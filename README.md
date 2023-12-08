@@ -22,18 +22,18 @@
       <tr>
          <td>Provides Quran audio files.</td>
          <td>
-            <ul>
+            <ol>
                <li>Lists all Quran audio files.</li>
                <li>Runs Quran audio files.</li>
                <li>Downloads Quran audio files.</li>
-            </ul>
+            </ol>
          </td>
          <td>
-            <ul>
+            <ol>
                <li>Lists all Quran audio files.</li>
                <li>Runs Quran audio files.</li>
                <li>Downloads Quran audio files.</li>
-            </ul>
+            </ol>
          </td>
       </tr>
       <!--feautre 2 -->
