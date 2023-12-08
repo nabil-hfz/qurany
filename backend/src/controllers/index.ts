@@ -12,7 +12,6 @@ import {
 import {  logWarn } from "../utils/logger";
 import * as multer from 'multer';
 
-// import * as assert from "node:assert";
 const upload = multer();
 
 type PostParams = {
