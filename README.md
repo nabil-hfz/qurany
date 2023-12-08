@@ -4,12 +4,12 @@
    
 ### This system consists of three parts:
    
-##### 1. Backend, build by Node js using express framework in typescript.
+#### 1. Backend, build by Node js using express framework in typescript.
    
-##### 2. Frontend, build by Angular.
-   
-##### 3. Mobile App, build by Flutter framework for Android & iOS.
-   
+#### 2. Mobile App, build by Flutter framework for Android & iOS.
+
+#### 3. Frontend, build by Angular.
+      
 ## Current Features.
    
    <table>
