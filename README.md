@@ -1,7 +1,7 @@
 <div style="padding-left: 20px;">
 
 # Qurany System.
-   
+
 ### This system consists of three parts:
    
 #### 1. Backend, build by Node js using express framework in typescript.
