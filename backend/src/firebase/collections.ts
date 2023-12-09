@@ -1,14 +1,12 @@
 export abstract class AppFirebaseCollections {
-  static recitersCollection = "reciters";
 
+  
   static audiosStoragePath = "audios";
   static imagesStoragePath = "images";
 
   static filesImageCollection = "files_image";
   static filesAudioCollection = "files_audio";
 
-  static khatmeCollection = "/khatme/";
-  static recitationsCollection = "/recitations/";
 
   private static _audioKhatme = "/khatme";
 

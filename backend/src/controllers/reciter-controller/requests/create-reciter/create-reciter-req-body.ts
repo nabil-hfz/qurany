@@ -1,9 +1,11 @@
-import { LocalizedModel } from "../../../../models/base-models";
+import { ILocalizedModel } from "../../../../models/localized-model";
+
 
 export type CreateReciterReqBody = {
   // public:
-  bio: LocalizedModel;
+  bio: ILocalizedModel;
   imagePath: string;
-  name: LocalizedModel;
-  numberKhatme: number;
+  name: ILocalizedModel;
+  numberOfKhatmat: number;
+  recitationTypes: number[];
 };

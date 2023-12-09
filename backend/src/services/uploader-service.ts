@@ -16,9 +16,8 @@ import * as fs from 'fs';
 import * as ffprobe from 'ffprobe';
 import * as ffprobeStatic from 'ffprobe-static';
 import * as tmp from 'tmp';
-import { FileModel } from "../models/file-model";
-import { Timestamp } from "firebase-admin/firestore";
-import { AppFirebaseCollections } from "../firebase/collections";
+import { FileModel, IFileModel } from "../models/file-model";
+// import { AppFirebaseCollections } from "../firebase/collections";
 
 
 
@@ -98,7 +97,7 @@ class UploaderService {
         audioLocation = "",
         imageLocation = "",
 
-    ): Promise<Array<{ audioFile: FileModel; imageFile: FileModel; duration: number }>> {
+    ): Promise<Array<{ audioFile: IFileModel; imageFile: IFileModel; duration: number }>> {
         const results = [];
         if (audioLocation && audioLocation.length > 0) {
             if (audioLocation.startsWith('/'))
@@ -132,29 +131,28 @@ class UploaderService {
 
             const duration = await this.getAudioDuration(audioBuffer.buffer);
 
-            const refAudio = firebaseDep.firestore()
-                .collection(AppFirebaseCollections.filesAudioCollection)
-                .doc();
-            const audioFile = new FileModel(
-                audioUrl,
-                audioBuffer.mimetype,
-                audioBuffer.size,
-                audioFileName,
-                Timestamp.now(),
-                refAudio,
+            // const refAudio = firebaseDep.firestore()
+            //     .collection(AppFirebaseCollections.filesAudioCollection)
+            //     .doc();
+            const audioFile = new FileModel({
+                url: audioUrl,
+                mimetype: audioBuffer.mimetype,
+                size: audioBuffer.size,
+                name: audioFileName,
+            }
             );
 
-            const refImage = firebaseDep.firestore()
-                .collection(AppFirebaseCollections.filesImageCollection)
-                .doc();
-            const imageFile = new FileModel(
-                imageUrl,
-                imageBuffer.mimetype,
-                imageBuffer.size,
-                imageFileName,
-                Timestamp.now(),
-                refImage,
-            )
+            // const refImage = firebaseDep.firestore()
+            //     .collection(AppFirebaseCollections.filesImageCollection)
+            //     .doc();
+            const imageFile = new FileModel({
+                url: imageUrl,
+                mimetype: imageBuffer.mimetype,
+                size: imageBuffer.size,
+                name: imageFileName,
+            }
+            );
+
 
             // audioFile
             results.push({ audioFile, imageFile, duration });
@@ -164,7 +162,7 @@ class UploaderService {
     async saveFile(
         file: Express.Multer.File,
         fileLocation = "",
-    ): Promise<FileModel> {
+    ): Promise<IFileModel> {
 
         if (fileLocation && fileLocation.length > 0) {
             if (fileLocation.startsWith('/'))
@@ -180,18 +178,15 @@ class UploaderService {
 
         const fileUrl = await this.uploadFile(fileBuffer.buffer, imageDestination, currentFileExt);
 
-        const ref = firebaseDep.firestore()
-            .collection(AppFirebaseCollections.filesImageCollection)
-            .doc();
 
-        const uploadedFile = new FileModel(
-            fileUrl,
-            fileBuffer.mimetype,
-            fileBuffer.size,
-            currentFileName,
-            Timestamp.now(),
-            ref,
-        )
+
+        const uploadedFile = new FileModel({
+            url: fileUrl,
+            mimetype: fileBuffer.mimetype,
+            size: fileBuffer.size,
+            name: currentFileName,
+        });
+
 
         return uploadedFile;
     }

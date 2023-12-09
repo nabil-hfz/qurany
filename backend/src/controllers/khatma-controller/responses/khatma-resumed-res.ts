@@ -1,16 +1,15 @@
 
-// import { Nullable } from "../../../utils/types";
-import { LocalizedModel } from "../../../models/base-models";
-import { KhatmaModel } from "../../../models/khatma-model";
+import { IKhatmaModel } from "../../../models/khatma-model";
+import { ILocalizedModel } from "../../../models/localized-model";
 import { Nullable } from "../../../utils/types";
 
 export class KhatmaResumedRes {
   public readonly id: Nullable<string>;
-  public readonly name: LocalizedModel;
+  public readonly name: ILocalizedModel;
   // public readonly price:number;
 
-  constructor(data: KhatmaModel, id?: string) {
-    this.id = id ?? "";
+  constructor(data: IKhatmaModel) {
+    this.id = data.id ?? "";
     this.name = data.name;
     // this.price = data.price;
   }

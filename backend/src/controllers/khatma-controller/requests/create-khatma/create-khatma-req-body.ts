@@ -1,9 +1,10 @@
-import { LocalizedModel } from "../../../../models/base-models";
+import { ILocalizedModel } from "../../../../models/localized-model";
+
 
 export type CreateKhatmaReqBody = {
   // public:
   reciterId: string;
-  name: LocalizedModel;
+  name: ILocalizedModel;
   type: number;
 
 };

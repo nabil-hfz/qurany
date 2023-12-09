@@ -11,10 +11,10 @@ import { CreateKhatmaReqBody } from './requests/create-khatma/create-khatma-req-
 import { checkIfIsValidCreateKhatmaReqBody } from './requests/create-khatma/create-khatma-validation';
 import { khatmeRepository } from '../../repository/khatma/khatme-repository';
 import { HttpResponseError } from "../../utils/http-response-error";
-import { KhatmaModel } from "../../models/khatma-model";
 import { KhatmaFullRes } from "./responses/khatma-full-res";
 import { KhatmaResumedRes } from "./responses/khatma-resumed-res";
 import { KhatmeListResumedRes } from "./responses/khatma-list-resumed-res";
+import { IKhatmaModel } from "../../models/khatma-model";
 
 export class KhatmaController implements Controller {
 
@@ -65,9 +65,10 @@ export class KhatmaController implements Controller {
   };
 
   private readonly getKhatmaListPublic: RequestHandler = async (req, res, next) => {
-    const reciters = await khatmeRepository.getKhatme();
-    const responseList = reciters.map(
-      (reciter) => new KhatmaResumedRes(reciter, reciter?.id?.id ?? '')
+    const data = await khatmeRepository.getKhatme();
+
+    const responseList = data.items.map(
+      (khatma) => new KhatmaResumedRes(khatma)
     );
     res.send(new KhatmeListResumedRes(responseList));
     next();
@@ -86,7 +87,7 @@ export class KhatmaController implements Controller {
     req: Request,
     res: any,
     next: NextFunction,
-    onSuccess: (product: KhatmaModel) => any
+    onSuccess: (product: IKhatmaModel) => any
   ) {
     if (!req.params.khatmaId?.length) {
       throw new HttpResponseError(

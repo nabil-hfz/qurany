@@ -13,7 +13,8 @@ node_modules/
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 .key/
-dist/
+
+**/docs/**
 **/.DS_Store
 src/firebase/*.json
 ./src/firebase/*.json

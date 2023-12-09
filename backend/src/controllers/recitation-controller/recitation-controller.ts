@@ -10,7 +10,7 @@ import { RecitationResumedRes } from './responses/recitation-resumed-res';
 import { RecitationListResumedRes } from './responses/recitation-list-resumed-res';
 import { HttpResponseError } from '../../utils/http-response-error';
 import { RecitationFullRes } from './responses/recitation-full-res';
-import { RecitationModel } from '../../models/recitation-model';
+import { IRecitationModel } from '../../models/recitation-model';
 
 export class RecitationController implements Controller {
 
@@ -49,9 +49,24 @@ export class RecitationController implements Controller {
       logStartRequest(req, 'RecitationController', 'createRecitations')
       const reqBody: CreateRecitationReqBody = Object.assign({}, req.body);
 
+
       checkIfIsValidCreateRecitationReqBody(reqBody);
+
+      const reciterIndex = reqBody.reciterIndex
+      const currentFilesPath = statusLables[reciterIndex];
+      if (reciterIndex >= statusLables.length || !currentFilesPath) {
+        throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterIndex"');
+      }
+
       const audios = req.files['audios'] as Express.Multer.File[];
+      if (!audios || !audios.length) {
+        throw new HttpResponseError(400, "BAD_REQUEST", 'No files found "audios"');
+      }
+
       const images = req.files['images'] as Express.Multer.File[];
+      if (!images || !images.length) {
+        throw new HttpResponseError(400, "BAD_REQUEST", 'No files found "images"');
+      }
 
 
       const result = await recitationRepository
@@ -83,7 +98,7 @@ export class RecitationController implements Controller {
 
   private readonly getRecitationListPublic: RequestHandler = async (req, res, next) => {
     const recitations = await recitationRepository.getRecitations();
-    const responseList = recitations.map(
+    const responseList = recitations.items.map(
       (recitation) => new RecitationResumedRes(recitation)
     );
     res.send(new RecitationListResumedRes(responseList));
@@ -107,7 +122,7 @@ export class RecitationController implements Controller {
     req: any,
     res: any,
     next: NextFunction,
-    onSuccess: (recatation: RecitationModel,) => any
+    onSuccess: (recatation: IRecitationModel) => any
   ) {
     if (!req.params.recitationId?.length) {
       throw new HttpResponseError(

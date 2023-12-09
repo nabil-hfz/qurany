@@ -1,57 +1,57 @@
-import { FileModel, MiniFileModel } from './../../models/file-model';
-import { ReciterModel } from "../../models/reciter-models";
+import { IFileModel } from './../../models/file-model';
+import { IReciterModel, ReciterModel } from "../../models/reciter-models";
 import { Repository } from "../repository";
-import { AppFirebaseCollections } from "../../firebase/collections";
 import { CreateReciterReqBody } from "../../controllers/reciter-controller/requests/create-reciter/create-reciter-req-body";
-import { Timestamp } from "../../firebase/firebase-data-classes";
-import { serializeFS } from "../../utils/serialize-firestore";
 import { HttpResponseError } from '../../utils/http-response-error';
+import { Model } from 'mongoose';
+import { RecitationTypes } from '../../models/recitation-model';
+import { FilesRepository, filesRepository } from '../file/files-repository';
 
-export class RecitersRepository extends Repository {
-  recitersCollection = AppFirebaseCollections.recitersCollection;
+export class RecitersRepository extends Repository<IReciterModel> {
 
-
-  async createReciter(request: CreateReciterReqBody, imageFile: FileModel)
-    : Promise<ReciterModel> {
-    const ref = this.getCollectionReference(this.recitersCollection).doc();
-
-    await this
-      .getCollectionReference(AppFirebaseCollections.filesImageCollection)
-      .doc(imageFile.id?.id ?? '').set(serializeFS(imageFile));
-
-    const data = new ReciterModel(
-      ref,
-      request.bio,
-      new MiniFileModel(imageFile.url, imageFile?.id),
-      request.name,
-      Number(request.numberKhatme??1), 
-      0, 
-      0,
-      Timestamp.now());
-    await ref.set(serializeFS(data));
-    return data;
+  constructor(model: Model<IReciterModel>, private filesRepository: FilesRepository) {
+    super(model);
   }
 
-  async getReciters(): Promise<ReciterModel[]> {
-    const snapshot = await this.getCollectionReference(this.recitersCollection).get();
-    return snapshot.docs.map((doc) =>
-      Object.assign(ReciterModel.empty(), doc.data())
-    );
+  async createReciter(
+    request: CreateReciterReqBody,
+    image: IFileModel
+  ): Promise<IReciterModel> {
+
+
+    const imgResult = await this.filesRepository.create(image);
+
+    const data: Partial<IReciterModel> = {
+      name: request.name,
+      bio: request.bio,
+      image: imgResult,
+      numberOfKhatmat: request.numberOfKhatmat,
+      recitationTypes: [RecitationTypes.Hafs]
+
+    };
+    const reciter = this.create(data);
+    return reciter;
   }
 
-  async getReciterById(reciterId: string): Promise<ReciterModel | null> {
+  async getReciters() {
+    const reciters = this.getAll({});
+    return reciters;
+  }
 
-    const reciterRes = await this.getDocumentReference(
-      this.recitersCollection,
-      reciterId
-    ).get();
+  async getReciterById(reciterId: string): Promise<IReciterModel | null> {
+
+    const reciterRes = await this.getOneById(reciterId);
+
     console.log(reciterRes)
-    if (!reciterRes.exists || reciterRes?.data() == null) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterId"');
+    if (!reciterRes || !reciterRes?.id) {
+      throw new HttpResponseError(
+        400,
+        "BAD_REQUEST",
+        `No reciter found with this \"reciterId\": ${reciterId}`);
 
     }
-    return Object.assign(ReciterModel.empty(), reciterRes.data()!);
+    return reciterRes;
   }
 }
 
-export const recitersRepository = new RecitersRepository();
+export const recitersRepository = new RecitersRepository(ReciterModel, filesRepository);

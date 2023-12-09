@@ -1,10 +1,9 @@
 {
     "out": "./docs",
-    "mode": "modules",
+    "entryPoints": ["./src"],
     "exclude": [
         "**/node_modules/**"
     ],
     "excludePrivate": true,
-    "excludeNotExported": true,
     "theme": "default",
 }

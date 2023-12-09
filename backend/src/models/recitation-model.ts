@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { BaseModelSchema, IBaseModel } from './base-models';
 import { IFileModel } from './file-model';
 import { ILocalizedModel, LocalizedModelSchema } from './localized-model';
@@ -10,7 +10,7 @@ export enum RecitationTypes {
     Shoaba = 2,
 }
 
-interface IRecitationModel extends IBaseModel {
+export interface IRecitationModel extends IBaseModel {
     title: ILocalizedModel;
     //
 
@@ -46,3 +46,5 @@ export const RecitationModelSchema = new Schema<IRecitationModel>({
     totalPlays: { type: Number, default: 0 },
     duration: { type: Number, required: true },
 });
+
+export const RecitationModel = mongoose.model<IRecitationModel>('Recitation', RecitationModelSchema);

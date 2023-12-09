@@ -1,26 +1,27 @@
-import { LocalizedModel } from "../../../models/base-models";
-import { MiniFileModel } from "../../../models/file-model";
-import { KhatmaModel } from "../../../models/khatma-model";
+
+import { IFileModel } from "../../../models/file-model";
+import { IKhatmaModel } from "../../../models/khatma-model";
+import { ILocalizedModel } from "../../../models/localized-model";
 import { KhatmaResumedRes } from "./khatma-resumed-res";
 
 export class KhatmaFullRes extends KhatmaResumedRes {
-  // public readonly internalCode:string;
-  public readonly reciter: { name: LocalizedModel, image: MiniFileModel, id: any };
-  public readonly createdAtMillis: number;
+
+  public readonly reciter: { name: ILocalizedModel, image: IFileModel, id: any };
   public readonly totalDownloads: number;
   public readonly totalPlays: number;
+  public readonly createdAtMillis?: Date;
 
-  constructor(data: KhatmaModel) {
-    super(data, data?.id?.id ?? '');
+  constructor(data: IKhatmaModel) {
+    super(data);
     this.reciter =
     {
       name: data.reciter.name,
       image: data.reciter.image,
-      id: data.reciter?.id?.id ?? ''
+      id: data.reciter?.id,
     };
     this.totalDownloads = data.totalDownloads;
     this.totalPlays = data.totalPlays;
 
-    this.createdAtMillis = data.createdAt.toMillis();
+    this.createdAtMillis = data.createdAt;
   }
 }

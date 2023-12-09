@@ -1,5 +1,5 @@
 import { Controller, HttpServer } from "../index";
-import { Request, RequestHandler } from "express";
+import {  RequestHandler } from "express";
 import { recitersRepository } from "../../repository/reciter/reciters-repository";
 import { HttpResponseError } from "../../utils/http-response-error";
 import { RecitersListResumedRes } from "./responses/reciters-list-resumed-res";
@@ -19,7 +19,7 @@ export class ReciterController implements Controller {
 
     httpServer.post({ path: this.url, requestHandler: this.createReciter.bind(this), fileFields: [{ name: 'image' }], customClaims: ['superAdmin'] });
     httpServer.get({ path: this.url, requestHandler: this.getReciterListPublic.bind(this), customClaims: ["user"] });
-    httpServer.get({ path: `${this.url}:reciterId`, requestHandler: this.getReciterByIdPublic.bind(this), customClaims: ["user"] });
+    httpServer.get({ path: `${this.url}/:reciterId`, requestHandler: this.getReciterByIdPublic.bind(this), customClaims: ["user"] });
 
     // httpServer.get(url, this.getProductListPublic.bind(this));
     // httpServer.post(urlUploadFiles, this.createNewKhatmaAndRecitation.bind(this));
@@ -50,7 +50,7 @@ export class ReciterController implements Controller {
   private readonly getReciterListPublic: RequestHandler = async (req, res, next) => {
 
     const reciters = await recitersRepository.getReciters();
-    const responseList = reciters.map(
+    const responseList = reciters.items.map(
       (reciter) => new ReciterResumedRes(reciter)
     );
     res.status(200).send(new RecitersListResumedRes(responseList));
@@ -58,22 +58,8 @@ export class ReciterController implements Controller {
 
 
   private readonly getReciterByIdPublic: RequestHandler = async (req, res, next) => {
-    return this.handleGetReciterById(
-      req,
-      res,
-      next,
-      // (data) => new ReciterFullRes(data)
-    );
-  };
-
-  private async handleGetReciterById(
-    req: Request,
-    res: any,
-    next: any,
-    // onSuccess: (product: ReciterModel) => any
-  ) {
-    // console.log('Hello baby ', req.params);
-    if (!req.params?.reciterId) {
+     console.log('Hello baby ', req.params);
+     if (!req.params?.reciterId) {
       throw new HttpResponseError(
         400,
         "BAD_REQUEST",
@@ -82,25 +68,35 @@ export class ReciterController implements Controller {
     }
     const ans = await recitersRepository.getReciterById(req.params.reciterId);
     res.send(new ReciterFullRes(ans!));
-    return;
-    // return onSuccess(result!);
-    // If there's a cache: it will use the cache, otherwise: it will wait for the getProductById result and cache it
-    const getReciterByIdCached = req.cacheOf(
-      "reciterId_param",
-      recitersRepository.getReciterById
-    );
-    const reciter = await getReciterByIdCached(req.params.reciterId);
+    next();
+  };
 
-    if (reciter == null) {
-      throw new HttpResponseError(
-        404,
-        "NOT_FOUND",
-        "Reciter ID " + req.params.reciterId + " not found"
-      );
-    }
-    // res.send(onSuccess(reciter));
-    // next();
-  }
+  // private async handleGetReciterById(
+  //   req: Request,
+  //   res: any,
+  //   next: any,
+  //   // onSuccess: (product: ReciterModel) => any
+  // ) {
+  
+  //   return;
+  //   // return onSuccess(result!);
+  //   // If there's a cache: it will use the cache, otherwise: it will wait for the getProductById result and cache it
+  //   const getReciterByIdCached = req.cacheOf(
+  //     "reciterId_param",
+  //     recitersRepository.getReciterById
+  //   );
+  //   const reciter = await getReciterByIdCached(req.params.reciterId);
+
+  //   if (reciter == null) {
+  //     throw new HttpResponseError(
+  //       404,
+  //       "NOT_FOUND",
+  //       "Reciter ID " + req.params.reciterId + " not found"
+  //     );
+  //   }
+  //   // res.send(onSuccess(reciter));
+  //   // next();
+  // }
 
   // private readonly getProductByIdFull: RequestHandler = async (req, res, next,) => {
   //     const getProductByIdCached = req.cacheOf('productId_param', recitersRepository.getProductById);

@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { logError } from '../utils/logger';
 
 export abstract class Repository<T extends Document> {
@@ -15,10 +15,10 @@ export abstract class Repository<T extends Document> {
     projection?: Partial<Record<keyof T, any>>,
     sortOptions?: { [key in keyof T]?: number }
   ):
-    Promise<{ data: T[] } |
-    { data: T[], totalDocs: number } |
-    { data: T[], totalPages: number } |
-    { data: T[], totalDocs: number, totalPages: number }> {
+    // IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>
+    Promise<
+      { items: T[], totalDocs?: number, totalPages?: number }
+    > {
     const options = {
       page: page,
       limit: size,
@@ -29,7 +29,7 @@ export abstract class Repository<T extends Document> {
       .find(conditions, projection, options)
       .exec();
 
-    let answer: any = { data: result };
+    let answer: any = { items: result };
 
     //  Checks if getAll true, then returns all documents with count.
     if (conditions.getAll) {
@@ -42,9 +42,17 @@ export abstract class Repository<T extends Document> {
     return answer;
   }
 
-  public async getDocument(id: string): Promise<T | null> {
+  public async createAll(resources: T[]): Promise<T[] | null> {
     try {
-      return await this.model.findOne().findById(id).exec();
+      return await this.model.insertMany(resources);
+    } catch (error) {
+      logError(error);
+      return null;
+    }
+  }
+  public async getOneById(id: string): Promise<T | null> {
+    try {
+      return await this.model.findById(id).exec();
     } catch (error) {
       logError(error);
       return null;
@@ -53,7 +61,8 @@ export abstract class Repository<T extends Document> {
 
   public async create(resource: Partial<T>): Promise<T> {
     const document = new this.model(resource);
-    return await document.save();
+    let result = await document.save();
+    return result;
   }
 
   public async update(id: string, resource: Partial<T>): Promise<T | null> {

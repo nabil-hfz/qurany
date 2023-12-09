@@ -10,10 +10,22 @@ import * as cors from "cors";
 import { log } from "./utils/logger";
 import * as bodyParser from "body-parser";
 import * as timeout from "connect-timeout";
+import * as mongoose from "mongoose";
 
 
-// import * as http from "http";
-// import * as https from "https";
+const connectToMongoDB = async () => {
+  try {
+    const mongoURI = 'mongodb://localhost:27017/quranly';  
+    await mongoose.connect(mongoURI)
+    .then(() => console.log('Successfully connected to MongoDB'))
+    .catch(err => console.error('Error connecting to MongoDB', err));
+  } catch (err) {
+    console.error('Error connecting to MongoDB', err);
+  }
+};
+
+connectToMongoDB();
+
 
 
 const app: Express = express();
@@ -43,7 +55,7 @@ app.get('/health', (req, res) => {
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   log(`Server listening on port http://localhost:${PORT}...`);
 });

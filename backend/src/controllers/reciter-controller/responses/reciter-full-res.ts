@@ -1,16 +1,15 @@
-import { LocalizedModel } from "../../../models/base-models";
-import { ReciterModel } from "../../../models/reciter-models";
+import { ILocalizedModel } from "../../../models/localized-model";
+import { IReciterModel } from "../../../models/reciter-models";
 import { ReciterResumedRes } from "./reciter-resumed-res";
 
 export class ReciterFullRes extends ReciterResumedRes {
-  public readonly bio: LocalizedModel;
-  public readonly numberOfSeals: number;
-  public readonly createdAtMillis: number;
+  public readonly bio: ILocalizedModel;
+  public readonly numberOfKhatmat: number;
 
-  constructor(data: ReciterModel) {
+  
+  constructor(data: IReciterModel) {
     super(data);
-    this.bio = data?.bio;
-    this.numberOfSeals = data?.numberOfSeals;
-    this.createdAtMillis = data?.createdAt?.toMillis();
+    this.bio = data.bio;
+    this.numberOfKhatmat = data.numberOfKhatmat;
   }
 }

@@ -3,17 +3,24 @@ import { HttpResponseError } from "../../../../utils/http-response-error";
 
 export function checkIfIsValidCreateReciterReqBody(body: CreateReciterReqBody) {
 
-  if (!body?.imagePath)  {
+  if (!body?.imagePath) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "imagePath" defined ');
   }
-  if (!body?.name.en.length || !body?.name.ar.length)  {
+
+  if (!body?.name?.en?.length || !body?.name?.ar?.length) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "name en or ar" defined');
   }
 
-  if (!body?.bio.en.length || !body?.bio.ar.length) {
+  if (!body?.bio?.en?.length || !body?.bio?.ar?.length) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'Invalid "bio"');
   }
+  if (!body?.numberOfKhatmat) {
+    throw new HttpResponseError(400, "BAD_REQUEST", 'No "numberOfKhatmat" defined ');
+  }
 
+  if (!body?.recitationTypes) {
+    throw new HttpResponseError(400, "BAD_REQUEST", 'No "recitationTypes" defined ');
+  }
   // if (!body?.stockQuantity || body.stockQuantity < 0) {
   //   throw new HttpResponseError(400, "BAD_REQUEST", 'Invalid "stockQuantity"');
   // }
