@@ -1,5 +1,5 @@
 <div style="padding-left: 20px;">
-   <h1>Qurany System: Frontend - Angular.</h1>
+   <h1>Qurany System: Frontend - Angular. (Status: Going one)</h1>
    <h3>The frontend website is built on Angular framework.</h3>
    <h2> Current Features:</h2>
    <h4>1- Provides Quranic Files:</h4>

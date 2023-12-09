@@ -1,40 +1,25 @@
-import { DocumentReference, Timestamp } from "../firebase/firebase-data-classes";
-import { Nullable } from "../utils/types";
 
-// type Params = {
-//   createdAt?: Timestamp;
-//   id?: Nullable<DocumentReference>;
-// };
+import { Schema, Document } from 'mongoose';
 
-export abstract class BaseModel {
-  constructor(
-    readonly createdAt?: Timestamp | null,
-    readonly id?: Nullable<DocumentReference>,
-  ) { }
 
-  // getIdPath(): { id?: string, path?: string } | null {
-  //   if (this.params?.id !== null) {
-  //     return {
-  //       id: this.params?.id?.id,
-  //       path: this.params?.id?.path,
-  //     };
-  //   }
-  //   return null;
-  // }
-  // ID(): string | null {
-  //   if (this.params?.id !== null && this.params?.id !== null) {
-  //     return this.params?.id?.id!;
-  //   }
-  //   return null;
-  // }
+export interface IBaseModel extends Document {
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export class LocalizedModel extends BaseModel {
-  constructor(public readonly ar: string, public readonly en: string) {
-    super();
-  }
+export const BaseModelSchema = new Schema<IBaseModel>({
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: undefined }
+}, {
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+});
 
-  static empty() {
-    return new LocalizedModel("", "");
-  }
-}
+BaseModelSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+
+// BaseModelSchema.set('toJSON', {
+//   virtuals: true
+// });

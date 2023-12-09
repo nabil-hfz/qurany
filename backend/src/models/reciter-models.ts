@@ -1,54 +1,28 @@
-import {
-  Timestamp,
-  DocumentReference,
-} from "../firebase/firebase-data-classes";
-import { BaseModel, LocalizedModel } from "./base-models";
-import { Nullable } from "../utils/types";
-import {  MiniFileModel } from "./file-model";
+import { FileModelSchema, IFileModel } from "./file-model";
+import mongoose, { Schema } from 'mongoose';
+import { BaseModelSchema, IBaseModel } from './base-models';
+import { ILocalizedModel, LocalizedModelSchema } from './localized-model';
+import { RecitationTypes } from "./recitation-model";
 
-export class ReciterModel extends BaseModel {
-  constructor(
-    id: Nullable<DocumentReference>,
-    public readonly bio: LocalizedModel,
-    public readonly image: MiniFileModel,
-    public readonly name: LocalizedModel,
-
-    public readonly numberOfSeals: number,
-    public readonly totalDownloads: number,
-    public readonly totalPlays: number,
-    public readonly createdAt: Timestamp = Timestamp.now()
-  ) {
-    super(createdAt, id);
-  }
-
-  static empty() {
-    return new ReciterModel(
-      null,
-      LocalizedModel.empty(),
-      MiniFileModel.empty(),
-      LocalizedModel.empty(),
-      0,
-      0,
-      0
-    );
-  }
+export interface IReciterModel extends IBaseModel {
+  name: ILocalizedModel;
+  bio: ILocalizedModel;
+  image: IFileModel;
+  recitationTypes: number[];
+  totalPlays: number;
+  totalDownloads: number;
+  numberOfKhatmat: number;
 }
 
-export class ReciterMiniModel extends BaseModel {
-  constructor(
-    id: Nullable<DocumentReference>,
-    public readonly image: MiniFileModel,
-    public readonly name: LocalizedModel,
-  ) {
+export const ReciterModelSchema = new Schema<IReciterModel>({
+  ...BaseModelSchema.obj,
+  name: { type: LocalizedModelSchema, required: true },
+  bio: { type: LocalizedModelSchema, required: false },
+  image: { type: FileModelSchema, required: true },
+  recitationTypes: { type: [Number], default: [RecitationTypes.Hafs] },
+  totalPlays: { type: Number, default: 0 },
+  totalDownloads: { type: Number, default: 0 },
+  numberOfKhatmat: { type: Number, default: 0 },
+});
 
-    super(null, id);
-  }
-
-  static empty() {
-    return new ReciterMiniModel(
-      null,
-      MiniFileModel.empty(),
-      LocalizedModel.empty(),
-    );
-  }
-}
+export const ReciterModel = mongoose.model<IReciterModel>('Reciter', ReciterModelSchema);

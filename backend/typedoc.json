@@ -1,0 +1,10 @@
+{
+    "out": "./docs",
+    "mode": "modules",
+    "exclude": [
+        "**/node_modules/**"
+    ],
+    "excludePrivate": true,
+    "excludeNotExported": true,
+    "theme": "default",
+}
