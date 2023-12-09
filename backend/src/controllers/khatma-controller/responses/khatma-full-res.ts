@@ -13,8 +13,7 @@ export class KhatmaFullRes extends KhatmaResumedRes {
 
   constructor(data: IKhatmaModel) {
     super(data);
-    this.reciter =
-    {
+    this.reciter = {
       name: data.reciter.name,
       image: data.reciter.image,
       id: data.reciter?.id,

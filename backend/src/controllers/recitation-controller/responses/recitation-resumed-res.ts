@@ -13,7 +13,7 @@ export class RecitationResumedRes {
 
 
   constructor(data: IRecitationModel) {
-    this.id = data.id?.id ?? "";
+    this.id = data.id ?? "";
     this.khatmaId = data.khatmaId ?? "";
     this.title = data.title;
     this.link = data.audio.url;
