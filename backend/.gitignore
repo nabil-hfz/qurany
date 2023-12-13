@@ -4,7 +4,6 @@ lib/**/*.js.map
 
 # TypeScript v1 declaration files
 typings/
-./src/environment
 
 # Node.js dependency directory
 node_modules/
@@ -18,3 +17,5 @@ node_modules/
 **/.DS_Store
 src/firebase/*.json
 ./src/firebase/*.json
+src/environment/**
+dist/**
