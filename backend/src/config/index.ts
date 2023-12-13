@@ -3,7 +3,8 @@ import * as dotenv from "dotenv";
 
 export const currentEnv = process.env.NODE_ENV as string;
 
-
+// export NODE_ENV=dev
+// export NODE_ENV=prod
 export default function init() {
   const projectName = currentEnv;
   let envPath;

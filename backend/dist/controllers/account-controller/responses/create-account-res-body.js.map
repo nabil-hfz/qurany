@@ -1,0 +1,1 @@
+{"version":3,"file":"create-account-res-body.js","sourceRoot":"","sources":["../../../../src/controllers/account-controller/responses/create-account-res-body.ts"],"names":[],"mappings":";;;AAGA,MAAa,oBAAoB;IAO/B,YAAY,IAAgB;QAHZ,aAAQ,GACtB,gQAAgQ,CAAC;QAGjQ,IAAI,CAAC,GAAG,GAAG,IAAI,CAAC,GAAG,CAAC;QACpB,IAAI,CAAC,MAAM,GAAG,2BAA2B,CAAC;IAC5C,CAAC;CACF;AAXD,oDAWC"}
