@@ -7,7 +7,7 @@ export function checkIfIsValidCreateRecitationReqBody(body: CreateRecitationReqB
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "reciterIndex" defined');
   }
   
-  if (!body?.khatmaId.length) {
+  if (!body?.khatmaId) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "khatmaId" defined');
   }
 

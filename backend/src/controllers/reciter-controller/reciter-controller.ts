@@ -1,24 +1,29 @@
 import { Controller, HttpServer } from "../index";
-import {  RequestHandler } from "express";
+import { RequestHandler } from "express";
 import { recitersRepository } from "../../repository/reciter/reciters-repository";
 import { HttpResponseError } from "../../utils/http-response-error";
-import { RecitersListResumedRes } from "./responses/reciters-list-resumed-res";
+// import { RecitersListResumedRes } from "./responses/reciters-list-resumed-res";
 import { ReciterResumedRes } from "./responses/reciter-resumed-res";
-import { AppConst } from "../../constant/app.const";
-import { AppRoutes } from "../../firebase/collections";
 import { CreateReciterReqBody } from "./requests/create-reciter/create-reciter-req-body";
 import { checkIfIsValidCreateReciterReqBody } from "./requests/create-reciter/create-reciter-validation";
 import { ReciterFullRes } from "./responses/reciter-full-res";
 import { uploaderService } from "../../services/uploader-service";
+import { AppRoutes } from "../../constant/app-routes.const";
+import { AppImagesRecitersConst } from "../../constant/app-storage-paths.const";
+import { RecitationTypesList } from "../../db/entities/recitation-entity";
+import { ResponseModel } from "../../db/response-model";
+import { ResponseListModel } from "../../db/entities/response-list-model";
 
 export class ReciterController implements Controller {
 
-  url = `${AppConst.AppFunctionVersion1}${AppRoutes.recitersRoute}`;
+  url = AppRoutes.recitersRoute;
 
   initialize(httpServer: HttpServer): void {
 
     httpServer.post({ path: this.url, requestHandler: this.createReciter.bind(this), fileFields: [{ name: 'image' }], customClaims: ['superAdmin'] });
+
     httpServer.get({ path: this.url, requestHandler: this.getReciterListPublic.bind(this), customClaims: ["user"] });
+
     httpServer.get({ path: `${this.url}/:reciterId`, requestHandler: this.getReciterByIdPublic.bind(this), customClaims: ["user"] });
 
     // httpServer.get(url, this.getProductListPublic.bind(this));
@@ -35,16 +40,32 @@ export class ReciterController implements Controller {
   private readonly createReciter: RequestHandler = async (req: any, res, next,) => {
     const bio = JSON.parse(req.body.bio);
     const name = JSON.parse(req.body.name);
-    const reqBody: CreateReciterReqBody = Object.assign({}, { ...req.body, bio, name });
+
+    const recitationTypes = JSON.parse(req.body.recitationTypes.toString()) as number[];
+
+    recitationTypes?.every((type) => type == RecitationTypesList.indexOf(type))
+    if (recitationTypes) {
+      let allFound = recitationTypes!.every((type) => RecitationTypesList.indexOf(type) != -1);
+      if (!allFound)
+        throw new HttpResponseError(400, "BAD_REQUEST", 'Reciter has one or more unsupported recitation type');
+    }
+
+    const reqBody: CreateReciterReqBody = Object.assign({}, { ...req.body, bio, name, recitationTypes });
     checkIfIsValidCreateReciterReqBody(reqBody);
+
+
+    let imagePath = AppImagesRecitersConst[reqBody.reciterIndex];
+    if (!imagePath) throw new HttpResponseError(400, "BAD_REQUEST", 'Reciter Nr Not found.');
 
     const image = req.files['image'];
     if (!image || !image.length) { res.status(400).send({ message: 'No Image found' }); return; }
 
-    const filesResult = await uploaderService.saveFile(image[0], reqBody.imagePath);
+
+    const filesResult = await uploaderService.saveFile(image[0], imagePath);
     const reciter = await recitersRepository.createReciter(reqBody, filesResult);
-    res.send(new ReciterFullRes(reciter));
-    // next();
+
+    res.send(ResponseModel.toResult(new ReciterFullRes(reciter)));
+    next();
   }
 
   private readonly getReciterListPublic: RequestHandler = async (req, res, next) => {
@@ -53,22 +74,30 @@ export class ReciterController implements Controller {
     const responseList = reciters.items.map(
       (reciter) => new ReciterResumedRes(reciter)
     );
-    res.status(200).send(new RecitersListResumedRes(responseList));
+    res.send(ResponseListModel.toResult({
+      message: "",
+      items: responseList,
+    }));
+    next();
   };
 
 
   private readonly getReciterByIdPublic: RequestHandler = async (req, res, next) => {
-     console.log('Hello baby ', req.params);
-     if (!req.params?.reciterId) {
+    const reciterId = Number(req.params.reciterId);
+    if (!reciterId) {
       throw new HttpResponseError(
         400,
         "BAD_REQUEST",
         "Please, inform a reciterId on the route"
       );
     }
-    const ans = await recitersRepository.getReciterById(req.params.reciterId);
-    res.send(new ReciterFullRes(ans!));
+    const reciter = await recitersRepository.getReciterById(reciterId);
+    if (!reciter)
+      throw new HttpResponseError(400, "BAD_REQUEST", "Please, reciter with this id not found");
+    
+      res.send(ResponseModel.toResult(new ReciterFullRes(reciter)));
     next();
+
   };
 
   // private async handleGetReciterById(
@@ -77,7 +106,7 @@ export class ReciterController implements Controller {
   //   next: any,
   //   // onSuccess: (product: ReciterModel) => any
   // ) {
-  
+
   //   return;
   //   // return onSuccess(result!);
   //   // If there's a cache: it will use the cache, otherwise: it will wait for the getProductById result and cache it

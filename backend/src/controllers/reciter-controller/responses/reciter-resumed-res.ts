@@ -1,13 +1,13 @@
-import { ILocalizedModel } from "../../../models/localized-model";
-import { IReciterModel } from "../../../models/reciter-models";
+import { LocalizedEntity } from "../../../db/entities/localized-entity";
+import { ReciterEntity } from "../../../db/entities/reciter-entity";
 
 export class ReciterResumedRes {
-  public readonly id: string;
-  public readonly name: ILocalizedModel;
+  public readonly id: number;
+  public readonly name: LocalizedEntity;
   public readonly image: string;
 
 
-  constructor(data: IReciterModel) {
+  constructor(data: ReciterEntity) {
     this.id = data.id;
     this.name = data.name;
     this.image = data.image.url;

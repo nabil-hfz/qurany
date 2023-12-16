@@ -16,8 +16,7 @@ import * as fs from 'fs';
 import * as ffprobe from 'ffprobe';
 import * as ffprobeStatic from 'ffprobe-static';
 import * as tmp from 'tmp';
-import { FileModel, IFileModel } from "../models/file-model";
-// import { AppFirebaseCollections } from "../firebase/collections";
+import { FileEntity } from "../db/entities/file-entity";
 
 
 
@@ -97,7 +96,7 @@ class UploaderService {
         audioLocation = "",
         imageLocation = "",
 
-    ): Promise<Array<{ audioFile: IFileModel; imageFile: IFileModel; duration: number }>> {
+    ): Promise<Array<{ audioFile: FileEntity; imageFile: FileEntity; duration: number }>> {
         const results = [];
         if (audioLocation && audioLocation.length > 0) {
             if (audioLocation.startsWith('/'))
@@ -131,27 +130,29 @@ class UploaderService {
 
             const duration = await this.getAudioDuration(audioBuffer.buffer);
 
-            // const refAudio = firebaseDep.firestore()
-            //     .collection(AppFirebaseCollections.filesAudioCollection)
-            //     .doc();
-            const audioFile = new FileModel({
-                url: audioUrl,
-                mimetype: audioBuffer.mimetype,
-                size: audioBuffer.size,
-                name: audioFileName,
-            }
-            );
+            const audioFile = new FileEntity();
+            audioFile.url = audioUrl;
+            audioFile.mimetype = audioBuffer.mimetype;
+            audioFile.size = audioBuffer.size;
+            audioFile.name = audioFileName;
 
             // const refImage = firebaseDep.firestore()
             //     .collection(AppFirebaseCollections.filesImageCollection)
             //     .doc();
-            const imageFile = new FileModel({
-                url: imageUrl,
-                mimetype: imageBuffer.mimetype,
-                size: imageBuffer.size,
-                name: imageFileName,
-            }
-            );
+   
+            const imageFile = new FileEntity();
+            imageFile.url = imageUrl;
+            imageFile.mimetype = imageBuffer.mimetype;
+            imageFile.size = imageBuffer.size;
+            imageFile.name = imageFileName;
+
+            // const imageFile = new FileEntity(
+            //     imageUrl,
+            //     imageBuffer.size,
+            //     imageBuffer.mimetype,
+            //     imageFileName,
+
+            // );
 
 
             // audioFile
@@ -162,7 +163,7 @@ class UploaderService {
     async saveFile(
         file: Express.Multer.File,
         fileLocation = "",
-    ): Promise<IFileModel> {
+    ): Promise<FileEntity> {
 
         if (fileLocation && fileLocation.length > 0) {
             if (fileLocation.startsWith('/'))
@@ -180,12 +181,20 @@ class UploaderService {
 
 
 
-        const uploadedFile = new FileModel({
-            url: fileUrl,
-            mimetype: fileBuffer.mimetype,
-            size: fileBuffer.size,
-            name: currentFileName,
-        });
+
+        const uploadedFile = new FileEntity();
+        uploadedFile.url = fileUrl;
+        uploadedFile.mimetype = fileBuffer.mimetype;
+        uploadedFile.size = fileBuffer.size;
+        uploadedFile.name = currentFileName;
+
+
+        // const uploadedFile = new FileModel({
+        //     url: fileUrl,
+        //     mimetype: fileBuffer.mimetype,
+        //     size: fileBuffer.size,
+        //     name: currentFileName,
+        // });
 
 
         return uploadedFile;

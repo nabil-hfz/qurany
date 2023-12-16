@@ -6,7 +6,7 @@ export function checkIfIsValidCreateKhatmaReqBody(body: CreateKhatmaReqBody) {
   //   throw new HttpResponseError(400, "BAD_REQUEST", 'No "khatmaId" defined');
   // }
 
-  if (!body?.reciterId?.length) {
+  if (!body?.reciterId) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "reciterId" defined');
   }
 
@@ -15,7 +15,7 @@ export function checkIfIsValidCreateKhatmaReqBody(body: CreateKhatmaReqBody) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "name" defined');
   }
 
-  if (!body?.type) {
+  if (!body?.khatmaType) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "type" defined');
   }
 

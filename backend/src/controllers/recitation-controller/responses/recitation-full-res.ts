@@ -1,22 +1,20 @@
-import { IRecitationModel } from "../../../models/recitation-model";
 import { Nullable } from "../../../utils/types";
 import { RecitationResumedRes } from "./recitation-resumed-res";
+import { RecitationEntity } from '../../../db/entities/recitation-entity';
 
 export class RecitationFullRes extends RecitationResumedRes {
-  public readonly khatmaId: Nullable<string>;
+  public readonly khatmaId: Nullable<number>;
   public readonly totalDownloads: number;
   public readonly totalPlays: number;
-  public readonly createdAtMillis?: Date;
-  public readonly duration: number;
-  public readonly audioFileSize: number;
+  public readonly createdAt?: Date;
+  public readonly audioFileSizeInByte: number;
 
-  constructor(data: IRecitationModel) {
+  constructor(data: RecitationEntity) {
     super(data);
     this.khatmaId = data.khatmaId;
-    this.duration = data.duration;
-    this.audioFileSize = data.audio.size;
+    this.audioFileSizeInByte = data.audio.size;
     this.totalDownloads = data.totalDownloads;
     this.totalPlays = data.totalPlays;
-    this.createdAtMillis = data.createdAt;
+    this.createdAt = data.createdAt;
   }
 }

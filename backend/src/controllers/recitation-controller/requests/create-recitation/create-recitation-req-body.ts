@@ -1,6 +1,7 @@
 
 export type CreateRecitationReqBody = {
-  // public:
-  khatmaId: string;
+
+  khatmaId: number;
   reciterIndex: number;
+  sequence: number;
 };

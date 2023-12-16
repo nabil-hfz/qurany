@@ -1,24 +1,24 @@
 import { Controller, HttpServer } from "../index";
-import { NextFunction, Request, RequestHandler } from "express";
-import { logInfo } from "../../utils/logger";
+import {  RequestHandler } from "express";
+// import { logInfo } from "../../utils/logger";
 
 
 
-import { AppConst } from "../../constant/app.const";
-import { logEndSuccessRequest, logStartRequest } from '../../utils/logger';
-import { AppRoutes } from '../../firebase/collections';
+// import { logEndSuccessRequest, logStartRequest } from '../../utils/logger';
 import { CreateKhatmaReqBody } from './requests/create-khatma/create-khatma-req-body';
 import { checkIfIsValidCreateKhatmaReqBody } from './requests/create-khatma/create-khatma-validation';
 import { khatmeRepository } from '../../repository/khatma/khatme-repository';
 import { HttpResponseError } from "../../utils/http-response-error";
 import { KhatmaFullRes } from "./responses/khatma-full-res";
 import { KhatmaResumedRes } from "./responses/khatma-resumed-res";
-import { KhatmeListResumedRes } from "./responses/khatma-list-resumed-res";
-import { IKhatmaModel } from "../../models/khatma-model";
+// import { KhatmeListResumedRes } from "./responses/khatma-list-resumed-res";
+import { AppRoutes } from "../../constant/app-routes.const";
+import { ResponseListModel } from "../../db/entities/response-list-model";
+import { ResponseModel } from "../../db/response-model";
 
 export class KhatmaController implements Controller {
 
-  url = `${AppConst.AppFunctionVersion1}${AppRoutes.khatmeRoute}`;
+  url = AppRoutes.khatmeRoute;
 
   initialize(httpServer: HttpServer): void {
     httpServer.post({
@@ -41,26 +41,19 @@ export class KhatmaController implements Controller {
   }
 
   private readonly createNewKhatma: RequestHandler = async (req: any, res, next) => {
-    logStartRequest(req, 'KhatmaController', 'createNewKhatma')
+    // logStartRequest(req, 'KhatmaController', 'createNewKhatma')
 
     const reqBody: CreateKhatmaReqBody = Object.assign({}, req.body);
     checkIfIsValidCreateKhatmaReqBody(reqBody);
 
 
-    // const reciterId = reqBody.reciterId as string | null;
-    // const khatmaName = reqBody.name;
-    // const type = reqBody.type;
-
-    logInfo('CreateKhatmaReqBody is: ' + reqBody);
-
-    const newKhatma = await khatmeRepository.createKhatma(reqBody);
+    const result = await khatmeRepository.createKhatma(reqBody);
 
 
-    logEndSuccessRequest(req, 'KhatmaController', 'createNewKhatma')
-    res.status(200).send({
-      message: 'Khatma created successfully',
-      khatmaId: newKhatma,
-    });
+    // logEndSuccessRequest(req, 'KhatmaController', 'createNewKhatma')
+    res.status(200).send(
+      ResponseModel.toResult(new KhatmaFullRes(result))
+    );
     next();
   };
 
@@ -70,26 +63,19 @@ export class KhatmaController implements Controller {
     const responseList = data.items.map(
       (khatma) => new KhatmaResumedRes(khatma)
     );
-    res.send(new KhatmeListResumedRes(responseList));
+    res.status(200).send(
+      ResponseListModel.toResult({
+        message: 'Khatma created successfully',
+        items: responseList
+      })
+    );
     next();
   };
 
   private readonly getKhatmaByIdPublic: RequestHandler = async (req, res, next) => {
-    return this.handleGetKhatmaById(
-      req,
-      res,
-      next,
-      (data) => new KhatmaFullRes(data)
-    );
-  };
 
-  private async handleGetKhatmaById(
-    req: Request,
-    res: any,
-    next: NextFunction,
-    onSuccess: (product: IKhatmaModel) => any
-  ) {
-    if (!req.params.khatmaId?.length) {
+    const khatmaId = Number(req.params.khatmaId);
+    if (!khatmaId) {
       throw new HttpResponseError(
         400,
         "BAD_REQUEST",
@@ -102,7 +88,7 @@ export class KhatmaController implements Controller {
     //   "khatmaId_param",
     //   khatmeRepository.getKhatmaById
     // );
-    const khatma = await khatmeRepository.getKhatmaById(req.params.khatmaId);
+    const khatma = await khatmeRepository.getKhatmaById(khatmaId);
 
     if (khatma == null) {
       throw new HttpResponseError(
@@ -111,7 +97,8 @@ export class KhatmaController implements Controller {
         "Khatma ID " + req.params.khatmaId + " not found"
       );
     }
-    res.send(onSuccess(khatma));
+
+    res.send(ResponseModel.toResult(new KhatmaFullRes(khatma)));
     next();
   }
 }

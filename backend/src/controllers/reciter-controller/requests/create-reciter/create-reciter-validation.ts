@@ -3,8 +3,8 @@ import { HttpResponseError } from "../../../../utils/http-response-error";
 
 export function checkIfIsValidCreateReciterReqBody(body: CreateReciterReqBody) {
 
-  if (!body?.imagePath) {
-    throw new HttpResponseError(400, "BAD_REQUEST", 'No "imagePath" defined ');
+  if (!body?.reciterIndex) {
+    throw new HttpResponseError(400, "BAD_REQUEST", 'No "reciterIndex" defined ');
   }
 
   if (!body?.name?.en?.length || !body?.name?.ar?.length) {

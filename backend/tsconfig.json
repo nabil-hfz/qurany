@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "./dist",

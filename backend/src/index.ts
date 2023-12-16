@@ -1,6 +1,9 @@
 import initConfig from "./config/index";
 initConfig();
 
+import { initializeDb } from "./db";
+initializeDb();
+
 import { Express } from "express";
 import * as express from "express";
 import { interceptors } from "./interceptors";
@@ -10,22 +13,6 @@ import * as cors from "cors";
 import { log } from "./utils/logger";
 import * as bodyParser from "body-parser";
 import * as timeout from "connect-timeout";
-import * as mongoose from "mongoose";
-
-
-const connectToMongoDB = async () => {
-  try {
-    const mongoURI = 'mongodb://localhost:27017/quranly';  
-    await mongoose.connect(mongoURI)
-    .then(() => console.log('Successfully connected to MongoDB'))
-    .catch(err => console.error('Error connecting to MongoDB', err));
-  } catch (err) {
-    console.error('Error connecting to MongoDB', err);
-  }
-};
-
-connectToMongoDB();
-
 
 
 const app: Express = express();

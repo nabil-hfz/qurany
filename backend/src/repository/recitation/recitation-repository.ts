@@ -1,17 +1,21 @@
 import { Repository } from "../repository";
-import { AppFirebaseCollections, statusLables } from "../../firebase/collections";
 import { CreateRecitationReqBody } from "../../controllers/recitation-controller/requests/create-recitation/create-recitation-req-body";
-import { IRecitationModel, RecitationModel } from "../../models/recitation-model";
 import { HttpResponseError } from "../../utils/http-response-error";
 import { uploaderService } from "../../services/uploader-service";
 import { logInfo } from "../../utils/logger";
-import { Model } from "mongoose";
-import { IReciterModel } from "../../models/reciter-models";
 import { FilesRepository, filesRepository } from "../file/files-repository";
+import { AppAudiosConst, AppImagesKhatmeConst } from "../../constant/app-storage-paths.const";
+import { KhatmeRepository, khatmeRepository } from "../khatma/khatme-repository";
+import { EntityTarget } from "typeorm";
+import { RecitationEntity } from "../../db/entities/recitation-entity";
+import { ReciterEntity } from "../../db/entities/reciter-entity";
 
-export class RecitationRepository extends Repository<IRecitationModel> {
+export class RecitationRepository extends Repository<RecitationEntity> {
 
-  constructor(model: Model<IRecitationModel>, private filesRepository: FilesRepository) {
+  constructor(
+    model: EntityTarget<RecitationEntity>,
+    private filesRepository: FilesRepository,
+    private khatmeRepository: KhatmeRepository) {
     super(model);
   }
 
@@ -21,13 +25,25 @@ export class RecitationRepository extends Repository<IRecitationModel> {
     audios: Express.Multer.File[]
   ): Promise<any> {
 
-    const khatmaId = request.khatmaId;
+    const khatmaId = Number(request.khatmaId);
     const reciterIndex = request.reciterIndex
-    const currentFilesPath = statusLables[reciterIndex];
+
+    const khatma = await this.khatmeRepository.getOneById(khatmaId);
+
+    if (!khatma || !khatma?.id) {
+      throw new HttpResponseError(400, "BAD_REQUEST", 'No khatma found with this "khatmaId"');
+    }
+
+    const reciter: ReciterEntity = khatma.reciter;
+    const reciterId: number = reciter.id;
+    if (!reciter || !reciterId) {
+      throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "khatmaId"');
+    }
 
 
-    const audiosPath = AppFirebaseCollections.audiosStoragePath + currentFilesPath;
-    const imagesPath = AppFirebaseCollections.imagesStoragePath + currentFilesPath;
+
+    const audiosPath = AppAudiosConst[reciterIndex] + `/${khatma.recitationType}`;
+    const imagesPath = AppImagesKhatmeConst[reciterIndex] + `/${khatma.recitationType}`;
 
 
     logInfo('khatmaId is: ' + khatmaId);
@@ -41,34 +57,25 @@ export class RecitationRepository extends Repository<IRecitationModel> {
       throw new HttpResponseError(400, "BAD_REQUEST", 'No files found "filesResult"');
     }
 
-    const khatma = await this.getOneById(khatmaId)
-    if (!khatma || !khatma?.id) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'No khatma found with this "khatmaId"');
-    }
-
-    const reciter: IReciterModel = khatma.reciter;
-    const reciterId: string = reciter.id;
-    if (!reciter || !reciterId || !reciterId?.length) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "khatmaId"');
-    }
 
 
+    let index = Number(request.sequence) ?? 1;
+    const docs: RecitationEntity[] = filesResult.map((data) => {
+      const result = new RecitationEntity();
 
-    let index = 0;
-    const docs: IRecitationModel[] = filesResult.map((data) => {
+      result.audio = data.audioFile;
+      result.duration = data.duration;
+      result.image = data.imageFile;
+
+      result.title = {
+        en: `Chapter ${index}`,
+        ar: `الجزء ${index}`,
+      };
+      result.sequence = index;
+      result.reciter = reciter;
+      result.khatmaId = khatmaId;
       index += 1;
-      return {
-        audio: data.audioFile,
-        duration: data.duration,
-        image: data.imageFile,
-        title: {
-          en: `Chapter ${index}`,
-          ar: `الجزء ${index}`,
-        },
-        sequence: index,
-        reciter: reciter,
-        khatmaId: khatmaId,
-      } as IRecitationModel;
+      return result;
     }) ?? [];
 
 
@@ -79,7 +86,7 @@ export class RecitationRepository extends Repository<IRecitationModel> {
     await this.filesRepository.createAll(imgs);
     await this.filesRepository.createAll(auds);
 
-    const savedRecitation = await this.createAll(docs);
+    const savedRecitation = await this.createAll(docs,);
 
     const temp = savedRecitation?.map(recitation => ({
       id: recitation?.id,
@@ -91,8 +98,10 @@ export class RecitationRepository extends Repository<IRecitationModel> {
     return temp;
   }
 
-  async getRecitationById(recitationId: string): Promise<IRecitationModel | null> {
-    const recitationRes = await this.getOneById(recitationId);
+  async getRecitationById(recitationId: number): Promise<RecitationEntity | null> {
+    const recitationRes = await this.getOneById(recitationId
+      // , "image audio reciter"
+    );
     if (!recitationRes || !recitationRes?.id) {
       return null;
     }
@@ -101,8 +110,21 @@ export class RecitationRepository extends Repository<IRecitationModel> {
   }
 
   async getRecitations() {
-    return await this.getAll({});
+    return await this.getAll(
+      {
+        relations: {
+          image: true,
+          audio: true,
+          reciter: true,
+        }
+      }
+
+    );
   }
 }
 
-export const recitationRepository = new RecitationRepository(RecitationModel, filesRepository);
+export const recitationRepository = new RecitationRepository(
+  RecitationEntity,
+  filesRepository,
+  khatmeRepository
+);

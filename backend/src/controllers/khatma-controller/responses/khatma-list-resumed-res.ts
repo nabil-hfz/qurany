@@ -1,5 +1,5 @@
-import { KhatmaResumedRes } from "./khatma-resumed-res";
+// import { KhatmaResumedRes } from "./khatma-resumed-res";
 
-export class KhatmeListResumedRes {
-  constructor(public readonly khatme: KhatmaResumedRes[]) {}
-}
+// export class KhatmeListResumedRes {
+//   constructor(public readonly khatme: KhatmaResumedRes[]) {}
+// }

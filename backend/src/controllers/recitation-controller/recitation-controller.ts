@@ -1,60 +1,64 @@
-import { NextFunction, RequestHandler } from 'express';
+import { RequestHandler } from 'express';
 import { Controller, HttpServer } from "../index";
-import { AppConst } from "../../constant/app.const";
-import { logEndSuccessRequest, logStartRequest } from '../../utils/logger';
-import { statusLables, AppRoutes, AppFirebaseCollections } from '../../firebase/collections';
+// import { logEndSuccessRequest, logStartRequest } from '../../utils/logger';
 import { checkIfIsValidCreateRecitationReqBody } from './requests/create-recitation/create-recitation-validation';
 import { CreateRecitationReqBody } from './requests/create-recitation/create-recitation-req-body';
 import { recitationRepository } from '../../repository/recitation/recitation-repository';
 import { RecitationResumedRes } from './responses/recitation-resumed-res';
-import { RecitationListResumedRes } from './responses/recitation-list-resumed-res';
+// import { RecitationListResumedRes } from './responses/recitation-list-resumed-res';
 import { HttpResponseError } from '../../utils/http-response-error';
 import { RecitationFullRes } from './responses/recitation-full-res';
-import { IRecitationModel } from '../../models/recitation-model';
+import { AppRoutes } from '../../constant/app-routes.const';
+import { AppAudiosConst, AppImagesKhatmeConst } from '../../constant/app-storage-paths.const';
+import { ResponseListModel } from '../../db/entities/response-list-model';
+import { ResponseModel } from '../../db/response-model';
 
 export class RecitationController implements Controller {
 
-  url = `${AppConst.AppFunctionVersion1}${AppRoutes.recitationsRoute}`;
+  url = AppRoutes.recitationsRoute;
 
   initialize(httpServer: HttpServer): void {
     httpServer.post({
-      path: `${this.url}`,
+      path: this.url,
       requestHandler: this.createRecitations.bind(this),
       fileFields: [{ name: 'audios' }, { name: 'images' }],
       customClaims: ['superAdmin'],
     });
 
     httpServer.get({
-      path: `${this.url}`,
+      path: this.url,
       requestHandler: this.getRecitationListPublic.bind(this),
       customClaims: ['user'],
     });
 
     httpServer.get({
-      path: `${this.url}:recitationId`,
-      requestHandler: this.getRecitationByIdPublic.bind(this),
+      path: `${this.url}-files-path`,
+      requestHandler: this.getFilePathPublic.bind(this),
       customClaims: ['user'],
     });
 
     httpServer.get({
-      path: `${this.url}/files-path`,
-      requestHandler: this.getFilePathPublic.bind(this),
+      path: `${this.url}/:recitationId`,
+      requestHandler: this.getRecitationByIdPublic.bind(this),
       customClaims: ['user'],
     });
+
+
 
   }
 
   private readonly createRecitations: RequestHandler =
     async (req: any, res, next) => {
-      logStartRequest(req, 'RecitationController', 'createRecitations')
+      // logStartRequest(req, 'RecitationController', 'createRecitations')
       const reqBody: CreateRecitationReqBody = Object.assign({}, req.body);
 
 
       checkIfIsValidCreateRecitationReqBody(reqBody);
 
       const reciterIndex = reqBody.reciterIndex
-      const currentFilesPath = statusLables[reciterIndex];
-      if (reciterIndex >= statusLables.length || !currentFilesPath) {
+      const currentFilesPath = AppImagesKhatmeConst[reciterIndex];
+
+      if (!currentFilesPath) {
         throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterIndex"');
       }
 
@@ -72,27 +76,25 @@ export class RecitationController implements Controller {
       const result = await recitationRepository
         .createRecitations(reqBody, images, audios)
 
-      logEndSuccessRequest(req, 'RecitationController', 'createRecitations')
+      // logEndSuccessRequest(req, 'RecitationController', 'createRecitations')
 
-      res.status(200).send({
-        message: 'Recitations created successfully',
-        recitations: result,
-      });
+      res.status(200).send(
+        ResponseListModel.toResult({
+          message: 'Recitations created successfully',
+          items: result,
+        })
+      );
       next();
     };
 
   private readonly getFilePathPublic: RequestHandler = async (req, res, next) => {
     res.status(200).send(
-      statusLables
-        .map((filePath, index) => {
-          return {
-            index,
-            audiosPath: AppFirebaseCollections.audiosStoragePath + filePath,
-            iamgesPath: AppFirebaseCollections.imagesStoragePath + filePath,
-          }
-        }));
+      ResponseModel.toResult({
+        audiosPath: { ...AppAudiosConst },
+        imagesPath: { ...AppImagesKhatmeConst }
+      })
+    );
     next();
-
   };
 
 
@@ -101,7 +103,11 @@ export class RecitationController implements Controller {
     const responseList = recitations.items.map(
       (recitation) => new RecitationResumedRes(recitation)
     );
-    res.send(new RecitationListResumedRes(responseList));
+    res.status(200).send(
+      ResponseListModel.toResult({
+        items: responseList,
+      })
+    );
     next();
   };
 
@@ -110,20 +116,7 @@ export class RecitationController implements Controller {
     res: any,
     next: any,
   ) => {
-    return this.handleGetRecitationById(
-      req,
-      res,
-      next,
-      (data) => new RecitationFullRes(data)
-    );
-  };
 
-  private async handleGetRecitationById(
-    req: any,
-    res: any,
-    next: NextFunction,
-    onSuccess: (recatation: IRecitationModel) => any
-  ) {
     if (!req.params.recitationId?.length) {
       throw new HttpResponseError(
         400,
@@ -146,7 +139,7 @@ export class RecitationController implements Controller {
         "Recitation id " + req.params.recitationId + " not found"
       );
     }
-    res.status(200).send(onSuccess(recitation));
+    res.status(200).send(ResponseModel.toResult(new RecitationFullRes(recitation)));
     next();
   }
 }

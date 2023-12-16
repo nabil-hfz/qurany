@@ -1,13 +1,19 @@
-import { FileModel, IFileModel } from '../../models/file-model';
+import { EntityTarget } from "typeorm";
+import { FileEntity } from "../../db/entities/file-entity";
 import { Repository } from "../repository";
-import { Model } from 'mongoose';
 
-export class FilesRepository extends Repository<IFileModel> {
+export class FilesRepository extends Repository<FileEntity> {
 
-  constructor(model: Model<IFileModel>) {
+  constructor(model: EntityTarget<FileEntity>) {
     super(model);
+  }
+
+
+  getFileUrlDependingOnPath(path: string): string {
+    path = '';
+    return path;
   }
 
 }
 
-export const filesRepository = new FilesRepository(FileModel);
+export const filesRepository = new FilesRepository(FileEntity);

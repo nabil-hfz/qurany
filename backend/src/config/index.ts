@@ -9,16 +9,16 @@ export default function init() {
   const projectName = currentEnv;
   let envPath;
   switch (projectName) {
-    case "dev":
-      envPath = path.resolve(process.cwd(), "./src/environment/.env.dev");
-      break;
     case "prod":
       envPath = path.resolve(process.cwd(), "./src/environment/.env.prod");
       break;
+    case "dev":
     default:
-      throw new Error("Application not supported");
+      envPath = path.resolve(process.cwd(), "./src/environment/.env.dev");
+      break;
   }
   dotenv.config({ path: envPath, debug: true, override: true });
   console.log(`process env ${currentEnv}`);
 }
 
+export const isDevelopment = currentEnv == "dev";

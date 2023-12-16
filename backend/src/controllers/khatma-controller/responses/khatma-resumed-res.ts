@@ -1,16 +1,22 @@
 
-import { IKhatmaModel } from "../../../models/khatma-model";
-import { ILocalizedModel } from "../../../models/localized-model";
+import { KhatmaEntity } from "../../../db/entities/khatma-entity";
+import { LocalizedEntity } from "../../../db/entities/localized-entity";
 import { Nullable } from "../../../utils/types";
 
 export class KhatmaResumedRes {
-  public readonly id: Nullable<string>;
-  public readonly name: ILocalizedModel;
-  // public readonly price:number;
+  public readonly id: Nullable<number>;
+  public readonly name: LocalizedEntity;
+  public readonly reciter: { name: LocalizedEntity, image: string, id:number };
 
-  constructor(data: IKhatmaModel) {
+
+  constructor(data: KhatmaEntity) {
     this.id = data.id ?? "";
     this.name = data.name;
+    this.reciter = {
+      name: data.reciter.name,
+      id: data.reciter.id,
+      image: data.reciter.image?.url,
+    }
     // this.price = data.price;
   }
 }

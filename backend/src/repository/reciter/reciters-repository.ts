@@ -1,48 +1,55 @@
-import { IFileModel } from './../../models/file-model';
-import { IReciterModel, ReciterModel } from "../../models/reciter-models";
+
 import { Repository } from "../repository";
 import { CreateReciterReqBody } from "../../controllers/reciter-controller/requests/create-reciter/create-reciter-req-body";
 import { HttpResponseError } from '../../utils/http-response-error';
-import { Model } from 'mongoose';
-import { RecitationTypes } from '../../models/recitation-model';
 import { FilesRepository, filesRepository } from '../file/files-repository';
+import { RecitationTypes } from '../../db/entities/recitation-entity';
+import { ReciterEntity } from "../../db/entities/reciter-entity";
+import { EntityTarget } from "typeorm/common/EntityTarget";
+import { FileEntity } from "../../db/entities/file-entity";
 
-export class RecitersRepository extends Repository<IReciterModel> {
+export class RecitersRepository extends Repository<ReciterEntity> {
 
-  constructor(model: Model<IReciterModel>, private filesRepository: FilesRepository) {
+  constructor(
+    model: EntityTarget<ReciterEntity>,
+    private filesRepository: FilesRepository
+  ) {
     super(model);
   }
 
   async createReciter(
     request: CreateReciterReqBody,
-    image: IFileModel
-  ): Promise<IReciterModel> {
+    imageFile: FileEntity
+  ): Promise<ReciterEntity> {
 
 
-    const imgResult = await this.filesRepository.create(image);
+    const imgResult = await this.filesRepository.create(imageFile);
 
-    const data: Partial<IReciterModel> = {
-      name: request.name,
-      bio: request.bio,
-      image: imgResult,
-      numberOfKhatmat: request.numberOfKhatmat,
-      recitationTypes: [RecitationTypes.Hafs]
+    const data = new ReciterEntity();
 
-    };
+    data.name = request.name;
+    data.bio = request.bio;
+    data.image = imgResult;
+    data.numberOfKhatmat = request.numberOfKhatmat;
+    data.recitationTypes = request.recitationTypes ?? [RecitationTypes.Hafs];
+
+
     const reciter = this.create(data);
     return reciter;
   }
 
   async getReciters() {
-    const reciters = this.getAll({});
+    const reciters = this.getAll({
+      relations: {
+        image: true,
+      }
+    });
     return reciters;
   }
 
-  async getReciterById(reciterId: string): Promise<IReciterModel | null> {
+  async getReciterById(reciterId: number): Promise<ReciterEntity | null> {
 
     const reciterRes = await this.getOneById(reciterId);
-
-    console.log(reciterRes)
     if (!reciterRes || !reciterRes?.id) {
       throw new HttpResponseError(
         400,
@@ -54,4 +61,4 @@ export class RecitersRepository extends Repository<IReciterModel> {
   }
 }
 
-export const recitersRepository = new RecitersRepository(ReciterModel, filesRepository);
+export const recitersRepository = new RecitersRepository(ReciterEntity, filesRepository);

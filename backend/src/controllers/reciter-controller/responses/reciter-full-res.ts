@@ -1,13 +1,13 @@
-import { ILocalizedModel } from "../../../models/localized-model";
-import { IReciterModel } from "../../../models/reciter-models";
+import { LocalizedEntity } from "../../../db/entities/localized-entity";
+import { ReciterEntity } from "../../../db/entities/reciter-entity";
 import { ReciterResumedRes } from "./reciter-resumed-res";
 
 export class ReciterFullRes extends ReciterResumedRes {
-  public readonly bio: ILocalizedModel;
+  public readonly bio: LocalizedEntity;
   public readonly numberOfKhatmat: number;
 
   
-  constructor(data: IReciterModel) {
+  constructor(data: ReciterEntity) {
     super(data);
     this.bio = data.bio;
     this.numberOfKhatmat = data.numberOfKhatmat;
