@@ -42,7 +42,7 @@ app.get('/health', (req, res) => {
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT =  8085;
+const PORT = process.env.PORT || 8085;
 app.listen(PORT, () => {
   log(`Server listening on port http://localhost:${PORT}...`);
 });
