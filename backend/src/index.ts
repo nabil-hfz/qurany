@@ -42,7 +42,7 @@ app.get('/health', (req, res) => {
 });
 
 // Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8080;
+const PORT =  8085;
 app.listen(PORT, () => {
   log(`Server listening on port http://localhost:${PORT}...`);
 });
@@ -77,9 +77,9 @@ app.listen(PORT, () => {
 // https://eu-central-1.console.aws.amazon.com/ecr/repositories/private/021171570288/qurany-api-dev?region=eu-central-1
 // Medium article : https://betterprogramming.pub/deploying-node-js-app-on-aws-cloud-in-a-serverless-way-d889a9444ef7
 
-// docker build -t qurany-api-dev .
-// docker run -it -p 7777:7777 qurany-api-dev
-// docker run -d -p 7777:7777 qurany-api-dev
+// docker build -t kawtharuna .
+// docker run -it -p 8080:8080 kawtharuna
+// docker run -d -p 8080:8080 kawtharuna
 // docker image ls
 // docker rmi $(docker images -q)
 // docker ps

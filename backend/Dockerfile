@@ -1,7 +1,7 @@
 FROM node:16-alpine
 
 # ENV NODE_ENV=dev
-ENV NODE_ENV=prod
+ENV NODE_ENV=dev
 
 # update packages
 RUN apk update
@@ -12,15 +12,15 @@ WORKDIR /app
 # copy configs to /app folder
 COPY package*.json ./
 COPY tsconfig.json ./
+
+
+RUN npm install 
+# RUN npm run build
+
 # copy source code to /app/src folder
 # COPY src /app/src
 # COPY dist /app/dist
 COPY . .
-# check files list
-RUN ls -a
-
-RUN npm install --all
-# RUN npm run build
 
 # EXPOSE 8080
 
