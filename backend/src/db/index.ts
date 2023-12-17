@@ -5,20 +5,33 @@ import { RecitationEntity } from "./entities/recitation-entity"
 import { ReciterEntity } from "./entities/reciter-entity"
 import { isDevelopment } from "../config"
 import { dbConfig } from "../config/db.config"
+// import { dbConfig2 } from "../../dist/db/entities/*.js"
 
 // const dbConfig = require("../config/db.config.js");
 
+// backend/dist/db/entities/base-entity.js
+console.log('dbConfig.HOST ', dbConfig.HOST);
+console.log('dbConfig.USER ', dbConfig.USER);
+console.log('dbConfig.PASSWORD ', dbConfig.PASSWORD);
+console.log('dbConfig.DB ', dbConfig.DB);
 
 export const AppDataSource = new DataSource({
     type: "postgres",
     host: dbConfig.HOST,
     port: 5432,
     username: dbConfig.USER,
-    password:  dbConfig.PASSWORD,
+    password: dbConfig.PASSWORD,
     database: dbConfig.DB,
-    entities: [FileEntity, KhatmaEntity, RecitationEntity, ReciterEntity],
+    entities: [
+        "../../dist/db/entities/*.js",
+        FileEntity,
+        KhatmaEntity,
+        RecitationEntity,
+        ReciterEntity,
+    ],
     synchronize: true,
     logging: isDevelopment,
+
 })
 
 

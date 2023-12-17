@@ -1,7 +1,7 @@
 FROM node:16-alpine
 
 # ENV NODE_ENV=dev
-ENV NODE_ENV=dev
+ENV NODE_ENV=prod
 
 # update packages
 RUN apk update
