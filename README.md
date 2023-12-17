@@ -1,6 +1,6 @@
 <div style="padding-left: 20px;">
 
-# Qurany System.
+# Kawtharuna System.
 
 ### This system consists of three parts:
    
