@@ -9,21 +9,22 @@ import {
   ErrorResponseBody,
   HttpResponseError,
 } from "../utils/http-response-error";
-import {  logWarn } from "../utils/logger";
+import { logWarn } from "../utils/logger";
 import * as multer from 'multer';
+import { paginationMiddleware } from "../middlewares/pagination.middleware";
 
 const upload = multer();
 
 type PostParams = {
   path: string;
-  requestHandler: RequestHandler;
+  requestHandler: RequestHandler[] | RequestHandler;
   fileFields?: any[];
   customClaims?: string[];
 };
 
 type GetParams = {
   path: string;
-  requestHandler: RequestHandler;
+  requestHandler: RequestHandler[] | RequestHandler;
   customClaims?: string[];
 };
 
@@ -34,10 +35,14 @@ export interface Controller {
 export class HttpServer {
   constructor(public readonly express: Express) { }
 
-  get(params:GetParams): void {
+  get(params: GetParams): void {
+    const handlers = Array.isArray(params.requestHandler)
+      ? params.requestHandler
+      : [params.requestHandler];
+
     this.express.get(
       params.path,
-      this._catchErrorHandler(params.requestHandler, params.customClaims)
+      [paginationMiddleware, ...handlers].map(handler => this._catchErrorHandler(handler, params.customClaims))
     );
   }
 
@@ -80,7 +85,7 @@ export class HttpServer {
   }
 
   private readonly _catchErrorHandler = (
-    requestHandler: RequestHandler,
+    requestHandlers: RequestHandler[] | RequestHandler,
     customClaims?: string[]
   ) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -113,7 +118,14 @@ export class HttpServer {
         checkCustomClaim.toString();
         // checkCustomClaim();
         // noinspection ES6RedundantAwait
-        await Promise.resolve(requestHandler(req, res, next));
+        // Handle both array and single request handler
+        if (Array.isArray(requestHandlers)) {
+          for (const handler of requestHandlers) {
+            await handler(req, res, next);
+          }
+        } else {
+          await requestHandlers(req, res, next);
+        }
       } catch (e: any) {
         const userInfo = !req.auth?.uid?.length ? "" : ` uid: ${req.auth.uid}`;
 
@@ -133,7 +145,7 @@ export class HttpServer {
           // next();
           return;
         }
-        console.error('Error happened ',e)
+        console.error('Error happened ', e)
         // logError(`[${req.method.toUpperCase()}] ${req.path}${userInfo}`);
         // logError(e.stack);
         // logError.toString();

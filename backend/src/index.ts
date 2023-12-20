@@ -48,69 +48,6 @@ app.listen(PORT, () => {
 });
 // https://www.youtube.com/watch?v=CqY2kYJQoK0
 
-
-
-
-
-
-
-// http.createServer(app).listen(port, () => {
-//   console.log("Hello nabil");
-//   log(`⚡️[server]: Server is running at http://localhost:${port}`);
-// });
-
-// https.createServer(app).listen(port, () => {
-//   console.log("Hello nabil");
-//   log(`⚡️[server]: Server is running at https://localhost:${port}`);
-// });
-// app.listen(port, () => {
-//   console.log("Hello nabil");
-//   log(`⚡️[server]: Server is running at http://localhost:${port}`);
-// });
-
-
-// export const api = firebaseDep.handleRequests(app);
-
-// exports.widgets = api;
-// module.exports = {api};
-
-// https://eu-central-1.console.aws.amazon.com/ecr/repositories/private/021171570288/qurany-api-dev?region=eu-central-1
-// Medium article : https://betterprogramming.pub/deploying-node-js-app-on-aws-cloud-in-a-serverless-way-d889a9444ef7
-
-// docker build -t kawtharuna .
-// docker run -it -p 8080:8080 kawtharuna
-// docker run -d -p 8080:8080 kawtharuna
-// docker image ls
-// docker rmi $(docker images -q)
-// docker ps
-// docker ps -a
-// Stop all running containers :  docker stop $(docker ps -a -q)
-// Delete all stopped containers: docker rm $(docker ps -a -q)
-
-
-// AMAZON : eb init --platform node.js --region eu-central-1
-// AMAZON : eb create --sample qurany-dev-eb
-
-
-//1- aws ecr create-repository --repository-name qurany-dev-repository --region eu-central-1
-//2- aws ecr delete-repository --repository-name qurany-dev-repository --region eu-central-1 --force
-//3- docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) 021171570288.dkr.ecr.eu-central-1.amazonaws.com
-//4- docker push 021171570288.dkr.ecr.eu-central-1.amazonaws.com/qurany-dev-repository
-//5- aws ecr delete-repository --repository-name qurany-dev-repository --region eu-central-1 --force
-
-
-
-
-//1- aws ecr create-repository --repository-name hello-repository --region eu-central-1
-//2- aws ecr delete-repository --repository-name hello-repository --region eu-central-1 --force
-//3- docker login -u AWS -p $(aws ecr get-login-password --region eu-central-1) 021171570288.dkr.ecr.eu-central-1.amazonaws.com
-//4- docker push 021171570288.dkr.ecr.eu-central-1.amazonaws.com/hello-repository
-//5- aws ecr delete-repository --repository-name hello-repository --region eu-central-1 --force
-
-
- 
-
-
 // https://www.youtube.com/watch?v=2Ti6r34odOw
 // https://www.youtube.com/watch?v=0YTs40kvnW0&list=PLjl2dJMjkDjkBIKd_S9YeBMsT92L8KD4m&index=11
 // https://www.youtube.com/watch?v=S45jZCvd2M8&t=43s

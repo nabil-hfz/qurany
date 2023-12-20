@@ -1,5 +1,5 @@
 import { Controller, HttpServer } from "../index";
-import {  RequestHandler } from "express";
+import { RequestHandler } from "express";
 // import { logInfo } from "../../utils/logger";
 
 
@@ -58,14 +58,23 @@ export class KhatmaController implements Controller {
   };
 
   private readonly getKhatmaListPublic: RequestHandler = async (req, res, next) => {
-    const data = await khatmeRepository.getKhatme();
+    const pagination = req.pagination;
+    let reciterId = Number(req.query.reciterId);
 
+    // if (!reciterId) {
+    //   throw new HttpResponseError(
+    //     400,
+    //     "BAD_REQUEST",
+    //     "Please, no 'reciterId' was provided"
+    //   );
+    // }
+
+    const data = await khatmeRepository.getKhatme(reciterId, pagination);
     const responseList = data.items.map(
       (khatma) => new KhatmaResumedRes(khatma)
     );
     res.status(200).send(
       ResponseListModel.toResult({
-        message: 'Khatma created successfully',
         items: responseList
       })
     );

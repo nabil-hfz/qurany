@@ -9,6 +9,7 @@ import { KhatmeRepository, khatmeRepository } from "../khatma/khatme-repository"
 import { EntityTarget } from "typeorm";
 import { RecitationEntity } from "../../db/entities/recitation-entity";
 import { ReciterEntity } from "../../db/entities/reciter-entity";
+import { AppPagination } from "../../middlewares/pagination.middleware";
 
 export class RecitationRepository extends Repository<RecitationEntity> {
 
@@ -34,8 +35,8 @@ export class RecitationRepository extends Repository<RecitationEntity> {
       throw new HttpResponseError(400, "BAD_REQUEST", 'No khatma found with this "khatmaId"');
     }
 
-    const reciter: ReciterEntity = khatma.reciter;
-    const reciterId: number = reciter.id;
+    const reciter: ReciterEntity | undefined = khatma.reciter;
+    const reciterId: number | undefined = reciter?.id;
     if (!reciter || !reciterId) {
       throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "khatmaId"');
     }
@@ -109,9 +110,27 @@ export class RecitationRepository extends Repository<RecitationEntity> {
     return recitationRes;
   }
 
-  async getRecitations() {
+  async getRecitations(
+    reciterId: number | undefined,
+    khatmaId: number | undefined,
+    pagination?: AppPagination
+  ) {
+    let options: any = { reciter: {} };
+
+    if (khatmaId) {
+      options.khatmaId = khatmaId;
+    }
+
+    if (reciterId) {
+      options.reciter.id = reciterId;
+    }
+
     return await this.getAll(
       {
+        conditions: {
+          ...options,
+          ...pagination
+        },
         relations: {
           image: true,
           audio: true,

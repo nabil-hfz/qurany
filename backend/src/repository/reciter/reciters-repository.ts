@@ -7,6 +7,7 @@ import { RecitationTypes } from '../../db/entities/recitation-entity';
 import { ReciterEntity } from "../../db/entities/reciter-entity";
 import { EntityTarget } from "typeorm/common/EntityTarget";
 import { FileEntity } from "../../db/entities/file-entity";
+import { AppPagination } from "../../middlewares/pagination.middleware";
 
 export class RecitersRepository extends Repository<ReciterEntity> {
 
@@ -38,8 +39,11 @@ export class RecitersRepository extends Repository<ReciterEntity> {
     return reciter;
   }
 
-  async getReciters() {
+  async getReciters(pagination?: AppPagination) {
     const reciters = this.getAll({
+      conditions:{
+        ...pagination
+      },
       relations: {
         image: true,
       }

@@ -4,9 +4,9 @@ import { KhatmaResumedRes } from "./khatma-resumed-res";
 
 export class KhatmaFullRes extends KhatmaResumedRes {
 
-  public readonly reciter: any;
-  public readonly totalDownloads: number;
-  public readonly totalPlays: number;
+  public readonly reciter: any | undefined;
+  public readonly totalDownloads: number | undefined;
+  public readonly totalPlays: number | undefined;
   // public readonly createdAtMillis?: Date;
 
   constructor(data: KhatmaEntity) {
@@ -14,9 +14,9 @@ export class KhatmaFullRes extends KhatmaResumedRes {
     this.totalDownloads = data.totalDownloads;
     this.totalPlays = data.totalPlays;
     this.reciter = {
-      name: data.reciter.name,
-      id: data.reciter.id,
-      image: data.reciter.image.url
+      name: data?.reciter?.name,
+      id: data?.reciter?.id,
+      image: data?.reciter?.image?.url
     };
     // this.createdAtMillis = data.createdAt;
   }

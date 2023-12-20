@@ -8,26 +8,26 @@ import { AppBaseEntity } from './base-entity';
 export class ReciterEntity extends AppBaseEntity {
 
   @Column(type => LocalizedEntity)
-  name!: LocalizedEntity;
+  name?: LocalizedEntity;
 
   @Column(type => LocalizedEntity)
-  bio!: LocalizedEntity;
+  bio?: LocalizedEntity;
 
   @OneToOne(() => FileEntity, {
     eager: true,
   })
   @JoinColumn()
-  image!: FileEntity;
+  image?: FileEntity;
 
   @Column("int", { array: true, default: [RecitationTypes.Hafs] })
   recitationTypes!: number[];
 
   @Column({ default: 0 })
-  totalPlays!: number;
+  totalPlays: number = 0;
 
   @Column({ default: 0 })
-  totalDownloads!: number;
+  totalDownloads: number = 0;
 
   @Column({ default: 0 })
-  numberOfKhatmat!: number;
+  numberOfKhatmat: number = 0;
 }

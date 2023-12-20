@@ -6,16 +6,16 @@ import { Nullable } from "../../../utils/types";
 export class KhatmaResumedRes {
   public readonly id: Nullable<number>;
   public readonly name: LocalizedEntity;
-  public readonly reciter: { name: LocalizedEntity, image: string, id:number };
+  public readonly reciter: { name: LocalizedEntity | undefined, image: string | undefined, id: number | undefined };
 
 
   constructor(data: KhatmaEntity) {
     this.id = data.id ?? "";
     this.name = data.name;
     this.reciter = {
-      name: data.reciter.name,
-      id: data.reciter.id,
-      image: data.reciter.image?.url,
+      name: data.reciter?.name,
+      id: data.reciter?.id,
+      image: data.reciter?.image?.url,
     }
     // this.price = data.price;
   }

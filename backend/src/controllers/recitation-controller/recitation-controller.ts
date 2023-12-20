@@ -99,7 +99,25 @@ export class RecitationController implements Controller {
 
 
   private readonly getRecitationListPublic: RequestHandler = async (req, res, next) => {
-    const recitations = await recitationRepository.getRecitations();
+    const pagination = req.pagination;
+    let reciterId = Number(req.query.reciterId);
+    let khatmaId = Number(req.query.khatmaId);
+
+    if (!reciterId && !khatmaId) {
+      throw new HttpResponseError(
+        400,
+        "BAD_REQUEST",
+        "Please, no 'reciterId' or 'khatmaId' was provided"
+      );
+    }
+
+    const recitations = await recitationRepository
+      .getRecitations(
+        reciterId,
+        khatmaId,
+        pagination
+      );
+      
     const responseList = recitations.items.map(
       (recitation) => new RecitationResumedRes(recitation)
     );

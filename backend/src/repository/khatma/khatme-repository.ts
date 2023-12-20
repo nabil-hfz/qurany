@@ -5,6 +5,7 @@ import { HttpResponseError } from "../../utils/http-response-error";
 
 import { RecitersRepository, recitersRepository } from "../reciter/reciters-repository";
 import { KhatmaEntity } from '../../db/entities/khatma-entity';
+import { AppPagination } from '../../middlewares/pagination.middleware';
 
 export class KhatmeRepository extends Repository<KhatmaEntity> {
 
@@ -37,15 +38,22 @@ export class KhatmeRepository extends Repository<KhatmaEntity> {
     return result;
   }
 
-  async getKhatme() {
-    const data = await this.getAll(
-      {
-        relations: {
-          reciter: true,
-        }
+  async getKhatme(reciterId?: number, pagination?: AppPagination) {
+
+    let options: any = { reciter: {} };
+    if (reciterId) {
+      options.reciter.id = reciterId;
+    }
+
+    const data = await this.getAll({
+      conditions: {
+        ...options,
+        ...pagination
+      },
+      relations: {
+        reciter: true,
       }
-      // { populate: 'reciter', select: 'name image' }
-    );
+    });
     return data;
   }
 

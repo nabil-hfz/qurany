@@ -29,7 +29,7 @@ export class KhatmaEntity extends AppBaseEntity {
     eager: true,
   })
   @JoinColumn()
-  reciter!: ReciterEntity;
+  reciter?: ReciterEntity;
 }
 
 

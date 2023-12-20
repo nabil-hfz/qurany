@@ -69,8 +69,9 @@ export class ReciterController implements Controller {
   }
 
   private readonly getReciterListPublic: RequestHandler = async (req, res, next) => {
+    const pagination = req.pagination;
 
-    const reciters = await recitersRepository.getReciters();
+    const reciters = await recitersRepository.getReciters(pagination);
     const responseList = reciters.items.map(
       (reciter) => new ReciterResumedRes(reciter)
     );

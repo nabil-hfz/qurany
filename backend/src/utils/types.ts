@@ -8,4 +8,4 @@ export declare type DiffResult = Array<{
   value: any;
 }>;
 
-export declare type Nullable<T> = T | null;
+export declare type Nullable<T> = T | undefined | null;

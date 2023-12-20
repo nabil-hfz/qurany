@@ -2,9 +2,10 @@ import { AppDataSource } from './../db/index';
 
 import { Repository as TypeORMRepository, EntityTarget, ObjectLiteral, FindOneOptions, ObjectId, FindManyOptions } from 'typeorm';
 import { logError } from '../utils/logger';
+import { AppPagination } from '../middlewares/pagination.middleware';
 
 export interface GetAllOptions<T> {
-  conditions?: Partial<T> & { page?: number; size?: number },
+  conditions?: Partial<T> & Partial<AppPagination>,
   order?: { [P in keyof T]?: 'ASC' | 'DESC' },
   relations?: { [P in keyof T]?: boolean },
 }
@@ -20,13 +21,16 @@ export abstract class Repository<T extends ObjectLiteral> {
   public async getAll(
     options?: GetAllOptions<T>,
   ): Promise<{ items: T[]; totalDocs?: number; totalPages?: number }> {
-    let { page = 1, size = 20 } = options?.conditions || {};
+    let { page = 1, limit = 20 } = options?.conditions || {};
 
     try {
+      delete options?.conditions?.page;
+      delete options?.conditions?.limit;
+      
       const findManyOptions: FindManyOptions = {
         where: options?.conditions,
-        skip: (page - 1) * size,
-        take: size,
+        skip: (page - 1) * limit,
+        take: limit,
         order: options?.order,
         relations: options?.relations
       };
@@ -35,10 +39,11 @@ export abstract class Repository<T extends ObjectLiteral> {
       return {
         items,
         totalDocs,
-        totalPages: Math.ceil(totalDocs / size)
+        totalPages: Math.ceil(totalDocs / limit)
       };
     } catch (error) {
-      logError(error);
+      console.log(error);
+      // logError(error);
       return { items: [], totalDocs: 0, totalPages: 0 };
     }
   }
