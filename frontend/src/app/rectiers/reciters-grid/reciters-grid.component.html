@@ -1,0 +1,46 @@
+<!-- <mat-progress-bar 
+  *ngIf="!(loaded$ | async)" 
+  mode="indeterminate"></mat-progress-bar> -->
+
+  <mat-toolbar color="primary">
+    Portfolio Grid
+
+    <div class="header-content">
+        <!-- <button (click)="navigateToForm()">Add New value</button> -->
+    </div>
+</mat-toolbar>
+<!-- portfolio-details.component.html -->
+<ng-container *ngIf="isLoading; else content">
+    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+</ng-container>
+
+
+<ng-template #content>
+    <div class="content-portfolio responsive-grid-portfolio">
+        <mat-card *ngFor="let value of items" (click)="onCardPressed(value)">
+            <mat-card-header>
+                <mat-card-title>{{ value?.name?.ar ?? '' }} </mat-card-title>
+            </mat-card-header>
+            <br />
+            <!-- <img src="value.reciter?.image" alt=""> -->
+            <img mat-card-image [src]="value.image" />
+            <mat-card-content class="card-content">
+                <br />
+                <!-- <a *ngIf="value.isVisible" [href]="value.customerLink" target="_blank">Customer Link</a> -->
+
+
+                <!-- <h5 *ngIf="!value.isVisible">Status: Hiden</h5> -->
+
+            </mat-card-content>
+            <!-- <mat-card-actions>
+            <button mat-button [hidden]="value.isVisible">Hide</button>
+            <button mat-button [hidden]="!value.isVisible">Unhide</button>
+        </mat-card-actions> -->
+        </mat-card>
+    </div>
+
+    <div class="" *ngIf="!items.length">
+
+        <mat-card-title> No items existed yet try adding one now</mat-card-title>
+    </div>
+</ng-template>

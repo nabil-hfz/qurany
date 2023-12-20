@@ -1,0 +1,12 @@
+<div class="image-selector">
+    <div *ngIf="imageUrl; else uploadTemplate" class="content">
+      <img [src]="imageUrl" alt="Selected Image" />
+      <button type="button"  (click)="fileInput.click()" class="btn btn-primary">Edit Image</button>
+      <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+    </div>
+    <ng-template #uploadTemplate  class="content">
+      <button type="button"  (click)="fileInput.click()" class="btn btn-primary">Select Image</button>
+      <input type="file" #fileInput (change)="onFileSelected($event)" hidden />
+    </ng-template>
+  </div>
+  
