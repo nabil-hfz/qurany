@@ -6,12 +6,14 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
 
 export const routes: Routes = [
     // Reciter Module
-    { path: '', component: RecitersGridComponent },
+    { path: '', component: KhatmatGridComponent },
 
+    // { path: 'khatmat', component: KhatmatGridComponent },
+    { path: 'reciters', component: RecitersGridComponent },
 
     // Khatma Module
-    { path: 'khatmat-grid/:reciterId/:reciterName', component: KhatmatGridComponent },
-    { path: 'khatma-details/:reciterId/:name', component: KhatmaDetailsComponent },
+    // { path: 'khatmat-grid/:reciterId/:reciterName', component: KhatmatGridComponent },
+    { path: 'khatma-details/:khatmaId/:khatmaName', component: KhatmaDetailsComponent },
     { path: '**', component: NotFoundComponent },
 
 ];

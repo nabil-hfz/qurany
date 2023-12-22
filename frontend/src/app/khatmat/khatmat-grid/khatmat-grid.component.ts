@@ -3,6 +3,7 @@ import { KhatmaService } from '../../services/khatma/khatma.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KhatmaModel } from '../../models/khatma.model';
 import { KhatmaFilter } from '../../models/filters/khatma.filter';
+import { BaseFilter } from '../../models/filters/base.filter';
 
 @Component({
   selector: 'khatmat-grid',
@@ -15,7 +16,6 @@ export class KhatmatGridComponent implements OnInit {
 
   values: KhatmaModel[] = [];
 
-  delayForLoader: number = 200;
   constructor(
     private service: KhatmaService,
     private router: Router,
@@ -25,10 +25,11 @@ export class KhatmatGridComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let reciterId = this.activatedRoute.snapshot.queryParamMap.get('reciterId');
-    let filter = { limit: 100, reciterId: reciterId };
+    // const reciterId = this.activatedRoute.snapshot.paramMap.get('reciterId');
+    // const filter: BaseFilter = {    };
+    // console.log('filter is ', filter);
 
-    this.service.getKhatmat(filter).subscribe({
+    this.service.getKhatmat( ).subscribe({
       next: (values: any) => {
         this.values = values.items;
         this.isLoading = false;
@@ -46,8 +47,8 @@ export class KhatmatGridComponent implements OnInit {
 
 
   onCardPressed(value: KhatmaModel) {
-    let words = value.name.ar?.split(' ');
-    this.router.navigate(['/khatma-details', value.id, words?.join('-') || '']);
+    const words = value.name.ar?.split(' ');
+    this.router.navigate(['khatma-details', value.id, words?.join('-') || '']);
 
   }
 }

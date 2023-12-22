@@ -1,3 +1,4 @@
+import { KhatmaService } from './services/khatma/khatma.service';
 
 import { ErrorHandler, NgModule } from '@angular/core';
 
@@ -31,6 +32,16 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
 import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.component';
+import { RecitersService } from './services/reciters/reciters.service';
+import { ReciterDetailsComponent } from './rectiers/reciter-details/reciter-details.component';
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
+import { KawtharunaAudioPlayerComponent } from './shared/kawtharuna-audio-player/kawtharuna-audio-player.component';
+import { RecitationsService } from './services/recitations/recitations.service';
+import { RecitationsListComponent } from './recitations/recitations-list/recitations-list.component';
+// import { MatListModule, MatIconModule } from '@angular/material';
+import {MatListModule} from '@angular/material/list';
+import {MatIconModule} from '@angular/material/icon';
+
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
 // import { EntriesService } from './stores/portfolio/api/portfolio.service';
@@ -47,9 +58,17 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
     SpinnerComponent,
     NotFoundComponent,
     AppComponent,
+
+    //
     KhatmatGridComponent,
     KhatmaDetailsComponent,
     RecitersGridComponent,
+    ReciterDetailsComponent,
+    RecitationsListComponent,
+
+    // SharedComponent
+    KawtharunaAudioPlayerComponent,
+
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -66,7 +85,9 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
     CommonModule,
     RouterOutlet,
     MatToolbarModule,
-
+    MatListModule,
+    MatIconModule,
+    
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
@@ -80,9 +101,16 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
     MatButtonModule,
     FlexLayoutModule,
     HttpClientModule,
+    //
+    NgxAudioPlayerModule
+
   ],
   providers: [
     // EntriesService,
+    KhatmaService,
+    RecitersService,
+    RecitationsService,
+    // RecitationsService
     {
       provide: ErrorHandler,
       useClass: AppErrorHandler,

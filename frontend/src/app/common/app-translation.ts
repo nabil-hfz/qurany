@@ -1,6 +1,9 @@
 import { LocalizedModel } from './../models/localized.model';
-export function getTranslation(localizedModel?: LocalizedModel) {
 
-    if (!localizedModel) return '';
-    return localizedModel.ar ?? '';
+export abstract class AppTranslation {
+    static getTranslation(localizedModel?: LocalizedModel) {
+
+        if (!localizedModel) return '';
+        return localizedModel.ar ?? '';
+    }
 }

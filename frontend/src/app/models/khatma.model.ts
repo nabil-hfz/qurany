@@ -2,7 +2,6 @@
 
 
 
-import { BaseFilter } from './filters/base.filter';
 import { AppBaseModel } from './base.model';
 import { LocalizedModel } from './localized.model';
 import { ReciterModel } from './reciter.model';

@@ -1,7 +1,7 @@
 import { AppBaseModel } from './base.model';
 
 
-export class FileEntity extends AppBaseModel {
+export class FileModel extends AppBaseModel {
 
     public url!: string;
     public size?: number;

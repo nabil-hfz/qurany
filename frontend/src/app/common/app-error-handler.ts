@@ -15,8 +15,9 @@ export class AppErrorHandler implements ErrorHandler {
             alert('Bad request.');
         }
         else {
-            alert('An unexpected error occurred.');
-            console.log(error);
+            // alert('An unexpected error occurred.');
+            console.error('Error: ' + error.message);
+            console.error('Error: ' + error.stack);
 
         }
 

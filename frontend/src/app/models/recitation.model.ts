@@ -1,5 +1,5 @@
 import { LocalizedModel } from './localized.model';
-import { FileEntity } from './file.model';
+import {   FileModel } from './file.model';
 import { ReciterModel } from './reciter.model';
 import { AppBaseModel } from './base.model';
 
@@ -14,14 +14,14 @@ export const RecitationTypesList = [
 ];
 
 
-export class RecitationEntity extends AppBaseModel {
+export class RecitationModel extends AppBaseModel {
 
   public title!: LocalizedModel;
 
 
-  public image!: FileEntity;
+  public image?: string;
 
-  public audio!: FileEntity;
+  public audio?: string;
 
   public reciter!: ReciterModel;
 

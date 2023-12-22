@@ -83,7 +83,7 @@ export class SpinnerComponent implements OnDestroy {
   ) {
     this.router.events.subscribe(
       (listener : any) => {
-       let event = listener.routerEvent
+       const event = listener.routerEvent
        console.log('listener is ',listener);
        console.log('event is ',event, event instanceof NavigationEnd);
        console.log('1- isSpinnerVisible is ',this.isSpinnerVisible);

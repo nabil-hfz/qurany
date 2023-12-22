@@ -4,7 +4,6 @@ import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReciterModel } from '../../models/reciter.model';
 import { RecitersService } from '../../services/reciters/reciters.service';
-import { getTranslation } from '../../common/app-translation';
 
 @Component({
   selector: 'reciters-grid',
@@ -21,7 +20,7 @@ export class RecitersGridComponent implements OnInit {
   constructor(public service: RecitersService, public router: Router) { }
 
   ngOnInit(): void {
-    let filter = { limit: 100 };
+    const filter = { limit: 100 };
 
     this.service.getRecitersList(filter).subscribe({
       next: (values: any) => {
@@ -40,18 +39,21 @@ export class RecitersGridComponent implements OnInit {
   // then the user would select one of them to get the recitations list.
   // Otherwise we will navigate to the recitations list page.
   onCardPressed(value: ReciterModel) {
-    let words = getTranslation(value.name)?.split(' ');
-    if (value.numberOfKhatmat > 1) {
+    const words = value.name.currentValue?.split(' ');
+    // if (value.numberOfKhatmat > 1)
+    {
       this.router.navigate(['/khatmat-grid', value.id, words?.join('-') || '']);
-    } else if (value.numberOfKhatmat == 1) {
-      this.router.navigate(['khatma-details', value.id, words?.join('-') || ''], {
-        queryParams: {
-          reciterId: value.id,
-        }
-      });
-    } else {
-      alert('This reciter does not have any khatma');
     }
+
+    // else if (value.numberOfKhatmat == 1) {
+    //   this.router.navigate(['/khatma-details', value.id, words?.join('-') || ''], {
+    //     queryParams: {
+    //       reciterId: value.id,
+    //     }
+    //   });
+    // } else {
+    //   alert('This reciter does not have any khatma');
+    // }
   }
 }
 

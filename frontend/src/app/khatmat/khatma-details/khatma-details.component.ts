@@ -9,7 +9,7 @@ import { map } from 'rxjs';
   styleUrl: './khatma-details.component.css'
 })
 export class KhatmaDetailsComponent implements OnInit {
-  reciterId = -1;
+  khatmaId = -1;
 
   constructor(
     private serivce: KhatmaService,
@@ -22,14 +22,26 @@ export class KhatmaDetailsComponent implements OnInit {
 
 
 
-  ngOnInit(): void {
-    const reciterId = this.activaedRoute.snapshot.queryParamMap.get('reciterId');
-    console.log(this.activaedRoute.snapshot.queryParamMap.getAll('reciterId'));
-    if (reciterId && Number(reciterId)) {
-      this.reciterId = Number(reciterId);
-      this.serivce.getAll().pipe(map((value: any) => {
+  ngOnInit() {
+    const khatmaId = this.activaedRoute.snapshot.paramMap.get('khatmaId');
+    console.log('KhatmaDetailsComponent is  khatmaId ', khatmaId);
+    if (khatmaId && Number(khatmaId)) {
+      this.khatmaId = Number(khatmaId);
+      try {
 
-      }));
+        console.log('Calling getKhatma ',this.khatmaId);
+
+        this.serivce.getKhatma(this.khatmaId).pipe(
+          map((response) => {
+            console.log('response format is ', response);
+            return response;
+          }),
+
+          ).subscribe((v) => console.info(v),);
+      } catch (err) {
+        console.error('response err is ', err);
+
+      }
     }
   }
 

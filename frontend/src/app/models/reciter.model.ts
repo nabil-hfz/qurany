@@ -1,4 +1,4 @@
-import { FileEntity } from './file.model';
+import { FileModel } from './file.model';
 import { LocalizedModel } from './localized.model';
 import { RecitationTypes } from './recitation.model';
 import { AppBaseModel } from './base.model';
