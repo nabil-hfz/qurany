@@ -1,6 +1,8 @@
 import initConfig from "./config/index";
 initConfig();
 
+import {options} from "./config/swagger.config";
+
 import { initializeDb } from "./db";
 initializeDb();
 
@@ -14,6 +16,10 @@ import { log } from "./utils/logger";
 import * as bodyParser from "body-parser";
 import * as timeout from "connect-timeout";
 
+import * as swaggerJsdoc from 'swagger-jsdoc';
+import * as swaggerUi from 'swagger-ui-express';
+
+const swaggerSpec = swaggerJsdoc(options);
 
 const app: Express = express();
 app.use(timeout(1000 * 60 * 3))
@@ -29,10 +35,14 @@ app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLim
 interceptors.forEach((interceptor) => {
   app.use(interceptor);
 })
+
 const httpServer = new HttpServer(app);
 CONTROLLERS.forEach((controller) => {
   controller.initialize(httpServer);
 });
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 app.get('/', (req, res) => {
   res.status(200).send('Hellow world!');

@@ -40,8 +40,52 @@ export class KhatmaController implements Controller {
     });
   }
 
+/**
+ * @swagger
+ * paths:
+ *  /khatma:
+ *    post:
+ *      summary: Create a new Khatma
+ *      description: Creates a new Khatma with the given details.
+ *      tags: [Khatma]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              required:
+ *                - reciterId
+ *                - name
+ *                - khatmaType
+ *              properties:
+ *                reciterId:
+ *                  type: number
+ *                  description: ID of the reciter.
+ *                name:
+ *                  type: object
+ *                  description: Localized name of the Khatma.
+ *                  properties:
+ *                    en:
+ *                      type: string
+ *                      description: English name.
+ *                    ar:
+ *                      type: string
+ *                      description: Arabic name.
+ *                khatmaType:
+ *                  type: number
+ *                  description: Type of the Khatma.
+ *      responses:
+ *        '200':
+ *          description: Successfully created new Khatma.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#src/controllers/khatma-controller/responses/khatma-full-res'
+ *        '400':
+ *          description: Bad request.
+ */
   private readonly createNewKhatma: RequestHandler = async (req: any, res, next) => {
-    // logStartRequest(req, 'KhatmaController', 'createNewKhatma')
 
     const reqBody: CreateKhatmaReqBody = Object.assign({}, req.body);
     checkIfIsValidCreateKhatmaReqBody(reqBody);
@@ -50,7 +94,6 @@ export class KhatmaController implements Controller {
     const result = await khatmeRepository.createKhatma(reqBody);
 
 
-    // logEndSuccessRequest(req, 'KhatmaController', 'createNewKhatma')
     res.status(200).send(
       ResponseModel.toResult(new KhatmaFullRes(result))
     );
