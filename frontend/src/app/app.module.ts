@@ -20,7 +20,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatButtonModule } from "@angular/material/button";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 // import { PortfolioDetailsComponent } from './portfolio/portfolio-details/portfolio-details.component';
-import { routes } from './app.routes';
+import { AppRoutingModule } from './app.routes';
 import { AppErrorHandler } from './common/app-error-handler';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
@@ -35,12 +35,15 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
 import { RecitersService } from './services/reciters/reciters.service';
 import { ReciterDetailsComponent } from './rectiers/reciter-details/reciter-details.component';
 import { NgxAudioPlayerModule } from 'ngx-audio-player';
-import { KawtharunaAudioPlayerComponent } from './shared/kawtharuna-audio-player/kawtharuna-audio-player.component';
 import { RecitationsService } from './services/recitations/recitations.service';
 import { RecitationsListComponent } from './recitations/recitations-list/recitations-list.component';
 // import { MatListModule, MatIconModule } from '@angular/material';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import { PlayerComponent } from './shared/player/player.component';
+import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
+import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { TrackControlComponent } from './shared/track-control/track-control.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -65,10 +68,11 @@ import {MatIconModule} from '@angular/material/icon';
     RecitersGridComponent,
     ReciterDetailsComponent,
     RecitationsListComponent,
-
+    RecitationCardComponent,
     // SharedComponent
-    KawtharunaAudioPlayerComponent,
-
+    PlayerComponent,
+    KawtharunaAppBarComponent,
+    TrackControlComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -96,13 +100,15 @@ import {MatIconModule} from '@angular/material/icon';
     MatGridListModule,
     MatProgressBarModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
-    RouterModule.forRoot(routes),
+    // RouterModule.forRoot(routes),
+ 
     MatSidenavModule,
     MatButtonModule,
     FlexLayoutModule,
     HttpClientModule,
     //
-    NgxAudioPlayerModule
+    NgxAudioPlayerModule,
+    AppRoutingModule,
 
   ],
   providers: [

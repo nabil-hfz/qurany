@@ -10,7 +10,7 @@ export class KhatmaModel extends AppBaseModel {
 
   public name!: LocalizedModel;
   public recitationType?: number;
-  public totalDownloads?: number;
-  public totalPlays?: number;
+  public totalDownloads: number = 0;
+  public totalPlays: number = 0;
   public reciter?: ReciterModel;
 }

@@ -6,7 +6,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 @Component({
   selector: 'app-image-selector',
   templateUrl: './image-selector.component.html',
-  styleUrls: ['./image-selector.component.css'],
+  styleUrls: ['./image-selector.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

@@ -1,12 +1,16 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.component';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-export const routes: Routes = [
+const routes: Routes = [
     // Reciter Module
-    { path: '', component: KhatmatGridComponent },
+
+    { path: '', redirectTo: '/khatma', pathMatch: 'full' },
+    { path: 'khatma', component: KhatmatGridComponent },
 
     // { path: 'khatmat', component: KhatmatGridComponent },
     { path: 'reciters', component: RecitersGridComponent },
@@ -17,3 +21,12 @@ export const routes: Routes = [
     { path: '**', component: NotFoundComponent },
 
 ];
+
+
+
+@NgModule({
+    imports: [CommonModule, RouterModule.forRoot(routes, { useHash: true })],
+    exports: [RouterModule],
+    declarations: [],
+})
+export class AppRoutingModule { }

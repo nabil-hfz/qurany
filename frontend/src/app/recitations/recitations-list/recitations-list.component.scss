@@ -1,0 +1,14 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+.content-portfolio {
+    padding: 24px;
+}
+
+.responsive-grid-portfolio {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    padding: 8px 16px;
+
+}

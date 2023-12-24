@@ -1,0 +1,60 @@
+.mat-elevation-z3 {
+    position: fixed;
+    top:0;
+    z-index: 2;
+    background: #fff;
+  }
+  
+  @media (min-width: 768px) {
+    .header-text {
+      display: inline;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header-text {
+      display: hidden;
+    }
+  }
+  
+  .search-container {
+    position: relative;
+    display: block;
+    background-color: #f5f5f5;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .search-icon {
+    color: #616161;
+    position: absolute;
+    top: 17px;
+    left: 24px;
+    font-size: 14px;
+  }
+  
+  .search-input {
+    font-size: 16px;
+    color: #212121;
+    padding: 0 72px;
+    box-sizing: border-box;
+    height: 48px;
+    width: 100%;
+    font-weight: 400;
+    outline: none;
+    background: transparent;
+    border: 1px solid transparent;
+    transition: border 0.1s ease-out;
+  }
+  
+  
+  .search-result {
+    max-height: 400px;
+    overflow: auto;
+    min-width: 400px;
+  }
+  
+  .search-result-item {
+    cursor: pointer;
+    border-bottom: 1px solid #f2f2f2;
+  }

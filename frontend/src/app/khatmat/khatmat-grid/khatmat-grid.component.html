@@ -1,46 +1,36 @@
-<!-- <mat-progress-bar 
-  *ngIf="!(loaded$ | async)" 
-  mode="indeterminate"></mat-progress-bar> -->
+<search-bar></search-bar>
 
-  <mat-toolbar color="primary">
-    Portfolio Grid
 
-    <div class="header-content">
-        <button (click)="navigateToForm()">Add New value</button>
-    </div>
-</mat-toolbar>
-<!-- portfolio-details.component.html -->
-<ng-container *ngIf="isLoading; else content">
-    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+<ng-container *ngIf="loading$ | async; else content">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </ng-container>
 
 
 <ng-template #content>
     <div class="content-portfolio responsive-grid-portfolio">
-        <mat-card *ngFor="let value of values" (click)="onCardPressed(value)">
-            <mat-card-header>
-                <mat-card-title>{{ value?.name?.ar ?? '' }} </mat-card-title>
-            </mat-card-header>
-            <br />
-            <!-- <img src="value.reciter?.image" alt=""> -->
-            <img mat-card-image [src]="value.reciter?.image" />
-            <mat-card-content class="card-content">
-                <br />
-                <!-- <a *ngIf="value.isVisible" [href]="value.customerLink" target="_blank">Customer Link</a> -->
+        <mat-card *ngFor="let item of values$ | async" (click)="onCardPressed(item)">
 
-
-                <!-- <h5 *ngIf="!value.isVisible">Status: Hiden</h5> -->
-
+            <mat-card-content>
+                <img [src]="item.reciter?.image" class="item-image">
             </mat-card-content>
-            <!-- <mat-card-actions>
-            <button mat-button [hidden]="value.isVisible">Hide</button>
-            <button mat-button [hidden]="!value.isVisible">Unhide</button>
-        </mat-card-actions> -->
+
+            <mat-card-header class="album-header">
+
+                <mat-card-title class="item-title">{{item.name.en}}</mat-card-title>
+
+                <mat-card-subtitle class="item-subtitle">By Sheikh: {{item.reciter?.name?.en}}</mat-card-subtitle>
+
+                <mat-card-subtitle class="item-subtitle">
+                    {{item.totalPlays > 0 ? item.totalPlays + ' Times played' : ''}}
+                </mat-card-subtitle>
+
+            </mat-card-header>
+
         </mat-card>
     </div>
 
-    <div class="" *ngIf="!values.length">
-
-        <mat-card-title> No values existed yet try adding one now</mat-card-title>
+    <div class="" *ngIf="(loading$ | async)">
+        <mat-card-title> No items existed yet try adding one now</mat-card-title>
     </div>
+
 </ng-template>

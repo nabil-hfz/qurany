@@ -8,7 +8,7 @@ import { RecitersService } from '../../services/reciters/reciters.service';
 @Component({
   selector: 'reciters-grid',
   templateUrl: './reciters-grid.component.html',
-  styleUrl: './reciters-grid.component.css'
+  styleUrl: './reciters-grid.component.scss'
 })
 export class RecitersGridComponent implements OnInit {
 

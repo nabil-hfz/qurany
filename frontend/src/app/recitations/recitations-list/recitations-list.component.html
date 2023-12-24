@@ -1,41 +1,33 @@
-<!-- <mat-progress-bar 
-  *ngIf="!(loaded$ | async)" 
-  mode="indeterminate"></mat-progress-bar> -->
+<search-bar [withSearch]="false"></search-bar>
 
-<mat-toolbar color="primary">
-    Portfolio Grid
 
-    <div class="header-content">
-        <!-- <button (click)="navigateToForm()">Add New value</button> -->
-    </div>
-</mat-toolbar>
-<!-- portfolio-details.component.html -->
-<ng-container *ngIf="isLoading; else content">
-    <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+<ng-container *ngIf="loaded$ | async; else content">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </ng-container>
 
 
+
 <ng-template #content>
-    <kawtharuna-audio-player [recitations]="recitations"></kawtharuna-audio-player>
+
+    <!-- <div class="row">
+        <div class="col-xs-12">
+            <h5>
+                <a routerLink="../../">{{routeParams.name}} - Albums </a> / Tracks
+            </h5>
+        </div>
+    </div> -->
+
+    <h4 *ngIf="reciterName.length">{{reciterName}} - Khatma</h4>
+    <mat-divider *ngIf="reciterName.length"></mat-divider>
+
     <div class="content-portfolio responsive-grid-portfolio">
-        <mat-card *ngFor="let value of recitations">
-
-
-            <img mat-card-image [src]="value.image" />
-
-            <mat-card-content class="card-content">
-                <mat-card-header>
-                    <mat-card-title>{{ value?.title?.en ?? '' }} </mat-card-title>
-                </mat-card-header>
-           
-            </mat-card-content>
-        
-        </mat-card>
+        <recitation-card *ngFor="let item of recitations" [recitation]="item"></recitation-card>
     </div>
 
     <div class="" *ngIf="!recitations.length">
 
         <mat-card-title> No items existed yet try adding one now</mat-card-title>
-    </div>
-</ng-template>
 
+    </div>
+
+</ng-template>
