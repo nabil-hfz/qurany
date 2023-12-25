@@ -1,0 +1,12 @@
+export 'firebase_error/base_error.dart';
+export 'firebase_error/custom_error.dart';
+export 'firebase_error/duplicated_credintcial.dart';
+export 'firebase_error/email_already_in_use_error.dart';
+export 'firebase_error/not_found_error.dart';
+export 'firebase_error/not_valid_email_error.dart';
+export 'firebase_error/operation_not_allawed_error.dart';
+export 'firebase_error/too_many_requests_error.dart';
+export 'firebase_error/unexpected_error.dart';
+export 'firebase_error/user_disabled_error.dart';
+export 'firebase_error/user_not_found_error.dart';
+export 'firebase_error/wrong_password_error.dart';
