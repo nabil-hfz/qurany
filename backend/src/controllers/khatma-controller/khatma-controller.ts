@@ -81,7 +81,6 @@ export class KhatmaController implements Controller {
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#src/controllers/khatma-controller/responses/khatma-full-res'
  *        '400':
  *          description: Bad request.
  */

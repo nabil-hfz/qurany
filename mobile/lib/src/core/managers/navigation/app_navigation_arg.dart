@@ -7,12 +7,14 @@ class BaseNavigationArg {
 
 enum NavigationType {
   /// this just applied to two pages
-  slid,
-  slideHorizontal,
+  slideHorizontalLeft,
+  slideHorizontalRight,
   slideVertical,
   scale,
   fade,
 
   /// this just applied to the new screen
   fadeScale,
+  fadeThrough,
+  sharedAxisTransition,
 }

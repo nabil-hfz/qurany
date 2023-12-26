@@ -1,7 +1,7 @@
 import initConfig from "./config/index";
 initConfig();
 
-import {options} from "./config/swagger.config";
+import { options } from "./config/swagger.config";
 
 import { initializeDb } from "./db";
 initializeDb();
@@ -18,19 +18,22 @@ import * as timeout from "connect-timeout";
 
 import * as swaggerJsdoc from 'swagger-jsdoc';
 import * as swaggerUi from 'swagger-ui-express';
+import { logRequests } from "./middlewares/logging.middleware";
 
 const swaggerSpec = swaggerJsdoc(options);
 
 const app: Express = express();
+app.use(logRequests);
+
 app.use(timeout(1000 * 60 * 3))
 
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
 // app.use(bodyParser.text({ limit: '1024mb' }))
 // app.use(bodyParser.raw({ limit: '1024mb' }))
-const maxFileSize = 1024 * 1024 * 1024 * 5 ;
+const maxFileSize = 1024 * 1024 * 1024 * 5;
 app.use(bodyParser.json({ limit: maxFileSize }))
-app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLimit:maxFileSize }))
+app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLimit: maxFileSize }))
 
 interceptors.forEach((interceptor) => {
   app.use(interceptor);
@@ -41,7 +44,14 @@ CONTROLLERS.forEach((controller) => {
   controller.initialize(httpServer);
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+app._router.use('/api-docs', swaggerUi.serve);
+app._router.get('/api-docs', swaggerUi.setup(swaggerSpec));
+// app.router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// const swaggerSpec = swaggerJSDoc(options);
+
+app.use('/api-docs2', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
 app.get('/', (req, res) => {

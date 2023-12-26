@@ -55,12 +55,11 @@ export class RecitationController implements Controller {
 
       checkIfIsValidCreateRecitationReqBody(reqBody);
 
-      const reciterIndex = reqBody.reciterIndex
-      const currentFilesPath = AppImagesKhatmeConst[reciterIndex];
-
-      if (!currentFilesPath) {
-        throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterIndex"');
-      }
+      // const reciterIndex = reqBody.reciterIndex
+      // const currentFilesPath = AppImagesKhatmeConst[reciterIndex];
+      // if (!currentFilesPath) {
+      //   throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterIndex"');
+      // }
 
       const audios = req.files['audios'] as Express.Multer.File[];
       if (!audios || !audios.length) {

@@ -27,7 +27,6 @@ export class RecitationRepository extends Repository<RecitationEntity> {
   ): Promise<any> {
 
     const khatmaId = Number(request.khatmaId);
-    const reciterIndex = request.reciterIndex
 
     const khatma = await this.khatmeRepository.getOneById(khatmaId);
 
@@ -42,6 +41,7 @@ export class RecitationRepository extends Repository<RecitationEntity> {
     }
 
 
+    const reciterIndex = reciter.reciterIndex;
 
     const audiosPath = AppAudiosConst[reciterIndex] + `/${khatma.recitationType}`;
     const imagesPath = AppImagesKhatmeConst[reciterIndex] + `/${khatma.recitationType}`;

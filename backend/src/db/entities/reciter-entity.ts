@@ -22,6 +22,9 @@ export class ReciterEntity extends AppBaseEntity {
   @Column("int", { array: true, default: [RecitationTypes.Hafs] })
   recitationTypes!: number[];
 
+  @Column({ nullable: false })
+  reciterIndex!: number;
+
   @Column({ default: 0 })
   totalPlays: number = 0;
 

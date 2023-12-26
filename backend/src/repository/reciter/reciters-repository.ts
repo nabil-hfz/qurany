@@ -30,6 +30,7 @@ export class RecitersRepository extends Repository<ReciterEntity> {
 
     data.name = request.name;
     data.bio = request.bio;
+    data.reciterIndex = request.reciterIndex;
     data.image = imgResult;
     data.numberOfKhatmat = request.numberOfKhatmat;
     data.recitationTypes = request.recitationTypes ?? [RecitationTypes.Hafs];
