@@ -2549,6 +2549,36 @@ class Translations {
       args: [],
     );
   }
+
+  /// `Khatmat`
+  String get khatmat {
+    return Intl.message(
+      'Khatmat',
+      name: 'khatmat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Khatma`
+  String get khatma {
+    return Intl.message(
+      'Khatma',
+      name: 'khatma',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By sheikh: {sheikh_name}`
+  String by_sheikh(Object sheikh_name) {
+    return Intl.message(
+      'By sheikh: $sheikh_name',
+      name: 'by_sheikh',
+      desc: '',
+      args: [sheikh_name],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Translations> {

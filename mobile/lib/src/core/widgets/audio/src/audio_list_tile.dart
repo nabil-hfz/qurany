@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
+import 'package:kawtharuna/src/core/entity/localization/localized_entity.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:kawtharuna/src/modules/reciter/domain/entity/reciter_entity.dart';
+import 'package:provider/provider.dart';
 
-typedef OnTap = void Function(AudioObject audioObject);
+// typedef OnTap = void Function(AudioObject audioObject);
 
 class AudioObject {
-  final String title, subtitle, img;
+  final String? image;
+  final String title, subtitle;
+  final LocalizedEntity? name, bio;
 
-  const AudioObject(this.title, this.subtitle, this.img);
+  const AudioObject(
+    this.title,
+    this.subtitle,
+    this.image, [
+    this.name,
+    this.bio,
+  ]);
 
   @override
   String toString() {
-    return 'title is $title, subtitle is $subtitle, img is $img';
+    return 'title is $title, subtitle is $subtitle, image is $image';
   }
 }
 

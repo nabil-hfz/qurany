@@ -2,7 +2,7 @@ class AppStrings {
   AppStrings._();
 
   //General
-  static const appName = 'Qurany';
+  static const appName = 'Kawtharuna';
   static const String langAr = "ar";
   static const String english = "English";
   static const String arabic = "العربية";

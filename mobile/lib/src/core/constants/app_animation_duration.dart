@@ -19,7 +19,7 @@ class AppDuration {
   static const int indicatorDuration = 2000;
 
   /// seconds
-  static const splashScreenDuration = 4;
+  static const splashScreenDuration = 2;
 }
 
 class AppMinLength {

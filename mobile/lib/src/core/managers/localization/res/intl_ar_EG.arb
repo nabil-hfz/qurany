@@ -246,5 +246,11 @@
   "library": "المكتبة",
   "islamic_library": "المكتبة الاسلامية",
 
-  "reciter": "القارء"
+  "reciter": "القارئ",
+  "khatmat": "ختمات",
+
+  "khatma": "ختمة",
+  "by_sheikh": "للقارئ الشيخ: {sheikh_name}"
+
+
 }

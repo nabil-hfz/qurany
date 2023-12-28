@@ -20,10 +20,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(minLength) =>
+  static String m0(sheikh_name) => "By sheikh: ${sheikh_name}";
+
+  static String m1(minLength) =>
       "This field should minimum length of ${minLength} characters";
 
-  static String m1(min, max) =>
+  static String m2(min, max) =>
       "This value should should be in range of (${min},${max})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -63,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "brief": MessageLookupByLibrary.simpleMessage("Brief"),
         "busy": MessageLookupByLibrary.simpleMessage("Busy"),
         "by": MessageLookupByLibrary.simpleMessage("By"),
+        "by_sheikh": m0,
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "catalog": MessageLookupByLibrary.simpleMessage("Catalog"),
@@ -204,6 +207,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "islamic_library":
             MessageLookupByLibrary.simpleMessage("Islamic Library"),
         "k": MessageLookupByLibrary.simpleMessage("K"),
+        "khatma": MessageLookupByLibrary.simpleMessage("Khatma"),
+        "khatmat": MessageLookupByLibrary.simpleMessage("Khatmat"),
         "kids": MessageLookupByLibrary.simpleMessage("Kids"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "languages": MessageLookupByLibrary.simpleMessage("Languages"),
@@ -376,8 +381,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Invalid email!"),
         "validator_it_does_not_match":
             MessageLookupByLibrary.simpleMessage("It does not match"),
-        "validator_should_be_with_minimum_length_of_characters": m0,
-        "validator_should_be_with_range_of": m1,
+        "validator_should_be_with_minimum_length_of_characters": m1,
+        "validator_should_be_with_range_of": m2,
         "validator_this_field_is_required":
             MessageLookupByLibrary.simpleMessage("This field is required"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),

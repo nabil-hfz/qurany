@@ -8,6 +8,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:kawtharuna/src/core/constants/app_enums.dart';
+import 'package:kawtharuna/src/core/entity/localization/localized_entity.dart';
 
 import '../constants/constants.dart';
 
@@ -98,6 +99,26 @@ class AppUtils {
       return androidStr!;
     }
     return "";
+  }
+
+  static dynamic languagePlatform(
+    material.BuildContext context, {
+    dynamic arabic,
+    dynamic english,
+  }) {
+    // if ((defaultTargetPlatform == TargetPlatform.iOS))
+    return english;
+    // return arabic;
+  }
+
+  static String localizedPlatform(
+    material.BuildContext context,
+    LocalizedEntity? localized,
+  ) {
+    if (material.Directionality.of(context) == material.TextDirection.ltr) {
+      return localized?.en ?? '';
+    }
+    return localized?.ar ?? '';
   }
 
   static void funDependOnPlatform({

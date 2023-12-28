@@ -9,9 +9,11 @@ import 'package:kawtharuna/main.dart';
 import 'package:kawtharuna/src/core/managers/navigation/app_navigation_arg.dart';
 import 'package:kawtharuna/src/core/managers/navigation/nav_routes.dart';
 import 'package:kawtharuna/src/core/utils/utl_device.dart';
-import 'package:kawtharuna/src/modules/main_menu/screens/main_menu_screen.dart';
-import 'package:kawtharuna/src/modules/main_menu/screens/not_found_page.dart';
-import 'package:kawtharuna/src/modules/spalsh/ui/pages/splash_page.dart';
+import 'package:kawtharuna/src/core/widgets/error/not_found_screen.dart';
+import 'package:kawtharuna/src/modules/khatmat/domain/entity/khatma_entity.dart';
+import 'package:kawtharuna/src/modules/khatmat/ui/screens/khatma_details_screen.dart';
+import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
+import 'package:kawtharuna/src/modules/spalsh/ui/pages/splash_screen.dart';
 
 @Singleton()
 class AppNavigator {
@@ -82,46 +84,6 @@ class AppNavigator {
     return router.canPop();
     // return _navigatorKey.currentState!.canPop();
   }
-
-// offAll<T>(String routeName, {dynamic arguments, T? result}) {
-//   DeviceUtils.hideKeyboard(_navigatorKey.currentContext!);
-//   _navigatorKey.currentState!.pushNamedAndRemoveUntil<T>(
-//     routeName,
-//     (route) => false,
-//   );
-// }
-
-// void pushNamedIfNotCurrent(
-//   String routeName, {
-//   Object? arguments,
-// }) {
-//   if (!isCurrent(routeName)) {
-//     pushNamed(routeName, arguments: arguments);
-//   }
-// }
-
-// void pushReplacementNamedIfNotCurrent(
-//   String routeName, {
-//   Object? arguments,
-// }) {
-//   if (!isCurrent(routeName)) {
-//     pushReplacementNamed(
-//       routeName,
-//       arguments: arguments,
-//     );
-//   }
-// }
-
-// bool isCurrent(String routeName) {
-//   bool isCurrent = false;
-//   _navigatorKey.currentState!.popUntil((route) {
-//     if (route.settings.name == routeName) {
-//       isCurrent = true;
-//     }
-//     return true;
-//   });
-//   return isCurrent;
-// }
 }
 
 abstract class AppRouter {
@@ -204,87 +166,34 @@ abstract class AppRouter {
         path: Routes.splash,
         name: Routes.splash,
         pageBuilder: (context, state) {
-          const child = SplashPage();
+          const child = SplashScreen();
           return pageBuilder(context, state, child);
         },
       ),
-      GoRoute(
-        name: Routes.mainRootPage,
-        path: Routes.mainRootPage,
-        redirect: (context, state) => Routes.homePage,
-      ),
 
-      /// Main management.
       GoRoute(
-        name: Routes.homePage,
-        path: Routes.homePage,
+        name: Routes.homeScreen,
+        path: Routes.homeScreen,
         pageBuilder: (context, state) {
-          const child = MainMenuScreen(key: Key('main menu'));
+          const child = MainMenuScreen();
           return pageBuilder(context, state, child, key: _scaffoldKey);
         },
       ),
       GoRoute(
-        name: Routes.cataloguePage,
-        path: Routes.cataloguePage,
-        redirect: (_, __) => Routes.catalogueServicesPage,
+        name: Routes.khatmaDetailsScreen,
+        path: Routes.khatmaDetailsScreen,
+        pageBuilder: (context, state) {
+          var navArgs = state.extra as BaseNavigationArg;
+          var args = navArgs.data as KhatmaEntity;
+
+          final child = KhatmaDetailsScreen(args: args);
+          return pageBuilder(context, state, child);
+        },
       ),
       // GoRoute(
-      //   name: Routes.catalogueKindPage,
-      //   path: Routes.catalogueKindPage,
-      //   pageBuilder: (context, state) {
-      //     var kind = state.pathParameters['kind']!;
-      //     final child = MainRootPage(
-      //       currentTab: CurrentTab.catalog,
-      //       child: CataloguePage(kind),
-      //     );
-      //     return pageBuilder(context, state, child, key: _scaffoldKey);
-      //   },
-      //   routes: <GoRoute>[
-      //     GoRoute(
-      //       path: ':packageId',
-      //       builder: (context, state) {
-      //         var navArgs = state.extra as BaseNavigationArg;
-      //         var args = navArgs.data as PackageDetailsArgs;
-      //
-      //         return PackageDetails(args: args);
-      //       },
-      //     ),
-      //   ],
-      // ),
-      // GoRoute(
-      //   name: Routes.clientsPage,
-      //   path: Routes.clientsPage,
-      //   pageBuilder: (BuildContext context, GoRouterState state) {
-      //     final child = MainRootPage(
-      //       currentTab: CurrentTab.booking,
-      //       child: Text(Translations.of(context).clients),
-      //     );
-      //     return pageBuilder(context, state, child, _scaffoldKey);
-      //   },
-      // ),
-
-      // GoRoute(
-      //   name: Routes.bookingDetailsPage,
-      //   path: Routes.bookingDetailsPage,
-      //   pageBuilder: (BuildContext context, GoRouterState state) {
-      //     var navArgs = state.extra as BaseNavigationArg;
-      //     var args = navArgs.data as BookingDetailsArgs;
-      //
-      //     final child = BookingDetails(args: args);
-      //     return pageBuilder(context, state, child);
-      //   },
-      // ),
-
-      // GoRoute(
-      //   name: Routes.addBookingPage,
-      //   path: Routes.addBookingPage,
-      //   pageBuilder: (BuildContext context, GoRouterState state) {
-      //     var navArgs = state.extra as BaseNavigationArg;
-      //     var args = navArgs.data as AddBookingArgs;
-      //
-      //     final child = AddBookingPage(args: args);
-      //     return pageBuilder(context, state, child);
-      //   },
+      //   name: Routes.catalogueScreen,
+      //   path: Routes.catalogueScreen,
+      //   redirect: (_, __) => Routes.catalogueServicesScreen,
       // ),
     ],
 
@@ -296,24 +205,7 @@ abstract class AppRouter {
   );
 
   static Widget errorWidget(BuildContext context, GoRouterState state) =>
-      const NotFoundPage();
-
-  // static String? _guard(BuildContext context, GoRouterState state) {
-  //   final bool signedIn = false; //_auth.signedIn;
-  //   final bool signingIn = state.matchedLocation == '/signin';
-  //
-  //   // Go to /signin if the user is not signed in
-  //   if (!signedIn && !signingIn) {
-  //     return '/signin';
-  //   }
-  //   // Go to /books if the user is signed in and tries to go to /signin.
-  //   else if (signedIn && signingIn) {
-  //     return '/books';
-  //   }
-  //
-  //   // no redirect
-  //   return null;
-  // }
+      const NotFoundScreen();
 
   static Page pageBuilder(
     BuildContext context,
@@ -367,46 +259,6 @@ abstract class AppRouter {
       child: child,
     );
   }
-//
-// // all the route paths. So that we can access them easily  across the app
-//   static const root = '/';
-// // static const singleArticle = '/article';
-//
-//   static mainPage([CurrentTab? type]) => '/${type?.name ?? ':type'}';
-// // static const singleArticleWithParams = '/article/:id';
-//   /// get route name with parameters, here [id] is optional because we need [:id] to define path on [_singleArticleWithParams]
-//   static singleArticleWithParams([String? id]) => '/article/${id ?? ':id'}';
-//
-//   /// private static methods that are accessible only in this class and not from outside
-//   static Widget _mainPageRouteBuilder(
-//           BuildContext context, GoRouterState state) =>
-//       MainRootPage(
-//           currentTab: state.params['type']! == CurrentTab.blogs.name
-//               ? CurrentTab.blogs
-//               : CurrentTab.favorite);
-//
-//   static Widget _singleBlog(BuildContext context, GoRouterState state) =>
-//       SingleArticle(blog: state.extra as Blog);
-//   static Widget _singleArticleWithParams(
-//           BuildContext context, GoRouterState state) =>
-//       SingleArticleWithParams(id: state.params["id"]!);
-//
-//   static Widget errorWidget(BuildContext context, GoRouterState state) =>
-//       const NotFoundPage();
-//
-//   /// use this in [MaterialApp.router]
-//   static final GoRouter _router = GoRouter(
-//     routes: <GoRoute>[
-//       GoRoute(
-//           path: root,
-//           redirect: (context, state) => mainPage(CurrentTab.calendar)),
-//       GoRoute(path: mainPage(), builder: _mainPageRouteBuilder),
-//       // GoRoute(path: singleArticle, builder: _singleBlog),
-//       GoRoute(
-//           path: singleArticleWithParams(), builder: _singleArticleWithParams)
-//     ],
-//     errorBuilder: errorWidget,
-//   );
 }
 
 class FadeTransitionPage extends CustomTransitionPage<void> {

@@ -20,7 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar_EG';
 
-  static String m0(minLength) =>
+  static String m0(sheikh_name) => "للقارئ الشيخ: ${sheikh_name}";
+
+  static String m1(minLength) =>
       "يجب ألا يقل طول هذا الحقل عن ${minLength} حرفًا";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -59,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "brief": MessageLookupByLibrary.simpleMessage("موجز"),
         "busy": MessageLookupByLibrary.simpleMessage("مشغول"),
         "by": MessageLookupByLibrary.simpleMessage("من قبل"),
+        "by_sheikh": m0,
         "calendar": MessageLookupByLibrary.simpleMessage("التقويم"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلفاء"),
         "catalog": MessageLookupByLibrary.simpleMessage("قائمة"),
@@ -197,6 +200,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "islamic_library":
             MessageLookupByLibrary.simpleMessage("المكتبة الاسلامية"),
         "k": MessageLookupByLibrary.simpleMessage("K"),
+        "khatma": MessageLookupByLibrary.simpleMessage("ختمة"),
+        "khatmat": MessageLookupByLibrary.simpleMessage("ختمات"),
         "kids": MessageLookupByLibrary.simpleMessage("أطفال"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "languages": MessageLookupByLibrary.simpleMessage("اللغات"),
@@ -249,7 +254,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ratings": MessageLookupByLibrary.simpleMessage("التقييمات"),
         "read_less": MessageLookupByLibrary.simpleMessage("أقرأ أقل"),
         "read_more": MessageLookupByLibrary.simpleMessage("قراءة المزيد"),
-        "reciter": MessageLookupByLibrary.simpleMessage("القارء"),
+        "reciter": MessageLookupByLibrary.simpleMessage("القارئ"),
         "reciters": MessageLookupByLibrary.simpleMessage("القرًاء"),
         "remember_me": MessageLookupByLibrary.simpleMessage("تذكر هذا الخيار"),
         "resend": MessageLookupByLibrary.simpleMessage("إعادة إرسال"),
@@ -361,7 +366,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("بريد إلكتروني غير صحيح!"),
         "validator_it_does_not_match":
             MessageLookupByLibrary.simpleMessage("غير متطابق"),
-        "validator_should_be_with_minimum_length_of_characters": m0,
+        "validator_should_be_with_minimum_length_of_characters": m1,
         "validator_this_field_is_required":
             MessageLookupByLibrary.simpleMessage("هذه الحقل مطلوب"),
         "verify": MessageLookupByLibrary.simpleMessage("تحقق"),

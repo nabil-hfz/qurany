@@ -259,6 +259,9 @@
   "quran": "Quran",
   "library": "Library",
   "islamic_library": "Islamic Library",
-  "reciter": "Reciter"
+  "reciter": "Reciter",
+  "khatmat": "Khatmat",
+  "khatma": "Khatma",
+  "by_sheikh": "By sheikh: {sheikh_name}"
 
 }

@@ -8,7 +8,8 @@ part of 'khatma_model.dart';
 
 KhatmatListModel _$KhatmatListModelFromJson(Map json) => KhatmatListModel(
       items: (json['items'] as List<dynamic>?)
-          ?.map((e) => KhatmaModel.fromJson(e as Map))
+          ?.map(
+              (e) => KhatmaModel.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
     );
 
@@ -18,24 +19,20 @@ Map<String, dynamic> _$KhatmatListModelToJson(KhatmatListModel instance) =>
     };
 
 KhatmaModel _$KhatmaModelFromJson(Map json) => KhatmaModel(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       name: json['name'] == null
           ? null
           : LocalizedModel.fromJson(
               Map<String, dynamic>.from(json['name'] as Map)),
-      image: json['image'] as String?,
-      numberOfKhatmat: json['numberOfKhatmat'] as int?,
-      bio: json['bio'] == null
+      reciter: json['reciter'] == null
           ? null
-          : LocalizedModel.fromJson(
-              Map<String, dynamic>.from(json['bio'] as Map)),
+          : ReciterModel.fromJson(
+              Map<String, dynamic>.from(json['reciter'] as Map)),
     );
 
 Map<String, dynamic> _$KhatmaModelToJson(KhatmaModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'image': instance.image,
-      'numberOfKhatmat': instance.numberOfKhatmat,
-      'bio': instance.bio,
+      'reciter': instance.reciter,
     };

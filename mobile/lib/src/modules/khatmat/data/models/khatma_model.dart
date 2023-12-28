@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:kawtharuna/src/core/models/base/base_model.dart';
 import 'package:kawtharuna/src/core/models/localization/localized_model.dart';
 import 'package:kawtharuna/src/modules/khatmat/domain/entity/khatma_entity.dart';
+import 'package:kawtharuna/src/modules/reciter/data/models/reciter_model.dart';
 
 part 'khatma_model.g.dart';
 
@@ -28,36 +29,48 @@ class KhatmatListModel extends BaseModel {
 
 @JsonSerializable(anyMap: true)
 class KhatmaModel extends BaseModel<KhatmaEntity> {
-  final int id;
+  final int? id;
   final LocalizedModel? name;
-  final String? image;
-  final int? numberOfKhatmat;
-  final LocalizedModel? bio;
+  final ReciterModel? reciter;
 
   KhatmaModel({
-    required this.id,
+    this.id,
     this.name,
-    this.image,
-    this.numberOfKhatmat,
-    this.bio,
+    this.reciter,
   });
 
-  factory KhatmaModel.fromSnapShot(Map<String, dynamic>? json, String id) {
-    return _$KhatmaModelFromJson(json!);
-  }
-
-  factory KhatmaModel.fromJson(Map json) => _$KhatmaModelFromJson(json);
+  factory KhatmaModel.fromJson(Map<String, dynamic> json) =>
+      _$KhatmaModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$KhatmaModelToJson(this);
 
   @override
   KhatmaEntity toEntity() {
     return KhatmaEntity(
-      id: id,
+      id: id ?? -1,
       name: name?.toEntity(),
-      image: image,
-      numberOfKhatmat: numberOfKhatmat ?? 0,
-      bio: bio?.toEntity(),
+      reciter: reciter?.toEntity(),
     );
   }
 }
+//
+// @JsonSerializable(anyMap: true)
+// class Reciter {
+//   @JsonKey(name: "name")
+//   final Name? name;
+//   @JsonKey(name: "id")
+//   final int? id;
+//   @JsonKey(name: "image")
+//   final String? image;
+//
+//   Reciter({
+//     this.name,
+//     this.id,
+//     this.image,
+//   });
+//
+//   factory Reciter.fromJson(Map<String, dynamic> json) =>
+//       _$ReciterFromJson(json);
+//
+//   Map<String, dynamic> toJson() => _$ReciterToJson(this);
+// }

@@ -5,7 +5,7 @@ import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 import 'package:kawtharuna/src/core/utils/utl_device.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
-import 'package:kawtharuna/src/modules/main_menu/screens/main_menu_screen.dart';
+import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
 import 'package:provider/provider.dart';
 
 class LibraryScreen extends StatelessWidget {
@@ -36,7 +36,7 @@ class LibraryScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              'Coming soon',
+              'No files yet, will be added soon.',
               style: appTextStyle.medium18.copyWith(
                 color: themeStore.appColors.textColor,
               ),

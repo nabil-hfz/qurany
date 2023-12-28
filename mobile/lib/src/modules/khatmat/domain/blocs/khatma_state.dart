@@ -1,77 +1,77 @@
 part of 'khatma_cubit.dart';
 
-class ReciterState {
-  const ReciterState({
-    required this.getReciters,
-    required this.getReciter,
-    required this.createReciter,
-    required this.updateReciter,
-    required this.deleteReciter,
+class KhatmaState {
+  const KhatmaState({
+    required this.getKhatmat,
+    required this.getKhatma,
+    required this.createKhatma,
+    required this.updateKhatma,
+    required this.deleteKhatma,
   });
 
-  final BaseState getReciters;
-  final BaseState getReciter;
-  final BaseState createReciter;
-  final BaseState updateReciter;
-  final BaseState deleteReciter;
+  final BaseState getKhatmat;
+  final BaseState getKhatma;
+  final BaseState createKhatma;
+  final BaseState updateKhatma;
+  final BaseState deleteKhatma;
 
-  factory ReciterState.initialState() => const ReciterState(
-        getReciters: BaseInitState(),
-        getReciter: BaseInitState(),
-        createReciter: BaseInitState(),
-        updateReciter: BaseInitState(),
-        deleteReciter: BaseInitState(),
+  factory KhatmaState.initialState() => const KhatmaState(
+        getKhatmat: BaseInitState(),
+        getKhatma: BaseInitState(),
+        createKhatma: BaseInitState(),
+        updateKhatma: BaseInitState(),
+        deleteKhatma: BaseInitState(),
       );
 
-  ReciterState copyWith({
-    BaseState? getReciters,
-    BaseState? getReciter,
-    BaseState? createReciter,
-    BaseState? updateReciter,
-    BaseState? deleteReciter,
+  KhatmaState copyWith({
+    BaseState? getKhatmat,
+    BaseState? getKhatma,
+    BaseState? createKhatma,
+    BaseState? updateKhatma,
+    BaseState? deleteKhatma,
   }) {
-    return ReciterState(
-      getReciters: getReciters ?? this.getReciters,
-      getReciter: getReciter ?? this.getReciter,
-      createReciter: createReciter ?? this.createReciter,
-      updateReciter: updateReciter ?? this.updateReciter,
-      deleteReciter: deleteReciter ?? this.deleteReciter,
+    return KhatmaState(
+      getKhatmat: getKhatmat ?? this.getKhatmat,
+      getKhatma: getKhatma ?? this.getKhatma,
+      createKhatma: createKhatma ?? this.createKhatma,
+      updateKhatma: updateKhatma ?? this.updateKhatma,
+      deleteKhatma: deleteKhatma ?? this.deleteKhatma,
     );
   }
 
   @override
   String toString() {
-    return '$ReciterState('
-        'getReciters: $getReciters, '
-        'getReciter: $getReciter'
-        'createReciter: $createReciter'
-        'createReciter: $createReciter'
-        'updateReciter: $updateReciter'
-        'deleteReciter: $deleteReciter'
+    return '$KhatmaState('
+        'getKhatmat: $getKhatmat, '
+        'getKhatma: $getKhatma'
+        'createKhatma: $createKhatma'
+        'createKhatma: $createKhatma'
+        'updateKhatma: $updateKhatma'
+        'deleteKhatma: $deleteKhatma'
         ')';
   }
 }
 
-class RecitersSuccess extends BaseSuccessState {
-  final List<ReciterEntity> reciters;
+class KhatmatSuccess extends BaseSuccessState {
+  final List<KhatmaEntity> khatmat;
 
-  const RecitersSuccess({required this.reciters});
-
-  @override
-  List<Object> get props => [reciters];
+  const KhatmatSuccess({required this.khatmat});
 
   @override
-  String toString() => 'RecitersSuccess(reciters: $reciters)';
+  List<Object> get props => [khatmat];
+
+  @override
+  String toString() => '$KhatmatSuccess(khatmat: $khatmat)';
 }
 
-class ReciterSuccess extends BaseSuccessState {
-  final ReciterEntity reciter;
+class KhatmaSuccess extends BaseSuccessState {
+  final KhatmaEntity khatma;
 
-  const ReciterSuccess({required this.reciter});
-
-  @override
-  List<Object> get props => [reciter];
+  const KhatmaSuccess({required this.khatma});
 
   @override
-  String toString() => 'ReciterSuccess(reciter: $reciter)';
+  List<Object> get props => [khatma];
+
+  @override
+  String toString() => '$KhatmaSuccess(khatma: $khatma)';
 }

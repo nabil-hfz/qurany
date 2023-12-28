@@ -235,10 +235,6 @@ class $AssetsImagesGen {
   SvgGenImage get imgPlaceHolder =>
       const SvgGenImage('assets/images/img_place_holder.svg');
 
-  /// File path: assets/images/img_upload_image.svg
-  SvgGenImage get imgUploadImage =>
-      const SvgGenImage('assets/images/img_upload_image.svg');
-
   /// File path: assets/images/man.svg
   SvgGenImage get man => const SvgGenImage('assets/images/man.svg');
 
@@ -261,7 +257,6 @@ class $AssetsImagesGen {
         forDeleteLocation,
         imgLogo,
         imgPlaceHolder,
-        imgUploadImage,
         man,
         mapMarker,
         resultNotFound,

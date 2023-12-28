@@ -12,7 +12,7 @@ class AppBoxShadow {
     spreadRadius: 0,
   );
   static BoxShadow packageShadow = BoxShadow(
-    color: const Color(0xff0BA0D0).withOpacity(0.2),
+    color: const Color(0xff06668E).withOpacity(0.2),
     offset: const Offset(0, 2),
     blurRadius: 12,
     spreadRadius: 0,

@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
                 builder: (context, appTheme, _) {
                   return MaterialApp.router(
                     title: envVariables.appName,
-                    debugShowCheckedModeBanner: kDebugMode,
+                    debugShowCheckedModeBanner: false,
                     theme: appTheme.isDarkMode
                         ? appTheme.getDarkTheme
                         : appTheme.getLightTheme,

@@ -12,7 +12,7 @@ final ValueNotifier<double> playerExpandProgress =
     ValueNotifier(playerMinHeight);
 
 final MiniplayerController controller = MiniplayerController();
-ValueNotifier<ReciterEntity?> currentlyPlaying = ValueNotifier(null);
+ValueNotifier<AudioObject?> currentlyPlaying = ValueNotifier(null);
 
 const double playerMinHeight = 70;
 const double playerMaxHeight = 670;
@@ -35,7 +35,7 @@ class DetailedPlayer extends StatelessWidget {
     );
   }
 
-  Widget buildPlayer(BuildContext context, ReciterEntity reciter) {
+  Widget buildPlayer(BuildContext context, AudioObject reciter) {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(
       context,
       listen: true,
@@ -53,7 +53,7 @@ class DetailedPlayer extends StatelessWidget {
         final double width = MediaQuery.of(context).size.width;
         final maxImgSize = width * 0.4;
 
-        final img = AppImageWidget(path: reciter.image);
+        final img = AppImageWidget(path: reciter?.image);
         final text = Text(reciter.name?.en ?? '');
         const buttonPlay = IconButton(
           icon: Icon(Icons.pause),

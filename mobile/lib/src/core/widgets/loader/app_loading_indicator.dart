@@ -31,7 +31,7 @@ class AppLoader extends StatelessWidget {
     if (this.size == AppLoaderSize.tiny) size = 24;
     if (this.size == AppLoaderSize.microscopic) size = 18;
     return Center(
-      child: SpinKitFadingFour(
+      child: SpinKitCubeGrid(
         size: size,
         color: iconColor ?? themeStore.appColors.loaderColor,
       ),

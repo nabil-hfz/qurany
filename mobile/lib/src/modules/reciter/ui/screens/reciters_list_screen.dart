@@ -14,7 +14,7 @@ import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
-import 'package:kawtharuna/src/modules/main_menu/screens/main_menu_screen.dart';
+import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
 import 'package:kawtharuna/src/modules/reciter/domain/blocs/reciter_cubit.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +93,7 @@ class _RecitersListScreenState extends State<RecitersListScreen> {
                     AudioListTile(
                       reciter: reciter,
                       onTap: () {
-                        currentlyPlaying.value = reciter;
+                        // currentlyPlaying.value = reciter;
                       },
                     ),
                 ],
