@@ -22,7 +22,17 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(sheikh_name) => "للقارئ الشيخ: ${sheikh_name}";
 
-  static String m1(minLength) =>
+  static String m1(int count) =>
+      "${Intl.plural(count, zero: '', one: '1 ساعة', other: '${count} ساعات')}";
+
+  static String m2(count) => "${count} س";
+
+  static String m3(int count) =>
+      "${Intl.plural(count, zero: '', one: '1 دقيقة', other: '${count} دقائق')}";
+
+  static String m4(count) => "${count} د";
+
+  static String m5(minLength) =>
       "يجب ألا يقل طول هذا الحقل عن ${minLength} حرفًا";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -196,11 +206,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "here": MessageLookupByLibrary.simpleMessage(
             "here ============================"),
         "home": MessageLookupByLibrary.simpleMessage("رئيسي"),
+        "hours_count": m1,
+        "hours_count_short": m2,
         "instagram": MessageLookupByLibrary.simpleMessage("انستغرام"),
         "islamic_library":
             MessageLookupByLibrary.simpleMessage("المكتبة الاسلامية"),
         "k": MessageLookupByLibrary.simpleMessage("K"),
         "khatma": MessageLookupByLibrary.simpleMessage("ختمة"),
+        "khatma_details": MessageLookupByLibrary.simpleMessage("تفاصيل الختمة"),
         "khatmat": MessageLookupByLibrary.simpleMessage("ختمات"),
         "kids": MessageLookupByLibrary.simpleMessage("أطفال"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
@@ -218,6 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نوع العمل الرئيسي"),
         "main_info": MessageLookupByLibrary.simpleMessage("المعلومات الرئيسية"),
         "men": MessageLookupByLibrary.simpleMessage("رجال"),
+        "minutes_count": m3,
+        "minutes_count_short": m4,
         "more": MessageLookupByLibrary.simpleMessage("المزيد"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
         "new_account": MessageLookupByLibrary.simpleMessage("حساب جديد"),
@@ -366,7 +381,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("بريد إلكتروني غير صحيح!"),
         "validator_it_does_not_match":
             MessageLookupByLibrary.simpleMessage("غير متطابق"),
-        "validator_should_be_with_minimum_length_of_characters": m1,
+        "validator_should_be_with_minimum_length_of_characters": m5,
         "validator_this_field_is_required":
             MessageLookupByLibrary.simpleMessage("هذه الحقل مطلوب"),
         "verify": MessageLookupByLibrary.simpleMessage("تحقق"),

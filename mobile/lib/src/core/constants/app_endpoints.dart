@@ -21,7 +21,7 @@ class AppEndpoints {
 
   // Recitation
   static const String _recitation = "recitation";
-  static const String getRecitations = '$_recitation/';
+  static const String getRecitations = _recitation;
 
   static String getRecitationDetails(String id) => '$_recitation/$id';
 }

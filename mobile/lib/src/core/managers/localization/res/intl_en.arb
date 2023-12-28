@@ -262,6 +262,31 @@
   "reciter": "Reciter",
   "khatmat": "Khatmat",
   "khatma": "Khatma",
-  "by_sheikh": "By sheikh: {sheikh_name}"
+  "khatma_details": "Khatma Details",
 
+  "by_sheikh": "By sheikh: {sheikh_name}",
+  "hours_count": "{count,plural, =0{} =1{1 hour} other{{count} hours}}",
+  "@hours_count": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "hours_count_short": "{count} h",
+  "@hours_count_short": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "minutes_count": "{count,plural, =0{} =1{1 minute} other{{count} minutes}}",
+  "@minutes_count": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "minutes_count_short": "{count} m",
+  "@minutes_count_short": {
+    "placeholders": {
+      "count": {}
+    }
+  }
 }

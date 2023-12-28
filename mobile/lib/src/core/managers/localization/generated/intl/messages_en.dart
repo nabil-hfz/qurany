@@ -22,10 +22,20 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(sheikh_name) => "By sheikh: ${sheikh_name}";
 
-  static String m1(minLength) =>
+  static String m1(int count) =>
+      "${Intl.plural(count, zero: '', one: '1 hour', other: '${count} hours')}";
+
+  static String m2(count) => "${count} h";
+
+  static String m3(int count) =>
+      "${Intl.plural(count, zero: '', one: '1 minute', other: '${count} minutes')}";
+
+  static String m4(count) => "${count} m";
+
+  static String m5(minLength) =>
       "This field should minimum length of ${minLength} characters";
 
-  static String m2(min, max) =>
+  static String m6(min, max) =>
       "This value should should be in range of (${min},${max})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -203,11 +213,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "here": MessageLookupByLibrary.simpleMessage(
             "here ============================"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "hours_count": m1,
+        "hours_count_short": m2,
         "instagram": MessageLookupByLibrary.simpleMessage("Instagram"),
         "islamic_library":
             MessageLookupByLibrary.simpleMessage("Islamic Library"),
         "k": MessageLookupByLibrary.simpleMessage("K"),
         "khatma": MessageLookupByLibrary.simpleMessage("Khatma"),
+        "khatma_details":
+            MessageLookupByLibrary.simpleMessage("Khatma Details"),
         "khatmat": MessageLookupByLibrary.simpleMessage("Khatmat"),
         "kids": MessageLookupByLibrary.simpleMessage("Kids"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
@@ -225,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Main business type"),
         "main_info": MessageLookupByLibrary.simpleMessage("Main Info"),
         "men": MessageLookupByLibrary.simpleMessage("Men"),
+        "minutes_count": m3,
+        "minutes_count_short": m4,
         "more": MessageLookupByLibrary.simpleMessage("More"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "new_account": MessageLookupByLibrary.simpleMessage("New account"),
@@ -381,8 +397,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Invalid email!"),
         "validator_it_does_not_match":
             MessageLookupByLibrary.simpleMessage("It does not match"),
-        "validator_should_be_with_minimum_length_of_characters": m1,
-        "validator_should_be_with_range_of": m2,
+        "validator_should_be_with_minimum_length_of_characters": m5,
+        "validator_should_be_with_range_of": m6,
         "validator_this_field_is_required":
             MessageLookupByLibrary.simpleMessage("This field is required"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),

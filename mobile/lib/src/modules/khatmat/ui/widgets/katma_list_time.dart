@@ -23,20 +23,12 @@ class KhatmaListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(
-      context,
-      listen: true,
-    );
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
 
     final width = DeviceUtils.getScaledWidth(context, 0.25);
     final height = DeviceUtils.getScaledHeight(context, 0.25);
     final imgSize = min(width, height);
-    // return AppImageWidget(
-    //   path: khatma.reciter?.image,
-    //   width: imgSize,
-    //   height: imgSize,
-    //   boxFit: BoxFit.cover,
-    // );
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppDimens.space8,

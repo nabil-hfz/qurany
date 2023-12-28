@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kawtharuna/src/core/data_source/base_repository.dart';
+import 'package:kawtharuna/src/core/models/base/base_filter.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
 import 'package:kawtharuna/src/modules/recitations/data/datasource/recitation_local_data_source_impl.dart';
 import 'package:kawtharuna/src/modules/recitations/data/datasource/recitation_remote_data_source_impl.dart';
@@ -40,10 +41,12 @@ class ImplRecitationRepository extends IRecitationRepository {
 
   @override
   Future<Result<RecitationsListEntity>> getRecitations({
+    required BaseFilter filter,
     CancelToken? cancelToken,
   }) async {
     final result = await _remoteDataSource.getRecitations(
       cancelToken: cancelToken,
+      filter: filter,
     );
     return BaseRepository.execute(
       remoteResult: result,

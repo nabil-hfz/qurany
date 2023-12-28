@@ -2570,6 +2570,16 @@ class Translations {
     );
   }
 
+  /// `Khatma Details`
+  String get khatma_details {
+    return Intl.message(
+      'Khatma Details',
+      name: 'khatma_details',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `By sheikh: {sheikh_name}`
   String by_sheikh(Object sheikh_name) {
     return Intl.message(
@@ -2577,6 +2587,52 @@ class Translations {
       name: 'by_sheikh',
       desc: '',
       args: [sheikh_name],
+    );
+  }
+
+  /// `{count,plural, =0{} =1{1 hour} other{{count} hours}}`
+  String hours_count(num count) {
+    return Intl.plural(
+      count,
+      zero: '',
+      one: '1 hour',
+      other: '$count hours',
+      name: 'hours_count',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} h`
+  String hours_count_short(Object count) {
+    return Intl.message(
+      '$count h',
+      name: 'hours_count_short',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count,plural, =0{} =1{1 minute} other{{count} minutes}}`
+  String minutes_count(num count) {
+    return Intl.plural(
+      count,
+      zero: '',
+      one: '1 minute',
+      other: '$count minutes',
+      name: 'minutes_count',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} m`
+  String minutes_count_short(Object count) {
+    return Intl.message(
+      '$count m',
+      name: 'minutes_count_short',
+      desc: '',
+      args: [count],
     );
   }
 }

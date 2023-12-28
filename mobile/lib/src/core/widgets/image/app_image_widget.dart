@@ -22,8 +22,8 @@ import 'image_network_circle.dart';
 class AppImageWidget extends StatelessWidget {
   final String? path;
   final Color? color;
-  final double width;
-  final double height;
+  final double? width;
+  final double? height;
   final double borderRadius;
   final bool isCircular;
   final BoxFit boxFit;
@@ -37,8 +37,8 @@ class AppImageWidget extends StatelessWidget {
     this.color,
     this.boxFit = BoxFit.cover,
     this.borderRadius = 0.0,
-    this.width = 20.0,
-    this.height = 20.0,
+    this.width,
+    this.height,
     this.isCircular = false,
     Key? key,
   }) : super(key: key);

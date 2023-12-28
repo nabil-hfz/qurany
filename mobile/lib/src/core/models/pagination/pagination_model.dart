@@ -2,40 +2,28 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'pagination_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(anyMap: true)
 class PaginationModel {
   int page;
-  int? pageSize;
-  bool? isRefresh;
+  int limit;
 
   PaginationModel({
     required this.page,
-    this.pageSize,
-    this.isRefresh = true,
+    this.limit = 10,
   });
 
   factory PaginationModel.defaultValues() {
-    return PaginationModel(page: 0, pageSize: 10);
+    return PaginationModel(page: 1, limit: 10);
   }
 
   PaginationModel copyWith({
     int? page,
     int? pageSize,
-    bool? isRefresh,
   }) =>
       PaginationModel(
         page: page ?? this.page,
-        pageSize: pageSize ?? this.pageSize,
-        isRefresh: isRefresh ?? this.isRefresh,
+        limit: pageSize ?? limit,
       );
-
-  /// This method should take a list of items and return paginated list.
-  List<T> getPage<T>(List<T> list) {
-    final end = list.length - 1;
-    final start = page * pageSize!;
-    if (start > end) return [];
-    return list.sublist(page * pageSize!).take(pageSize!).toList();
-  }
 
   factory PaginationModel.fromJson(Map<String, dynamic> json) =>
       _$PaginationModelFromJson(json);
@@ -44,6 +32,9 @@ class PaginationModel {
 
   @override
   String toString() {
-    return "PaginationModel(page: $page, pageSize: $pageSize, isRefresh: $isRefresh)";
+    return "PaginationModel("
+        "page: $page, "
+        "pageSize: $limit"
+        ")";
   }
 }

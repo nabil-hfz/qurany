@@ -245,12 +245,33 @@
   "quran": "القران",
   "library": "المكتبة",
   "islamic_library": "المكتبة الاسلامية",
-
   "reciter": "القارئ",
   "khatmat": "ختمات",
-
   "khatma": "ختمة",
-  "by_sheikh": "للقارئ الشيخ: {sheikh_name}"
-
-
+  "khatma_details": "تفاصيل الختمة",
+  "by_sheikh": "للقارئ الشيخ: {sheikh_name}",
+  "hours_count": "{count,plural, =0{} =1{1 ساعة} other{{count} ساعات}}",
+  "@hours_count": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "hours_count_short": "{count} س",
+  "@hours_count_short": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "minutes_count": "{count,plural, =0{} =1{1 دقيقة} other{{count} دقائق}}",
+  "@minutes_count": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "minutes_count_short": "{count} د",
+  "@minutes_count_short": {
+    "placeholders": {
+      "count": {}
+    }
+  }
 }

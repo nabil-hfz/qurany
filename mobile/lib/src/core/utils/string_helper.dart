@@ -1,3 +1,5 @@
+// Project imports:
+
 import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 
 abstract class StringHelper {
@@ -33,7 +35,11 @@ abstract class StringHelper {
   }
 
   /// Formats the review upon the value range
-  static String formatReviewsCount(int reviewsCount) {
+  static String formatReviewsCount(
+    int reviewsCount, [
+    bool withReviewLabel = true,
+  ]) {
+    if (!withReviewLabel) return '(${formatCount(reviewsCount)})';
     return '(${formatCount(reviewsCount)} '
         '${reviewsCount > 1 ? translate.reviews : translate.review})';
   }
@@ -45,20 +51,48 @@ abstract class StringHelper {
   }
 
   /// Formats the price with specific logic
-  static String formatPrice(int price) {
+  static String formatPrice(num? price) {
     try {
-      return '\$${price.toString()}';
+      if (price == null) return "\$ 00.00";
+      return '\$${price.toStringAsFixed(2)}';
     } catch (e) {
-      return '\$${price.toString()}';
+      return '\$${price!.toStringAsFixed(2)}';
     }
   }
 
   /// Formats the duration with specific logic
-  // static String formatDuration(Duration duration) {
-  //   int hours = duration.inHours;
-  //   int minutes = duration.inMinutes.remainder(60);
-  //   return "${translate.hours_count(hours)} ${translate.minutes_count(minutes)}";
-  // }
+  static String formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    return '${translate.hours_count(hours)} ${translate.minutes_count(minutes)}';
+  }
+
+  static String formatDurationHHMM(Duration duration) {
+    String twoDigit(int n) => n.toString().padLeft(2, '0');
+    return '${twoDigit(duration.inHours)}:${twoDigit(duration.inMinutes.remainder(60))}';
+  }
+
+  /// Formats the duration with specific logic
+  static double formatRating(double? rating) {
+    if (rating == null) return 0.0;
+    return double.parse(rating.toStringAsFixed(2));
+  }
+
+  /// Formats the duration with specific logic
+  static String formatShortDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    String res = '';
+    if (hours > 0) {
+      res = translate.hours_count_short(hours);
+    }
+    if (hours > 0 && minutes > 0) res += " ";
+    if (minutes > 0) {
+      res += translate.minutes_count_short(minutes);
+    }
+
+    return res;
+  }
 
   static int getMemberCountAsShortNumber(int? membersCount) {
     int phrase = 0;
