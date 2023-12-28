@@ -1,5 +1,5 @@
 <div style="padding-left: 20px;">
-   <h1>Kawtharuna System: Mobile App - Flutter. (Status: Going one)</h1>
+   <h1>Kawtharuna System: Mobile App - Flutter. (Status: 80 Done)</h1>
    <h3>The mobile app is built on Flutter framework.</h3>
    <h2> Current Features:</h2>
    <h4>1- Provides Quranic Files:</h4>
