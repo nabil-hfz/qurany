@@ -12,15 +12,16 @@ const swaggerDefinition = {
         description: 'This is a REST API application made with Express.',
     },
     servers: [
+
         {
-            url: 'http://localhost:3000',
-            description: 'Development server',
+            url: 'https://www.api.kawtharuna.com/v1',
+            description: 'Production server.',
+        },
+        {
+            url: 'http://localhost:8080',
+            description: 'Development server, when you run the application directly from the command line on your local machine.',
         }
-        // ,
-        // {
-        //     url: 'https://www.api.kawtharuna.com/v1',
-        //     description: 'Production server',
-        // },
+    
     ],
 };
 
