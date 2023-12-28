@@ -11,7 +11,7 @@ class ReciterLocalDataSource implements IReciterDataSource {
   const ReciterLocalDataSource();
 
   @override
-  Future<Result<List<ReciterModel>>> getReciters({
+  Future<Result<RecitersListModel>> getReciters({
     CancelToken? cancelToken,
   }) {
     // TODO: implement getServices

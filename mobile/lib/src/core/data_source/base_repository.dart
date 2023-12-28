@@ -1,3 +1,5 @@
+// Project imports:
+
 import 'package:kawtharuna/src/core/entity/base/base_entity.dart';
 import 'package:kawtharuna/src/core/models/base/base_model.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
@@ -6,12 +8,12 @@ abstract class BaseRepository {
   const BaseRepository();
 
   static Result<Entity>
-      execute<Model extends BaseModel<Entity>, Entity extends BaseEntity>({
+      execute<Model extends BaseModel, Entity extends BaseEntity>({
     required Result<Model> remoteResult,
   }) {
     if (remoteResult.hasDataOnly) {
       return Result(
-        data: remoteResult.data!.toEntity(),
+        data: remoteResult.data!.toEntity() as Entity,
       );
     } else {
       return Result(error: remoteResult.error);
@@ -29,12 +31,11 @@ abstract class BaseRepository {
     }
   }
 
-  static Result<Object> executeForNoData<Model extends BaseModel<Entity>,
-      Entity extends BaseEntity>({
+  static Result<Object> executeForNoData({
     required Result<Object> remoteResult,
   }) {
     if (remoteResult.hasDataOnly) {
-      return Result(data: Object());
+      return const Result(data: Object());
     }
     return Result(error: remoteResult.error);
   }

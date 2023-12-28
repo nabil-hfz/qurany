@@ -6,7 +6,7 @@ import 'package:kawtharuna/src/modules/reciter/data/models/reciter_model.dart';
 abstract class IReciterDataSource {
   const IReciterDataSource();
 
-  Future<Result<List<ReciterModel>>> getReciters({
+  Future<Result<RecitersListModel>> getReciters({
     CancelToken? cancelToken,
   });
 
@@ -16,11 +16,6 @@ abstract class IReciterDataSource {
   });
 
   Future<Result<ReciterModel>> createReciter({
-    required ReciterModel reciter,
-    CancelToken? cancelToken,
-  });
-
-  Future<Result<ReciterModel>> updateReciter({
     required ReciterModel reciter,
     CancelToken? cancelToken,
   });

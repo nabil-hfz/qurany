@@ -1,17 +1,15 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-// Project imports:
-import 'package:salon_app/core/managers/theme/app_them_manager.dart';
-
 class BaseShimmerWidget extends StatelessWidget {
   final Widget? child;
 
-  const BaseShimmerWidget({Key? key, this.child}) : super(key: key);
+  const BaseShimmerWidget({super.key, this.child});
 
   @override
   Widget build(BuildContext context) {

@@ -7,9 +7,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:logging/logging.dart';
 import 'package:kawtharuna/src/core/managers/in_app_purchase/ad_removal.dart';
-import 'package:kawtharuna/src/core/style/snack_bar.dart';
+import 'package:logging/logging.dart';
 
 /// Allows buying in-app. Facade of `package:in_app_purchase`.
 class InAppPurchaseController extends ChangeNotifier {
@@ -161,7 +160,7 @@ class InAppPurchaseController extends ChangeNotifier {
           if (valid) {
             _adRemoval = const AdRemovalPurchase.active();
             if (purchaseDetails.status == PurchaseStatus.purchased) {
-              showSnackBar('Thank you for your support!');
+              // showSnackBar('Thank you for your support!');
             }
             notifyListeners();
           } else {
@@ -191,7 +190,7 @@ class InAppPurchaseController extends ChangeNotifier {
 
   void _reportError(String message) {
     _log.severe(message);
-    showSnackBar(message);
+    // showSnackBar(message);
     _adRemoval = AdRemovalPurchase.error(message);
     notifyListeners();
   }

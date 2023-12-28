@@ -1,72 +1,43 @@
 import 'package:kawtharuna/src/core/entity/base/base_entity.dart';
+import 'package:kawtharuna/src/core/entity/localization/localized_entity.dart';
 import 'package:kawtharuna/src/modules/reciter/data/models/reciter_model.dart';
 
+class RecitersListEntity extends BaseEntity {
+  final List<ReciterEntity> items;
+
+  const RecitersListEntity({required this.items});
+
+  @override
+  List<Object?> get props => [
+        items,
+      ];
+}
+
 class ReciterEntity extends BaseEntity {
-  final String id;
-  final DateTime? createdDate;
-  final String image;
+  final int id;
   final LocalizedEntity? name;
-  final int numberOfSeals;
+  final String? image;
+  final int numberOfKhatmat;
   final LocalizedEntity? bio;
-  final int totalNumberOfPlay;
-  final int totalNumberOfDownload;
 
   const ReciterEntity({
     required this.id,
-    this.createdDate,
+    this.name,
     required this.image,
-    required this.name,
-    required this.numberOfSeals,
-    required this.bio,
-    required this.totalNumberOfPlay,
-    required this.totalNumberOfDownload,
+    required this.numberOfKhatmat,
+    this.bio,
   });
 
   ReciterModel toModel() {
-    return ReciterModel(
-      bio: bio?.toModel(),
-      createdDate: createdDate,
-      image: image,
-      id: id,
-      name: name?.toModel(),
-      numberOfSeals: numberOfSeals,
-      totalNumberOfDownload: totalNumberOfDownload,
-      totalNumberOfPlay: totalNumberOfDownload,
-    );
+    return ReciterModel(id: 1);
   }
 
   @override
   List<Object?> get props => [
         id,
-        createdDate,
-        image,
         name,
-        numberOfSeals,
+        image,
+        numberOfKhatmat,
         bio,
-        totalNumberOfPlay,
-        totalNumberOfDownload,
-      ];
-}
-
-class LocalizedEntity extends BaseEntity {
-  final String? ar;
-  final String? en;
-
-  const LocalizedEntity({
-    this.ar,
-    this.en,
-  });
-
-  LocalizedModel toModel() {
-    return LocalizedModel(
-      ar: ar,
-      en: en,
-    );
-  }
-
-  @override
-  List<Object?> get props => [
-        ar,
-        en,
       ];
 }

@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:equatable/equatable.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +24,23 @@ import 'package:logging/logging.dart';
 
 AppConfig envVariables = AppConfig.init();
 Logger _log = Logger('main.dart');
+bool isProduction = true;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  envVariables = EnvironmentConfig.envType();
+
+  await Firebase.initializeApp();
   await configureDependencies();
 
-  FirebaseCrashlytics? crashlytics = await initFirebaseService();
+  FirebaseCrashlytics? crashlytics;
+  if (EnvironmentConfig.isProduction) {
+    crashlytics = await initFirebaseService();
+  }
 
   Bloc.observer = SimpleBlocObserver();
   EquatableConfig.stringify = kDebugMode;
+  isProduction = !kDebugMode;
 
   await guardWithCrashlytics(
     guardedMain,
@@ -41,6 +50,8 @@ Future<void> main() async {
 
 /// Without logging and crash reporting, this would be `void main()`.
 void guardedMain() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   if (kReleaseMode) {
     // Don't log anything below warnings in production.
     Logger.root.level = Level.WARNING;
@@ -70,8 +81,6 @@ void guardedMain() {
   // adsController = AdsController.initGameService();
   // gamesServicesController = GamesServicesController.initGameService();
   // inAppPurchaseController = InAppPurchaseController.initInAppPurchaseService();
-
-  envVariables = EnvironmentConfig.envType();
 
   runApp(
     MyApp(

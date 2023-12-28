@@ -6,11 +6,8 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-// Project imports:
-import 'package:salon_app/core/constants/app_text_style.dart';
-import 'package:salon_app/core/managers/theme/app_them_manager.dart';
-import 'package:salon_app/core/widgets/common/vertical_padding.dart';
+import 'package:kawtharuna/src/core/constants/app_text_style.dart';
+import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 
 ///
 /// Wrap around any widget that makes an async call to show a modal progress
@@ -72,7 +69,7 @@ class AppModalProgressHUDWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           progressIndicator,
-          if (message != null) VerticalTextPadding.with16(),
+          // if (message != null) VerticalTextPadding.with16(),
           if (message != null)
             Text(
               message!,

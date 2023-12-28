@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:go_router/go_router.dart';
-
-// Project imports:
-import 'package:salon_app/core/managers/navigation/nav_routes.dart';
+import 'package:kawtharuna/src/core/managers/navigation/nav_routes.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({

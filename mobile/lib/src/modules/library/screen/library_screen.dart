@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
-import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/utils/utils_collection.dart';
+import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
+import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
+import 'package:kawtharuna/src/core/utils/utl_device.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
 import 'package:kawtharuna/src/modules/main_menu/screens/main_menu_screen.dart';
+import 'package:provider/provider.dart';
 
 class LibraryScreen extends StatelessWidget {
   const LibraryScreen({super.key});
@@ -20,7 +21,7 @@ class LibraryScreen extends StatelessWidget {
       backgroundColor: themeStore.appColors.scaffoldBgColor,
       appBar: CustomAppBar(
         automaticallyImplyLeading: false,
-        titleString: translate.islamic_library,
+        title: translate.islamic_library,
         leading: AppMenuIconWidget(
           onDrawerPressed: () {
             mainKey.currentState?.openDrawer();

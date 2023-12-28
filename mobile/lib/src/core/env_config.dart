@@ -42,7 +42,7 @@ class EnvironmentConfig {
         _appConfig = AppConfig(
           appName: AppStrings.appName,
           flavor: EnvType.prod,
-          baseLink: "https://api.kawtharuna.com/v1",
+          baseUrl: "https://api.kawtharuna.com/v1/",
         );
         break;
       case EnvType.dev:
@@ -50,7 +50,7 @@ class EnvironmentConfig {
         _appConfig = AppConfig(
             appName: '${AppStrings.appName} Dev',
             flavor: EnvType.dev,
-            baseLink: 'http://localhost:4200/v1');
+            baseUrl: 'http://localhost:4200/v1/');
         break;
     }
     AppUtils.debugPrint('_appConfig=($_appConfig)');
@@ -67,18 +67,18 @@ enum EnvType { prod, dev, none }
 class AppConfig {
   final String appName;
   final EnvType flavor;
-  final String baseLink;
+  final String baseUrl;
 
   AppConfig({
     required this.appName,
     required this.flavor,
-    required this.baseLink,
+    required this.baseUrl,
   });
 
   factory AppConfig.init() {
     return AppConfig(
       appName: '',
-      baseLink: '',
+      baseUrl: '',
       flavor: EnvType.none,
     );
   }
@@ -88,7 +88,7 @@ class AppConfig {
     return '$AppConfig('
         'appName: $appName, '
         'flavor: $flavor, '
-        'baseLink: $baseLink'
+        'baseLink: $baseUrl'
         ')';
   }
 }

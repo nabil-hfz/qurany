@@ -1,27 +1,24 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
+import 'package:kawtharuna/src/core/constants/app_radius.dart';
+import 'package:kawtharuna/src/core/generated_files/assets/assets.gen.dart';
+import 'package:kawtharuna/src/core/managers/managers.dart';
+import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
-// Project imports:
-import 'package:salon_app/core/constants/app_icon_size.dart';
-import 'package:salon_app/core/constants/app_radius.dart';
-import 'package:salon_app/core/generated_files/assets/assets.gen.dart';
-import 'package:salon_app/core/managers/localization/app_language.dart';
-import 'package:salon_app/core/managers/theme/app_them_manager.dart';
-import 'package:salon_app/core/widgets/image/app_image_widget.dart';
-
 class AppBackIconWidget extends StatelessWidget {
   const AppBackIconWidget({
-    Key? key,
+    super.key,
     this.color,
     this.withBgColor = true,
     this.onPressed,
-  }) : super(key: key);
+  });
   final bool withBgColor;
   final Color? color;
-  final Function()? onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -65,19 +62,19 @@ class AppBackIconWidget extends StatelessWidget {
 // )
 class AppIconButton extends StatelessWidget {
   const AppIconButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.backgroundColor,
     this.iconSize,
-  }) : super(key: key);
+  });
   final Widget icon;
-  final Function()? onPressed;
+  final void Function()? onPressed;
   final Color? backgroundColor;
   final double? iconSize;
 
   factory AppIconButton.search({
-    required Function() onPressed,
+    required void Function()? onPressed,
     Color? color,
     Color? backgroundColor,
   }) {
@@ -95,7 +92,7 @@ class AppIconButton extends StatelessWidget {
   }
 
   factory AppIconButton.filter({
-    required Function() onPressed,
+    required void Function()? onPressed,
     Color? color,
     Color? backgroundColor,
   }) {
@@ -114,7 +111,7 @@ class AppIconButton extends StatelessWidget {
   }
 
   factory AppIconButton.options({
-    required Function() onPressed,
+    required void Function()? onPressed,
     Color? color,
     Color? backgroundColor,
   }) {
@@ -134,7 +131,7 @@ class AppIconButton extends StatelessWidget {
   }
 
   factory AppIconButton.phone({
-    required Function() onPressed,
+    required void Function()? onPressed,
     Color? color,
     Color? backgroundColor,
   }) {
@@ -155,7 +152,7 @@ class AppIconButton extends StatelessWidget {
   }
 
   factory AppIconButton.share({
-    required Function() onPressed,
+    required void Function()? onPressed,
     Color? color,
     Color? backgroundColor,
   }) {
@@ -168,27 +165,6 @@ class AppIconButton extends StatelessWidget {
           Icons.share_outlined,
           size: AppIconSize.size_20,
           color: color,
-        ),
-      ),
-      onPressed: onPressed,
-    );
-  }
-
-  factory AppIconButton.map({
-    required Function() onPressed,
-    Color? color,
-    Color? backgroundColor,
-  }) {
-    // AppIconSize.size_20,
-    return AppIconButton(
-      backgroundColor: backgroundColor,
-      icon: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: AppImageWidget(
-          color: color,
-          path: Assets.icons.mapCodicon.path,
-          height: AppIconSize.size_20,
-          width: AppIconSize.size_20,
         ),
       ),
       onPressed: onPressed,

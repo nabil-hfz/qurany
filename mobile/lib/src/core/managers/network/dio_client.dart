@@ -1,13 +1,22 @@
+// Dart imports:
+import 'dart:io';
+
+// Package imports:
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:injectable/injectable.dart';
-import 'package:kawtharuna/src/core/models/base/base_model.dart';
+import 'package:kawtharuna/app_constants.dart';
+import 'package:kawtharuna/src/core/constants/app_endpoints.dart';
+import 'package:kawtharuna/src/core/constants/extension.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
-import 'package:kawtharuna/src/core/utils/utils_collection.dart';
+import 'package:kawtharuna/src/core/network/exceptions/errors.dart';
+import 'package:kawtharuna/src/core/utils/utl_app.dart';
+
+// Project imports:
 
 import 'error_util.dart';
 
-@injectable
+@Singleton()
 class DioClient {
   // dio instance
   final Dio _dio;
@@ -15,10 +24,15 @@ class DioClient {
   // injecting dio instance
   DioClient(this._dio);
 
+  static String appendBearerForToken([String? token]) {
+    return 'Bearer $token';
+  }
+
   // Get:-----------------------------------------------------------------------
-  Future<Result<BaseModel>> get(
+  Future<Result<BaseModel>> get<BaseModel>(
     String uri, {
-    required BaseModel Function(Map<String, dynamic>) converter,
+    BaseModel Function(dynamic)? converter,
+    BaseModel Function(Map<String, dynamic>)? converterMap,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -32,10 +46,17 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
-      BaseModel r = converter(response.data as Map<String, dynamic>);
+      BaseModel r;
+      if (converterMap != null) {
+        r = converterMap(response.data as Map<String, dynamic>);
+      } else if (converter != null) {
+        r = converter(response.data);
+      } else {
+        throw NotFoundError('Should pass one converter');
+      }
       return Result(data: r);
     } catch (err, stackTrace) {
-      AppUtils.debugPrint('err: $err, stackTrace: $stackTrace');
+      appPrint('DioClient get error: $err \nstackTrace: $stackTrace');
       return Result(error: ErrorUtil.handleError(err));
     }
   }
@@ -50,7 +71,7 @@ class DioClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final Response<List<T>> response = await _dio.get<List<T>>(
+      final Response response = await _dio.get(
         uri,
         options: options,
         cancelToken: cancelToken,
@@ -58,27 +79,29 @@ class DioClient {
         onReceiveProgress: onReceiveProgress,
       );
       final result = response.data
-          ?.map((json) => converter(json as Map<String, dynamic>))
+          ?.profile<T>((json) => converter(json as Map<String, dynamic>))
           .toList();
-      return Result(data: result);
+      return Result(data: result as List<T>?);
     } catch (err, stackTrace) {
-      AppUtils.debugPrint('err: $err, stackTrace: $stackTrace');
+      appPrint('DioClient getList error: $err \nstackTrace: $stackTrace');
       return Result(error: ErrorUtil.handleError(err));
     }
   }
 
   // Post:----------------------------------------------------------------------
-  Future<Result<BaseModel>> post(
+  Future<Result<BaseModel>> post<BaseModel>(
     String uri, {
-    dynamic data,
+    Object? data,
     Map<String, dynamic>? queryParameters,
+    BaseModel Function(Map<String, dynamic>)? converter,
+    BaseModel Function(dynamic)? converterDynamic,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final Response<BaseModel> response = await _dio.post(
+      final Response response = await _dio.post(
         uri,
         data: data,
         queryParameters: queryParameters,
@@ -87,20 +110,25 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return Result(data: response.data);
+      BaseModel r;
+      if (converterDynamic != null) {
+        r = converterDynamic(response.data);
+      } else {
+        r = converter!(response.data as Map<String, dynamic>);
+      }
+      return Result(data: r);
     } catch (err, stackTrace) {
-      AppUtils.debugPrint('err: $err, stackTrace: $stackTrace');
+      appPrint('DioClient post error: $err \nstackTrace: $stackTrace');
       return Result(error: ErrorUtil.handleError(err));
     }
   }
 
-  Future<Result<BaseModel>> postWithFile(
+  Future<Result<BaseModel>> postWithFile<BaseModel>(
     String uri, {
     Map<String, dynamic>? data,
-    required String fileKey,
-    required String filePath,
-    required String fileName,
-    required String extension,
+    required File? file,
+    required FileType? fileType,
+    required BaseModel Function(Map<String, dynamic>) converter,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
@@ -112,33 +140,41 @@ class DioClient {
         dataMap.addAll(data);
       }
 
+      String filePath = file!.path;
+      String fileName = file.getFileName;
+      String extension = file.getFileExtension;
+      const fileKey = AppQueryParameters.file;
       dataMap.addAll({
         fileKey: await MultipartFile.fromFile(
           filePath,
           filename: fileName,
-          contentType: MediaType("image", extension),
+          contentType: MediaType(fileType!.name, extension),
         ),
       });
 
-      final Response<BaseModel> response = await _dio.post(
+      FormData formData = FormData.fromMap(dataMap);
+      final Response response = await _dio.post(
         uri,
-        data: FormData.fromMap(dataMap),
+        data: formData,
         options: options,
         cancelToken: cancelToken,
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return Result(data: response.data);
+      BaseModel r = converter(response.data as Map<String, dynamic>);
+      return Result(data: r);
     } catch (err, stackTrace) {
-      AppUtils.debugPrint('err: $err, stackTrace: $stackTrace');
+      appPrint('DioClient postWithFile error: $err \nstackTrace: $stackTrace');
       return Result(error: ErrorUtil.handleError(err));
     }
   }
 
   // Put:-----------------------------------------------------------------------
-  Future<Result<BaseModel>> put(
+  Future<Result<BaseModel>> put<BaseModel>(
     String uri, {
-    dynamic data,
+    data,
+    BaseModel Function(dynamic)? converter,
+    BaseModel Function(dynamic)? converterDynamic,
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
@@ -146,7 +182,7 @@ class DioClient {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final Response<BaseModel> response = await _dio.put(
+      final Response response = await _dio.put(
         uri,
         data: data,
         queryParameters: queryParameters,
@@ -155,34 +191,48 @@ class DioClient {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return Result(data: response.data);
+      BaseModel r;
+      if (converterDynamic != null) {
+        r = converterDynamic(response.data);
+      } else {
+        r = converter!(response.data);
+      }
+      return Result(data: r);
     } catch (err, stackTrace) {
-      AppUtils.debugPrint('err: $err, stackTrace: $stackTrace');
+      appPrint('DioClient put error: $err \nstackTrace: $stackTrace');
       return Result(error: ErrorUtil.handleError(err));
     }
   }
 
   // Delete:--------------------------------------------------------------------
-  Future<Result<BaseModel>> delete(
+  Future<Result<BaseModel>> delete<BaseModel>(
     String uri, {
-    dynamic data,
+    data,
     Map<String, dynamic>? queryParameters,
+    BaseModel Function(Map<String, dynamic>)? converter,
+    BaseModel Function(dynamic)? converterDynamic,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final Response<BaseModel> response = await _dio.delete(
+      final Response response = await _dio.delete(
         uri,
         data: data,
         queryParameters: queryParameters,
         options: options,
         cancelToken: cancelToken,
       );
-      return Result(data: response.data);
+      BaseModel r;
+      if (converterDynamic != null) {
+        r = converterDynamic(response.data);
+      } else {
+        r = converter!(response.data as Map<String, dynamic>);
+      }
+      return Result(data: r);
     } catch (err, stackTrace) {
-      AppUtils.debugPrint('err: $err, stackTrace: $stackTrace');
+      appPrint('DioClient delete error: $err \nstackTrace: $stackTrace');
       return Result(error: ErrorUtil.handleError(err));
     }
   }

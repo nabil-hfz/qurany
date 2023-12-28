@@ -1,6 +1,13 @@
+// Dart imports:
+import 'dart:io';
+
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:kawtharuna/src/core/widgets/image/image_network_circle.dart';
+
+import 'image_network_circle.dart';
 
 /// General Image widget which can accept all image types url, svg and assets.
 ///
@@ -13,20 +20,22 @@ import 'package:kawtharuna/src/core/widgets/image/image_network_circle.dart';
 /// image and the size of it will depend on [radius] exclusively. The [borderRadius]
 /// param will be meaningful just in case the image is not a circle one.
 class AppImageWidget extends StatelessWidget {
-  final String path;
+  final String? path;
   final Color? color;
   final double width;
   final double height;
-  final double radius;
   final double borderRadius;
   final bool isCircular;
   final BoxFit boxFit;
+  final File? localFile;
+  final Widget? errorWidget;
 
   const AppImageWidget({
-    required this.path,
+    this.path,
+    this.localFile,
+    this.errorWidget,
     this.color,
     this.boxFit = BoxFit.cover,
-    this.radius = 0.0,
     this.borderRadius = 0.0,
     this.width = 20.0,
     this.height = 20.0,
@@ -35,14 +44,16 @@ class AppImageWidget extends StatelessWidget {
   }) : super(key: key);
 
   bool get isNetworkImage {
-    return path.startsWith('http') ||
-        path.startsWith('https') ||
-        path.contains('http') ||
-        path.contains('https');
+    return path == null ||
+        path!.isEmpty ||
+        (path!.startsWith('http') ||
+            path!.startsWith('https') ||
+            path!.contains('http') ||
+            path!.contains('https'));
   }
 
   bool get isSvgImage {
-    return path.toLowerCase().endsWith('.svg');
+    return path != null && path!.toLowerCase().endsWith('.svg');
   }
 
   @override
@@ -60,24 +71,36 @@ class AppImageWidget extends StatelessWidget {
     height = this.height;
     // }
 
-    /// Inferring image type upon the url or path.
-    if (isNetworkImage) {
-      image = ImageNetworkCircleWidget(
-        imageUrl: path,
-        boxFit: boxFit,
-        imagePlaceHolderBackgroundColor: color,
-      );
-    } else if (isSvgImage) {
-      image = SvgPicture.asset(
-        path,
+    if (localFile != null) {
+      image = Image.file(
+        localFile!,
         height: height,
         width: width,
         color: color,
         fit: boxFit,
       );
+    }
+
+    /// Inferring image type upon the url or path.
+    else if (isNetworkImage) {
+      image = ImageNetworkCircleWidget(
+        imageUrl: path,
+        boxFit: boxFit,
+        errorWidget: errorWidget,
+        imagePlaceHolderBackgroundColor: color,
+      );
+    } else if (isSvgImage) {
+      image = SvgPicture.asset(
+        path!,
+        height: height,
+        width: width,
+        // ignore: deprecated_member_use
+        color: color,
+        fit: boxFit,
+      );
     } else {
       image = Image.asset(
-        path,
+        path!,
         height: height,
         width: width,
         color: color,

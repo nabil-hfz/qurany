@@ -12,7 +12,7 @@ import 'package:kawtharuna/src/modules/reciter/data/datasource/reciter_remote_da
 import 'package:kawtharuna/src/modules/reciter/data/models/reciter_model.dart';
 import 'package:kawtharuna/src/modules/reciter/domain/entity/reciter_entity.dart';
 
-import 'service_repository_i.dart';
+import 'reciter_repository_i.dart';
 
 @Singleton()
 class ImplReciterRepository extends IReciterRepository {
@@ -58,27 +58,13 @@ class ImplReciterRepository extends IReciterRepository {
   }
 
   @override
-  Future<Result<List<ReciterEntity>>> getReciters({
+  Future<Result<RecitersListEntity>> getReciters({
     CancelToken? cancelToken,
   }) async {
     final result = await _remoteDataSource.getReciters(
       cancelToken: cancelToken,
     );
-    return BaseRepository.executeForList<ReciterModel, ReciterEntity>(
-      remoteResult: result,
-    );
-  }
-
-  @override
-  Future<Result<ReciterEntity>> updateReciter({
-    required ReciterEntity reciter,
-    CancelToken? cancelToken,
-  }) async {
-    final result = await _remoteDataSource.updateReciter(
-      cancelToken: cancelToken,
-      reciter: reciter.toModel(),
-    );
-    return BaseRepository.execute<ReciterModel, ReciterEntity>(
+    return BaseRepository.execute(
       remoteResult: result,
     );
   }

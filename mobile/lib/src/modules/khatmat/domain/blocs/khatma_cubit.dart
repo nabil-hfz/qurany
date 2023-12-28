@@ -9,9 +9,9 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_loading_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_success_state.dart';
 import 'package:kawtharuna/src/modules/reciter/domain/entity/reciter_entity.dart';
-import 'package:kawtharuna/src/modules/reciter/domain/repo/service_repository_impl.dart';
+import 'package:kawtharuna/src/modules/reciter/domain/repo/reciter_repository_impl.dart';
 
-part 'reciters_state.dart';
+part 'khatma_state.dart';
 
 @Singleton()
 class ReciterCubit extends BaseCubit<ReciterState> {
@@ -35,7 +35,7 @@ class ReciterCubit extends BaseCubit<ReciterState> {
 
     if (results.hasDataOnly) {
       if (isRefresh) _reciters.clear();
-      _reciters.addAll(results.data!);
+      if (results.data?.items != null) _reciters.addAll(results.data!.items);
       emit(state.copyWith(getReciters: RecitersSuccess(reciters: _reciters)));
     } else {
       emit(
@@ -101,36 +101,6 @@ class ReciterCubit extends BaseCubit<ReciterState> {
             result.error,
             callback: () {
               createReciter(reciter: reciter, cancelToken: cancelToken);
-            },
-          ),
-        ),
-      );
-    }
-  }
-
-  Future<void> updateReciter({
-    required ReciterEntity reciter,
-    CancelToken? cancelToken,
-  }) async {
-    emit(state.copyWith(updateReciter: const BaseLoadingState()));
-
-    final result = await _repository.updateReciter(
-      reciter: reciter,
-      cancelToken: cancelToken,
-    );
-
-    if (result.hasDataOnly) {
-      emit(state.copyWith(updateReciter: const BaseSuccessState()));
-      // final resultReciter = result.data!;
-
-      emit(state.copyWith(updateReciter: const BaseInitState()));
-    } else {
-      emit(
-        state.copyWith(
-          updateReciter: BaseFailState(
-            result.error,
-            callback: () {
-              updateReciter(reciter: reciter, cancelToken: cancelToken);
             },
           ),
         ),

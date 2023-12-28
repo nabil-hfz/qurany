@@ -1,4 +1,4 @@
-part of 'reciters_cubit.dart';
+part of 'reciter_cubit.dart';
 
 class ReciterState {
   const ReciterState({

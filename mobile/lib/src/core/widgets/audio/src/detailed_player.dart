@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:provider/provider.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
@@ -52,7 +53,7 @@ class DetailedPlayer extends StatelessWidget {
         final double width = MediaQuery.of(context).size.width;
         final maxImgSize = width * 0.4;
 
-        final img = Image.network(reciter.image);
+        final img = AppImageWidget(path: reciter.image);
         final text = Text(reciter.name?.en ?? '');
         const buttonPlay = IconButton(
           icon: Icon(Icons.pause),

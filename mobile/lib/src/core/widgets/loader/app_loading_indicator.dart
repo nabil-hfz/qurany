@@ -1,13 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:kawtharuna/src/core/managers/managers.dart';
 
 // Package imports:
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-
-// Project imports:
-import 'package:salon_app/core/managers/managers.dart';
-import 'package:salon_app/core/managers/theme/app_them_manager.dart';
 
 enum AppLoaderSize {
   microscopic,

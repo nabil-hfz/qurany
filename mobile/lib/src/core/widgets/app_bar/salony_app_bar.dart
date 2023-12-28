@@ -1,15 +1,12 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kawtharuna/src/core/constants/constants.dart';
+import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
+import 'package:kawtharuna/src/core/widgets/icons/app_back_icon_widget.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-
-// Project imports:
-import 'package:salon_app/core/constants/app_dimens.dart';
-import 'package:salon_app/core/constants/app_text_style.dart';
-import 'package:salon_app/core/managers/managers.dart';
-import 'package:salon_app/core/widgets/common/app_back_icon_widget.dart';
 
 /// [SalonyAppBar] General appbar used across the app.
 ///
@@ -39,7 +36,7 @@ class SalonyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final double? elevation;
   final double? toolbarHeight;
-  final Function()? onBackPressed;
+  final void Function()? onBackPressed;
 
   final Widget? leading;
   final Widget? customTitle;

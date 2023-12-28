@@ -1,3 +1,5 @@
+import 'package:kawtharuna/main.dart';
+
 class AppEndpoints {
   AppEndpoints._();
 
@@ -24,7 +26,7 @@ class AppEndpoints {
   ];
 
   // base url
-  static const String baseUrl = "https://jsonplaceholder.typicode.com";
+  static String baseUrl = envVariables.baseUrl;
 
   // receiveTimeout
   static const int receiveTimeout = 15000;
@@ -33,4 +35,28 @@ class AppEndpoints {
   static const int connectionTimeout = 30000;
 
   static const String posts = "/posts";
+
+  // Staff
+  static const String _reciter = "reciter";
+  static const String createReciter = _reciter;
+  static const String updateReciter = '$_reciter/';
+  static const String getReciters = '$_reciter/';
+  static const String getReciterDetails = '$_reciter/';
+  static const String deleteReciter = '$_reciter/';
+
+  // Khatma
+  static const String _khatma = "khatma";
+  static const String getKhatmat = '$_khatma/';
+
+  static String getKhatmaDetails(String id) => '$_khatma/$id';
+}
+
+abstract class AppQueryParameters {
+  AppQueryParameters._();
+
+  static const String id = "id";
+  static const String serviceId = "serviceId";
+  static const String fileName = "fileName";
+  static const String file = "file";
+  static const String name = "name";
 }

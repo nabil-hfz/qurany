@@ -7,8 +7,8 @@ import 'dart:isolate';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:logging/logging.dart';
-import 'package:kawtharuna/src/core/utils/utl_app.dart';
 
 /// Runs [mainFunction] in a guarded [Zone].
 ///

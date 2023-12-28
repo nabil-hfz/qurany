@@ -17,6 +17,17 @@ enum LogType {
   severe,
 }
 
+void appPrint(dynamic value) {
+  //if (isProduction)
+  {
+    // dev.log(
+    //     '==================================[TAG]==================================');
+    // dev.log('$value', sequenceNumber: 200);
+    // dev.log(
+    //     '=========================================================================');
+  }
+}
+
 class AppUtils {
   static AppUtils instance = AppUtils._();
 

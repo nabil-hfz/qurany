@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kawtharuna/src/core/constants/app_endpoints.dart';
 import 'package:kawtharuna/src/core/managers/network/dio_client.dart';
 import 'package:kawtharuna/src/core/models/empty_result/empty_result_model.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
@@ -77,42 +78,24 @@ class ReciterRemoteDataSource implements IReciterDataSource {
   }
 
   @override
-  Future<Result<List<ReciterModel>>> getReciters({
+  Future<Result<RecitersListModel>> getReciters({
     CancelToken? cancelToken,
   }) async {
-    return await FirestoreService.requestDataListObject(
-      collection: FirebaseCollections.reciters,
-      passingLastDocument: (lastDoc) => reciters = lastDoc,
-      builder: (json, id) {
-        return ReciterModel.fromSnapShot(json, id);
+    return await _dioClient.get<RecitersListModel>(
+      AppEndpoints.getReciters,
+      cancelToken: cancelToken,
+      converterMap: (json) {
+        return RecitersListModel.fromJson(json);
       },
     );
-  }
 
-  @override
-  Future<Result<ReciterModel>> updateReciter({
-    required ReciterModel reciter,
-    CancelToken? cancelToken,
-  }) async {
-    await FirestoreService.updateData(
-      collection: FirebaseCollections.reciters,
-      path: reciter.id!,
-      data: () {
-        final data = reciter.toJson();
-        data['id'] = FirestoreService.getFirebaseReferenced(
-          collection: FirebaseCollections.reciters,
-          id: reciter.id!,
-        );
-        data['updatedAt'] = FieldValue.serverTimestamp();
-        return data;
-      },
-    );
-    return await FirestoreService.requestDataObject(
-      collection: FirebaseCollections.reciters,
-      docId: reciter.id!,
-      builder: (json, id) {
-        return ReciterModel.fromSnapShot(json, id);
-      },
-    );
+    //
+    // return await FirestoreService.requestDataListObject(
+    //   collection: FirebaseCollections.reciters,
+    //   passingLastDocument: (lastDoc) => reciters = lastDoc,
+    //   builder: (json, id) {
+    //     return ReciterModel.fromSnapShot(json, id);
+    //   },
+    // );
   }
 }
