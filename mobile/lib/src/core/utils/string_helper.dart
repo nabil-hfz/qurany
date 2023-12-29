@@ -64,7 +64,8 @@ abstract class StringHelper {
   static String formatDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
-    return '${translate.hours_count(hours)} ${translate.minutes_count(minutes)}';
+    int seconds = duration.inSeconds.remainder(60);
+    return '${translate.hours_count(hours)} ${translate.minutes_count(minutes)} ${translate.seconds_count(seconds)}';
   }
 
   static String formatDurationHHMM(Duration duration) {
@@ -82,6 +83,7 @@ abstract class StringHelper {
   static String formatShortDuration(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
     String res = '';
     if (hours > 0) {
       res = translate.hours_count_short(hours);
@@ -89,6 +91,10 @@ abstract class StringHelper {
     if (hours > 0 && minutes > 0) res += " ";
     if (minutes > 0) {
       res += translate.minutes_count_short(minutes);
+    }
+    if (seconds > 0 && seconds > 0) res += " ";
+    if (seconds > 0) {
+      res += translate.seconds_count_short(seconds);
     }
 
     return res;

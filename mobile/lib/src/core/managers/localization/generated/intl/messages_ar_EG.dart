@@ -32,10 +32,16 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(count) => "${count} د";
 
-  static String m5(minLength) =>
+  static String m5(int count) =>
+      "${Intl.plural(count, zero: '', one: '1 ثانية', other: '${count} ثواني')}";
+
+  static String m6(count) => "${count} ث";
+
+  static String m7(minLength) =>
       "يجب ألا يقل طول هذا الحقل عن ${minLength} حرفًا";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
+
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activate": MessageLookupByLibrary.simpleMessage("تفيل"),
         "activated": MessageLookupByLibrary.simpleMessage("مفعلة"),
@@ -296,6 +302,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "search": MessageLookupByLibrary.simpleMessage("ابحث"),
         "search_by_location_or_code": MessageLookupByLibrary.simpleMessage(
             "البحث بالموقع أو الرمز الدولي"),
+        "seconds_count": m5,
+        "seconds_count_short": m6,
         "select_another_service":
             MessageLookupByLibrary.simpleMessage("Select another service(s)"),
         "select_duration": MessageLookupByLibrary.simpleMessage("اختر الوقت"),
@@ -381,7 +389,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("بريد إلكتروني غير صحيح!"),
         "validator_it_does_not_match":
             MessageLookupByLibrary.simpleMessage("غير متطابق"),
-        "validator_should_be_with_minimum_length_of_characters": m5,
+        "validator_should_be_with_minimum_length_of_characters": m7,
         "validator_this_field_is_required":
             MessageLookupByLibrary.simpleMessage("هذه الحقل مطلوب"),
         "verify": MessageLookupByLibrary.simpleMessage("تحقق"),

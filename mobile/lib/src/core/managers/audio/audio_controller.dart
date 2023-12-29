@@ -1,54 +1,35 @@
-// Copyright 2022, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:collection';
-import 'dart:math';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/widgets.dart';
-import 'package:logging/logging.dart';
 import 'package:kawtharuna/src/core/managers/audio/songs.dart';
 import 'package:kawtharuna/src/core/managers/audio/sounds.dart';
 import 'package:kawtharuna/src/core/managers/settings/settings.dart';
+import 'package:logging/logging.dart';
 
-/// Allows playing music and sound. A facade to `package:audioplayers`.
 class AudioController {
   static final _log = Logger('AudioController');
 
   final AudioPlayer _musicPlayer;
 
-  /// This is a list of [AudioPlayer] instances which are rotated to play
-  /// sound effects.
-  final List<AudioPlayer> _sfxPlayers;
-
-  int _currentSfxPlayer = 0;
-
   final Queue<Song> _playlist;
-
-  final Random _random = Random();
 
   SettingsController? _settings;
 
   ValueNotifier<AppLifecycleState>? _lifecycleNotifier;
 
-  /// Creates an instance that plays music and sound.
-  ///
-  /// Use [polyphony] to configure the number of sound effects (SFX) that can
-  /// play at the same time. A [polyphony] of `1` will always only play one
-  /// sound (a new sound will stop the previous one). See discussion
-  /// of [_sfxPlayers] to learn why this is the case.
-  ///
-  /// Background music does not count into the [polyphony] limit. Music will
-  /// never be overridden by sound effects because that would be silly.
-  AudioController({int polyphony = 2})
-      : assert(polyphony >= 1),
-        _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
-        _sfxPlayers = Iterable.generate(
-                polyphony, (i) => AudioPlayer(playerId: 'sfxPlayer#$i'))
-            .toList(growable: false),
-        _playlist = Queue.of(List<Song>.of(songs)..shuffle()) {
-    // _musicPlayer.onPlayerComplete.listen(_changeSong);
+  AudioController()
+      : _musicPlayer = AudioPlayer(playerId: 'musicPlayer'),
+        _playlist = Queue.of([]) {
+    _musicPlayer.onPlayerComplete.listen(_changeSong);
+  }
+
+  Stream<PlayerState> get songListener {
+    return _musicPlayer.onPlayerStateChanged;
+  }
+
+  AudioPlayer get musicPlayer {
+    return _musicPlayer;
   }
 
   /// Enables the [AudioController] to listen to [AppLifecycleState] events,
@@ -88,7 +69,7 @@ class AudioController {
     settingsController.soundsOn.addListener(_soundsOnHandler);
 
     if (!settingsController.muted.value && settingsController.musicOn.value) {
-      // _startMusic();
+      _startMusic();
     }
   }
 
@@ -96,9 +77,6 @@ class AudioController {
     _lifecycleNotifier?.removeListener(_handleAppLifecycle);
     _stopAllSound();
     _musicPlayer.dispose();
-    for (final player in _sfxPlayers) {
-      player.dispose();
-    }
   }
 
   /// Preloads all sound effects.
@@ -107,10 +85,10 @@ class AudioController {
     // This assumes there is only a limited number of sound effects in the game.
     // If there are hundreds of long sound effect files, it's better
     // to be more selective when preloading.
-    await AudioCache.instance.loadAll(SfxType.values
-        .expand(soundTypeToFilename)
-        .map((path) => 'sfx/$path')
-        .toList());
+    // await AudioCache.instance.loadAll(SfxType.values
+    //     .expand(soundTypeToFilename)
+    //     .map((path) => 'sfx/$path')
+    //     .toList());
   }
 
   /// Plays a single sound effect, defined by [type].
@@ -132,14 +110,9 @@ class AudioController {
     }
 
     _log.info(() => 'Playing sound: $type');
-    final options = soundTypeToFilename(type);
-    final filename = options[_random.nextInt(options.length)];
-    _log.info(() => '- Chosen filename: $filename');
-
-    final currentPlayer = _sfxPlayers[_currentSfxPlayer];
-    currentPlayer.play(AssetSource('sfx/$filename'),
-        volume: soundTypeToVolume(type));
-    _currentSfxPlayer = (_currentSfxPlayer + 1) % _sfxPlayers.length;
+    // final options = soundTypeToFilename(type);
+    // final filename = options[_random.nextInt(options.length)];
+    // _log.info(() => '- Chosen filename: $filename');
   }
 
   void _changeSong(void _) {
@@ -193,9 +166,29 @@ class AudioController {
     }
   }
 
+  /// Plays audio from the given URL.
+  Future<void> playAudioFromUrl(String url) async {
+    final muted = _settings?.muted.value ?? true;
+    if (muted) {
+      _log.info(() => 'Ignoring playing audio because audio is muted.');
+      return;
+    }
+
+    // Check if the same audio is already playing
+    if (_musicPlayer.state == PlayerState.playing &&
+        _musicPlayer.source is UrlSource &&
+        (_musicPlayer.source as UrlSource).url == url) {
+      _log.info(() => 'Pausing audio as it is already playing.');
+      await _musicPlayer.pause();
+    } else {
+      _log.info(() => 'Playing audio from URL: $url');
+      await _musicPlayer.play(UrlSource(url));
+    }
+  }
+
   Future<void> _playFirstSongInPlaylist() async {
     _log.info(() => 'Playing ${_playlist.first} now.');
-    await _musicPlayer.play(AssetSource('music/${_playlist.first.filename}'));
+    // await _musicPlayer.play(AssetSource('music/${_playlist.first.filename}'));
   }
 
   Future<void> _resumeMusic() async {
@@ -231,11 +224,11 @@ class AudioController {
   }
 
   void _soundsOnHandler() {
-    for (final player in _sfxPlayers) {
-      if (player.state == PlayerState.playing) {
-        player.stop();
-      }
-    }
+    // for (final player in _sfxPlayers) {
+    //   if (player.state == PlayerState.playing) {
+    //     player.stop();
+    //   }
+    // }
   }
 
   void _startMusic() {
@@ -247,9 +240,9 @@ class AudioController {
     if (_musicPlayer.state == PlayerState.playing) {
       _musicPlayer.pause();
     }
-    for (final player in _sfxPlayers) {
-      player.stop();
-    }
+    // for (final player in _sfxPlayers) {
+    //   player.stop();
+    // }
   }
 
   void _stopMusic() {

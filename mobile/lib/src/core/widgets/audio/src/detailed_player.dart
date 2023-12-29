@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kawtharuna/src/core/constants/app_text_style.dart';
+import 'package:kawtharuna/src/core/managers/managers.dart';
+import 'package:kawtharuna/src/core/utils/utils_collection.dart';
+import 'package:kawtharuna/src/core/widgets/audio/src/audio_list_tile.dart';
+import 'package:kawtharuna/src/core/widgets/audio/src/utils.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:provider/provider.dart';
-import 'package:kawtharuna/src/core/constants/app_text_style.dart';
-import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/widgets/audio/src/audio_list_tile.dart';
-import 'package:kawtharuna/src/core/widgets/audio/src/utils.dart';
-import 'package:kawtharuna/src/modules/reciter/domain/entity/reciter_entity.dart';
 
 final ValueNotifier<double> playerExpandProgress =
     ValueNotifier(playerMinHeight);
@@ -53,8 +53,8 @@ class DetailedPlayer extends StatelessWidget {
         final double width = MediaQuery.of(context).size.width;
         final maxImgSize = width * 0.4;
 
-        final img = AppImageWidget(path: reciter?.image);
-        final text = Text(reciter.name?.en ?? '');
+        final img = AppImageWidget(path: reciter.image);
+        final text = Text(AppUtils.localizedPlatform(context, reciter.title));
         const buttonPlay = IconButton(
           icon: Icon(Icons.pause),
           onPressed: onTap,
@@ -174,19 +174,22 @@ class DetailedPlayer extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              reciter.name?.en ?? '',
+                              AppUtils.localizedPlatform(
+                                context,
+                                reciter.title,
+                              ),
                               style: appTextStyle.bold18.copyWith(
                                 color: themeStore.appColors.textColor,
                               ),
                             ),
-                            Text(
-                              reciter.bio?.en ?? '',
-                              style: appTextStyle.regular14.copyWith(
-                                color: themeStore.appColors.textColor,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            // Text(
+                            //   reciter.subtitle ?? '',
+                            //   style: appTextStyle.regular14.copyWith(
+                            //     color: themeStore.appColors.textColor,
+                            //   ),
+                            //   maxLines: 1,
+                            //   overflow: TextOverflow.ellipsis,
+                            // ),
                           ],
                         ),
                       ),

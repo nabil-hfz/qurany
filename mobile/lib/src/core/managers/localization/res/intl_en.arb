@@ -288,5 +288,17 @@
     "placeholders": {
       "count": {}
     }
+  },
+  "seconds_count": "{count,plural, =0{} =1{1 second} other{{count} seconds}}",
+  "@seconds_count": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "seconds_count_short": "{count} s",
+  "@seconds_count_short": {
+    "placeholders": {
+      "count": {}
+    }
   }
 }

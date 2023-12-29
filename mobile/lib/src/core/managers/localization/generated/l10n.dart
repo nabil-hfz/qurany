@@ -2635,6 +2635,29 @@ class Translations {
       args: [count],
     );
   }
+
+  /// `{count,plural, =0{} =1{1 second} other{{count} seconds}}`
+  String seconds_count(num count) {
+    return Intl.plural(
+      count,
+      zero: '',
+      one: '1 second',
+      other: '$count seconds',
+      name: 'seconds_count',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count} s`
+  String seconds_count_short(Object count) {
+    return Intl.message(
+      '$count s',
+      name: 'seconds_count_short',
+      desc: '',
+      args: [count],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Translations> {
