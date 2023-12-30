@@ -221,7 +221,7 @@ class Translations {
   }
 
   /// `This field should minimum length of {minLength} characters`
-  String validator_should_be_with_minimum_length_of_characters(int minLength) {
+  String validator_should_be_with_minimum_length_of_characters(num minLength) {
     return Intl.message(
       'This field should minimum length of $minLength characters',
       name: 'validator_should_be_with_minimum_length_of_characters',
@@ -2655,6 +2655,29 @@ class Translations {
       '$count s',
       name: 'seconds_count_short',
       desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Hi, {name}!`
+  String greeting(String name) {
+    return Intl.message(
+      'Hi, $name!',
+      name: 'greeting',
+      desc: 'Greet the user by their name.',
+      args: [name],
+    );
+  }
+
+  /// `{count, plural, =0{no wombats} =1{1 wombat} other{{count} wombats}}`
+  String nWombats(num count) {
+    return Intl.plural(
+      count,
+      zero: 'no wombats',
+      one: '1 wombat',
+      other: '$count wombats',
+      name: 'nWombats',
+      desc: 'A plural message',
       args: [count],
     );
   }
