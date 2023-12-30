@@ -41,8 +41,8 @@ class LevelSelectionScreen extends StatelessWidget {
                       enabled: playerProgress.highestLevelReached >=
                           level.number - 1,
                       onTap: () {
-                        final audioController = context.read<AudioController>();
-                        audioController.playSfx(SfxType.buttonTap);
+                        // final audioController = context.read<AudioController>();
+                        // audioController.playSfx(SfxType.buttonTap);
 
                         GoRouter.of(context)
                             .go('/play/session/${level.number}');

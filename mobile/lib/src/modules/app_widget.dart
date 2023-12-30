@@ -74,7 +74,7 @@ class MyApp extends StatelessWidget {
               // and not "only when it's needed", as is default behavior.
               // This way, music starts immediately.
               lazy: false,
-              create: (context) => AudioController()..initialize(),
+              create: (context) => AudioController(),
               update: (context, settings, lifecycleNotifier, audio) {
                 if (audio == null) throw ArgumentError.notNull();
                 audio.attachSettings(settings);

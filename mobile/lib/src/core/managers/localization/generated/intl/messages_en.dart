@@ -22,29 +22,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(sheikh_name) => "By sheikh: ${sheikh_name}";
 
-  static String m1(int count) =>
+  static String m8(name) => "Hi, ${name}!";
+
+  static String m1(num count) =>
       "${Intl.plural(count, zero: '', one: '1 hour', other: '${count} hours')}";
 
-  static String m2(int count) => "${count} h";
+  static String m2(num count) => "${count} h";
 
-  static String m3(int count) =>
+  static String m3(num count) =>
       "${Intl.plural(count, zero: '', one: '1 minute', other: '${count} minutes')}";
 
-  static String m4(int count) => "${count} m";
+  static String m4(num count) => "${count} m";
 
-  static String m5(int count) =>
+  static String m9(num count) =>
+      "${Intl.plural(count, zero: 'no wombats', one: '1 wombat', other: '${count} wombats')}";
+
+  static String m5(num count) =>
       "${Intl.plural(count, zero: '', one: '1 second', other: '${count} seconds')}";
 
-  static String m6(int count) => "${count} s";
+  static String m6(num count) => "${count} s";
 
   static String m7(minLength) =>
       "This field should minimum length of ${minLength} characters";
 
-  static String m8(min, max) =>
+  static String m10(min, max) =>
       "This value should should be in range of (${min},${max})";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activate": MessageLookupByLibrary.simpleMessage("Activate"),
         "activated": MessageLookupByLibrary.simpleMessage("Activated"),
@@ -215,6 +219,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "free": MessageLookupByLibrary.simpleMessage("Free"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
+        "greeting": m8,
         "hairdresser": MessageLookupByLibrary.simpleMessage("Hairdresser"),
         "here": MessageLookupByLibrary.simpleMessage(
             "here ============================"),
@@ -248,6 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes_count": m3,
         "minutes_count_short": m4,
         "more": MessageLookupByLibrary.simpleMessage("More"),
+        "nWombats": m9,
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "new_account": MessageLookupByLibrary.simpleMessage("New account"),
         "new_password": MessageLookupByLibrary.simpleMessage("New password"),
@@ -406,7 +412,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "validator_it_does_not_match":
             MessageLookupByLibrary.simpleMessage("It does not match"),
         "validator_should_be_with_minimum_length_of_characters": m7,
-        "validator_should_be_with_range_of": m8,
+        "validator_should_be_with_range_of": m10,
         "validator_this_field_is_required":
             MessageLookupByLibrary.simpleMessage("This field is required"),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),

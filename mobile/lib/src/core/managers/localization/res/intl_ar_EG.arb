@@ -253,37 +253,49 @@
   "hours_count": "{count,plural, =0{} =1{1 ساعة} other{{count} ساعات}}",
   "@hours_count": {
     "placeholders": {
-      "count": {}
+      "count": {
+        
+      }
     }
   },
   "hours_count_short": "{count} س",
   "@hours_count_short": {
     "placeholders": {
-      "count": {}
+      "count": {
+        
+      }
     }
   },
   "minutes_count": "{count,plural, =0{} =1{1 دقيقة} other{{count} دقائق}}",
   "@minutes_count": {
     "placeholders": {
-      "count": {}
+      "count": {
+        
+      }
     }
   },
   "minutes_count_short": "{count} د",
   "@minutes_count_short": {
     "placeholders": {
-      "count": {}
+      "count": {
+        
+      }
     }
   },
   "seconds_count": "{count,plural, =0{} =1{1 ثانية} other{{count} ثواني}}",
   "@seconds_count": {
     "placeholders": {
-      "count": {}
+      "count": {
+        
+      }
     }
   },
   "seconds_count_short": "{count} ث",
   "@seconds_count_short": {
     "placeholders": {
-      "count": {}
+      "count": {
+        
+      }
     }
   }
 }

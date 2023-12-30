@@ -22,26 +22,25 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(sheikh_name) => "للقارئ الشيخ: ${sheikh_name}";
 
-  static String m1(int count) =>
+  static String m1(num count) =>
       "${Intl.plural(count, zero: '', one: '1 ساعة', other: '${count} ساعات')}";
 
-  static String m2(count) => "${count} س";
+  static String m2(num count) => "${count} س";
 
-  static String m3(int count) =>
+  static String m3(num count) =>
       "${Intl.plural(count, zero: '', one: '1 دقيقة', other: '${count} دقائق')}";
 
-  static String m4(count) => "${count} د";
+  static String m4(num count) => "${count} د";
 
-  static String m5(int count) =>
+  static String m5(num count) =>
       "${Intl.plural(count, zero: '', one: '1 ثانية', other: '${count} ثواني')}";
 
-  static String m6(count) => "${count} ث";
+  static String m6(num count) => "${count} ث";
 
   static String m7(minLength) =>
       "يجب ألا يقل طول هذا الحقل عن ${minLength} حرفًا";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "activate": MessageLookupByLibrary.simpleMessage("تفيل"),
         "activated": MessageLookupByLibrary.simpleMessage("مفعلة"),

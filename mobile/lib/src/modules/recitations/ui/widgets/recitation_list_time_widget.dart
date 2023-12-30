@@ -1,4 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:async';
+
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:kawtharuna/src/core/constants/app_animation_duration.dart';
 import 'package:kawtharuna/src/core/constants/app_dimens.dart';
@@ -27,6 +29,30 @@ class RecitationListItem extends StatefulWidget {
 }
 
 class _RecitationListItemState extends State<RecitationListItem> {
+  late AudioController _audioController;
+  late StreamSubscription _playerSubscription;
+  bool _isCurrentPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _audioController = Provider.of<AudioController>(context, listen: false);
+
+    // _playerSubscription = _audioController.songListener.listen((event) {
+    //   final isPlaying = event == PlayerState.playing &&
+    //       _audioController.currentlyPlayingUrl == widget.recitation.audio;
+    //   setState(() {
+    //     _isCurrentPlaying = isPlaying;
+    //   });
+    // });
+  }
+
+  @override
+  void dispose() {
+    _playerSubscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
@@ -50,6 +76,7 @@ class _RecitationListItemState extends State<RecitationListItem> {
               ),
               Positioned.fill(
                 child: AudioControlOverlay(
+                  isCurrentPlaying: _isCurrentPlaying,
                   recitation: widget.recitation,
                 ),
               ),
@@ -85,7 +112,10 @@ class AudioControlOverlay extends StatefulWidget {
   const AudioControlOverlay({
     super.key,
     required this.recitation,
+    this.isCurrentPlaying = false,
   });
+
+  final bool isCurrentPlaying;
 
   final RecitationEntity recitation;
 
@@ -97,6 +127,15 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> animation;
+
+  @override
+  void didUpdateWidget(covariant AudioControlOverlay oldWidget) {
+    if (widget.isCurrentPlaying != oldWidget.isCurrentPlaying) {
+      _onAnimate();
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   void initState() {
@@ -112,9 +151,9 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
       end: 1.0,
     ).animate(controller);
     // ifcontext.read<AudioController>().musicPlayer.source as UrlSource?;
-    context.read<AudioController>().songListener.listen((event) {
-      if (event.index == PlayerState.completed) {}
-    });
+    // context.read<AudioController>().songListener.listen((event) {
+    //   // if (event.index == PlayerState.completed) {}
+    // });
   }
 
   @override
@@ -126,6 +165,7 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
   @override
   Widget build(BuildContext context) {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
+    // final isPlaying = Provider.of<AudioController>(context)._isCurrentPlaying;
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -142,11 +182,7 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
         ),
         onPressed: () {
           _togglePlayPause();
-          if (animation.status == AnimationStatus.completed) {
-            controller.reverse();
-          } else {
-            controller.forward();
-          }
+          _onAnimate();
         },
       ),
     );
@@ -162,6 +198,14 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
         image: widget.recitation.image,
         title: widget.recitation.title,
       );
+    }
+  }
+
+  void _onAnimate() {
+    if (animation.status == AnimationStatus.completed) {
+      controller.reverse();
+    } else {
+      controller.forward();
     }
   }
 }

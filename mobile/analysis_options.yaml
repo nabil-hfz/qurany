@@ -7,3 +7,5 @@ linter:
     # development. Consider enabling them once development is further along.
     prefer_const_constructors: false  # Annoying in early development
     prefer_single_quotes: false  # Annoying in early development
+    parameter_assignments: false
+

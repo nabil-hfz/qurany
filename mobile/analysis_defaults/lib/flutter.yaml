@@ -19,3 +19,5 @@ linter:
     unawaited_futures: true
     unnecessary_statements: true
     use_super_parameters: true
+    argument_type_not_assignable: false
+
