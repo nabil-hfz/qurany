@@ -10,7 +10,6 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 
 
-
 //apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 def localProperties = new Properties()
@@ -94,4 +93,10 @@ dependencies {
 
 //    implementation platform("com.google.firebase:firebase-bom:32.7.0")
     implementation "com.google.firebase:firebase-analytics"
+//    def exoplayer_version = "2.19.1"
+//    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+//    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+//    implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayer_version"
+//    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:$exoplayer_version"
+
 }

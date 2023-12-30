@@ -3,12 +3,17 @@ import 'dart:developer' as dev;
 import 'dart:io';
 import 'dart:math';
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:kawtharuna/src/core/constants/app_enums.dart';
+import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
 import 'package:kawtharuna/src/core/entity/localization/localized_entity.dart';
+import 'package:kawtharuna/src/core/managers/managers.dart';
+import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
 
@@ -136,66 +141,16 @@ class AppUtils {
     }
   }
 
-  static String platformStr() {
-    if (kIsWeb) {
-      return PlatformTargetApp.web.name;
-    } else {
-      if (Platform.isAndroid) {
-        return PlatformTargetApp.android.name;
-      } else if (Platform.isIOS) {
-        return PlatformTargetApp.iOS.name;
-      } else if (Platform.isLinux) {
-        return PlatformTargetApp.linux.name;
-      } else if (Platform.isMacOS) {
-        return PlatformTargetApp.macOs.name;
-      } else if (Platform.isWindows) {
-        return PlatformTargetApp.windows.name;
-      } else {
-        return "";
-      }
-    }
-  }
-
-  static String bytesToHex(List<int> bytes) {
-    return bytes.map((e) => e.toRadixString(16).padLeft(2, '0')).join('');
-  }
-
-  /*
-  static showToast({
-    required String msg,
-    Toast? toastLength,
-    Color? backgroundColor,
-    Color? textColor,
-  }) {
-    Fluttertoast.showToast(
-      msg: msg,
-      toastLength: toastLength,
-      backgroundColor: backgroundColor,
-      textColor: textColor,
-      fontSize: AppTextSize.size_16,
-    );
-  }
-
-  static appShowDialog<T>({
-    required BuildContext context,
-    required Widget Function(BuildContext context) builder,
-  }) {
-    showDialog<T>(
-      context: context,
-      builder: (BuildContext context) {
-        return builder(context);
-      },
-    ).then((T? value) {});
-  }
-
   static showSnackBar({
     required BuildContext context,
     required String message,
     TextStyle? style,
     Color? backgroundColor,
   }) {
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
-
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(
+      context,
+      listen: false,
+    );
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
@@ -211,7 +166,7 @@ class AppUtils {
     );
   }
 
-  static showCustomMessage({
+  static Future<T?> _showCustomMessage<T>({
     required BuildContext context,
     String? title,
     String? message,
@@ -219,16 +174,20 @@ class AppUtils {
     Widget? messageText,
     Color? backgroundColor,
     Color? titleColor,
-    FlushbarPosition position = FlushbarPosition.BOTTOM,
+    FlushbarPosition position = FlushbarPosition.TOP,
     Curve reverseAnimationCurve = Curves.decelerate,
     Curve forwardAnimationCurve = Curves.elasticOut,
-    bool isDismissible = false,
+    bool isDismissible = true,
     Duration? duration,
     Widget? icon,
     Widget? mainButton,
   }) async {
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
-    Flushbar(
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(
+      context,
+      listen: false,
+    );
+
+    return Flushbar<T>(
       title: title,
       titleColor: titleColor,
       message: message,
@@ -248,7 +207,7 @@ class AppUtils {
     ).show(context);
   }
 
-  static showWarningMessage({
+  static Future<T?> showWarningMessage<T>({
     required BuildContext context,
     String? title,
     String? message,
@@ -259,8 +218,11 @@ class AppUtils {
     Color? iconColor,
     FlushbarPosition position = FlushbarPosition.BOTTOM,
   }) async {
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
-    showCustomMessage(
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(
+      context,
+      listen: false,
+    );
+    return _showCustomMessage(
       title: title,
       titleColor: titleColor,
       message: message,
@@ -275,7 +237,7 @@ class AppUtils {
     );
   }
 
-  static showErrorMessage({
+  static Future<T?> showErrorMessage<T>({
     required BuildContext context,
     String? title,
     String? message,
@@ -285,17 +247,50 @@ class AppUtils {
     Color? iconColor,
     FlushbarPosition position = FlushbarPosition.BOTTOM,
   }) async {
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
-    showCustomMessage(
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(
+      context,
+      listen: false,
+    );
+    return _showCustomMessage(
       title: title,
       titleColor: titleColor,
       message: message,
       position: position,
       context: context,
+      backgroundColor: themeStore.appColors.flushBarErrorBackground,
       icon: Icon(
         Icons.error_outline,
-        size: AppIconSize.size_16,
-        color: iconColor ?? themeStore.appColors.iconColor,
+        size: AppIconSize.size_24,
+        color: iconColor ?? themeStore.appColors.iconReversedColor,
+      ),
+    );
+  }
+
+  static Future<T?> showSuccessMessage<T>({
+    required BuildContext context,
+    String? title,
+    String? message,
+    Widget? titleText,
+    Widget? messageText,
+    Color? titleColor,
+    Color? iconColor,
+    FlushbarPosition position = FlushbarPosition.BOTTOM,
+  }) async {
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(
+      context,
+      listen: false,
+    );
+    return _showCustomMessage(
+      title: title,
+      titleColor: titleColor,
+      message: message,
+      position: position,
+      context: context,
+      backgroundColor: themeStore.appColors.flushBarSuccessBackground,
+      icon: Icon(
+        Icons.check_circle,
+        size: AppIconSize.size_24,
+        color: iconColor ?? themeStore.appColors.iconReversedColor,
       ),
     );
   }
@@ -308,69 +303,10 @@ class AppUtils {
     if (focus.hasFocus) focus.unfocus();
   }
 
-  /// A normal email Regular Expression
-  /// checks the current email value
-  /// if it matches the reg
-  static emailValidator(
-    String value,
-  ) {
-    final regex = RegExp(
-      r"^[a-zA-Z\d.a-zA-Z\d!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+",
-    );
-    return regex.hasMatch(value);
-  }
-
-  /// Returns a correct value of the current
-  /// given values.
-  static platform({android, ios}) {
-    if (Platform.isIOS) return ios;
-    return android;
-  }
-  */
-
   /// Returns a generated random color with ends with the white color value.
   static int generateColor() {
     return Random().nextInt(0xffffffff);
   }
-
-  /// Opens current link after checking it
-// static openLink({
-//   String url = '-',
-// }) async {
-//   print('openLink ${url}');
-//   try {
-//     if (await canLaunchUrl(Uri.tryParse(url)!)) {
-//       // print('Uri.tryParse(url) is ${Uri.tryParse(url)!}');
-//       await launch(
-//         url,
-//         forceSafariVC: false,
-//         forceWebView: false,
-//       );
-//     } else
-//       CustomSnackbarToastDialog.showErrorMsgSnackBar(
-//         '${translate.could_not_open_this_link}',
-//       );
-//   } catch (e) {
-//     CustomSnackbarToastDialog.showErrorMsgSnackBar(
-//       '${translate.could_not_open_this_link}',
-//     );
-//   }
-// }
-
-  /// Opens current link after checking it
-// static clipboard({
-//   required String text,
-// }) async {
-//   try {
-//     Clipboard.setData(ClipboardData(text: text)).then((value) {
-//       showToast(message: '${translate.copied_to_clipboard}');
-//     });
-//   } catch (e) {
-//     print('clipboard error is $e');
-//     // showToast(message: '${translate.no_data_found}');
-//   }
-// }
-//
 }
 
 AppUtils appUtils = AppUtils.instance;

@@ -9,9 +9,9 @@ part 'base_filter.g.dart';
 @JsonSerializable(anyMap: true, includeIfNull: false)
 class BaseFilter extends Equatable {
   BaseSortModel? sort;
-  final PaginationModel _pagination;
+  final PaginationModel pagination;
 
-  BaseFilter(this.sort, this._pagination);
+  BaseFilter(this.sort, this.pagination);
 
   factory BaseFilter.fromJson(Map<String, dynamic> json) =>
       _$BaseFilterFromJson(json);
@@ -19,31 +19,31 @@ class BaseFilter extends Equatable {
   Map<String, dynamic> toJson() => _$BaseFilterToJson(this);
 
   int get limit {
-    return _pagination.limit;
+    return pagination.limit;
   }
 
   set limit(int value) {
-    _pagination.limit = value;
+    pagination.limit = value;
   }
 
   int get page {
-    return _pagination.page;
+    return pagination.page;
   }
 
   set page(int value) {
-    _pagination.page = value;
+    pagination.page = value;
   }
 
   @override
   List<Object?> get props => [
         sort,
-        _pagination,
+        pagination,
       ];
 
   @override
   String toString() {
     return "$BaseFilter($BaseSortModel: $sort, "
-        "$PaginationModel: $_pagination"
+        "$PaginationModel: $pagination"
         ")";
   }
 }

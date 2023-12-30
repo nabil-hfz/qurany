@@ -1,11 +1,14 @@
 import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
+import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:kawtharuna/src/core/managers/audio/songs.dart';
 import 'package:kawtharuna/src/core/managers/settings/settings.dart';
 import 'package:logging/logging.dart';
+import 'package:rxdart/rxdart.dart';
 
+@Singleton()
 class AudioController {
   static final _log = Logger('AudioController');
 
@@ -19,7 +22,17 @@ class AudioController {
   AudioController() {
     _musicPlayer = AudioPlayer();
     _playlist = Queue.of([]);
+    _musicPlayer.playerStateStream.listen((event) {
+      if (event.playing) {
+        if (event.processingState == ProcessingState.completed ||
+            event.processingState == ProcessingState.idle) {
+          currentPlayingUrl.add(null);
+        }
+      }
+    });
   }
+
+  late BehaviorSubject<String?> currentPlayingUrl = BehaviorSubject();
 
   String? get currentlyPlayingUrl => _currentlyPlayingUrl;
 
@@ -115,6 +128,18 @@ class AudioController {
   }
 
   /// Plays audio from the given URL.
+  Future<void> setPlayList(List<String> urls) async {
+    // Define the playlist
+    final playlist = ConcatenatingAudioSource(
+      // Start loading next item just before reaching it
+      useLazyPreparation: true,
+      // Customise the shuffle algorithm
+      shuffleOrder: DefaultShuffleOrder(),
+      // Specify the playlist items
+      children: urls.map((url) => AudioSource.uri(Uri.parse(url))).toList(),
+    );
+  }
+
   Future<void> playAudioFromUrl(String url) async {
     final muted = _settings?.muted.value ?? true;
     if (muted) {
@@ -122,21 +147,33 @@ class AudioController {
       return;
     }
 
+    final uri = Uri.parse(url);
+
+    //
+    print('_currentlyPlayingUrl');
+    print(_currentlyPlayingUrl);
+    print('_currentlyPlayingUrl 2');
+    print(url);
     if (_currentlyPlayingUrl == url) {
-      if (_musicPlayer.playerState.playing) {
-        _log.info(() => 'Pausing audio as it is already playing.');
-        await _musicPlayer.pause();
-        _currentlyPlayingUrl = null;
+      if (_musicPlayer.playerState.playing &&
+          _musicPlayer.audioSource is UriAudioSource) {
+        if ((_musicPlayer.audioSource as UriAudioSource).uri == uri) {
+          _log.info(() => 'Pausing audio as it is already playing.');
+          await _musicPlayer.pause();
+          currentPlayingUrl.add(null);
+        }
       } else {
         _log.info(() => 'Resuming audio: $url');
         await _musicPlayer.play();
+        currentPlayingUrl.add(url);
       }
     } else {
-      _log.info(() => 'Playing audio from URL: $url');
-      await _musicPlayer.setAudioSource(AudioSource.uri(Uri.parse(url)));
+      _log.info(() => 'Playing audio from URL ');
+      await _musicPlayer.setAudioSource(AudioSource.uri(uri));
       await _musicPlayer.play();
-
+      //
       _currentlyPlayingUrl = url;
+      currentPlayingUrl.add(url);
     }
   }
 
@@ -200,8 +237,10 @@ class AudioController {
   }
 
   void dispose() {
-    _lifecycleNotifier?.removeListener(_handleAppLifecycle);
+    currentPlayingUrl.add(null);
     _stopMusic();
+    currentPlayingUrl.close();
+    _lifecycleNotifier?.removeListener(_handleAppLifecycle);
     _musicPlayer.dispose();
   }
 }

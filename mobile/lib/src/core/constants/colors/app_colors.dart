@@ -43,6 +43,8 @@ abstract class AppColors {
   late Color amberColor;
   late Color indicatorActiveDotColor;
   late Color indicatorInactiveDotColor;
+  late Color flushBarErrorBackground;
+  late Color flushBarSuccessBackground;
 
   ///
   /// Scaffold Colors

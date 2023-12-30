@@ -8,7 +8,7 @@ part of 'pagination_model.dart';
 
 PaginationModel _$PaginationModelFromJson(Map json) => PaginationModel(
       page: json['page'] as int,
-      limit: json['limit'] as int,
+      limit: json['limit'] as int? ?? 10,
     );
 
 Map<String, dynamic> _$PaginationModelToJson(PaginationModel instance) =>

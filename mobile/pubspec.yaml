@@ -46,6 +46,9 @@ dependencies:
   # that references the dependency.
   firebase_core: ^2.1.1  # Needed for Crashlytics below
   firebase_crashlytics: ^3.4.8
+  firebase_performance: ^0.9.3+8
+
+
   games_services: ^3.0.0  # Achievements and leaderboards
   google_mobile_ads: ^2.0.1  # Ads
   in_app_purchase: ^3.0.1  # In-app purchases
@@ -64,7 +67,7 @@ dependencies:
   equatable: ^2.0.5
   flutter_bloc: ^8.1.2
   fluttertoast: ^8.2.1
-  another_flushbar: ^1.12.29
+
   devicelocale: ^0.6.0
   http_parser: ^4.0.2
   json_annotation: ^4.8.0
@@ -83,6 +86,11 @@ dependencies:
   miniplayer: ^1.0.1
   cached_network_image: ^3.3.0
   firebase_storage: ^11.0.16
+
+  # A flexible widget for user notification.
+  # Customize your text, button, duration, animations and much more.
+  # For Android devs, it is made to replace Snackbars and Toasts.
+  another_flushbar: ^1.12.29
 
 
 #  flutter pub upgrade --major-versions
@@ -133,6 +141,7 @@ dev_dependencies:
   build_runner: ^2.3.3
 
   flutter_gen_runner: ^5.2.0
+  flutter_gen: ^5.3.2
 
 flutter:
   uses-material-design: true

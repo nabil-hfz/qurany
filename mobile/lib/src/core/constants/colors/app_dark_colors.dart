@@ -21,7 +21,10 @@ class DarkColors implements AppColors {
 
   @override
   Color get flushBarBackground => Colors.black38;
-
+  @override
+  Color get flushBarErrorBackground => Colors.red;
+  @override
+  Color get flushBarSuccessBackground => Colors.lightGreen;
   @override
   Color get pageRoundedCornerBG => Colors.black;
 

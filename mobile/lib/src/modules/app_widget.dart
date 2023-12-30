@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kawtharuna/main.dart';
@@ -74,7 +73,7 @@ class MyApp extends StatelessWidget {
               // and not "only when it's needed", as is default behavior.
               // This way, music starts immediately.
               lazy: false,
-              create: (context) => AudioController(),
+              create: (context) => findDep<AudioController>(),
               update: (context, settings, lifecycleNotifier, audio) {
                 if (audio == null) throw ArgumentError.notNull();
                 audio.attachSettings(settings);

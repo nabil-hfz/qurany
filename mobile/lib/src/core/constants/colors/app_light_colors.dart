@@ -23,6 +23,12 @@ class LightColors implements AppColors {
   Color get flushBarBackground => Colors.white54;
 
   @override
+  Color get flushBarErrorBackground => Colors.red;
+
+  @override
+  Color get flushBarSuccessBackground => Colors.lightGreen;
+
+  @override
   Color get pageRoundedCornerBG => Colors.white;
 
   @override
