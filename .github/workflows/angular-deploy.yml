@@ -33,8 +33,15 @@ jobs:
         run: firebase experiments:enable webframeworks
         working-directory: ./frontend
 
-      - name: Deploy to Firebase Hosting
-        run: firebase deploy --only hosting --token "$FIREBASE_TOKEN"
+      - name: Setup Google Cloud Credentials
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+            SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        run: |
+            echo "$SERVICE_ACCOUNT_KEY" > ./gcloud-service-key.json
+            echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcloud-service-key.json" >> $GITHUB_ENV
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting
+        # env:
+        #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}  # Optional if we use service account, should be deleted later on
         working-directory: ./frontend
