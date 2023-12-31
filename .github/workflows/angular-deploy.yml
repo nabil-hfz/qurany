@@ -18,6 +18,9 @@ jobs:
       with:
         node-version: '18'
 
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+      
     - name: Install Dependencies
       run: npm install --legacy-peer-deps
       working-directory: ./frontend
