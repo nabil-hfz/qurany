@@ -33,7 +33,6 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
   late Animation<double> animation;
   late final Uri? audioUri;
   late final String? audioUrl;
-  final seekingValueInSec = 10;
 
   bool isBeingPlayed = false;
 
@@ -164,9 +163,9 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
 
   void onSeek(bool isSeekingForward) {
     if (isSeekingForward) {
-      audioController.seekForward(seekingValueInSec);
+      audioController.seekForward();
     } else {
-      audioController.seekBackward(seekingValueInSec);
+      audioController.seekBackward();
     }
   }
 

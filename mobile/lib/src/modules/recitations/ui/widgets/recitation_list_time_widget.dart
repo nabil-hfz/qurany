@@ -9,7 +9,7 @@ import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:kawtharuna/src/core/widgets/common/vertical_padding.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:kawtharuna/src/modules/recitations/domain/entity/recitation_entity.dart';
-import 'package:kawtharuna/src/modules/recitations/ui/widgets/audio_control_overlay.dart';
+import 'package:kawtharuna/src/modules/recitations/ui/widgets/audio_controllers_overlay.dart';
 import 'package:provider/provider.dart';
 
 class RecitationListItem extends StatefulWidget {
