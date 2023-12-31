@@ -36,10 +36,6 @@ class AudioController {
 
   String? get currentlyPlayingUrl => _currentlyPlayingUrl;
 
-  // Stream<PlayerState> get songListener {
-  //   return _musicPlayer;
-  // }
-
   AudioPlayer get musicPlayer {
     return _musicPlayer;
   }
@@ -127,18 +123,18 @@ class AudioController {
     }
   }
 
-  /// Plays audio from the given URL.
-  Future<void> setPlayList(List<String> urls) async {
-    // Define the playlist
-    final playlist = ConcatenatingAudioSource(
-      // Start loading next item just before reaching it
-      useLazyPreparation: true,
-      // Customise the shuffle algorithm
-      shuffleOrder: DefaultShuffleOrder(),
-      // Specify the playlist items
-      children: urls.map((url) => AudioSource.uri(Uri.parse(url))).toList(),
-    );
-  }
+  // /// Plays audio from the given URL.
+  // Future<void> setPlayList(List<String> urls) async {
+  //   // Define the playlist
+  //   final playlist = ConcatenatingAudioSource(
+  //     // Start loading next item just before reaching it
+  //     useLazyPreparation: true,
+  //     // Customise the shuffle algorithm
+  //     shuffleOrder: DefaultShuffleOrder(),
+  //     // Specify the playlist items
+  //     children: urls.map((url) => AudioSource.uri(Uri.parse(url))).toList(),
+  //   );
+  // }
 
   Future<void> playAudioFromUrl(String url) async {
     final muted = _settings?.muted.value ?? true;
@@ -149,38 +145,37 @@ class AudioController {
 
     final uri = Uri.parse(url);
 
-    //
-    print('_currentlyPlayingUrl');
-    print(_currentlyPlayingUrl);
-    print('_currentlyPlayingUrl 2');
-    print(url);
     if (_currentlyPlayingUrl == url) {
-      if (_musicPlayer.playerState.playing &&
-          _musicPlayer.audioSource is UriAudioSource) {
-        if ((_musicPlayer.audioSource as UriAudioSource).uri == uri) {
-          _log.info(() => 'Pausing audio as it is already playing.');
-          await _musicPlayer.pause();
-          currentPlayingUrl.add(null);
-        }
+      if (_musicPlayer.playerState.playing ||
+          _musicPlayer.playerState.processingState == ProcessingState.loading) {
+        _log.info(() => 'Pausing audio as it is already playing.');
+        currentPlayingUrl.add(null);
+        await _musicPlayer.pause();
       } else {
-        _log.info(() => 'Resuming audio: $url');
-        await _musicPlayer.play();
+        _log.info(() => 'Resuming audio');
         currentPlayingUrl.add(url);
+        await _musicPlayer.play();
       }
     } else {
-      _log.info(() => 'Playing audio from URL ');
-      await _musicPlayer.setAudioSource(AudioSource.uri(uri));
-      await _musicPlayer.play();
-      //
+      _log.info(() => 'Playing audio from URL $url');
+      // await _musicPlayer.setAudioSource(AudioSource.uri(uri));
+
+      await _musicPlayer.setUrl(url);
       _currentlyPlayingUrl = url;
       currentPlayingUrl.add(url);
+      //
+      await _musicPlayer.play();
     }
   }
 
-  // Future<void> _playFirstSongInPlaylist() async {
-  //   _log.info(() => 'Playing ${_playlist.first} now.');
-  //   // await _musicPlayer.play(AssetSource('music/${_playlist.first.filename}'));
-  // }
+  Future<void> seekForward([int seconds = 10]) async {
+    return await musicPlayer.seek(Duration(seconds: seconds));
+  }
+
+  Future<void> seekBackward([int seconds = 10]) async {
+    await musicPlayer.seek(Duration(seconds: -seconds));
+    // return await musicPlayer.seek(Duration(seconds: -seconds));
+  }
 
   Future<void> _resumeMusic() async {
     _log.info('Resuming music');

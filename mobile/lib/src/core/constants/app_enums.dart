@@ -6,7 +6,8 @@ class AppConstants {
   static const textFieldMaxLines = 4;
   static const checkboxBorderWidth = 1.5;
   static const borderWidth = 1.0;
-  static const MobileThreshold = 400;
+  static const mobileThreshold = 420;
+  static const desktopThreshold = 900;
 }
 
 enum PlatformTargetApp { android, iOS, web, macOs, windows, linux }

@@ -1,7 +1,4 @@
 // import 'package:audioplayers/audioplayers.dart';
-import 'dart:developer' as dev;
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/constants/app_radius.dart';
@@ -36,10 +33,11 @@ class _RecitationListItemState extends State<RecitationListItem> {
   @override
   Widget build(BuildContext context) {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
-    final width = DeviceUtils.getScaledWidth(context, 0.38);
-    final height = DeviceUtils.getScaledHeight(context, 0.38);
-    final imgSize = min(width, height);
-    dev.log('${widget.recitation.image}');
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    double size = isPortrait ? 0.3 : 0.46;
+    final height = DeviceUtils.getScaledHeight(context, size);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppDimens.space8,
@@ -50,12 +48,16 @@ class _RecitationListItemState extends State<RecitationListItem> {
         children: [
           Stack(
             children: [
-              AppImageWidget(
-                path: widget.recitation.image,
-                borderRadius: AppRadius.radius6,
-                boxFit: BoxFit.cover,
-                // width: imgSize,
-                height: imgSize,
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  return AppImageWidget(
+                    path: widget.recitation.image,
+                    borderRadius: AppRadius.radius6,
+                    boxFit: BoxFit.cover,
+                    width: constraints.maxWidth,
+                    height: height,
+                  );
+                },
               ),
               Positioned.fill(
                 child: AudioControlOverlay(

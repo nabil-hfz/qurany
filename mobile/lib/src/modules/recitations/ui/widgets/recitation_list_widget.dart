@@ -6,7 +6,6 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_state.dart';
 import 'package:kawtharuna/src/core/constants/app_enums.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
-import 'package:kawtharuna/src/core/managers/audio/audio_controller.dart';
 import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
 import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';
@@ -59,19 +58,8 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RecitationCubit, RecitationState>(
+    return BlocBuilder<RecitationCubit, RecitationState>(
       bloc: findDep<RecitationCubit>(),
-      listener: (ctx, state) {
-        if (state.getRecitations is RecitationsSuccess) {
-          // final recitations = (state as RecitationsSuccess).recitations;
-          // final audios = recitations
-          //     .map((e) => e.audio)
-          //     .where((element) => element != null)
-          //     .toList() as List<String>;
-
-          // context.read<AudioController>().setPlayList(audios);
-        }
-      },
       builder: (ctx, state) {
         final resultState = state.getRecitations;
         return _buildBod(resultState);
@@ -98,16 +86,22 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
     final width = DeviceUtils.getScaledWidth(context, 1);
     final height = DeviceUtils.getScaledHeight(context, 1);
     final size = min(width, height);
-    if (size <= AppConstants.MobileThreshold) {
-      return SliverList.builder(
-        itemBuilder: (ctx, index) {
-          return RecitationListItem(
-            recitation: recitations[index],
-          );
-        },
-        itemCount: recitations.length,
-      );
+
+    var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    if (isPortrait) {
+      if (size <= AppConstants.mobileThreshold) {
+        return SliverList.builder(
+          itemBuilder: (ctx, index) {
+            return RecitationListItem(
+              recitation: recitations[index],
+            );
+          },
+          itemCount: recitations.length,
+        );
+      }
     }
+    int crossAxisCount = width <= AppConstants.desktopThreshold ? 2 : 3;
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (ctx, i) {
@@ -118,7 +112,10 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
         childCount: recitations.length,
       ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: 0,
+        mainAxisSpacing: 0,
+        childAspectRatio: 1.4,
       ),
     );
   }

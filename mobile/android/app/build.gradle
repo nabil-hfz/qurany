@@ -53,7 +53,7 @@ android {
         applicationId "com.kawtharuna.mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -93,10 +93,11 @@ dependencies {
 
 //    implementation platform("com.google.firebase:firebase-bom:32.7.0")
     implementation "com.google.firebase:firebase-analytics"
-//    def exoplayer_version = "2.19.1"
-//    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
-//    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
-//    implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayer_version"
-//    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:$exoplayer_version"
+
+    def exoplayer_version = "2.19.1"
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:$exoplayer_version"
 
 }

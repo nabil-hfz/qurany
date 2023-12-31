@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
 import 'package:kawtharuna/src/core/constants/constants.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/audio/audio_controller.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
 import 'package:kawtharuna/src/modules/recitations/domain/entity/recitation_entity.dart';
 import 'package:provider/provider.dart';
+
+enum AudioControllerOverlayAction {
+  seekBackward,
+  seekForward,
+}
 
 class AudioControlOverlay extends StatefulWidget {
   const AudioControlOverlay({
     super.key,
     required this.recitation,
-    // this.isCurrentPlaying = false,
   });
-
-  // final bool isCurrentPlaying;
 
   final RecitationEntity recitation;
 
@@ -25,18 +27,21 @@ class AudioControlOverlay extends StatefulWidget {
 
 class _AudioControlOverlayState extends State<AudioControlOverlay>
     with SingleTickerProviderStateMixin {
+  final audioController = findDep<AudioController>();
+
   late AnimationController controller;
   late Animation<double> animation;
-  late final Uri? uri;
-  late final String? url;
+  late final Uri? audioUri;
+  late final String? audioUrl;
+  final seekingValueInSec = 10;
 
   bool isBeingPlayed = false;
 
   @override
   void initState() {
     super.initState();
-    url = widget.recitation.audio;
-    uri = Uri.parse(url ?? '');
+    audioUrl = widget.recitation.audio;
+    audioUri = Uri.parse(audioUrl ?? '');
     controller = AnimationController(
       vsync: this,
       duration: const Duration(
@@ -47,16 +52,8 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
       begin: 0.0,
       end: 1.0,
     ).animate(controller);
-    final player = findDep<AudioController>();
 
-    player.currentPlayingUrl.listen(listener);
-  }
-
-  @override
-  void dispose() {
-    print('dispose here ');
-    controller.dispose();
-    super.dispose();
+    audioController.currentPlayingUrl.stream.listen(listener);
   }
 
   @override
@@ -68,42 +65,44 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
         color: Colors.black26,
         borderRadius: BorderRadius.circular(AppRadius.radius6),
       ),
-      child: IconButton(
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.play_pause,
-          progress: animation,
-          semanticLabel: 'Show menu',
-          color: themeStore.appColors.iconReversedColor,
-          size: 64.0,
-        ),
-        onPressed: () {
-          _togglePlayPause();
-          _onAnimate();
-        },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildSeekButton(
+            themeStore,
+            AudioControllerOverlayAction.seekBackward,
+          ),
+          IconButton(
+            icon: AnimatedIcon(
+              progress: animation,
+              icon: AnimatedIcons.play_pause,
+              semanticLabel: 'Play/Pause Button',
+              color: themeStore.appColors.iconReversedColor,
+              size: AppIconSize.size_62,
+            ),
+            onPressed: () {
+              _togglePlayPause();
+            },
+          ),
+          _buildSeekButton(
+            themeStore,
+            AudioControllerOverlayAction.seekForward,
+          ),
+        ],
       ),
     );
   }
 
   void _togglePlayPause() {
-    if (url != null) {
-      final audioController = findDep<AudioController>();
-      audioController.playAudioFromUrl(url!);
+    if (audioUrl != null) {
+      audioController.playAudioFromUrl(audioUrl!);
       currentlyPlaying.value = AudioObject(
-        audio: url!,
+        audio: audioUrl!,
         image: widget.recitation.image,
         title: widget.recitation.title,
       );
-      _onChange();
     } else {
       // AppUtils;
-    }
-  }
-
-  void _onAnimate() {
-    if (animation.status == AnimationStatus.completed) {
-      controller.reverse();
-    } else {
-      controller.forward();
     }
   }
 
@@ -118,32 +117,62 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
   /// widget is played already then we change its state and animate the icon,
   /// for ex: when we have something being played and it ends at some point.
   void listener(String? audioUrl) {
-    print('listener audioUrl is $isBeingPlayed $audioUrl');
-    if (audioUrl != null) {
-      if (audioUrl == url) {
-        if (!isBeingPlayed) {
-          controller.forward();
-          _onChange();
-        }
+    if (audioUrl != null && audioUrl.isNotEmpty) {
+      if (audioUrl == this.audioUrl) {
+        _onChange();
       } else {
         if (isBeingPlayed) {
-          controller.reverse();
           _onChange();
         }
       }
     } else {
       if (isBeingPlayed) {
-        controller.reverse();
         _onChange();
       }
     }
   }
 
   void _onChange() {
+    if (!isBeingPlayed) {
+      controller.forward();
+    } else if (isBeingPlayed) {
+      controller.reverse();
+    }
+
     if (mounted) {
       setState(() {
         isBeingPlayed = !isBeingPlayed;
       });
     }
+  }
+
+  Widget _buildSeekButton(
+    AppThemeManager themeStore,
+    AudioControllerOverlayAction action,
+  ) {
+    bool isSeekingForward = AudioControllerOverlayAction.seekForward == action;
+    return IconButton(
+      icon: Icon(
+        isSeekingForward ? Icons.forward_10_outlined : Icons.replay_10_outlined,
+        semanticLabel: 'Seek Button',
+        color: themeStore.appColors.iconReversedColor,
+        size: AppIconSize.size_32,
+      ),
+      onPressed: () => onSeek(isSeekingForward),
+    );
+  }
+
+  void onSeek(bool isSeekingForward) {
+    if (isSeekingForward) {
+      audioController.seekForward(seekingValueInSec);
+    } else {
+      audioController.seekBackward(seekingValueInSec);
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }

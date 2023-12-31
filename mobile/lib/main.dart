@@ -59,7 +59,7 @@ void guardedMain() {
     final msg = '${record.level.name}: ${record.time}: '
         '${record.loggerName}: '
         '${record.message}';
-    AppUtils.debugPrint(msg);
+    // AppUtils.debugPrint(msg);
     // AppUtils.log(msg);
   });
 
