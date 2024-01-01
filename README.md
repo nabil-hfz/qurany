@@ -1,67 +1,18 @@
-<div style="padding-left: 20px;">
+# Kawtharuna System
 
-# Kawtharuna System.
+## [Kawtharuna Website](www.kawtharuna.com)
 
 ### This system consists of three parts:
-   
-#### 1. Backend, build by Node js using express framework in typescript.
-   
-#### 2. Mobile App, build by Flutter framework for Android & iOS.
 
-#### 3. Frontend, build by Angular.
-      
-## Current Features.
-   
-   <table>
-      <tr>
-         <th style="color:#0BA0D0;">Backend</th>
-         <th style="color:#0BA0D0;">Forntend</th>
-         <th style="color:#0BA0D0;">Mobile</th>
-      </tr>
-      <!--feautre one -->
-      <tr>
-         <td>Provides Quran audio files.</td>
-         <td>
-            <ol>
-               <li>Lists all Quran audio files.</li>
-               <li>Runs Quran audio files.</li>
-               <li>Downloads Quran audio files.</li>
-            </ol>
-         </td>
-         <td>
-            <ol>
-               <li>Lists all Quran audio files.</li>
-               <li>Runs Quran audio files.</li>
-               <li>Downloads Quran audio files.</li>
-            </ol>
-         </td>
-      </tr>
-      <!--feautre 2 -->
-      <tr>
-         <td>
-            <ol>
-               <li>Provides Islamic reach Library</li>
-               <li>Provides search options</li>
-               <li>Downloads files</li>
-            </ol>
-         </td>
-         <td>
-            <ol>
-               <li>Lists files from the library</li>
-               <li>Provides files categories</li>
-               <li>Provides search options</li>
-               <li>Downloads Quran audio files</li>
-            </ol>
-         </td>
-         <td>
-            <ol>
-               <li>Lists files from the library</li>
-               <li>Provides files categories</li>
-               <li>Provides search options</li>
-               <li>Downloads Quran audio files</li>
-            </ol>
-         </td>
-      </tr>
-           <!--feautre 3 -->
-   </table>
-</div>
+#### 1. Backend, built with Node.js using the Express framework in TypeScript.
+
+#### 2. Mobile App, built with the Flutter framework for Android & iOS.
+
+#### 3. Frontend, built with Angular.
+
+## Current Features
+
+| Backend | Frontend | Mobile |
+| ------- | -------- | ------ |
+| Provides Quran audio files. | <ul><li>Lists all Quran audio files.</li><li>Runs Quran audio files.</li><li>Downloads Quran audio files.</li></ul> | <ul><li>Lists all Quran audio files.</li><li>Runs Quran audio files.</li><li>Downloads Quran audio files.</li></ul> |
+| <ul><li>Provides Islamic reach Library</li><li>Provides search options</li><li>Downloads files</li></ul> | <ul><li>Lists files from the library</li><li>Provides files categories</li><li>Provides search options</li><li>Downloads Quran audio files</li></ul> | <ul><li>Lists files from the library</li><li>Provides files categories</li><li>Provides search options</li><li>Downloads Quran audio files</li></ul> |
