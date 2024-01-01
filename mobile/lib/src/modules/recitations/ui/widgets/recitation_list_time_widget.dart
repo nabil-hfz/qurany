@@ -46,25 +46,28 @@ class _RecitationListItemState extends State<RecitationListItem> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Stack(
-            children: [
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  return AppImageWidget(
-                    path: widget.recitation.image,
-                    borderRadius: AppRadius.radius6,
-                    boxFit: BoxFit.cover,
-                    width: constraints.maxWidth,
-                    height: height,
-                  );
-                },
-              ),
-              Positioned.fill(
-                child: AudioControlOverlay(
-                  recitation: widget.recitation,
+          SizedBox(
+            height: height,
+            child: Stack(
+              children: [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return AppImageWidget(
+                      path: widget.recitation.image,
+                      borderRadius: AppRadius.radius6,
+                      boxFit: BoxFit.cover,
+                      width: constraints.maxWidth,
+                      height: height - 8,
+                    );
+                  },
                 ),
-              ),
-            ],
+                Positioned.fill(
+                  child: AudioControlOverlay(
+                    recitation: widget.recitation,
+                  ),
+                ),
+              ],
+            ),
           ),
           VerticalTextPadding.with6(),
           Row(

@@ -26,13 +26,14 @@ class AudioController {
       if (event.playing) {
         if (event.processingState == ProcessingState.completed ||
             event.processingState == ProcessingState.idle) {
-          currentPlayingUrl.add(null);
+          // currentPlayingUrl.add(null);
+          _currentlyPlayingUrl = null;
         }
       }
     });
   }
 
-  late BehaviorSubject<String?> currentPlayingUrl = BehaviorSubject();
+  // late BehaviorSubject<String?> currentPlayingUrl = BehaviorSubject();
 
   String? get currentlyPlayingUrl => _currentlyPlayingUrl;
 
@@ -149,11 +150,11 @@ class AudioController {
       if (_musicPlayer.playerState.playing ||
           _musicPlayer.playerState.processingState == ProcessingState.loading) {
         _log.info(() => 'Pausing audio as it is already playing.');
-        currentPlayingUrl.add(null);
+        // currentPlayingUrl.add(null);
         await _musicPlayer.pause();
       } else {
         _log.info(() => 'Resuming audio');
-        currentPlayingUrl.add(url);
+        // currentPlayingUrl.add(url);
         await _musicPlayer.play();
       }
     } else {
@@ -162,19 +163,22 @@ class AudioController {
 
       await _musicPlayer.setUrl(url);
       _currentlyPlayingUrl = url;
-      currentPlayingUrl.add(url);
+      // currentPlayingUrl.add(url);
       //
       await _musicPlayer.play();
     }
   }
 
   Future<void> seekForward([int seconds = 10]) async {
-    return await musicPlayer.seek(Duration(seconds: seconds));
+    var currentPosition = _musicPlayer.position.inSeconds;
+    currentPosition += seconds;
+    return await musicPlayer.seek(Duration(seconds: currentPosition));
   }
 
   Future<void> seekBackward([int seconds = 10]) async {
-    await musicPlayer.seek(Duration(seconds: -seconds));
-    // return await musicPlayer.seek(Duration(seconds: -seconds));
+    var currentPosition = _musicPlayer.position.inSeconds;
+    currentPosition -= seconds;
+    return await musicPlayer.seek(Duration(seconds: currentPosition));
   }
 
   Future<void> _resumeMusic() async {
@@ -232,9 +236,9 @@ class AudioController {
   }
 
   void dispose() {
-    currentPlayingUrl.add(null);
+    // currentPlayingUrl.add(null);
     _stopMusic();
-    currentPlayingUrl.close();
+    // currentPlayingUrl.close();
     _lifecycleNotifier?.removeListener(_handleAppLifecycle);
     _musicPlayer.dispose();
   }

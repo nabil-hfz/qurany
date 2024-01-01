@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
 import 'package:kawtharuna/src/core/constants/constants.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/audio/audio_controller.dart';
+import 'package:kawtharuna/src/core/managers/audio/common.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
+import 'package:kawtharuna/src/core/widgets/audio_controllers/src/play_pause_button_widget.dart';
 import 'package:kawtharuna/src/modules/recitations/domain/entity/recitation_entity.dart';
 import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 enum AudioControllerOverlayAction {
   seekBackward,
@@ -29,120 +33,53 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
     with SingleTickerProviderStateMixin {
   final audioController = findDep<AudioController>();
 
-  late AnimationController controller;
-  late Animation<double> animation;
-  late final Uri? audioUri;
-  late final String? audioUrl;
-
-  bool isBeingPlayed = false;
-
   @override
   void initState() {
     super.initState();
-    audioUrl = widget.recitation.audio;
-    audioUri = Uri.parse(audioUrl ?? '');
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(
-        milliseconds: AppDuration.mediumAnimationDuration,
-      ),
-    );
-    animation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(controller);
-
-    audioController.currentPlayingUrl.stream.listen(listener);
   }
 
   @override
   Widget build(BuildContext context) {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.black26,
-        borderRadius: BorderRadius.circular(AppRadius.radius6),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _buildSeekButton(
-            themeStore,
-            AudioControllerOverlayAction.seekBackward,
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.only(bottom: 8),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.black26,
+            borderRadius: BorderRadius.circular(AppRadius.radius6),
           ),
-          IconButton(
-            icon: AnimatedIcon(
-              progress: animation,
-              icon: AnimatedIcons.play_pause,
-              semanticLabel: 'Play/Pause Button',
-              color: themeStore.appColors.iconReversedColor,
-              size: AppIconSize.size_62,
-            ),
-            onPressed: () {
-              _togglePlayPause();
-            },
+        ),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildSeekButton(
+                themeStore,
+                AudioControllerOverlayAction.seekBackward,
+              ),
+              PlayPauseButtonWidget(
+                recitation: widget.recitation,
+              ),
+              _buildSeekButton(
+                themeStore,
+                AudioControllerOverlayAction.seekForward,
+              ),
+            ],
           ),
-          _buildSeekButton(
-            themeStore,
-            AudioControllerOverlayAction.seekForward,
-          ),
-        ],
-      ),
+        ),
+        Positioned(
+          right: 0,
+          left: 0,
+          bottom: 0,
+          child:
+              // Display seek bar. Using StreamBuilder, this widget rebuilds
+              // each time the position, buffered position or duration changes.
+              SeekBarWidget(audio: widget.recitation.audio),
+        )
+      ],
     );
-  }
-
-  void _togglePlayPause() {
-    if (audioUrl != null) {
-      audioController.playAudioFromUrl(audioUrl!);
-      currentlyPlaying.value = AudioObject(
-        audio: audioUrl!,
-        image: widget.recitation.image,
-        title: widget.recitation.title,
-      );
-    } else {
-      // AppUtils;
-    }
-  }
-
-  /// First, checks if current played audioUrl is not null then
-  /// We have an audio being played, then we will check if the audioUrl
-  /// the same as url then we just have to check if this icon widget
-  /// is not already played we animate the icon, for ex: when we have audio being
-  /// played but we are in another screen.
-  /// If they are not the same audioUrl & url then we check if current icon widget
-  /// is played already we change its state and animate the icon.
-  /// Lastly, if we do not have any thing being played then we check if this
-  /// widget is played already then we change its state and animate the icon,
-  /// for ex: when we have something being played and it ends at some point.
-  void listener(String? audioUrl) {
-    if (audioUrl != null && audioUrl.isNotEmpty) {
-      if (audioUrl == this.audioUrl) {
-        _onChange();
-      } else {
-        if (isBeingPlayed) {
-          _onChange();
-        }
-      }
-    } else {
-      if (isBeingPlayed) {
-        _onChange();
-      }
-    }
-  }
-
-  void _onChange() {
-    if (!isBeingPlayed) {
-      controller.forward();
-    } else if (isBeingPlayed) {
-      controller.reverse();
-    }
-
-    if (mounted) {
-      setState(() {
-        isBeingPlayed = !isBeingPlayed;
-      });
-    }
   }
 
   Widget _buildSeekButton(
@@ -173,5 +110,77 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+class SeekBarWidget extends StatefulWidget {
+  const SeekBarWidget({
+    super.key,
+    this.audio,
+  });
+
+  final String? audio;
+
+  @override
+  State<SeekBarWidget> createState() => _SeekBarWidgetState();
+}
+
+class _SeekBarWidgetState extends State<SeekBarWidget> {
+  final audioController = findDep<AudioController>();
+
+  /// Collects the data useful for displaying in a seek bar, using a handy
+  /// feature of rx_dart to combine the 3 streams of interest into one.
+  Stream<PositionData> get _positionDataStream =>
+      Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+        audioController.musicPlayer.positionStream,
+        audioController.musicPlayer.bufferedPositionStream,
+        audioController.musicPlayer.durationStream,
+        (position, bufferedPosition, duration) => PositionData(
+          position,
+          bufferedPosition,
+          duration ?? Duration.zero,
+        ),
+      );
+
+  Uri? uri;
+
+  @override
+  void initState() {
+    super.initState();
+    uri = Uri.tryParse(widget.audio ?? '');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<PlayerState>(
+        stream: audioController.musicPlayer.playerStateStream,
+        builder: (context, snapshot) {
+          if (!(snapshot.data?.playing ?? false)) {
+            return Container();
+          }
+          if (audioController.musicPlayer.audioSource is UriAudioSource) {
+            final source =
+                audioController.musicPlayer.audioSource as UriAudioSource;
+            if (source.uri != uri) return Container();
+          }
+          return StreamBuilder<PositionData>(
+            stream: _positionDataStream,
+            builder: (context, snapshot) {
+              final positionData = snapshot.data;
+              // print('positionData?.duration is ${positionData?.duration}');
+              if (positionData?.duration == null ||
+                  positionData?.duration.inSeconds == 0) {
+                return SizedBox();
+              }
+              return SeekBar(
+                duration: positionData?.duration ?? Duration.zero,
+                position: positionData?.position ?? Duration.zero,
+                bufferedPosition:
+                    positionData?.bufferedPosition ?? Duration.zero,
+                onChangeEnd: audioController.musicPlayer.seek,
+              );
+            },
+          );
+        });
   }
 }
