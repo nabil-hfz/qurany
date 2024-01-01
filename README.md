@@ -1,6 +1,6 @@
 # Kawtharuna System
 
-## [Kawtharuna Website](www.kawtharuna.com)
+## [Kawtharuna Website](https://www.kawtharuna.com)
 
 ### This system consists of three parts:
 
