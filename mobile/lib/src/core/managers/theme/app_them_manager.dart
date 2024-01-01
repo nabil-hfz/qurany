@@ -103,6 +103,7 @@ class AppThemeManager with ChangeNotifier {
     /// if there is a value we should look for this value, if is it system
     /// value then we can listen as well. If not then will not listen
     _sharedPreference.getThemeMode.then((value) {
+      print('value is $value');
       _isPossibleToListenToSystemChanges = (value != null);
       if (value != null) {
         var result = $enumDecodeNullable(themeModeEnumMap, value);

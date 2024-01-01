@@ -237,7 +237,8 @@ scripts:
 
   # prod environment:
   run-prod: flutter clean && flutter pub get && flutter run --dart-define ENV=prod --flavor=prod
-  build-prod: flutter clean && flutter pub get && flutter build apk --dart-define ENV=prod --flavor=prod
+  build-app-prod: flutter clean && flutter pub get && flutter build apk --dart-define ENV=prod --flavor=prod
+  build-bundle-prod: flutter clean && flutter pub get && flutter build appbundle --release --dart-define ENV=prod --flavor=prod
 
   # development scripts:
   generate_files: flutter packages get && flutter pub run build_runner build --delete-conflicting-outputs

@@ -1,12 +1,13 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:kawtharuna/main.dart';
 import 'package:kawtharuna/src/core/constants/app_animation_duration.dart';
 import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/audio/audio_controller.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
 import 'package:kawtharuna/src/modules/recitations/domain/entity/recitation_entity.dart';
 import 'package:provider/provider.dart';
 
@@ -104,7 +105,20 @@ class _PlayPauseButtonWidgetState extends State<PlayPauseButtonWidget>
 
   void _togglePlayPause() {
     if (audioUrl != null) {
-      player.playAudioFromUrl(audioUrl!);
+      // player.playAudioFromUrl(audioUrl!);
+      audioHandler.addQueueItem(
+        MediaItem(
+          id: audioUrl!,
+          title: widget.recitation.title?.en ?? '',
+          album: "Science Friday",
+          artist: "Science Friday and WNYC Studios",
+          duration: Duration(milliseconds: widget.recitation.durationInSecond),
+          artUri: Uri.parse(widget.recitation.image ?? ''),
+        ),
+      );
+      audioHandler.playFromMediaId(audioUrl!);
+      // audioHandler.playAudioFromUrl(audioUrl!);
+      // audioHandler.play();
       // currentlyPlaying.value = AudioObject(
       //   audio: audioUrl!,
       //   image: widget.recitation.image,

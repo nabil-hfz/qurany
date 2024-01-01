@@ -297,7 +297,7 @@ class _PlayerAnimationWidgetState extends State<PlayerAnimationWidget> {
                 positionData?.position == null ||
                 positionData?.duration.inSeconds == 0 ||
                 positionData!.position >= positionData.duration) {
-              return SizedBox();
+              return SizedBox.expand();
             }
             return SpinKitRipple(
               color: AppColors.appPrimaryColor,
