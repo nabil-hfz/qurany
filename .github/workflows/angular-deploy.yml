@@ -1,7 +1,7 @@
 name: Deploy Angular Project to Firebase Hosting
 
 on:
-  push:
+  pull_request:
     branches:
       - deployment/frontend
 
