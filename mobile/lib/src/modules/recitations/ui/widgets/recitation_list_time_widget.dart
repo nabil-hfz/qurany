@@ -4,7 +4,6 @@ import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/constants/app_radius.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/utils/string_helper.dart';
 import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:kawtharuna/src/core/widgets/common/vertical_padding.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
@@ -14,10 +13,12 @@ import 'package:provider/provider.dart';
 
 class RecitationListItem extends StatefulWidget {
   final RecitationEntity recitation;
+  final int? index;
 
   const RecitationListItem({
     super.key,
     required this.recitation,
+    required this.index,
   });
 
   @override

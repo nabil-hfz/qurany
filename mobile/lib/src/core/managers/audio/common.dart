@@ -40,6 +40,8 @@ class SeekBarState extends State<SeekBar> {
   @override
   Widget build(BuildContext context) {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
+    print(
+        'widget.duration is ${widget.duration} - position ${widget.position}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -48,11 +50,22 @@ class SeekBarState extends State<SeekBar> {
             horizontal: 8.0,
             vertical: 4,
           ),
-          child: Text(
-            formatDuration(_remaining),
-            style: appTextStyle.medium14.copyWith(
-              color: themeStore.appColors.textReversedColor,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                formatDuration(widget.position),
+                style: appTextStyle.medium14.copyWith(
+                  color: themeStore.appColors.textReversedColor,
+                ),
+              ),
+              Text(
+                '/${formatDuration(widget.duration)}',
+                style: appTextStyle.medium14.copyWith(
+                  color: themeStore.appColors.textGrey2Color,
+                ),
+              ),
+            ],
           ),
         ),
         Container(
@@ -150,7 +163,10 @@ class SeekBarState extends State<SeekBar> {
     }
   }
 
-  Duration get _remaining => widget.duration - widget.position;
+  Duration get _remaining => Duration(
+        milliseconds:
+            widget.duration.inMilliseconds - widget.position.inMilliseconds,
+      );
 }
 
 class HiddenThumbComponentShape extends SliderComponentShape {

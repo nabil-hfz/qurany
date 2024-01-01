@@ -77,7 +77,6 @@ class _PlayPauseButtonWidgetState extends State<PlayPauseButtonWidget>
       builder: (context, snapshot) {
         final playerState = snapshot.data;
         final processingState = playerState?.processingState;
-        // final playing = playerState?.playing;
         if (isSame &&
             (processingState == ProcessingState.loading ||
                 processingState == ProcessingState.buffering)) {
@@ -99,11 +98,6 @@ class _PlayPauseButtonWidgetState extends State<PlayPauseButtonWidget>
           ),
           onPressed: _togglePlayPause,
         );
-        // return IconButton(
-        //   icon: const Icon(Icons.pause),
-        //   iconSize: 64.0,
-        //   onPressed: player.musicPlayer.pause,
-        // );
       },
     );
   }
@@ -111,11 +105,11 @@ class _PlayPauseButtonWidgetState extends State<PlayPauseButtonWidget>
   void _togglePlayPause() {
     if (audioUrl != null) {
       player.playAudioFromUrl(audioUrl!);
-      currentlyPlaying.value = AudioObject(
-        audio: audioUrl!,
-        image: widget.recitation.image,
-        title: widget.recitation.title,
-      );
+      // currentlyPlaying.value = AudioObject(
+      //   audio: audioUrl!,
+      //   image: widget.recitation.image,
+      //   title: widget.recitation.title,
+      // );
     } else {
       // AppUtils;
     }
