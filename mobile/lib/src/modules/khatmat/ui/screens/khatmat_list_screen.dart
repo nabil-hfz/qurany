@@ -39,7 +39,7 @@ class _KhatmatListScreenState extends State<KhatmatListScreen> {
     );
     return Scaffold(
       appBar: CustomAppBar(
-        // title: translate.khatmat,
+        title: translate.home,
         leading: AppMenuIconWidget(
           onDrawerPressed: () {
             mainKey.currentState?.openDrawer();
@@ -96,9 +96,14 @@ class _KhatmatListScreenState extends State<KhatmatListScreen> {
                 (ctx, index) {
                   return KhatmaListItem(
                     khatma: khatmat[index],
-                    // onTap: () {
-                    // currentlyPlaying.value = khatma;
-                    // },
+                    onTap: () {
+                      navigator.pushNamed(
+                        Routes.khatmaDetailsScreen,
+                        arguments: BaseNavigationArg(
+                          data: khatmat[index],
+                        ),
+                      );
+                    },
                   );
                 },
                 childCount: khatmat.length,

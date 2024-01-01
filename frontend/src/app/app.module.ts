@@ -44,6 +44,7 @@ import { PlayerComponent } from './shared/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { TrackControlComponent } from './shared/track-control/track-control.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -73,6 +74,7 @@ import { TrackControlComponent } from './shared/track-control/track-control.comp
     PlayerComponent,
     KawtharunaAppBarComponent,
     TrackControlComponent,
+    PrivacyPolicyComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
