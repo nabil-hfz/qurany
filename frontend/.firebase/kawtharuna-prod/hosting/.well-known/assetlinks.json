@@ -1,0 +1,14 @@
+[
+    {
+      "relation": [
+        "delegate_permission/common.handle_all_urls"
+      ],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.kawtharuna.mobile",
+        "sha256_cert_fingerprints": [
+          "93:B9:99:6B:12:51:5B:9C:5D:76:26:A6:39:A7:B7:80:C2:4C:B6:36:82:20:36:7B:18:E3:A0:18:C0:0D:BD:2B"
+        ]
+      }
+    }
+  ]
