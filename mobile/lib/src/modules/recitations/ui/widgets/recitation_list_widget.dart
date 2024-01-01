@@ -116,7 +116,7 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 0,
         mainAxisSpacing: 0,
-        childAspectRatio: 1.4,
+        childAspectRatio: 1.8,
       ),
     );
   }

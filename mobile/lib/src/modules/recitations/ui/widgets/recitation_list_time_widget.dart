@@ -35,7 +35,7 @@ class _RecitationListItemState extends State<RecitationListItem> {
     AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
     var isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
-    double size = isPortrait ? 0.3 : 0.46;
+    double size = isPortrait ? 0.3 : 0.48;
     final height = DeviceUtils.getScaledHeight(context, size);
 
     return Padding(
@@ -78,15 +78,15 @@ class _RecitationListItemState extends State<RecitationListItem> {
                   color: themeStore.appColors.textColor,
                 ),
               ),
-              Spacer(),
-              Text(
-                StringHelper.formatShortDuration(
-                  Duration(seconds: widget.recitation.durationInSecond),
-                ),
-                style: appTextStyle.medium12.copyWith(
-                  color: themeStore.appColors.textGreyColor,
-                ),
-              ),
+              // Spacer(),
+              // Text(
+              //   StringHelper.formatShortDuration(
+              //     Duration(seconds: widget.recitation.durationInSecond),
+              //   ),
+              //   style: appTextStyle.medium12.copyWith(
+              //     color: themeStore.appColors.textGreyColor,
+              //   ),
+              // ),
             ],
           ),
         ],

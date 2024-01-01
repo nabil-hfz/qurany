@@ -155,9 +155,9 @@ class _SeekBarWidgetState extends State<SeekBarWidget> {
     return StreamBuilder<PlayerState>(
         stream: audioController.musicPlayer.playerStateStream,
         builder: (context, snapshot) {
-          if (!(snapshot.data?.playing ?? false)) {
-            return Container();
-          }
+          // if (!(snapshot.data?.playing ?? false)) {
+          //   return Container();
+          // }
           if (audioController.musicPlayer.audioSource is UriAudioSource) {
             final source =
                 audioController.musicPlayer.audioSource as UriAudioSource;
