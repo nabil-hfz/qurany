@@ -5,6 +5,7 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
     // Reciter Module
@@ -18,7 +19,15 @@ const routes: Routes = [
     // Khatma Module
     // { path: 'khatmat-grid/:reciterId/:reciterName', component: KhatmatGridComponent },
     { path: 'khatma-details/:khatmaId/:khatmaName', component: KhatmaDetailsComponent },
+
+
+
+    { path: 'privacy-policy', component: PrivacyPolicyComponent },
+
     { path: '**', component: NotFoundComponent },
+
+
+
 
 ];
 

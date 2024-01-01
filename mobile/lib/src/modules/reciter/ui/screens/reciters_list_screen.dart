@@ -10,6 +10,7 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/generated_files/assets/assets.gen.dart';
+import 'package:kawtharuna/src/core/managers/audio/common.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';

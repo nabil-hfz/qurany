@@ -93,9 +93,11 @@ class MyApp extends StatelessWidget {
                   return MaterialApp.router(
                     title: envVariables.appName,
                     debugShowCheckedModeBanner: false,
-                    theme: appTheme.isDarkMode
-                        ? appTheme.getDarkTheme
-                        : appTheme.getLightTheme,
+                    theme:
+                        // appTheme.isDarkMode
+                        //     ? appTheme.getDarkTheme
+                        //     :
+                        appTheme.getLightTheme,
                     // scaffoldMessengerKey: scaffoldMessengerKey,
                     locale: appLanguage.appLocal,
                     supportedLocales: Translations.delegate.supportedLocales,

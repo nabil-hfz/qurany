@@ -1,0 +1,45 @@
+name: Deploy Angular Project to Firebase Hosting
+
+on:
+  push:
+    branches:
+      - deployment/frontend
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install Firebase CLI
+        run:  npm install -g firebase-tools@13.0.2
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+        working-directory: ./frontend
+
+      - name: Build Angular Project
+        run: npm run build_prod
+        working-directory: ./frontend
+
+      - name: Enable to Firebase webframeworks
+        run: firebase experiments:enable webframeworks
+        working-directory: ./frontend
+
+      - name: Setup Google Cloud Credentials
+        env:
+            SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        run: |
+            echo "$SERVICE_ACCOUNT_KEY" > ./gcloud-service-key.json
+            echo "GOOGLE_APPLICATION_CREDENTIALS=${PWD}/gcloud-service-key.json" >> $GITHUB_ENV
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only hosting
+        working-directory: ./frontend

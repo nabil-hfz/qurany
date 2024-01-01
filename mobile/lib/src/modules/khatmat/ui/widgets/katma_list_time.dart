@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/constants/app_radius.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
-import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:kawtharuna/src/core/widgets/common/app_inkwell_widget.dart';
@@ -15,10 +14,12 @@ import 'package:provider/provider.dart';
 
 class KhatmaListItem extends StatelessWidget {
   final KhatmaEntity khatma;
+  final void Function()? onTap;
 
   const KhatmaListItem({
     super.key,
     required this.khatma,
+    this.onTap,
   });
 
   @override
@@ -35,14 +36,7 @@ class KhatmaListItem extends StatelessWidget {
         horizontal: AppDimens.space16,
       ),
       child: AppInkWellWidget(
-        onTap: () {
-          navigator.pushNamed(
-            Routes.khatmaDetailsScreen,
-            arguments: BaseNavigationArg(
-              data: khatma,
-            ),
-          );
-        },
+        onTap: onTap,
         child: Row(
           children: [
             AppImageWidget(

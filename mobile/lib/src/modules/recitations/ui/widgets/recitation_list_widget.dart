@@ -94,6 +94,7 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
         return SliverList.builder(
           itemBuilder: (ctx, index) {
             return RecitationListItem(
+              index: index,
               recitation: recitations[index],
             );
           },
@@ -106,6 +107,7 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
       delegate: SliverChildBuilderDelegate(
         (ctx, i) {
           return RecitationListItem(
+            index: i,
             recitation: recitations[i],
           );
         },
@@ -115,7 +117,7 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
         crossAxisCount: crossAxisCount,
         crossAxisSpacing: 0,
         mainAxisSpacing: 0,
-        childAspectRatio: 1.4,
+        childAspectRatio: 1.8,
       ),
     );
   }
