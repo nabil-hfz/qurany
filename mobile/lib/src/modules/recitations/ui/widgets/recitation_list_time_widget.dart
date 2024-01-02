@@ -65,6 +65,7 @@ class _RecitationListItemState extends State<RecitationListItem> {
                 Positioned.fill(
                   child: AudioControlOverlay(
                     recitation: widget.recitation,
+                    index: widget.index,
                   ),
                 ),
               ],

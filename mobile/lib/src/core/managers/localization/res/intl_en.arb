@@ -330,5 +330,10 @@
         "format": "compact"
       }
     }
-  }
+  },
+  "seek_forward_button": "Seek forward button",
+  "seek_backward_button": "Seek backward button",
+  "back_button": "Back button",
+  "home_menu_button": "Home menu button"
+
 }

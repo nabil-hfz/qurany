@@ -2681,6 +2681,46 @@ class Translations {
       args: [count],
     );
   }
+
+  /// `Seek forward button`
+  String get seek_forward_button {
+    return Intl.message(
+      'Seek forward button',
+      name: 'seek_forward_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Seek backward button`
+  String get seek_backward_button {
+    return Intl.message(
+      'Seek backward button',
+      name: 'seek_backward_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Back button`
+  String get back_button {
+    return Intl.message(
+      'Back button',
+      name: 'back_button',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home menu button`
+  String get home_menu_button {
+    return Intl.message(
+      'Home menu button',
+      name: 'home_menu_button',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Translations> {

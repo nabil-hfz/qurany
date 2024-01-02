@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     double height = DeviceUtils.getScaledHeight(context, 1);
     return Scaffold(
       backgroundColor: _themeManager.appColors.scaffoldBgColor,
-      appBar: SalonyAppBar(
+      appBar: CustomAppBar(
         automaticallyImplyLeading: false,
         backgroundColor: _themeManager.appColors.splashAppBarColor,
       ),

@@ -25,9 +25,11 @@ class AudioControlOverlay extends StatefulWidget {
   const AudioControlOverlay({
     super.key,
     required this.recitation,
+    this.index,
   });
 
   final RecitationEntity recitation;
+  final int? index;
 
   @override
   State<AudioControlOverlay> createState() => _AudioControlOverlayState();
@@ -143,7 +145,8 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
     return IconButton(
       icon: Icon(
         isSeekingForward ? Icons.forward_10_outlined : Icons.replay_10_outlined,
-        semanticLabel: 'Seek Button',
+        semanticLabel:
+            "${isSeekingForward ? translate.seek_forward_button : translate.seek_backward_button} ${widget.index}",
         color: themeStore.appColors.iconReversedColor,
         size: AppIconSize.size_32,
       ),

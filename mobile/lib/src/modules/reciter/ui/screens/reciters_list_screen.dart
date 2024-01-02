@@ -13,6 +13,7 @@ import 'package:kawtharuna/src/core/generated_files/assets/assets.gen.dart';
 import 'package:kawtharuna/src/core/managers/audio/common.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
+import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
 import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
