@@ -6,7 +6,7 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_state.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
+import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
 import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
 import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';

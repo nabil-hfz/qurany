@@ -4,6 +4,7 @@ import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/audio/common.dart';
 import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
+import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
 import 'package:kawtharuna/src/modules/khatmat/domain/entity/khatma_entity.dart';
 import 'package:kawtharuna/src/modules/khatmat/ui/widgets/katma_list_time.dart';
 import 'package:kawtharuna/src/modules/recitations/domain/blocs/recitation_cubit.dart';
