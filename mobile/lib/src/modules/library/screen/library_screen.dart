@@ -23,11 +23,11 @@ class LibraryScreen extends StatelessWidget {
       appBar: CustomAppBar(
         automaticallyImplyLeading: false,
         title: translate.islamic_library,
-        leading: AppMenuIconWidget(
-          onDrawerPressed: () {
-            mainKey.currentState?.openDrawer();
-          },
-        ),
+        // leading: AppMenuIconWidget(
+        //   onDrawerPressed: () {
+        //     mainKey.currentState?.openDrawer();
+        //   },
+        // ),
       ),
       body: SizedBox(
         height: DeviceUtils.getScaledHeight(context, 1),
