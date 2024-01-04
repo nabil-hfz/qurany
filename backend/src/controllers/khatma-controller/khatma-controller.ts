@@ -13,7 +13,7 @@ import { KhatmaFullRes } from "./responses/khatma-full-res";
 import { KhatmaResumedRes } from "./responses/khatma-resumed-res";
 // import { KhatmeListResumedRes } from "./responses/khatma-list-resumed-res";
 import { AppRoutes } from "../../constant/app-routes.const";
-import { ResponseListModel } from "../../db/entities/response-list-model";
+import { ResponseListModel } from "../../repository/response-list-model";
 import { ResponseModel } from "../../db/response-model";
 
 export class KhatmaController implements Controller {

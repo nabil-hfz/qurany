@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as dotenv from "dotenv";
 
-export const currentEnv = process.env.NODE_ENV as string;
+export let currentEnv = process.env.NODE_ENV as string;
 
 // export NODE_ENV=dev
 // export NODE_ENV=prod
@@ -15,6 +15,7 @@ export default function init() {
     case "dev":
     default:
       envPath = path.resolve(process.cwd(), "./src/environment/.env.dev");
+      currentEnv = "dev";
       break;
   }
   dotenv.config({ path: envPath, debug: true, override: true });

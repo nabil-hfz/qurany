@@ -7,7 +7,7 @@ import { AppBaseEntity } from './base-entity';
 import { LocalizedEntity } from './localized-entity';
 import { ReciterEntity } from './reciter-entity';
 
-@Entity({ name: 'khatma' })
+@Entity({ name: 'khatmat' })
 export class KhatmaEntity extends AppBaseEntity {
 
   @Column(type => LocalizedEntity)
@@ -31,25 +31,3 @@ export class KhatmaEntity extends AppBaseEntity {
   @JoinColumn()
   reciter?: ReciterEntity;
 }
-
-
-// export interface IKhatmaModel extends IBaseModel {
-//     name: ILocalizedModel;
-//     recitationType: number;
-//     totalDownloads: number;
-//     totalPlays: number;
-//     reciter: IReciterModel;
-// }
-
-// export const KhatmaModelSchema = new Schema<IKhatmaModel>({
-//     ...BaseModelSchema.obj,
-//     name: { type: LocalizedModelSchema, required: true },
-//     recitationType: { type: Number, default: 0 },
-//     totalDownloads: { type: Number, default: 0 },
-//     totalPlays: { type: Number, default: 0 },
-//     reciter: { type: Schema.Types.ObjectId, ref: 'Reciter', required: true },
-
-// });
-
-
-// export const KhatmaModel = mongoose.model<IKhatmaModel>('Khatma', KhatmaModelSchema);

@@ -1,10 +1,12 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { FileEntity } from './file-entity';
 import { LocalizedEntity } from './localized-entity';
-import { RecitationTypes } from './recitation-entity';
 import { AppBaseEntity } from './base-entity';
 
-@Entity({ name: 'reciter' })
+// import { RecitationTypes } from './recitation-entity';
+// RecitationTypes.Hafs;
+
+@Entity({ name: 'reciters' })
 export class ReciterEntity extends AppBaseEntity {
 
   @Column(type => LocalizedEntity)
@@ -19,7 +21,7 @@ export class ReciterEntity extends AppBaseEntity {
   @JoinColumn()
   image?: FileEntity;
 
-  @Column("int", { array: true, default: [RecitationTypes.Hafs] })
+  @Column("int", { array: true, default: [1] })
   recitationTypes!: number[];
 
   @Column({ nullable: false })
