@@ -1,5 +1,5 @@
-import { LocalizedEntity } from "../../../db/entities/localized-entity";
-import { RecitationEntity } from "../../../db/entities/recitation-entity";
+import { LocalizedEntity } from "../../../db/entities/localized.entity";
+import { RecitationEntity } from "../../../db/entities/recitation.entity";
 import { Nullable } from "../../../utils/types";
 
 export class RecitationResumedRes {
@@ -8,7 +8,7 @@ export class RecitationResumedRes {
   public readonly title: LocalizedEntity;
   public readonly audio: string;
   public readonly image: string;
-  public readonly durationInSecond: Nullable<number>;
+  public readonly durationInMilli: Nullable<number>;
 
 
   constructor(data: RecitationEntity) {
@@ -17,6 +17,6 @@ export class RecitationResumedRes {
     this.title = data.name;
     this.audio = data.audio.url;
     this.image = data.image.url;
-    this.durationInSecond = data.duration;
+    this.durationInMilli = data.durationInMilli;
   }
 }

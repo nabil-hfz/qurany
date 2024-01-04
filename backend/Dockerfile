@@ -1,6 +1,5 @@
 FROM node:16-alpine
 
-ENV NODE_ENV=dev
 ENV NODE_ENV=prod
 
 # update packages
@@ -25,7 +24,7 @@ RUN npm run build
 EXPOSE 8080
 
 
-CMD ["sh", "-c", "npm run typeorm:migrate && npm run start"]
+CMD ["sh", "-c", "npm run start"]
 
 # Base image for development
 # FROM node:16 as development 

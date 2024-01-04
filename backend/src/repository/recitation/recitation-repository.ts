@@ -7,8 +7,8 @@ import { FilesRepository, filesRepository } from "../file/files-repository";
 import { AppAudiosConst, AppImagesKhatmeConst } from "../../constant/app-storage-paths.const";
 import { KhatmeRepository, khatmeRepository } from "../khatma/khatme-repository";
 import { EntityTarget } from "typeorm";
-import { RecitationEntity } from "../../db/entities/recitation-entity";
-import { ReciterEntity } from "../../db/entities/reciter-entity";
+import { RecitationEntity } from "../../db/entities/recitation.entity";
+import { ReciterEntity } from "../../db/entities/reciter.entity";
 import { AppPagination } from "../../middlewares/pagination.middleware";
 
 export class RecitationRepository extends Repository<RecitationEntity> {
@@ -65,7 +65,7 @@ export class RecitationRepository extends Repository<RecitationEntity> {
       const result = new RecitationEntity();
 
       result.audio = data.audioFile;
-      result.duration = data.duration;
+      result.durationInMilli = data.duration;
       result.image = data.imageFile;
 
       result.name = {

@@ -4,7 +4,7 @@ import { CreateKhatmaReqBody } from "../../controllers/khatma-controller/request
 import { HttpResponseError } from "../../utils/http-response-error";
 
 import { RecitersRepository, recitersRepository } from "../reciter/reciters-repository";
-import { KhatmaEntity } from '../../db/entities/khatma-entity';
+import { KhatmaEntity } from '../../db/entities/khatma.entity';
 import { AppPagination } from '../../middlewares/pagination.middleware';
 
 export class KhatmeRepository extends Repository<KhatmaEntity> {

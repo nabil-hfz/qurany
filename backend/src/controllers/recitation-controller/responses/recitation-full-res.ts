@@ -1,6 +1,6 @@
 import { Nullable } from "../../../utils/types";
 import { RecitationResumedRes } from "./recitation-resumed-res";
-import { RecitationEntity } from '../../../db/entities/recitation-entity';
+import { RecitationEntity } from '../../../db/entities/recitation.entity';
 
 export class RecitationFullRes extends RecitationResumedRes {
   public readonly khatmaId: Nullable<number>;

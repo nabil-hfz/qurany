@@ -1,7 +1,7 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
-import { FileEntity } from './file-entity';
-import { LocalizedEntity } from './localized-entity';
-import { AppBaseEntity } from './base-entity';
+import { FileEntity } from './file.entity';
+import { LocalizedEntity } from './localized.entity';
+import { AppBaseEntity } from './base.entity';
 
 // import { RecitationTypes } from './recitation-entity';
 // RecitationTypes.Hafs;
