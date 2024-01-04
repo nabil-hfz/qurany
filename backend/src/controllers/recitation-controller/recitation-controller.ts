@@ -10,7 +10,7 @@ import { HttpResponseError } from '../../utils/http-response-error';
 import { RecitationFullRes } from './responses/recitation-full-res';
 import { AppRoutes } from '../../constant/app-routes.const';
 import { AppAudiosConst, AppImagesKhatmeConst } from '../../constant/app-storage-paths.const';
-import { ResponseListModel } from '../../db/entities/response-list-model';
+import { ResponseListModel } from '../../repository/response-list-model';
 import { ResponseModel } from '../../db/response-model';
 
 export class RecitationController implements Controller {

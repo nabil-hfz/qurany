@@ -1,8 +1,8 @@
-import { AppDataSource } from './../db/index';
 
 import { Repository as TypeORMRepository, EntityTarget, ObjectLiteral, FindOneOptions, ObjectId, FindManyOptions } from 'typeorm';
 import { logError } from '../utils/logger';
 import { AppPagination } from '../middlewares/pagination.middleware';
+import dataSource from '../db/data-source';
 
 export interface GetAllOptions<T> {
   conditions?: Partial<T> & Partial<AppPagination>,
@@ -15,7 +15,7 @@ export abstract class Repository<T extends ObjectLiteral> {
   protected repository: TypeORMRepository<T>;
 
   constructor(entity: EntityTarget<T>) {
-    this.repository = AppDataSource.getRepository<T>(entity);
+    this.repository = dataSource.getRepository<T>(entity);
   }
 
   public async getAll(

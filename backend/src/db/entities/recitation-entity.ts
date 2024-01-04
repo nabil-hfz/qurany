@@ -14,10 +14,10 @@ export const RecitationTypesList = [
   RecitationTypes.Shoaba,
 ];
 
-@Entity({ name: 'recitation' })
+@Entity({ name: 'recitations' })
 export class RecitationEntity extends AppBaseEntity {
   @Column(type => LocalizedEntity)
-  title!: LocalizedEntity;
+  name!: LocalizedEntity;
 
   @OneToOne(() => FileEntity, {
     eager: true,

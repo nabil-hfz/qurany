@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.3+3
+version: 1.0.4+4
 
 environment:
   sdk: '>=3.2.1 <4.0.0'
@@ -237,6 +237,7 @@ scripts:
 
   # prod environment:
   run-prod: flutter clean && flutter pub get && flutter run --dart-define ENV=prod --flavor=prod
+  run-release-prod: flutter clean && flutter pub get && flutter run --release --dart-define ENV=prod --flavor=prod
   build-app-prod: flutter clean && flutter pub get && flutter build apk --dart-define ENV=prod --flavor=prod
   build-bundle-prod: flutter clean && flutter pub get && flutter build appbundle --release --dart-define ENV=prod --flavor=prod
 

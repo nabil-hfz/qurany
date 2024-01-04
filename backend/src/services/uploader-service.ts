@@ -132,7 +132,7 @@ class UploaderService {
 
             const audioFile = new FileEntity();
             audioFile.url = audioUrl;
-            audioFile.mimetype = audioBuffer.mimetype;
+            audioFile.mimeType = audioBuffer.mimetype;
             audioFile.size = audioBuffer.size;
             audioFile.name = audioFileName;
 
@@ -142,7 +142,7 @@ class UploaderService {
    
             const imageFile = new FileEntity();
             imageFile.url = imageUrl;
-            imageFile.mimetype = imageBuffer.mimetype;
+            imageFile.mimeType = imageBuffer.mimetype;
             imageFile.size = imageBuffer.size;
             imageFile.name = imageFileName;
 
@@ -184,7 +184,7 @@ class UploaderService {
 
         const uploadedFile = new FileEntity();
         uploadedFile.url = fileUrl;
-        uploadedFile.mimetype = fileBuffer.mimetype;
+        uploadedFile.mimeType = fileBuffer.mimetype;
         uploadedFile.size = fileBuffer.size;
         uploadedFile.name = currentFileName;
 

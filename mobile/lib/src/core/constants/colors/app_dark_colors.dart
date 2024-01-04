@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import 'app_colors.dart';
 
 class DarkColors implements AppColors {
@@ -14,17 +16,20 @@ class DarkColors implements AppColors {
   Color get secondaryColor => Colors.black;
 
   @override
-  Color get greyBackground => const Color(0xffF8F8F8);
+  Color get greyBackground => Colors.black;
 
   @override
   Color get errorColor => Colors.red;
 
   @override
   Color get flushBarBackground => Colors.black38;
+
   @override
   Color get flushBarErrorBackground => Colors.red;
+
   @override
   Color get flushBarSuccessBackground => Colors.lightGreen;
+
   @override
   Color get pageRoundedCornerBG => Colors.black;
 
@@ -98,6 +103,9 @@ class DarkColors implements AppColors {
   @override
   Color get iconGreyColor => const Color(0xff808080);
 
+  @override
+  Color get iconRed => const Color(0xffEC4C5B);
+
   ///
   /// Radio Colors
   @override
@@ -145,7 +153,7 @@ class DarkColors implements AppColors {
   ///
   /// Text Field Color
   @override
-  Color get fillTextFieldColor => Colors.white60;
+  Color get fillTextFieldColor => Colors.grey.shade900;
 
   @override
   Color get borderTextFieldColor => const Color(0xffD9D9D9);
@@ -196,7 +204,7 @@ class DarkColors implements AppColors {
   Color get bouncingButtonEnabledColor => Colors.black26;
 
   @override
-  Color get bouncingButtonDisabledColor => Colors.black45;
+  Color get bouncingButtonDisabledColor => Colors.grey.shade800;
 
   @override
   Color get floatingActionButtonColor => AppColors.appPrimaryColor;
@@ -282,23 +290,23 @@ class DarkColors implements AppColors {
   Color get borderProfileImageColor => Colors.white24;
 
   @override
-  Color get logoutCancelBtnColor => Colors.white;
+  Color get logoutCancelBtnColor => Colors.white54;
 
   ///
   /// Package Section
   @override
   Color get packageBaseGradientStartColor =>
-      const Color(0xff06668E).withOpacity(0.6);
+      const Color(0xff0BA0D0).withOpacity(0.6);
 
   @override
   Color get packageBaseGradientEndColor =>
       const Color(0xffF9F9FB).withOpacity(0.3);
 
   @override
-  Color get packageCircleGradientStartColor => const Color(0xff06668E);
+  Color get packageCircleGradientStartColor => const Color(0xff0BA0D0);
 
   @override
-  Color get packageCircleGradientEndColor => const Color(0xff06668E);
+  Color get packageCircleGradientEndColor => const Color(0xff0BA0D0);
 
   @override
   Color get packageCircleBaseColor => const Color(0xff000000).withOpacity(0.15);
@@ -322,18 +330,6 @@ class DarkColors implements AppColors {
 
   @override
   Color get serviceDetailsAppBarGradientEndColor => Colors.transparent;
-
-  ///
-  /// Bottom Navigation Bar
-  @override
-  Color get backgroundBottomNavigationBarColor => Colors.black;
-
-  @override
-  Color get selectedIconBottomNavigationBarColor => AppColors.appPrimaryColor;
-
-  @override
-  Color get unselectedIconBottomNavigationBarColor =>
-      Colors.white.withOpacity(0.7);
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);

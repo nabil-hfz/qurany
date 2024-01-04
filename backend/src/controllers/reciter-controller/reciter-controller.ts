@@ -12,7 +12,7 @@ import { AppRoutes } from "../../constant/app-routes.const";
 import { AppImagesRecitersConst } from "../../constant/app-storage-paths.const";
 import { RecitationTypesList } from "../../db/entities/recitation-entity";
 import { ResponseModel } from "../../db/response-model";
-import { ResponseListModel } from "../../db/entities/response-list-model";
+import { ResponseListModel } from "../../repository/response-list-model";
 
 export class ReciterController implements Controller {
 

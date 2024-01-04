@@ -1,10 +1,12 @@
+
+import "reflect-metadata";
+
 import initConfig from "./config/index";
 initConfig();
+import dataSource from "./db/data-source"
 
 import { options } from "./config/swagger.config";
 
-import { initializeDb } from "./db";
-initializeDb();
 
 import { Express } from "express";
 import * as express from "express";
@@ -19,6 +21,14 @@ import * as timeout from "connect-timeout";
 import * as swaggerJsdoc from 'swagger-jsdoc';
 import * as swaggerUi from 'swagger-ui-express';
 import { logRequests } from "./middlewares/logging.middleware";
+
+
+
+dataSource.initialize()
+  .then(() => {
+    console.log('Successfully connected to postgres')
+  })
+  .catch(err => console.error('Error connecting to postgres', err));
 
 const swaggerSpec = swaggerJsdoc(options);
 

@@ -14,7 +14,7 @@ export class RecitationResumedRes {
   constructor(data: RecitationEntity) {
     this.id = data.id ?? "";
     this.khatmaId = data.khatmaId ?? "";
-    this.title = data.title;
+    this.title = data.name;
     this.audio = data.audio.url;
     this.image = data.image.url;
     this.durationInSecond = data.duration;

@@ -68,7 +68,7 @@ export class RecitationRepository extends Repository<RecitationEntity> {
       result.duration = data.duration;
       result.image = data.imageFile;
 
-      result.title = {
+      result.name = {
         en: `Chapter ${index}`,
         ar: `الجزء ${index}`,
       };
@@ -93,7 +93,7 @@ export class RecitationRepository extends Repository<RecitationEntity> {
       id: recitation?.id,
       audio: recitation?.audio.url,
       image: recitation?.image.url,
-      title: recitation?.title,
+      title: recitation?.name,
     }));
 
     return temp;

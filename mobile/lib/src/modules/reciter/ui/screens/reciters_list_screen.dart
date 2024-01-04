@@ -64,11 +64,11 @@ class _RecitersListScreenState extends State<RecitersListScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: translate.reciters,
-        leading: AppMenuIconWidget(
-          onDrawerPressed: () {
-            mainKey.currentState?.openDrawer();
-          },
-        ),
+        // leading: AppMenuIconWidget(
+        //   onDrawerPressed: () {
+        //     mainKey.currentState?.openDrawer();
+        //   },
+        // ),
         automaticallyImplyLeading: false,
       ),
       body: BlocConsumer<ReciterCubit, ReciterState>(

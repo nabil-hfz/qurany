@@ -40,11 +40,11 @@ class _KhatmatListScreenState extends State<KhatmatListScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: translate.home,
-        leading: AppMenuIconWidget(
-          onDrawerPressed: () {
-            mainKey.currentState?.openDrawer();
-          },
-        ),
+        // leading: AppMenuIconWidget(
+        //   onDrawerPressed: () {
+        //     mainKey.currentState?.openDrawer();
+        //   },
+        // ),
         automaticallyImplyLeading: false,
       ),
       body: BlocConsumer<KhatmaCubit, KhatmaState>(
