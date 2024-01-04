@@ -15,6 +15,3 @@ export abstract class AppBaseEntity extends BaseEntity {
   updatedAt?: Date;
 
 }
-
-
-/** End file docs */

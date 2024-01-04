@@ -1,3 +1,4 @@
+import { RecitationTypes } from './../../../../frontend/src/app/models/recitation.model';
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { FileEntity } from './file.entity';
 import { LocalizedEntity } from './localized.entity';
@@ -21,7 +22,7 @@ export class ReciterEntity extends AppBaseEntity {
   @JoinColumn()
   image?: FileEntity;
 
-  @Column("int", { array: true, default: [1] })
+  @Column("int", { array: true, default: [RecitationTypes.Hafs] })
   recitationTypes!: number[];
 
   @Column({ nullable: false })
