@@ -5,7 +5,7 @@ import initConfig from "./config/index";
 initConfig();
 import dataSource from "./db/data-source"
 
-import { options } from "./config/swagger.config";
+import { options } from "./swagger/swagger.config";
 
 
 import { Express } from "express";

@@ -17,6 +17,5 @@ export class KhatmaResumedRes {
       id: data.reciter?.id,
       image: data.reciter?.image?.url,
     }
-    // this.price = data.price;
   }
 }
