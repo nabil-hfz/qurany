@@ -1,7 +1,7 @@
 # 🌐 Kawtharuna System
 
 ### 🖥️ [Kawtharuna Website](https://www.kawtharuna.com)
-### 📱 [Kawtharuna Google Play](https://www.kawtharuna.com)
+### [![Google Play Badge](./images/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.kawtharuna.mobile)
 
 ### 💡 Contributions
 
