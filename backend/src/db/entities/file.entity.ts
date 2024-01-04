@@ -36,6 +36,13 @@ export class FileEntity extends AppBaseEntity {
      */
     @Column({ nullable: true })
     name?: string;
+
+    /**
+     * The thumbnail of the file.
+     * This field is optional and used to store the thumbnail of the file, if it has.
+     */
+    // @OneToOne(() => FileEntity)
+    // @JoinColumn({ name: 'thumbnail_id' })
+    // thumbnail?: FileEntity;
 }
 
-/** End file docs */
