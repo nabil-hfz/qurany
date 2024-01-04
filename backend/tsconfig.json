@@ -9,8 +9,7 @@
     "noUnusedLocals": true,
     "outDir": "./dist",
     "sourceMap": true,
-    "strict": true,
+    "strict": true
   },
-  "compileOnSave": true,
-  "include": ["src"]
+  "compileOnSave": true
 }

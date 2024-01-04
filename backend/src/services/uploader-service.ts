@@ -39,7 +39,7 @@ class UploaderService {
         const metadata = await ffprobe(tmpFile.name, { path: ffprobeStatic.path });
 
         const audioStream = metadata.streams.find((stream) => stream.codec_type === 'audio');
-        const durtion = Math.round(audioStream?.duration ?? 0);
+        const durtion = Math.round(Number(audioStream?.duration) ?? 0);
 
         // Clean up temp file
         fs.unlinkSync(tmpFile.name);
