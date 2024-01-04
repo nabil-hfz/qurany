@@ -10,6 +10,7 @@ export default function init() {
   let envPath;
   switch (projectName) {
     case "prod":
+      currentEnv = "prod";
       envPath = path.resolve(process.cwd(), "./src/environment/.env.prod");
       break;
     case "dev":

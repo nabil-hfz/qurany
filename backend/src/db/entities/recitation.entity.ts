@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
-import { LocalizedEntity } from './localized-entity';
-import { FileEntity } from './file-entity';
-import { ReciterEntity } from './reciter-entity';
-import { AppBaseEntity } from './base-entity';
+import { LocalizedEntity } from './localized.entity';
+import { FileEntity } from './file.entity';
+import { ReciterEntity } from './reciter.entity';
+import { AppBaseEntity } from './base.entity';
 
 export enum RecitationTypes {
   Hafs = 1,
@@ -57,5 +57,5 @@ export class RecitationEntity extends AppBaseEntity {
   totalPlays!: number;
 
   @Column({ default: 0 })
-  duration!: number;
+  durationInMilli!: number;
 }

@@ -1,6 +1,6 @@
 
-import { KhatmaEntity } from "../../../db/entities/khatma-entity";
-import { LocalizedEntity } from "../../../db/entities/localized-entity";
+import { KhatmaEntity } from "../../../db/entities/khatma.entity";
+import { LocalizedEntity } from "../../../db/entities/localized.entity";
 import { Nullable } from "../../../utils/types";
 
 export class KhatmaResumedRes {
@@ -17,6 +17,5 @@ export class KhatmaResumedRes {
       id: data.reciter?.id,
       image: data.reciter?.image?.url,
     }
-    // this.price = data.price;
   }
 }

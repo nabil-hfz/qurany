@@ -16,7 +16,7 @@ import * as fs from 'fs';
 import * as ffprobe from 'ffprobe';
 import * as ffprobeStatic from 'ffprobe-static';
 import * as tmp from 'tmp';
-import { FileEntity } from "../db/entities/file-entity";
+import { FileEntity } from "../db/entities/file.entity";
 
 
 

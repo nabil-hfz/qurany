@@ -10,7 +10,7 @@ import { ReciterFullRes } from "./responses/reciter-full-res";
 import { uploaderService } from "../../services/uploader-service";
 import { AppRoutes } from "../../constant/app-routes.const";
 import { AppImagesRecitersConst } from "../../constant/app-storage-paths.const";
-import { RecitationTypesList } from "../../db/entities/recitation-entity";
+import { RecitationTypesList } from "../../db/entities/recitation.entity";
 import { ResponseModel } from "../../db/response-model";
 import { ResponseListModel } from "../../repository/response-list-model";
 

@@ -3,9 +3,9 @@
 
 
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { AppBaseEntity } from './base-entity';
-import { LocalizedEntity } from './localized-entity';
-import { ReciterEntity } from './reciter-entity';
+import { AppBaseEntity } from './base.entity';
+import { LocalizedEntity } from './localized.entity';
+import { ReciterEntity } from './reciter.entity';
 
 @Entity({ name: 'khatmat' })
 export class KhatmaEntity extends AppBaseEntity {

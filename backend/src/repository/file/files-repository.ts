@@ -1,5 +1,5 @@
 import { EntityTarget } from "typeorm";
-import { FileEntity } from "../../db/entities/file-entity";
+import { FileEntity } from "../../db/entities/file.entity";
 import { Repository } from "../repository";
 
 export class FilesRepository extends Repository<FileEntity> {

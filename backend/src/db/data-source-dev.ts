@@ -2,7 +2,6 @@ import { DataSource, DataSourceOptions } from "typeorm"
 import { isDevelopment } from "../config"
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
- 
 let connectionOptions: DataSourceOptions = {
     type: "postgres",
     host: "localhost",
@@ -14,11 +13,10 @@ let connectionOptions: DataSourceOptions = {
     logging: isDevelopment,
     namingStrategy: new SnakeNamingStrategy(),
     entities: [
-
-        "src/db/entities/*.ts",
+        __dirname + "/entities/*.ts",
     ],
     migrations: [
-        "src/db/migrations/*.ts",
+        __dirname + "/migrations/*.ts",
     ]
 };
 
