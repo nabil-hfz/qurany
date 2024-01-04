@@ -13,11 +13,11 @@ import { CategoryEntity } from './category.entity';
 export class FileEntryEntity extends AppBaseEntity {
 
   /**
-   * The title of the file entry. This field is required and cannot be null.
-   * Used to store the title of the file, which can be in any language.
+   * The name of the file entry. This field is required and cannot be null.
+   * Used to store the name of the file, which can be in any language.
    */
   @Column({ nullable: false })
-  title!: string;
+  name!: string;
 
   /**
    * An optional description for the file entry, providing additional context or details.
