@@ -12,6 +12,6 @@ export abstract class AppBaseEntity extends BaseEntity {
   createdAt!: Date;
 
   @UpdateDateColumn({ nullable: true, default: null })
-  updatedAt?: Date;
+  updatedAt?: Date = undefined;
 
 }
