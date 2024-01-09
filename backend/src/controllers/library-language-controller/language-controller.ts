@@ -35,6 +35,38 @@ export class LanguageController implements Controller {
     });
   }
 
+  /**
+ * @swagger
+ * /language:
+ *   post:
+ *     summary: Create new languages
+ *     description: Allows the creation of multiple new languages.
+ *     tags: [Language]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - languages
+ *             properties:
+ *               languages:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: A list of language names to be created.
+ *     responses:
+ *       '200':
+ *         description: A list of created languages.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LanguageResumedRes'
+ *       '400':
+ *         description: Bad request. Missing or invalid fields in the request.
+ */
+
   private readonly createLanguages: RequestHandler =
     async (req: any, res, next) => {
 
