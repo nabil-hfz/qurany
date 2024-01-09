@@ -13,7 +13,7 @@ export class FileEntity extends AppBaseEntity {
      * The URL where the file is located.
      * This field is required and must be a valid URL string.
      */
-    @Column()
+    @Column({unique: true, nullable: false})
     public url!: string;
 
     /**

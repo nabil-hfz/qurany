@@ -4,7 +4,7 @@ import { Entity } from 'typeorm/decorator/entity/Entity';
 import { Column } from 'typeorm/decorator/columns/Column';
 import { LocalizedEntity } from './localized.entity';
 import { ManyToMany } from 'typeorm';
-import { FileEntryEntity } from './file-entiries.entity';
+import { FileEntryEntity } from './file-entiry.entity';
 /**
  * Represents a category entity in the database.
  * Each category can be linked to multiple file entries, allowing for categorization
@@ -20,7 +20,7 @@ export class CategoryEntity extends AppBaseEntity {
    * This field is required and must be unique across all categories.
    * The `LocalizedEntity` type allows for storing names in different languages.
    */
-  @Column({ nullable: false, unique: true })
+  @Column(() => LocalizedEntity)
   name!: LocalizedEntity;
 
   /**
@@ -31,5 +31,5 @@ export class CategoryEntity extends AppBaseEntity {
    * The `FileEntryEntity` represents the linked file entries.
    */
   @ManyToMany(() => FileEntryEntity)
-  FileEntryEntity?: FileEntryEntity[];
+  fileEntries?: FileEntryEntity[];
 }

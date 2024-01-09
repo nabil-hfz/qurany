@@ -16,10 +16,8 @@ export class ReciterEntity extends AppBaseEntity {
   @Column(type => LocalizedEntity)
   bio?: LocalizedEntity;
 
-  @OneToOne(() => FileEntity, {
-    eager: true,
-  })
-  @JoinColumn()
+  @OneToOne(() => FileEntity, { eager: true })
+  @JoinColumn({ name: 'image_id' })
   image?: FileEntity;
 
   @Column("int", { array: true, default: [RecitationTypes.Hafs] })

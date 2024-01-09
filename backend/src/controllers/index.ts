@@ -63,13 +63,11 @@ export class HttpServer {
   }
 
   delete(
-    path: string,
-    requestHandler: RequestHandler,
-    customClaims?: string[]
+    param:GetParams,
   ): void {
     this.express.delete(
-      path,
-      this._catchErrorHandler(requestHandler, customClaims)
+      param.path,
+      this._catchErrorHandler(param.requestHandler, param.customClaims)
     );
   }
 

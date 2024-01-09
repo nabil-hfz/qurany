@@ -9,15 +9,15 @@ let connectionOptions: DataSourceOptions = {
     username: "kawtharuna_user",
     password: "DEV_PASSWORD_THANK_YOU",
     database: "kawtharuna",
-    synchronize: false,
-    logging: isDevelopment,
     namingStrategy: new SnakeNamingStrategy(),
     entities: [
         __dirname + "/entities/*.ts",
     ],
     migrations: [
         __dirname + "/migrations/*.ts",
-    ]
+    ],
+    synchronize: false,
+    logging: isDevelopment,
 };
 
 export default new DataSource(connectionOptions);

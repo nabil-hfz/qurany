@@ -1,11 +1,11 @@
 import * as path from "path";
 import * as dotenv from "dotenv";
 
-export let currentEnv = process.env.NODE_ENV as string;
+export let currentEnv = process.env.NODE_ENV;
 
 // export NODE_ENV=dev
 // export NODE_ENV=prod
-export default function init() {
+function init() {
   const projectName = currentEnv;
   let envPath;
   switch (projectName) {
@@ -22,5 +22,5 @@ export default function init() {
   dotenv.config({ path: envPath, debug: true, override: true });
   console.log(`process env ${currentEnv}`);
 }
-
+init();
 export const isDevelopment = currentEnv == "dev";

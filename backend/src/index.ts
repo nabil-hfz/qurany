@@ -1,8 +1,7 @@
 
 import "reflect-metadata";
 
-import initConfig from "./config/index";
-initConfig();
+
 import dataSource from "./db/data-source"
 
 import { options } from "./swagger/swagger.config";
