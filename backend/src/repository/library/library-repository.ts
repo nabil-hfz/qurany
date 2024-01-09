@@ -34,7 +34,7 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
 
         const categories: CategoryEntity[] = [];
         for (let id of request.categoryIds ?? []) {
-            const category = await  this.categoryRepository.getOneById(id);
+            const category = await this.categoryRepository.getOneById(id);
             if (!category)
                 throw new HttpResponseError(400, "BAD_REQUEST", 'No category found with this id ' + id);
             categories.push(category);
@@ -50,14 +50,14 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
 
 
         const thumbnailBuffer = await ThumbnailService.createPdfThumbnail(file);
-        
+
         if (!thumbnailBuffer) {
             throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "bufferThumbnail" is null');
         }
 
         const thumbnailPath = AppStoragePathsConst.libraryThumbnail + `/${languageId}`;
         const thumbnailResult = await this.uploaderService
-            .saveBufferAsFile(thumbnailBuffer, thumbnailPath, file); 
+            .saveBufferAsFile(thumbnailBuffer, thumbnailPath, file);
 
         if (!thumbnailResult) {
             throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "thumbnailResult" is null');
@@ -76,10 +76,7 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
         return result;
     }
 
-    async getFileEntryById(id: number): Promise<FileEntryEntity | null> {
-        const resource = await this.getOneById(id);
-        return resource;
-    }
+
 
     async getFileEntrys(
         languageId?: number | undefined,
@@ -115,6 +112,11 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
             }
 
         );
+    }
+
+    async getFileEntryById(id: number): Promise<FileEntryEntity | null> {
+        const resource = await this.getOneById(id);
+        return resource;
     }
 }
 
