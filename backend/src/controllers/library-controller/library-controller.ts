@@ -48,13 +48,13 @@ export class LibraryController implements Controller {
       const reqBody: CreateFileEntryReqBody = Object.assign({}, req.body);
       checkIfIsValidCreateFileEntryReqBody(reqBody);
 
-      const file = req.files['file'] as Express.Multer.File;
+      const file = req.files['file'] as Express.Multer.File[];
       if (!file) {
         throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "file" in the body');
       }
 
       const result = await libraryRepository
-        .createFileEntry(reqBody, file);
+        .createFileEntry(reqBody, file[0]);
 
       res.status(200).send(ResponseModel.toResult(new FileEntryFullRes(result)));
       next();
