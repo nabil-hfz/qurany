@@ -126,6 +126,28 @@ export class LanguageController implements Controller {
   };
 
 
+  /**
+ * @swagger
+ * /language/{id}:
+ *   delete:
+ *     summary: Delete a language by ID
+ *     description: Deletes a specific language based on the provided ID.
+ *     tags: [Language]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The ID of the language to delete.
+ *     responses:
+ *       '200':
+ *         description: Language successfully deleted.
+ *       '400':
+ *         description: Bad request. Invalid ID provided.
+ *       '404':
+ *         description: Language not found.
+ */
   private readonly deleteLanguageById: RequestHandler = async (
     req: any,
     res: any,
