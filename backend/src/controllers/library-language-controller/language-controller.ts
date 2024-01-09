@@ -89,6 +89,24 @@ export class LanguageController implements Controller {
     };
 
 
+    /**
+ * @swagger
+ * /language:
+ *   get:
+ *     summary: Retrieve a list of languages
+ *     description: Get a list of all available languages.
+ *     tags: [Language]
+ *     responses:
+ *       '200':
+ *         description: A list of languages.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ResponseListModel'
+ *       '400':
+ *         description: Bad request. Error in retrieving the list.
+ */
+
   private readonly getLanguageList: RequestHandler = async (req, res, next) => {
     const pagination = req.pagination;
 
