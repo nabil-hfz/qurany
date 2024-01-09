@@ -9,7 +9,7 @@ export class CategoryFullRes extends CategoryResumedRes {
 
   constructor(data: CategoryEntity) {
     super(data);
-    this.fileEntry = data.FileEntryEntity;
+    this.fileEntry = data.fileEntries;
  
   }
 }

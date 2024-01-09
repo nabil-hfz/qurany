@@ -26,7 +26,7 @@ export abstract class Repository<T extends ObjectLiteral> {
     try {
       delete options?.conditions?.page;
       delete options?.conditions?.limit;
-      
+
       const findManyOptions: FindManyOptions = {
         where: options?.conditions,
         skip: (page - 1) * limit,
@@ -85,17 +85,16 @@ export abstract class Repository<T extends ObjectLiteral> {
     }
   }
 
-  public async delete(id: number): Promise<T | null> {
+  public async delete(id: number): Promise<boolean> {
     try {
-      const item = await this._repository.delete(new ObjectId(id));
-      return item.raw;
-      // if (item) {
-      //   await this.repository.remove(item);
-      // }
-      // return item;
+      const item = await this._repository.delete(id);
+
+      console.log(item);
+
+      return (item.affected ?? 0) > 0;
     } catch (error) {
       logError(error);
-      return null;
+      return false;
     }
   }
 }

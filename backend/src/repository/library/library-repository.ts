@@ -1,128 +1,104 @@
-import { LibraryRepository } from './library-repository';
+import { UploaderService, uploaderService } from './../../services/uploader-service';
 import { FileEntryEntity } from '../../db/entities/file-entiry.entity';
 import { Repository } from "../repository";
 import { HttpResponseError } from "../../utils/http-response-error";
-import { uploaderService } from "../../services/uploader-service";
-import { logInfo } from "../../utils/logger";
-import { FilesRepository, filesRepository } from "../file/files-repository";
-import { AppAudiosConst, AppImagesKhatmeConst } from "../../constant/app-storage-paths.const";
 import { EntityTarget } from "typeorm";
-import { ReciterEntity } from "../../db/entities/reciter.entity";
 import { AppPagination } from "../../middlewares/pagination.middleware";
 import { CreateFileEntryReqBody } from '../../controllers/library-controller/requests/create-file-entry/create-file-entry-req-body';
+import { CategoryRepository, categoryRepository } from './category-repository';
+import { LanguageRepository, languageRepository } from './language-repository';
+import { CategoryEntity } from '../../db/entities/category.entity';
+import { AppStoragePathsConst } from '../../constant/app-storage-paths.const';
+import { ThumbnailService } from '../../services/thumbnail-service';
 
 export class LibraryRepository extends Repository<FileEntryEntity> {
 
     constructor(
         model: EntityTarget<FileEntryEntity>,
-        private filesRepository: FilesRepository
+        private uploaderService: UploaderService,
+        private categoryRepository: CategoryRepository,
+        private languageRepository: LanguageRepository,
     ) {
         super(model);
     }
 
     async createFileEntry(
         request: CreateFileEntryReqBody,
-        images: Express.Multer.File[],
-        audios: Express.Multer.File[]
+        file: Express.Multer.File,
     ): Promise<any> {
 
-        const khatmaId = Number(request.khatmaId);
+        const languageId = request.languageId;
+        const language = await this.languageRepository.getLanguageById(languageId!);
+        if (!language)
+            throw new HttpResponseError(400, "BAD_REQUEST", 'No language found with this id ' + languageId);
 
-        const khatma = await this.khatmeRepository.getOneById(khatmaId);
-
-        if (!khatma || !khatma?.id) {
-            throw new HttpResponseError(400, "BAD_REQUEST", 'No khatma found with this "khatmaId"');
+        const categories: CategoryEntity[] = [];
+        for (let id of request.categoryIds ?? []) {
+            const category = await  this.categoryRepository.getOneById(id);
+            if (!category)
+                throw new HttpResponseError(400, "BAD_REQUEST", 'No category found with this id ' + id);
+            categories.push(category);
         }
 
-        const reciter: ReciterEntity | undefined = khatma.reciter;
-        const reciterId: number | undefined = reciter?.id;
-        if (!reciter || !reciterId) {
-            throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "khatmaId"');
-        }
+        const filePath = AppStoragePathsConst.libraryFileEntry + `/${languageId}`;
+        const fileResult = await this.uploaderService
+            .saveFile(file, filePath);
 
-
-        const reciterIndex = reciter.reciterIndex;
-
-        const audiosPath = AppAudiosConst[reciterIndex] + `/${khatma.recitationType}`;
-        const imagesPath = AppImagesKhatmeConst[reciterIndex] + `/${khatma.recitationType}`;
-
-
-        logInfo('khatmaId is: ' + khatmaId);
-        logInfo('audiosPath is: ' + audiosPath);
-        logInfo('imagesPath is: ' + imagesPath);
-
-        const filesResult = await uploaderService
-            .handleFiles(images, audios, audiosPath, imagesPath);
-
-        if (!filesResult || !filesResult.length) {
-            throw new HttpResponseError(400, "BAD_REQUEST", 'No files found "filesResult"');
+        if (!fileResult) {
+            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "fileResult" is null');
         }
 
 
+        const thumbnailBuffer = await ThumbnailService.createPdfThumbnail(file);
+        
+        if (!thumbnailBuffer) {
+            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "bufferThumbnail" is null');
+        }
 
-        let index = Number(request.sequence) ?? 1;
-        const docs: FileEntryEntity[] = filesResult.map((data) => {
-            const result = new FileEntryEntity();
+        const thumbnailPath = AppStoragePathsConst.libraryThumbnail + `/${languageId}`;
+        const thumbnailResult = await this.uploaderService
+            .saveBufferAsFile(thumbnailBuffer, thumbnailPath, file); 
 
-            result.audio = data.audioFile;
-            result.durationInMilli = data.duration;
-            result.image = data.imageFile;
+        if (!thumbnailResult) {
+            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "thumbnailResult" is null');
+        }
 
-            result.name = {
-                en: `Chapter ${index}`,
-                ar: `الجزء ${index}`,
-            };
-            result.sequence = index;
-            result.reciter = reciter;
-            result.khatmaId = khatmaId;
-            index += 1;
-            return result;
-        }) ?? [];
+        const entity = new FileEntryEntity();
+        entity.name = request.name!;
+        entity.description = request?.description;
+        entity.language = language!;
+        entity.categories = categories;
+        entity.file = fileResult;
+        entity.thumbnail = thumbnailResult;
 
+        const result = await this._repository.save(entity);
 
-
-
-        const imgs = docs.map(recitation => recitation.image);
-        const auds = docs.map(recitation => recitation.audio);
-        await this.filesRepository.createAll(imgs);
-        await this.filesRepository.createAll(auds);
-
-        const savedFileEntry = await this.createAll(docs,);
-
-        const temp = savedFileEntry?.map(recitation => ({
-            id: recitation?.id,
-            audio: recitation?.audio.url,
-            image: recitation?.image.url,
-            title: recitation?.name,
-        }));
-
-        return temp;
+        return result;
     }
 
-    async getFileEntryById(recitationId: number): Promise<FileEntryEntity | null> {
-        const recitationRes = await this.getOneById(recitationId
-            // , "image audio reciter"
-        );
-        if (!recitationRes || !recitationRes?.id) {
-            return null;
-        }
-
-        return recitationRes;
+    async getFileEntryById(id: number): Promise<FileEntryEntity | null> {
+        const resource = await this.getOneById(id);
+        return resource;
     }
 
     async getFileEntrys(
-        reciterId: number | undefined,
-        khatmaId: number | undefined,
-        pagination?: AppPagination
-    ) {
-        let options: any = { reciter: {} };
+        languageId?: number | undefined,
+        categories?: number[] | undefined,
+        name?: string | undefined,
+        pagination?: AppPagination,
 
-        if (khatmaId) {
-            options.khatmaId = khatmaId;
+    ) {
+        let options: any = {};
+
+        if (languageId) {
+            options.languageId = languageId;
+        }
+        if (name) {
+            options.name = name;
         }
 
-        if (reciterId) {
-            options.reciter.id = reciterId;
+        if (categories && categories.length > 0) {
+            options.categories = categories;
         }
 
         return await this.getAll(
@@ -132,9 +108,9 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
                     ...pagination
                 },
                 relations: {
-                    image: true,
-                    audio: true,
-                    reciter: true,
+                    language: true,
+                    file: true,
+                    thumbnail: true,
                 }
             }
 
@@ -144,5 +120,7 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
 
 export const libraryRepository = new LibraryRepository(
     FileEntryEntity,
-    filesRepository,
+    uploaderService,
+    categoryRepository,
+    languageRepository,
 );

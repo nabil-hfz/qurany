@@ -31,5 +31,5 @@ export class CategoryEntity extends AppBaseEntity {
    * The `FileEntryEntity` represents the linked file entries.
    */
   @ManyToMany(() => FileEntryEntity)
-  FileEntryEntity?: FileEntryEntity[];
+  fileEntries?: FileEntryEntity[];
 }

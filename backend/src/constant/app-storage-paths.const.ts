@@ -4,6 +4,7 @@ export abstract class AppStoragePathsConst {
 
   static audiosPath = "audios";
   static imagesPath = "images";
+  private static libraryPath = "library";
 
   static filesImageCollection = "files_image";
   static filesAudioCollection = "files_audio";
@@ -24,6 +25,10 @@ export abstract class AppStoragePathsConst {
   static khaledAlabiImages = `${this._imageReciters}/khaled_alabi`;
   static abdulRahmanAlSudaisImages = `${this._imageReciters}/abdul_rahman_al_sudais`;
   static abuBakrAlShatriImages = `${this._imageReciters}/abu_bakr_al_shatri`;
+
+  // Library paths
+  static libraryFileEntry = `${this.libraryPath}/file_entry`;
+  static libraryThumbnail = `${this.libraryPath}/thumbnail`;
 
 }
 
