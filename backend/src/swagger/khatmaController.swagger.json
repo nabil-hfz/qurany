@@ -1,237 +1,284 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Library API",
-    "version": "1.0.0"
-  },
   "paths": {
-    "/library": {
+    "/khatma": {
       "post": {
-        "summary": "Create a File Entry",
-        "description": "Endpoint to create a new file entry in the library.",
+        "summary": "Create a new Khatma",
+        "description": "Creates a new Khatma with the given details.",
         "tags": [
-          "Library"
+          "Khatma"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateFileEntryReqBody"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "reciterId",
+                  "name",
+                  "khatmaType"
+                ],
+                "properties": {
+                  "reciterId": {
+                    "type": "number",
+                    "description": "ID of the reciter."
+                  },
+                  "name": {
+                    "type": "object",
+                    "description": "Localized name of the Khatma.",
+                    "properties": {
+                      "en": {
+                        "type": "string",
+                        "description": "English name."
+                      },
+                      "ar": {
+                        "type": "string",
+                        "description": "Arabic name."
+                      }
+                    }
+                  },
+                  "khatmaType": {
+                    "type": "number",
+                    "description": "Type of the Khatma. for example Hafs or Shoaba recitation."
+                  }
+                }
+              }
             }
-          },
-          {
-            "in": "formData",
-            "name": "file",
-            "type": "file",
-            "required": true,
-            "description": "File to be uploaded"
           }
-        ],
+        },
         "responses": {
           "200": {
-            "description": "File Entry Created Successfully",
-            "schema": {
-              "$ref": "#/definitions/FileEntryFullRes"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get File Entry List",
-        "description": "Retrieve a list of file entries from the library.",
-        "tags": [
-          "Library"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "languageId",
-            "type": "integer",
-            "required": false,
-            "description": "Language ID filter"
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "type": "string",
-            "required": false,
-            "description": "Name filter"
-          },
-          {
-            "in": "query",
-            "name": "categoryIds",
-            "type": "array",
-            "items": {
-              "type": "integer"
-            },
-            "required": false,
-            "description": "Category IDs filter"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List of File Entries",
-            "schema": {
-              "$ref": "#/definitions/ResponseListModel"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      }
-    },
-    "/library/{id}": {
-      "get": {
-        "summary": "Get a File Entry by ID",
-        "description": "Retrieve a single file entry by its ID.",
-        "tags": [
-          "Library"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "description": "ID of the file entry to retrieve"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "schema": {
-              "$ref": "#/definitions/FileEntryFullRes"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          },
-          "404": {
-            "description": "FileEntry not found",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete a File Entry by ID",
-        "description": "Delete a single file entry by its ID.",
-        "tags": [
-          "Library"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "description": "ID of the file entry to delete"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful deletion",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "File entry deleted successfully"
+            "description": "Successfully created new Khatma.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/KhatmaFullRes"
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+            "description": "Bad request, reciterId, khatmaType or name are missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
             }
           },
           "404": {
-            "description": "FileEntry not found",
+            "description": "Khatma not found for the given ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve a list of Khatmat",
+        "description": "Retrieve a paginated list of Khatma with optional filtering by reciter ID.",
+        "tags": [
+          "Khatma"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Page number of the Khatma list"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "Number of Khatmat per page"
+          },
+          {
+            "in": "query",
+            "name": "reciterId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "ID of the reciter to filter the Khatmat"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of Khatmat.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/KhatmaResumedRes"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/khatma/{khatmaId}": {
+      "get": {
+        "summary": "Retrieve a specific Khatma by ID",
+        "description": "Retrieve detailed information about a specific Khatma using its ID.",
+        "tags": ["Khatma"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "khatmaId",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true,
+            "description": "The ID of the Khatma to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed information about the Khatma.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KhatmaFullRes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request, khatmaId is missing or invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Khatma not found for the given ID.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "definitions": {
-    "CreateFileEntryReqBody": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "languageId": {
-          "type": "integer"
-        },
-        "categoryIds": {
-          "type": "array",
-          "items": {
-            "type": "integer"
+  "components": {
+    "schemas": {
+      "KhatmaResumedRes": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "ID of the Khatma."
+          },
+          "name": {
+            "$ref": "#/components/schemas/LocalizedEntity"
+          },
+          "reciter": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/LocalizedEntity"
+              },
+              "id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "image": {
+                "type": "string",
+                "nullable": true,
+                "format": "uri",
+                "description": "URL of the reciter's image."
+              }
+            }
           }
         }
       },
-      "required": [
-        "name",
-        "languageId",
-        "categoryIds"
-      ]
-    },
-    "FileEntryFullRes": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "language": {
-          "$ref": "#/definitions/LanguageResumedItem"
-        },
-        "file": {
-          "type": "string"
-        },
-        "thumbnail": {
-          "type": "string"
-        },
-        "totalViews": {
-          "type": "integer"
-        },
-        "totalDownloads": {
-          "type": "integer"
-        },
-        "categories": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Category"
+      "KhatmaFullRes": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/KhatmaResumedRes"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalDownloads": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Total number of downloads for the Khatma."
+              },
+              "totalPlays": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Total number of plays for the Khatma."
+              }
+            }
           }
-        },
-        "description": {
-          "type": "string"
-        }
+        ]
       }
     }
   }
