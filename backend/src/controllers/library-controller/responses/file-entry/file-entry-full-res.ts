@@ -16,7 +16,5 @@ export class FileEntryFullRes extends FileEntryResumedRes {
       ?.map(category => ({ id: category.id, name: category.name }));
 
     this.description = data.description;
-
-
   }
 }

@@ -42,6 +42,7 @@ export class LibraryController implements Controller {
     });
   }
 
+
   private readonly createFileEntrys: RequestHandler =
     async (req: any, res, next) => {
 
@@ -136,16 +137,16 @@ export class LibraryController implements Controller {
       );
     }
 
-    const resource = await libraryRepository.delete(id);
+    const isDeleted = await libraryRepository.delete(id);
 
-    if (resource == null) {
+    if (isDeleted == null) {
       throw new HttpResponseError(
         404,
         "NOT_FOUND",
         "FileEntry id " + id + " not found"
       );
     }
-    res.status(200).send(ResponseModel.toResult(resource));
+    res.status(200).send(ResponseModel.toResult(isDeleted));
     next();
   }
 
