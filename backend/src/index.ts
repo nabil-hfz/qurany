@@ -55,22 +55,16 @@ CONTROLLERS.forEach((controller) => {
   controller.initialize(httpServer);
 });
 
+
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hellow world! ');
-});
 
-app.get('/health', (req, res) => {
-  res.status(200).send('Health: OK');
-});
-
-// Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8085;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   log(`Server listening on port http://localhost:${PORT}...`);
 });
-/** End file docs */
 
 // https://www.youtube.com/watch?v=CqY2kYJQoK0
 // https://www.youtube.com/watch?v=2Ti6r34odOw

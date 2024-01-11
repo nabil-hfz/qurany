@@ -1,3 +1,4 @@
+import { healthControllerSwagger } from './health-controller.swagger';
 import * as swaggerJSDoc from "swagger-jsdoc";
 import { khatmaControllerSwagger } from './khatma-controller.swagger';
 import { libraryControllerSwagger } from './library-controller.swagger';
@@ -93,6 +94,7 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
           }
         },
+        ...healthControllerSwagger.components.schemas,
         ...khatmaControllerSwagger.components.schemas,
         ...recitationControllerSwagger.components.schemas,
         ...reciterControllerSwagger.components.schemas,
@@ -103,6 +105,7 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
       }
     },
     paths: {
+      ...healthControllerSwagger.paths,
       ...khatmaControllerSwagger.paths,
       ...recitationControllerSwagger.paths,
       ...reciterControllerSwagger.paths,
