@@ -1,5 +1,7 @@
 # Kawtharuna Backend Server - Node Js (Status: 90% Done)
 
+- This project services the backend server and contains the functionality needed to connect to the backend server.
+
 ## Current Features:
 
 ### 1- Provides Quranic Khatmat
