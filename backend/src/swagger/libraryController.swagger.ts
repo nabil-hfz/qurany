@@ -1,7 +1,5 @@
 export const libraryControllerSwagger = {
-
   paths: {
-    
     "/library": {
       "post": {
         "summary": "Create a File Entry",

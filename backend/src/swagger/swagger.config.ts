@@ -1,6 +1,7 @@
 import * as swaggerJSDoc from "swagger-jsdoc";
 import { khatmaControllerSwagger } from './khatmaController.swagger';
 import { libraryControllerSwagger } from './libraryController.swagger';
+import { languageControllerSwagger } from './languageController.swagger';
 
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
@@ -29,60 +30,8 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
     components: {
 
       schemas: {
-
-        KhatmaResumedRes: {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "nullable": true,
-              "description": "ID of the Khatma."
-            },
-            "name": {
-              "$ref": "#/components/schemas/LocalizedEntity"
-            },
-            "reciter": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$ref": "#/components/schemas/LocalizedEntity"
-                },
-                "id": {
-                  "type": "integer",
-                  "nullable": true
-                },
-                "image": {
-                  "type": "string",
-                  "nullable": true,
-                  "format": "uri",
-                  "description": "URL of the reciter's image."
-                }
-              }
-            }
-          }
-        },
-        KhatmaFullRes: {
-          "allOf": [
-            {
-              "$ref": "#/components/schemas/KhatmaResumedRes"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "totalDownloads": {
-                  "type": "integer",
-                  "nullable": true,
-                  "description": "Total number of downloads for the Khatma."
-                },
-                "totalPlays": {
-                  "type": "integer",
-                  "nullable": true,
-                  "description": "Total number of plays for the Khatma."
-                }
-              }
-            }
-          ]
-        },
+ 
+ 
         LocalizedEntity: {
           "type": "object",
           "properties": {
@@ -96,31 +45,7 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
             }
           }
         },
-        LanguageResumedRes: {
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "description": "A list of created languages.",
-              "items": {
-                "$ref": "#/components/schemas/LanguageResumedItem"
-              }
-            },
-          }
-        },
-        LanguageResumedItem: {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of created language."
-            },
-            "id": {
-              "type": "number",
-              "description": "Id of the created language."
-            }
-          }
-        },
+      
 
         DeleteResponse: {
           type: "boolean",
@@ -149,13 +74,16 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
           }
         },
-        ...(khatmaControllerSwagger.components),
-        ...(libraryControllerSwagger.components),
+        ...khatmaControllerSwagger.components,
+        ...libraryControllerSwagger.components,
+        ...languageControllerSwagger.components,
+
       }
     },
     paths: {
       ...khatmaControllerSwagger.paths,
       ...libraryControllerSwagger.paths,
+      ...languageControllerSwagger.paths,
     },
   };
   return combined;
