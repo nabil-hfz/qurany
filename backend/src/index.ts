@@ -32,8 +32,6 @@ dataSource.initialize()
 
 const swaggerSpec = swaggerJsdoc(options);
 
-console.log('swagger.config options is ', options);
-
 const app: Express = express();
 app.use(logRequests);
 

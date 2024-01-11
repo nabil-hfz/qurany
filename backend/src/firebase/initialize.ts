@@ -4,9 +4,8 @@ import { currentEnv } from "../config";
 
 
 export const CURRENT_GCLOUD_PROJECT = process.env.GCLOUD_PROJECT as string;
-console.log(`project CURRENT_GCLOUD_PROJECT (${CURRENT_GCLOUD_PROJECT}) config loaded`);
 
-const serviceAccoun = path.resolve(process.cwd(), `./.keys/qurany-firebase-adminsdk-${currentEnv}.json`);
+const serviceAccoun = path.resolve(process.cwd(), `./.keys/firebase-adminsdk-${currentEnv}.json`);
 console.log('serviceAccoun is ',serviceAccoun);
 const credential = admin.credential.cert(serviceAccoun);
 
