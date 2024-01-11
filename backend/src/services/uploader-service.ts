@@ -3,21 +3,13 @@ import { Readable } from "node:stream";
 import { CreateWriteStreamOptions } from "@google-cloud/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { firebaseDep } from '../firebase/firebase-datasource';
-// import { logError, logInfo } from '../utils/logger';
-// import { FileInfo } from 'busboy';
-// import * as busboy from 'busboy';
-// type GetSignedUrlConfig = any;
-// import { once } from 'events';
 
-// import { tmpdir } from 'os';
-// import { join } from 'path';
-// import path = require('path');
 import * as fs from 'fs';
 import * as ffprobe from 'ffprobe';
 import * as ffprobeStatic from 'ffprobe-static';
 import * as tmp from 'tmp';
 import { FileEntity } from "../db/entities/file.entity";
-
+import { ThumbnailImageResponse } from "./thumbnail-service";
 
 
 export class UploaderService {
@@ -192,10 +184,10 @@ export class UploaderService {
     }
 
     async saveBufferAsFile(
-        fileBuffer: Buffer,
+        thumbnail: ThumbnailImageResponse,
         fileLocation = "",
-        originalFileBuffer?: Express.Multer.File,
-     
+        // originalFileBuffer?: Express.Multer.File,
+
     ): Promise<FileEntity> {
 
         if (fileLocation && fileLocation.length > 0) {
@@ -205,17 +197,19 @@ export class UploaderService {
                 fileLocation += '/';
         }
 
-        const currentFileName = originalFileBuffer?.originalname;
-        const currentFileExt = originalFileBuffer?.mimetype;
-        const fileDestination = `${fileLocation}${currentFileName}`;
+        const { name, ext, buffer, size } = thumbnail;
 
-        const fileUrl = await this.uploadFile(fileBuffer, fileDestination, currentFileExt);
+        const fileDestination = `${fileLocation}${ext}`;
+
+
+        const fileUrl = await this.uploadFile(buffer!, fileDestination, ext);
+
 
         const uploadedFile = new FileEntity();
         uploadedFile.url = fileUrl;
-        uploadedFile.mimeType = originalFileBuffer?.mimetype;
-        uploadedFile.size = originalFileBuffer?.size ?? 0;
-        uploadedFile.name = currentFileName;
+        uploadedFile.mimeType = ext;
+        uploadedFile.size = size ?? 0;
+        uploadedFile.name = name;
 
         return uploadedFile;
     }

@@ -47,7 +47,7 @@ export class KhatmaController implements Controller {
     res.status(200).send(
       ResponseModel.toResult(new KhatmaFullRes(result))
     );
-    next();
+    // next();
   };
 
   private readonly getKhatmaListPublic: RequestHandler = async (req, res, next) => {
@@ -63,7 +63,7 @@ export class KhatmaController implements Controller {
         items: responseList
       })
     );
-    next();
+    // next();
   };
 
 
@@ -95,7 +95,7 @@ export class KhatmaController implements Controller {
     }
 
     res.send(ResponseModel.toResult(new KhatmaFullRes(khatma)));
-    next();
+    // next();
   }
 }
 

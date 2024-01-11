@@ -1,18 +1,10 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import { LocalizedEntity } from './localized.entity';
 import { FileEntity } from './file.entity';
-import { ReciterEntity } from './reciter.entity';
+import { RecitationTypes, ReciterEntity } from './reciter.entity';
 import { AppBaseEntity } from './base.entity';
 
-export enum RecitationTypes {
-  Hafs = 1,
-  Shoaba = 2,
-}
 
-export const RecitationTypesList = [
-  RecitationTypes.Hafs,
-  RecitationTypes.Shoaba,
-];
 
 @Entity({ name: 'recitations' })
 export class RecitationEntity extends AppBaseEntity {

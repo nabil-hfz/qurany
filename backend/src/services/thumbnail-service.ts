@@ -1,40 +1,53 @@
-import { PDFDocument } from 'pdf-lib';
-import { createCanvas } from 'canvas';
-// import { logError } from '../utils/logger';
+import { fromBuffer } from "pdf2pic";
 
-export abstract class ThumbnailService {
-
-    static async createPdfThumbnail(file: Express.Multer.File): Promise<any> {
+// import * as fs from 'fs';
+import * as path from 'path';
+export class ThumbnailService {
+    static async createPdfThumbnail(file: Express.Multer.File): Promise<ThumbnailImageResponse> {
         try {
-            console.log('file ', file);
-            console.log('file.buffer ', file.buffer);
-            const pdfDoc = await PDFDocument.load(file.buffer.buffer);
-            pdfDoc.toString();
-            const pdfPage = pdfDoc.getPage(0); // Get the first page
 
-            // Define the size of the thumbnail
-            const width = 200; // Width in pixels
-            const height = (pdfPage.getHeight() / pdfPage.getWidth()) * width;
+            const buffer = file.buffer;
 
-            // Create a canvas and render the PDF page onto it
-            const canvas = createCanvas(width, height);
-            // const context = canvas.getContext('2d');
-            // const pageImage = await pdfPage.renderToContext(context, {
-            //     x: 0,
-            //     y: 0,
-            //     width,
-            //     height,
-            //     // You can adjust additional options if needed
-            // });
+            // Define the file name
+            const originalname = file.originalname;
+            const { name, ext } = path.parse(originalname);
 
-            // Convert the canvas to a Buffer (PNG format)
-            return canvas.toBuffer('image/png');
+            const directory = path.dirname(__filename);
+
+            const options = {
+                preserveAspectRatio: true,
+                format: 'png',
+                saveFilename: name,
+                savePath: directory,
+
+            };
+            const convert = fromBuffer(buffer, options);
+            const pageToConvertAsImage = 1;
+
+            const result = await convert(pageToConvertAsImage, { responseType: "buffer" });
+
+            return {
+                buffer: result.buffer,
+                size: Buffer.byteLength(result.buffer!),
+                page: result.page,
+                name: name,
+                ext: ext,
+            };
+
         } catch (error) {
-            console.error(error);
+            console.error('Error creating thumbnail:', error);
             throw error;
         }
     }
+}
 
+
+export interface ThumbnailImageResponse {
+    size?: number;
+    page?: number;
+    name?: string;
+    ext?: string;
+    buffer?: Buffer;
 }
 
 

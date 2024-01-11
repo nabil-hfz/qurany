@@ -17,6 +17,6 @@ export class RootController implements Controller {
     res.send({
       status: `API is working! Counter: ${counter++}`,
     });
-    next();
+    // next();
   };
 }

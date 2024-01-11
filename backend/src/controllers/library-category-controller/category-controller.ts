@@ -39,24 +39,24 @@ export class CategoryController implements Controller {
     async (req: any, res, next) => {
 
 
-      
+
       const reqBody: CreateCategoriesReqBody = Object.assign({}, req.body);
       checkIfIsValidCreateCategoriesReqBody(reqBody);
 
 
-      
+
       const data = await categoryRepository
         .createCategories(reqBody);
 
-        const list = data.map(
-          (entry: any) => new CategoryResumedRes(entry)
-        );
-  
-        res.status(200).send(
-          ResponseListModel.toResult({
-            items: list
-          })
-        );
+      const list = data.map(
+        (entry: any) => new CategoryResumedRes(entry)
+      );
+
+      res.status(200).send(
+        ResponseListModel.toResult({
+          items: list
+        })
+      );
     };
 
 
@@ -64,9 +64,7 @@ export class CategoryController implements Controller {
     const pagination = req.pagination;
 
     const response = await categoryRepository
-      .getCategories(
-        pagination,
-      );
+      .getCategories(pagination);
 
     const responseList = response.items.map(
       (entity) => new CategoryResumedRes(entity)
@@ -76,7 +74,7 @@ export class CategoryController implements Controller {
         items: responseList,
       })
     );
-    next();
+    // next();
   };
 
   private readonly deleteCategoryById: RequestHandler = async (
@@ -103,7 +101,7 @@ export class CategoryController implements Controller {
       );
     }
     res.status(200).send(ResponseModel.toResult(resource));
-    next();
+    // next();
   }
 
 }

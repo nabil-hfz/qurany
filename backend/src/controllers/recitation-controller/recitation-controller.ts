@@ -83,7 +83,7 @@ export class RecitationController implements Controller {
           items: result,
         })
       );
-      next();
+      // next();
     };
 
   private readonly getFilePathPublic: RequestHandler = async (req, res, next) => {
@@ -93,7 +93,7 @@ export class RecitationController implements Controller {
         imagesPath: { ...AppImagesKhatmeConst }
       })
     );
-    next();
+    // next();
   };
 
 
@@ -125,7 +125,7 @@ export class RecitationController implements Controller {
         items: responseList,
       })
     );
-    next();
+    // next();
   };
 
   private readonly getRecitationByIdPublic: RequestHandler = async (
@@ -157,7 +157,7 @@ export class RecitationController implements Controller {
       );
     }
     res.status(200).send(ResponseModel.toResult(new RecitationFullRes(recitation)));
-    next();
+    // next();
   }
 }
 

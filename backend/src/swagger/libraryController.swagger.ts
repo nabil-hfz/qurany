@@ -1,10 +1,7 @@
-{
-  "swagger": "2.0",
-  "info": {
-    "title": "Library API",
-    "version": "1.0.0"
-  },
-  "paths": {
+export const libraryControllerSwagger = {
+
+  paths: {
+    
     "/library": {
       "post": {
         "summary": "Create a File Entry",
@@ -173,7 +170,7 @@
       }
     }
   },
-  "definitions": {
+  components: {
     "CreateFileEntryReqBody": {
       "type": "object",
       "properties": {

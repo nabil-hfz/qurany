@@ -1,17 +1,12 @@
 import * as swaggerJSDoc from "swagger-jsdoc";
-import * as fs from "fs";
-import * as path from "path";
+import { khatmaControllerSwagger } from './khatmaController.swagger';
+import { libraryControllerSwagger } from './libraryController.swagger';
 
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
-  const basePath = path.join(__dirname, './');
-  console.log(`Swagger ${basePath}`);
-  const files = fs.readdirSync(basePath).filter(file => file.search('.json') != -1);
 
 
-  // KhatmaController
   const combined: swaggerJSDoc.SwaggerDefinition = {
-    // Like the one described here: https://swagger.io/specification/#infoObject
     basePath: '/',
     openapi: '3.0.0',
     info: {
@@ -32,7 +27,9 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
     ],
     components: {
-      "schemas": {
+
+      schemas: {
+
         KhatmaResumedRes: {
           "type": "object",
           "properties": {
@@ -152,16 +149,15 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
           }
         },
+        ...(khatmaControllerSwagger.components),
+        ...(libraryControllerSwagger.components),
       }
     },
+    paths: {
+      ...khatmaControllerSwagger.paths,
+      ...libraryControllerSwagger.paths,
+    },
   };
-
-  files.forEach((file) => {
-    const doc = JSON.parse(fs.readFileSync(path.join(basePath, file), 'utf8'));
-    combined.paths = { ...combined.paths, ...doc.paths };
-    combined.definitions = { ...combined.definitions, ...doc.definitions };
-  });
-
   return combined;
 };
 
@@ -171,9 +167,7 @@ export const options: swaggerJSDoc.Options = {
   swaggerDefinition,
   failOnErrors: true,
   apis: [
-    "src/controllers/**-controller/*.ts",
-    "src/controllers/**-controller/responses/*.ts"
+    // "src/controllers/**-controller/*.ts",
+    // "src/controllers/**-controller/responses/*.ts"
   ]
 };
-
-// npm install swagger-ui-express swagger-jsdoc --save

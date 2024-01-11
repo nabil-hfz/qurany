@@ -1,9 +1,13 @@
-FROM node:16-alpine
+# FROM node:16-alpine
+FROM node:18-alpine
 
 ENV NODE_ENV=prod
 
-# update packages
+# Update package list
 RUN apk update
+
+# Install GraphicsMagick
+RUN apk add graphicsmagick
 
 # create root application folder
 WORKDIR /app

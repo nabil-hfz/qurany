@@ -58,7 +58,7 @@ export class LibraryController implements Controller {
         .createFileEntry(reqBody, file[0]);
 
       res.status(200).send(ResponseModel.toResult(new FileEntryFullRes(result)));
-      next();
+      // next();
     };
 
 
@@ -92,7 +92,7 @@ export class LibraryController implements Controller {
         items: responseList,
       })
     );
-    next();
+    // next();
   };
 
   private readonly getFileEntryById: RequestHandler = async (
@@ -119,7 +119,7 @@ export class LibraryController implements Controller {
       );
     }
     res.status(200).send(ResponseModel.toResult(new FileEntryFullRes(resource)));
-    next();
+    // next();
   }
 
 
@@ -147,7 +147,7 @@ export class LibraryController implements Controller {
       );
     }
     res.status(200).send(ResponseModel.toResult(isDeleted));
-    next();
+    // next();
   }
 
 }

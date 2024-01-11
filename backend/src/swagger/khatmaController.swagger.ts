@@ -1,5 +1,5 @@
-{
-  "paths": {
+export const khatmaControllerSwagger = {
+  paths: {
     "/khatma": {
       "post": {
         "summary": "Create a new Khatma",
@@ -225,7 +225,7 @@
       }
     }
   },
-  "components": {
+  components: {
     "schemas": {
       "KhatmaResumedRes": {
         "type": "object",
@@ -282,4 +282,5 @@
       }
     }
   }
-}
+};
+
