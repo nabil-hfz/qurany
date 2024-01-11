@@ -1,5 +1,6 @@
 
 import "reflect-metadata";
+import * as path from "path";
 
 
 import dataSource from "./db/data-source"
@@ -56,8 +57,12 @@ CONTROLLERS.forEach((controller) => {
 });
 
 
+// Services the application code documentation
+const index = __dirname.lastIndexOf('/');
+const docsDirPath = __dirname.substring(0, index);
+app.use('/code-docs', express.static(path.join(docsDirPath, 'docs')));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Services the application API documentation
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
