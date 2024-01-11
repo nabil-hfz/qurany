@@ -1,5 +1,5 @@
 export const languageControllerSwagger = {
-  paths: {
+  "paths": {
     "/library/language": {
       "post": {
         "summary": "Create new languages",
@@ -61,6 +61,10 @@ export const languageControllerSwagger = {
         "summary": "Retrieve a list of languages",
         "description": "Get a list of all available languages.",
         "tags": ["Language"],
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
+        ],
         "responses": {
           "200": {
             "description": "A list of languages.",
@@ -137,9 +141,9 @@ export const languageControllerSwagger = {
       }
     }
   },
-  components: {
+  "components": {
     "schemas": {
-      LanguageResumedItem: {
+      "LanguageResumedItem": {
         "type": "object",
         "properties": {
           "name": {
@@ -153,7 +157,7 @@ export const languageControllerSwagger = {
           }
         }
       },
-      LanguageResumedRes: {
+      "LanguageResumedRes": {
         "type": "object",
         "properties": {
           "items": {

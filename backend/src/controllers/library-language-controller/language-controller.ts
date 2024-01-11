@@ -71,7 +71,6 @@ export class LanguageController implements Controller {
         items: responseList,
       })
     );
-
   };
 
 

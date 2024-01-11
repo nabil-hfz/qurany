@@ -2,6 +2,7 @@ import * as swaggerJSDoc from "swagger-jsdoc";
 import { khatmaControllerSwagger } from './khatmaController.swagger';
 import { libraryControllerSwagger } from './libraryController.swagger';
 import { languageControllerSwagger } from './languageController.swagger';
+import { recitationControllerSwagger } from './recitationController.swagger';
 
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
@@ -16,7 +17,6 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
       description: 'This is a REST API application made with Express.',
     },
     servers: [
-
       {
         url: 'https://www.api.kawtharuna.com/v1',
         description: 'Production server.',
@@ -28,10 +28,29 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
     ],
     components: {
-
+      parameters: {
+        "PageParam": {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 1
+          },
+          "description": "Page number of the results to fetch."
+        },
+        "LimitParam": {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 30
+          },
+          "description": "Number of results per page."
+        }
+      },
       schemas: {
- 
- 
         LocalizedEntity: {
           "type": "object",
           "properties": {
@@ -45,8 +64,6 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
             }
           }
         },
-      
-
         DeleteResponse: {
           type: "boolean",
           example: true
@@ -74,9 +91,10 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
           }
         },
-        ...khatmaControllerSwagger.components,
-        ...libraryControllerSwagger.components,
-        ...languageControllerSwagger.components,
+        ...khatmaControllerSwagger.components.schemas,
+        ...libraryControllerSwagger.components.schemas,
+        ...languageControllerSwagger.components.schemas,
+        ...recitationControllerSwagger.components.schemas,
 
       }
     },
@@ -84,6 +102,7 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
       ...khatmaControllerSwagger.paths,
       ...libraryControllerSwagger.paths,
       ...languageControllerSwagger.paths,
+      ...recitationControllerSwagger.paths,
     },
   };
   return combined;
