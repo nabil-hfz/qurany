@@ -1,10 +1,69 @@
-{
-  "swagger": "2.0",
-  "info": {
-    "title": "Library API",
-    "version": "1.0.0"
+export const libraryControllerSwagger = {
+  components: {
+    schemas: {
+      "CreateFileEntryReqBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "integer"
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "languageId",
+          "categoryIds"
+        ]
+      },
+      "FileEntryFullRes": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/definitions/LanguageResumedItem"
+          },
+          "file": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "totalViews": {
+            "type": "integer"
+          },
+          "totalDownloads": {
+            "type": "integer"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Category"
+            }
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
   },
-  "paths": {
+  paths: {
     "/library": {
       "post": {
         "summary": "Create a File Entry",
@@ -13,21 +72,8 @@
           "Library"
         ],
         "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateFileEntryReqBody"
-            }
-          },
-          {
-            "in": "formData",
-            "name": "file",
-            "type": "file",
-            "required": true,
-            "description": "File to be uploaded"
-          }
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" }
         ],
         "responses": {
           "200": {
@@ -173,66 +219,5 @@
       }
     }
   },
-  "definitions": {
-    "CreateFileEntryReqBody": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "languageId": {
-          "type": "integer"
-        },
-        "categoryIds": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "languageId",
-        "categoryIds"
-      ]
-    },
-    "FileEntryFullRes": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string"
-        },
-        "language": {
-          "$ref": "#/definitions/LanguageResumedItem"
-        },
-        "file": {
-          "type": "string"
-        },
-        "thumbnail": {
-          "type": "string"
-        },
-        "totalViews": {
-          "type": "integer"
-        },
-        "totalDownloads": {
-          "type": "integer"
-        },
-        "categories": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Category"
-          }
-        },
-        "description": {
-          "type": "string"
-        }
-      }
-    }
-  }
+
 }

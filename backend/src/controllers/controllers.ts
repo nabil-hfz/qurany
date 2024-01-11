@@ -7,6 +7,7 @@ import { RecitationController } from "./recitation-controller/recitation-control
 import { LanguageController } from "./library-language-controller/language-controller";
 import { CategoryController } from "./library-category-controller/category-controller";
 import { LibraryController } from "./library-controller/library-controller";
+import { HealthController } from "./health-controller/health-controller";
 
 /** TODO: Set yours controllers here: */
 export const CONTROLLERS: Array<Controller> = [
@@ -18,4 +19,5 @@ export const CONTROLLERS: Array<Controller> = [
   new LanguageController(),
   new CategoryController(),
   new LibraryController(),
+  new HealthController(),
 ];

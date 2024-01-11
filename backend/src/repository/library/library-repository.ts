@@ -10,6 +10,7 @@ import { LanguageRepository, languageRepository } from './language-repository';
 import { CategoryEntity } from '../../db/entities/category.entity';
 import { AppStoragePathsConst } from '../../constant/app-storage-paths.const';
 import { ThumbnailService } from '../../services/thumbnail-service';
+import { FilesRepository, filesRepository } from '../file/files-repository';
 
 export class LibraryRepository extends Repository<FileEntryEntity> {
 
@@ -18,6 +19,7 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
         private uploaderService: UploaderService,
         private categoryRepository: CategoryRepository,
         private languageRepository: LanguageRepository,
+        private filesRepository: FilesRepository,
     ) {
         super(model);
     }
@@ -40,36 +42,37 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
             categories.push(category);
         }
 
-        const filePath = AppStoragePathsConst.libraryFileEntry + `/${languageId}`;
-        const fileResult = await this.uploaderService
+        const filePath = AppStoragePathsConst.libraryFileEntry + `/language_${languageId}`;
+        const uploadedFileResult = await this.uploaderService
             .saveFile(file, filePath);
 
-        if (!fileResult) {
-            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "fileResult" is null');
+        if (!uploadedFileResult) {
+            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "uploadedFileResult" is null');
         }
+        const savedFileResult = await this.filesRepository.create(uploadedFileResult);
 
 
-        const thumbnailBuffer = await ThumbnailService.createPdfThumbnail(file);
-
-        if (!thumbnailBuffer) {
+        const thumbnailFilePath = await ThumbnailService.createPdfThumbnail(file);
+        if (!thumbnailFilePath) {
             throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "bufferThumbnail" is null');
         }
 
-        const thumbnailPath = AppStoragePathsConst.libraryThumbnail + `/${languageId}`;
-        const thumbnailResult = await this.uploaderService
-            .saveBufferAsFile(thumbnailBuffer, thumbnailPath, file);
-
-        if (!thumbnailResult) {
+        const thumbnailPath = AppStoragePathsConst.libraryThumbnail + `/language_${languageId}`;
+        const uploadedThumbnailResult = await this.uploaderService
+            .saveBufferAsFile(thumbnailFilePath, thumbnailPath);
+        if (!uploadedThumbnailResult) {
             throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "thumbnailResult" is null');
         }
+        const savedThumbnailResult = await this.filesRepository.create(uploadedThumbnailResult);
+
 
         const entity = new FileEntryEntity();
         entity.name = request.name!;
         entity.description = request?.description;
         entity.language = language!;
         entity.categories = categories;
-        entity.file = fileResult;
-        entity.thumbnail = thumbnailResult;
+        entity.file = savedFileResult;
+        entity.thumbnail = savedThumbnailResult;
 
         const result = await this._repository.save(entity);
 
@@ -125,4 +128,5 @@ export const libraryRepository = new LibraryRepository(
     uploaderService,
     categoryRepository,
     languageRepository,
+    filesRepository,
 );

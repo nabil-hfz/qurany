@@ -1,17 +1,17 @@
+import { healthControllerSwagger } from './health-controller.swagger';
 import * as swaggerJSDoc from "swagger-jsdoc";
-import * as fs from "fs";
-import * as path from "path";
+import { khatmaControllerSwagger } from './khatma-controller.swagger';
+import { libraryControllerSwagger } from './library-controller.swagger';
+import { languageControllerSwagger } from './library-language-controller.swagger';
+import { recitationControllerSwagger } from './recitation-controller.swagger';
+import { reciterControllerSwagger } from './reciter-controller.swagger';
+import { libraryCategoryControllerSwagger } from './library-category-controller.swagger';
 
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
-  const basePath = path.join(__dirname, './');
-  console.log(`Swagger ${basePath}`);
-  const files = fs.readdirSync(basePath).filter(file => file.search('.json') != -1);
 
 
-  // KhatmaController
   const combined: swaggerJSDoc.SwaggerDefinition = {
-    // Like the one described here: https://swagger.io/specification/#infoObject
     basePath: '/',
     openapi: '3.0.0',
     info: {
@@ -20,7 +20,6 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
       description: 'This is a REST API application made with Express.',
     },
     servers: [
-
       {
         url: 'https://www.api.kawtharuna.com/v1',
         description: 'Production server.',
@@ -32,60 +31,29 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
     ],
     components: {
-      "schemas": {
-        KhatmaResumedRes: {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "nullable": true,
-              "description": "ID of the Khatma."
-            },
-            "name": {
-              "$ref": "#/components/schemas/LocalizedEntity"
-            },
-            "reciter": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "$ref": "#/components/schemas/LocalizedEntity"
-                },
-                "id": {
-                  "type": "integer",
-                  "nullable": true
-                },
-                "image": {
-                  "type": "string",
-                  "nullable": true,
-                  "format": "uri",
-                  "description": "URL of the reciter's image."
-                }
-              }
-            }
-          }
+      parameters: {
+        "PageParam": {
+          "in": "query",
+          "name": "page",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 1
+          },
+          "description": "Page number of the results to fetch."
         },
-        KhatmaFullRes: {
-          "allOf": [
-            {
-              "$ref": "#/components/schemas/KhatmaResumedRes"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "totalDownloads": {
-                  "type": "integer",
-                  "nullable": true,
-                  "description": "Total number of downloads for the Khatma."
-                },
-                "totalPlays": {
-                  "type": "integer",
-                  "nullable": true,
-                  "description": "Total number of plays for the Khatma."
-                }
-              }
-            }
-          ]
-        },
+        "LimitParam": {
+          "in": "query",
+          "name": "limit",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "default": 30
+          },
+          "description": "Number of results per page."
+        }
+      },
+      schemas: {
         LocalizedEntity: {
           "type": "object",
           "properties": {
@@ -99,32 +67,6 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
             }
           }
         },
-        LanguageResumedRes: {
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "description": "A list of created languages.",
-              "items": {
-                "$ref": "#/components/schemas/LanguageResumedItem"
-              }
-            },
-          }
-        },
-        LanguageResumedItem: {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "Name of created language."
-            },
-            "id": {
-              "type": "number",
-              "description": "Id of the created language."
-            }
-          }
-        },
-
         DeleteResponse: {
           type: "boolean",
           example: true
@@ -152,16 +94,26 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
           }
         },
+        ...healthControllerSwagger.components.schemas,
+        ...khatmaControllerSwagger.components.schemas,
+        ...recitationControllerSwagger.components.schemas,
+        ...reciterControllerSwagger.components.schemas,
+        ...libraryControllerSwagger.components.schemas,
+        ...languageControllerSwagger.components.schemas,
+        ...libraryCategoryControllerSwagger.components.schemas,
+
       }
     },
+    paths: {
+      ...healthControllerSwagger.paths,
+      ...khatmaControllerSwagger.paths,
+      ...recitationControllerSwagger.paths,
+      ...reciterControllerSwagger.paths,
+      ...libraryControllerSwagger.paths,
+      ...languageControllerSwagger.paths,
+      ...libraryCategoryControllerSwagger.paths,
+    },
   };
-
-  files.forEach((file) => {
-    const doc = JSON.parse(fs.readFileSync(path.join(basePath, file), 'utf8'));
-    combined.paths = { ...combined.paths, ...doc.paths };
-    combined.definitions = { ...combined.definitions, ...doc.definitions };
-  });
-
   return combined;
 };
 
@@ -171,9 +123,7 @@ export const options: swaggerJSDoc.Options = {
   swaggerDefinition,
   failOnErrors: true,
   apis: [
-    "src/controllers/**-controller/*.ts",
-    "src/controllers/**-controller/responses/*.ts"
+    // "src/controllers/**-controller/*.ts",
+    // "src/controllers/**-controller/responses/*.ts"
   ]
 };
-
-// npm install swagger-ui-express swagger-jsdoc --save

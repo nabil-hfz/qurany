@@ -1,5 +1,6 @@
 
 import "reflect-metadata";
+import * as path from "path";
 
 
 import dataSource from "./db/data-source"
@@ -53,22 +54,20 @@ CONTROLLERS.forEach((controller) => {
   controller.initialize(httpServer);
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hellow world! ');
-});
+// Services the application code documentation
+const index = __dirname.lastIndexOf('/');
+const docsDirPath = __dirname.substring(0, index);
+app.use('/code-docs', express.static(path.join(docsDirPath, 'docs')));
 
-app.get('/health', (req, res) => {
-  res.status(200).send('Health: OK');
-});
+// Services the application API documentation
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8085;
+
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   log(`Server listening on port http://localhost:${PORT}...`);
 });
-/** End file docs */
 
 // https://www.youtube.com/watch?v=CqY2kYJQoK0
 // https://www.youtube.com/watch?v=2Ti6r34odOw
