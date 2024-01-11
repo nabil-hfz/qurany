@@ -1,8 +1,10 @@
 import * as swaggerJSDoc from "swagger-jsdoc";
-import { khatmaControllerSwagger } from './khatmaController.swagger';
-import { libraryControllerSwagger } from './libraryController.swagger';
-import { languageControllerSwagger } from './languageController.swagger';
-import { recitationControllerSwagger } from './recitationController.swagger';
+import { khatmaControllerSwagger } from './khatma-controller.swagger';
+import { libraryControllerSwagger } from './library-controller.swagger';
+import { languageControllerSwagger } from './library-language-controller.swagger';
+import { recitationControllerSwagger } from './recitation-controller.swagger';
+import { reciterControllerSwagger } from './reciter-controller.swagger';
+import { libraryCategoryControllerSwagger } from './library-category-controller.swagger';
 
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
@@ -92,17 +94,21 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
           }
         },
         ...khatmaControllerSwagger.components.schemas,
+        ...recitationControllerSwagger.components.schemas,
+        ...reciterControllerSwagger.components.schemas,
         ...libraryControllerSwagger.components.schemas,
         ...languageControllerSwagger.components.schemas,
-        ...recitationControllerSwagger.components.schemas,
+        ...libraryCategoryControllerSwagger.components.schemas,
 
       }
     },
     paths: {
       ...khatmaControllerSwagger.paths,
+      ...recitationControllerSwagger.paths,
+      ...reciterControllerSwagger.paths,
       ...libraryControllerSwagger.paths,
       ...languageControllerSwagger.paths,
-      ...recitationControllerSwagger.paths,
+      ...libraryCategoryControllerSwagger.paths,
     },
   };
   return combined;

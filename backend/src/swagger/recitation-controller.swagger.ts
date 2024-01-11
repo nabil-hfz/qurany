@@ -16,7 +16,7 @@ export const recitationControllerSwagger = {
                     type: "integer",
                     description: "ID of the khatma for which to create recitations.",
                     nullable: false,
-                    required: true,
+                    required: true
                   },
                   sequence: {
                     type: "integer",
