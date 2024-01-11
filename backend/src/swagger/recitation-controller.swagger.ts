@@ -5,11 +5,11 @@ export const recitationControllerSwagger = {
         summary: "Create Recitations",
         description: "Creates new recitations with the given details.",
         tags: ["Recitation"],
-        requestBody: {
-          required: true,
-          content: {
+        "requestBody": {
+          "required": true,
+          "content": {
             "multipart/form-data": {
-              schema: {
+              "schema": {
                 type: "object",
                 properties: {
                   khatmaId: {
@@ -42,6 +42,7 @@ export const recitationControllerSwagger = {
                   }
                 },
                 required: ["khatmaId", "sequence", "audios", "images"]
+
               }
             }
           }

@@ -66,26 +66,76 @@ export const libraryControllerSwagger = {
   paths: {
     "/library": {
       "post": {
-        "summary": "Create a File Entry",
-        "description": "Endpoint to create a new file entry in the library.",
-        "tags": [
-          "Library"
-        ],
-        "parameters": [
-          { "$ref": "#/components/parameters/PageParam" },
-          { "$ref": "#/components/parameters/LimitParam" }
-        ],
+        "summary": "Create File Entry",
+        "description": "Create a new file entry with the provided information.",
+        "tags": ["Library"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the file entry."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the file entry."
+                  },
+                  "languageId": {
+                    "type": "integer",
+                    "description": "The language ID associated with the file entry."
+                  },
+                  "categoryIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "An array of category IDs associated with the file entry."
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The file to upload."
+                  }
+                },
+                "required": ["name", "languageId", "categoryIds", "file"],
+
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "File Entry Created Successfully",
-            "schema": {
-              "$ref": "#/definitions/FileEntryFullRes"
+            "description": "File entry created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileEntryFullRes"
+                }
+              }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+            "description": "Bad request, invalid request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
             }
           }
         }

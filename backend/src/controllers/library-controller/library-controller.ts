@@ -18,7 +18,7 @@ export class LibraryController implements Controller {
     // File entry
     httpServer.post({
       path: this.url,
-      requestHandler: this.createFileEntrys.bind(this),
+      requestHandler: this.createFileEntry.bind(this),
       fileFields: [{ name: 'file' }],
       customClaims: ['superAdmin'],
     });
@@ -43,7 +43,7 @@ export class LibraryController implements Controller {
   }
 
 
-  private readonly createFileEntrys: RequestHandler =
+  private readonly createFileEntry: RequestHandler =
     async (req: any, res, next) => {
 
       const reqBody: CreateFileEntryReqBody = Object.assign({}, req.body);
