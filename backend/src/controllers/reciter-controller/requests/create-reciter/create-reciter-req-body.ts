@@ -1,4 +1,4 @@
-import { LocalizedEntity } from "../../../../db/entities/localized-entity";
+import { LocalizedEntity } from "../../../../db/entities/localized.entity";
 
 
 export type CreateReciterReqBody = {

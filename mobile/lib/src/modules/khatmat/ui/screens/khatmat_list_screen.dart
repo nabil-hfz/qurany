@@ -6,7 +6,7 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_state.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
-import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
+import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
 import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
 import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';
@@ -39,12 +39,12 @@ class _KhatmatListScreenState extends State<KhatmatListScreen> {
     );
     return Scaffold(
       appBar: CustomAppBar(
-        // title: translate.khatmat,
-        leading: AppMenuIconWidget(
-          onDrawerPressed: () {
-            mainKey.currentState?.openDrawer();
-          },
-        ),
+        title: translate.home,
+        // leading: AppMenuIconWidget(
+        //   onDrawerPressed: () {
+        //     mainKey.currentState?.openDrawer();
+        //   },
+        // ),
         automaticallyImplyLeading: false,
       ),
       body: BlocConsumer<KhatmaCubit, KhatmaState>(
@@ -96,9 +96,14 @@ class _KhatmatListScreenState extends State<KhatmatListScreen> {
                 (ctx, index) {
                   return KhatmaListItem(
                     khatma: khatmat[index],
-                    // onTap: () {
-                    // currentlyPlaying.value = khatma;
-                    // },
+                    onTap: () {
+                      navigator.pushNamed(
+                        Routes.khatmaDetailsScreen,
+                        arguments: BaseNavigationArg(
+                          data: khatmat[index],
+                        ),
+                      );
+                    },
                   );
                 },
                 childCount: khatmat.length,

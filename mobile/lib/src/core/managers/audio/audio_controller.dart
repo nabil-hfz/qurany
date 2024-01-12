@@ -1,12 +1,14 @@
 import 'dart:collection';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:kawtharuna/main.dart';
+import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/audio/songs.dart';
 import 'package:kawtharuna/src/core/managers/settings/settings.dart';
 import 'package:logging/logging.dart';
-import 'package:rxdart/rxdart.dart';
 
 @Singleton()
 class AudioController {
@@ -22,17 +24,53 @@ class AudioController {
   AudioController() {
     _musicPlayer = AudioPlayer();
     _playlist = Queue.of([]);
+
+    // audioHandler.playbackState.add(PlaybackState(
+    //   // Which buttons should appear in the notification now
+    //   controls: [
+    //     MediaControl.skipToPrevious,
+    //     MediaControl.pause,
+    //     // MediaControl.stop,
+    //     MediaControl.skipToNext,
+    //   ],
+    //   // Which other actions should be enabled in the notification
+    //   systemActions: const {
+    //     MediaAction.seek,
+    //     MediaAction.seekForward,
+    //     MediaAction.seekBackward,
+    //   },
+    //   // Which controls to show in Android's compact view.
+    //   androidCompactActionIndices: const [0, 1, 3],
+    //   // Whether audio is ready, buffering, ...
+    //   processingState: AudioProcessingState.ready,
+    //   // Whether audio is playing
+    //   playing: true,
+    //   // The current position as of this update. You should not broadcast
+    //   // position changes continuously because listeners will be able to
+    //   // project the current position after any elapsed time based on the
+    //   // current speed and whether audio is playing and ready. Instead, only
+    //   // broadcast position updates when they are different from expected (e.g.
+    //   // buffering, or seeking).
+    //   updatePosition: Duration(milliseconds: 54321),
+    //   // The current buffered position as of this update
+    //   bufferedPosition: Duration(milliseconds: 65432),
+    //   // The current speed
+    //   speed: 1.0,
+    //   // The current queue position
+    //   queueIndex: 0,
+    // ));
     _musicPlayer.playerStateStream.listen((event) {
       if (event.playing) {
         if (event.processingState == ProcessingState.completed ||
             event.processingState == ProcessingState.idle) {
-          currentPlayingUrl.add(null);
+          // currentPlayingUrl.add(null);
+          _currentlyPlayingUrl = null;
         }
       }
     });
   }
 
-  late BehaviorSubject<String?> currentPlayingUrl = BehaviorSubject();
+  // late BehaviorSubject<String?> currentPlayingUrl = BehaviorSubject();
 
   String? get currentlyPlayingUrl => _currentlyPlayingUrl;
 
@@ -149,11 +187,11 @@ class AudioController {
       if (_musicPlayer.playerState.playing ||
           _musicPlayer.playerState.processingState == ProcessingState.loading) {
         _log.info(() => 'Pausing audio as it is already playing.');
-        currentPlayingUrl.add(null);
+        // currentPlayingUrl.add(null);
         await _musicPlayer.pause();
       } else {
         _log.info(() => 'Resuming audio');
-        currentPlayingUrl.add(url);
+        // currentPlayingUrl.add(url);
         await _musicPlayer.play();
       }
     } else {
@@ -162,19 +200,22 @@ class AudioController {
 
       await _musicPlayer.setUrl(url);
       _currentlyPlayingUrl = url;
-      currentPlayingUrl.add(url);
+      // currentPlayingUrl.add(url);
       //
       await _musicPlayer.play();
     }
   }
 
   Future<void> seekForward([int seconds = 10]) async {
-    return await musicPlayer.seek(Duration(seconds: seconds));
+    var currentPosition = _musicPlayer.position.inSeconds;
+    currentPosition += seconds;
+    return await musicPlayer.seek(Duration(seconds: currentPosition));
   }
 
   Future<void> seekBackward([int seconds = 10]) async {
-    await musicPlayer.seek(Duration(seconds: -seconds));
-    // return await musicPlayer.seek(Duration(seconds: -seconds));
+    var currentPosition = _musicPlayer.position.inSeconds;
+    currentPosition -= seconds;
+    return await musicPlayer.seek(Duration(seconds: currentPosition));
   }
 
   Future<void> _resumeMusic() async {
@@ -232,10 +273,59 @@ class AudioController {
   }
 
   void dispose() {
-    currentPlayingUrl.add(null);
+    // currentPlayingUrl.add(null);
     _stopMusic();
-    currentPlayingUrl.close();
+    // currentPlayingUrl.close();
     _lifecycleNotifier?.removeListener(_handleAppLifecycle);
     _musicPlayer.dispose();
+  }
+}
+
+class MyAudioHandler extends BaseAudioHandler
+    with
+        QueueHandler, // mix in default queue callback implementations
+        SeekHandler {
+  // mix in default seek callback implementations
+
+  Future<void> playAudioFromUrl(String url) async {
+    return findDep<AudioController>().playAudioFromUrl(url);
+  }
+
+  // The most common callbacks:
+  @override
+  Future<void> play() async {
+    print('MyAudioHandler play');
+    // All 'play' requests from all origins route to here. Implement this
+    // callback to start playing audio appropriate to your app. e.g. music.
+  } // The most common callbacks:
+
+  @override
+  Future<void> playFromMediaId(String mediaId,
+      [Map<String, dynamic>? extras]) async {
+    print('MyAudioHandler playFromMediaId');
+    return findDep<AudioController>().playAudioFromUrl(mediaId);
+
+    // All 'play' requests from all origins route to here. Implement this
+    // callback to start playing audio appropriate to your app. e.g. music.
+  }
+
+  @override
+  Future<void> pause() async {
+    print('MyAudioHandler pause');
+  }
+
+  @override
+  Future<void> stop() async {
+    print('MyAudioHandler stop');
+  }
+
+  @override
+  Future<void> seek(Duration position) async {
+    print('MyAudioHandler seek');
+  }
+
+  @override
+  Future<void> skipToQueueItem(int index) async {
+    print('MyAudioHandler skipToQueueItem');
   }
 }

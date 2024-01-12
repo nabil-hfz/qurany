@@ -1,3 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:kawtharuna/src/core/constants/constants.dart';
+import 'package:kawtharuna/src/core/managers/managers.dart';
+import 'package:kawtharuna/src/core/widgets/buttons/app_back_button.dart';
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,12 +15,12 @@ import 'package:kawtharuna/src/core/widgets/icons/app_back_icon_widget.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 
-/// [SalonyAppBar] General appbar used across the app.
+/// [CustomAppBar] General appbar used across the app.
 ///
 /// For appbar title it will add [CustomAppBarTextWidget] in case there is not
 /// [customTitle] widget provided.
-class SalonyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SalonyAppBar({
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({
     super.key,
     this.title,
     this.actions,
@@ -57,9 +64,12 @@ class SalonyAppBar extends StatelessWidget implements PreferredSizeWidget {
     Widget? title;
     Widget? leading;
     if (automaticallyImplyLeading) {
-      leading = AppBackIconWidget(
-        onPressed: onBackPressed ?? Navigator.of(context).pop,
-        color: arrowBackColor ?? themeManager.appColors.iconColor,
+      leading = Semantics(
+        label: translate.back_button,
+        child: AppBackIconWidget(
+          onPressed: onBackPressed ?? Navigator.of(context).pop,
+          color: arrowBackColor ?? themeManager.appColors.iconColor,
+        ),
       );
       // IconButton(
       // onPressed: onBackPressed ?? Navigator.of(context).pop,

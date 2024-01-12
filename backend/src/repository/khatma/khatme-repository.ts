@@ -4,7 +4,7 @@ import { CreateKhatmaReqBody } from "../../controllers/khatma-controller/request
 import { HttpResponseError } from "../../utils/http-response-error";
 
 import { RecitersRepository, recitersRepository } from "../reciter/reciters-repository";
-import { KhatmaEntity } from '../../db/entities/khatma-entity';
+import { KhatmaEntity } from '../../db/entities/khatma.entity';
 import { AppPagination } from '../../middlewares/pagination.middleware';
 
 export class KhatmeRepository extends Repository<KhatmaEntity> {
@@ -24,7 +24,7 @@ export class KhatmeRepository extends Repository<KhatmaEntity> {
       throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterId"');
     }
     if (reciter.recitationTypes!.indexOf(request.khatmaType) < 0) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'This associated reciter does not have this "khatmaType" value which is the recitation type');
+      throw new HttpResponseError(404, "BAD_REQUEST", 'This associated reciter does not have this "khatmaType" value which is the recitation type');
     }
 
     const data = new KhatmaEntity();

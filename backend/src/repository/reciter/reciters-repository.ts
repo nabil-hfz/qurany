@@ -3,10 +3,9 @@ import { Repository } from "../repository";
 import { CreateReciterReqBody } from "../../controllers/reciter-controller/requests/create-reciter/create-reciter-req-body";
 import { HttpResponseError } from '../../utils/http-response-error';
 import { FilesRepository, filesRepository } from '../file/files-repository';
-import { RecitationTypes } from '../../db/entities/recitation-entity';
-import { ReciterEntity } from "../../db/entities/reciter-entity";
+import { RecitationTypes, ReciterEntity } from "../../db/entities/reciter.entity";
 import { EntityTarget } from "typeorm/common/EntityTarget";
-import { FileEntity } from "../../db/entities/file-entity";
+import { FileEntity } from "../../db/entities/file.entity";
 import { AppPagination } from "../../middlewares/pagination.middleware";
 
 export class RecitersRepository extends Repository<ReciterEntity> {

@@ -20,6 +20,7 @@ class AppMenuIconWidget extends StatelessWidget {
       onPressed: onDrawerPressed,
       icon: SvgPicture.asset(
         Assets.icons.menu.path,
+        semanticsLabel: translate.home_menu_button,
         width: AppIconSize.size_28,
         height: AppIconSize.size_28,
         color: themeStore.appColors.iconColor,

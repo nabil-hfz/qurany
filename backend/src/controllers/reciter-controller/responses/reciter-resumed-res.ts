@@ -1,5 +1,5 @@
-import { LocalizedEntity } from "../../../db/entities/localized-entity";
-import { ReciterEntity } from "../../../db/entities/reciter-entity";
+import { LocalizedEntity } from "../../../db/entities/localized.entity";
+import { ReciterEntity } from "../../../db/entities/reciter.entity";
 import { Nullable } from "../../../utils/types";
 
 export class ReciterResumedRes {

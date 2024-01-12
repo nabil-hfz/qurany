@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "attach_image_or_video":
             MessageLookupByLibrary.simpleMessage("قم باضافة صورة او فيديو"),
         "b": MessageLookupByLibrary.simpleMessage("B"),
+        "back_button": MessageLookupByLibrary.simpleMessage("زر العودة للخلف"),
         "barber": MessageLookupByLibrary.simpleMessage("حلاق"),
         "brief": MessageLookupByLibrary.simpleMessage("موجز"),
         "busy": MessageLookupByLibrary.simpleMessage("مشغول"),
@@ -211,6 +212,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "here": MessageLookupByLibrary.simpleMessage(
             "here ============================"),
         "home": MessageLookupByLibrary.simpleMessage("رئيسي"),
+        "home_menu_button":
+            MessageLookupByLibrary.simpleMessage("زر القائمة الرئيسية"),
         "hours_count": m1,
         "hours_count_short": m2,
         "instagram": MessageLookupByLibrary.simpleMessage("انستغرام"),
@@ -303,6 +306,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "البحث بالموقع أو الرمز الدولي"),
         "seconds_count": m5,
         "seconds_count_short": m6,
+        "seek_backward_button":
+            MessageLookupByLibrary.simpleMessage("البحث عن زر للخلف"),
+        "seek_forward_button":
+            MessageLookupByLibrary.simpleMessage("زر البحث للأمام"),
         "select_another_service":
             MessageLookupByLibrary.simpleMessage("Select another service(s)"),
         "select_duration": MessageLookupByLibrary.simpleMessage("اختر الوقت"),

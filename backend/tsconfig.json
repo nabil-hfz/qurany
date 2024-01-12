@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "target": "es6",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": true,
@@ -8,9 +9,7 @@
     "noUnusedLocals": true,
     "outDir": "./dist",
     "sourceMap": true,
-    "strict": true,
-    "target": "es2017"
+    "strict": true
   },
-  "compileOnSave": true,
-  "include": ["src"]
+  "compileOnSave": true
 }

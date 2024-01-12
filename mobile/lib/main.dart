@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -8,16 +9,17 @@ import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/env_config.dart';
 import 'package:kawtharuna/src/core/helpers/bloc_observer.dart';
 import 'package:kawtharuna/src/core/managers/ads/ads_controller.dart';
+import 'package:kawtharuna/src/core/managers/audio/audio_controller.dart';
 import 'package:kawtharuna/src/core/managers/crashlytics/crashlytics.dart';
 import 'package:kawtharuna/src/core/managers/games_services/games_services.dart';
 import 'package:kawtharuna/src/core/managers/in_app_purchase/in_app_purchase.dart';
 import 'package:kawtharuna/src/core/managers/player_progress/persistence/local_storage_player_progress_persistence.dart';
 import 'package:kawtharuna/src/core/managers/settings/persistence/local_storage_settings_persistence.dart';
 import 'package:kawtharuna/src/core/network/firestore/firestore_service.dart';
-import 'package:kawtharuna/src/core/utils/utils_collection.dart';
 import 'package:kawtharuna/src/modules/app_widget.dart';
 import 'package:logging/logging.dart';
 
+late MyAudioHandler audioHandler;
 AppConfig envVariables = AppConfig.init();
 Logger _log = Logger('main.dart');
 bool isProduction = true;
@@ -26,8 +28,19 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   envVariables = EnvironmentConfig.envType();
 
+  audioHandler = await AudioService.init(
+    builder: () {
+      return MyAudioHandler();
+    },
+    config: AudioServiceConfig(
+      androidNotificationChannelId: 'com.kawtharuna.mobile.audio',
+      androidNotificationChannelName: 'Music playback',
+    ),
+  );
+
   await Firebase.initializeApp();
   await configureDependencies();
+  // store this in a singleton
 
   FirebaseCrashlytics? crashlytics;
   if (EnvironmentConfig.isProduction) {
@@ -46,7 +59,7 @@ Future<void> main() async {
 
 /// Without logging and crash reporting, this would be `void main()`.
 void guardedMain() {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
   if (kReleaseMode) {
     // Don't log anything below warnings in production.

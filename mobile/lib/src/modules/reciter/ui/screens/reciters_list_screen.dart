@@ -10,8 +10,10 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/generated_files/assets/assets.gen.dart';
+import 'package:kawtharuna/src/core/managers/audio/common.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
+import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
 import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
 import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
@@ -62,11 +64,11 @@ class _RecitersListScreenState extends State<RecitersListScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: translate.reciters,
-        leading: AppMenuIconWidget(
-          onDrawerPressed: () {
-            mainKey.currentState?.openDrawer();
-          },
-        ),
+        // leading: AppMenuIconWidget(
+        //   onDrawerPressed: () {
+        //     mainKey.currentState?.openDrawer();
+        //   },
+        // ),
         automaticallyImplyLeading: false,
       ),
       body: BlocConsumer<ReciterCubit, ReciterState>(

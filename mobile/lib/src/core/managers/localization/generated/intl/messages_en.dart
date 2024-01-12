@@ -81,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "attach_image_or_video":
             MessageLookupByLibrary.simpleMessage("Attach image(s) or video(s)"),
         "b": MessageLookupByLibrary.simpleMessage("B"),
+        "back_button": MessageLookupByLibrary.simpleMessage("Back button"),
         "barber": MessageLookupByLibrary.simpleMessage("Barber"),
         "brief": MessageLookupByLibrary.simpleMessage("Brief"),
         "busy": MessageLookupByLibrary.simpleMessage("Busy"),
@@ -224,6 +225,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "here": MessageLookupByLibrary.simpleMessage(
             "here ============================"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "home_menu_button":
+            MessageLookupByLibrary.simpleMessage("Home menu button"),
         "hours_count": m1,
         "hours_count_short": m2,
         "instagram": MessageLookupByLibrary.simpleMessage("Instagram"),
@@ -318,6 +321,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Search by location or code"),
         "seconds_count": m5,
         "seconds_count_short": m6,
+        "seek_backward_button":
+            MessageLookupByLibrary.simpleMessage("Seek backward button"),
+        "seek_forward_button":
+            MessageLookupByLibrary.simpleMessage("Seek forward button"),
         "select_another_service":
             MessageLookupByLibrary.simpleMessage("Select another service(s)"),
         "select_duration":

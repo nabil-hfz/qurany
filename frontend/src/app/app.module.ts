@@ -1,13 +1,13 @@
 import { KhatmaService } from './services/khatma/khatma.service';
 
 import { ErrorHandler, NgModule } from '@angular/core';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 // import { PortfolioListComponent } from './portfolio/portfolio-grid/portfolio-grid.component';
@@ -39,8 +39,8 @@ import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { RecitationsService } from './services/recitations/recitations.service';
 import { RecitationsListComponent } from './recitations/recitations-list/recitations-list.component';
 // import { MatListModule, MatIconModule } from '@angular/material';
-import {MatListModule} from '@angular/material/list';
-import {MatIconModule} from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
 import { PlayerComponent } from './shared/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
@@ -97,7 +97,7 @@ import { LibraryService } from './services/library/library.service';
     MatToolbarModule,
     MatListModule,
     MatIconModule,
-    
+
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
@@ -108,7 +108,7 @@ import { LibraryService } from './services/library/library.service';
     MatChipsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
- 
+
     MatSidenavModule,
     MatButtonModule,
     FlexLayoutModule,
