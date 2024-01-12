@@ -1,68 +1,4 @@
 export const libraryControllerSwagger = {
-  components: {
-    schemas: {
-      "CreateFileEntryReqBody": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "languageId": {
-            "type": "integer"
-          },
-          "categoryIds": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
-          }
-        },
-        "required": [
-          "name",
-          "languageId",
-          "categoryIds"
-        ]
-      },
-      "FileEntryFullRes": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "language": {
-            "$ref": "#/definitions/LanguageResumedItem"
-          },
-          "file": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "totalViews": {
-            "type": "integer"
-          },
-          "totalDownloads": {
-            "type": "integer"
-          },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Category"
-            }
-          },
-          "description": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  },
   paths: {
     "/library": {
       "post": {
@@ -176,13 +112,13 @@ export const libraryControllerSwagger = {
           "200": {
             "description": "List of File Entries",
             "schema": {
-              "$ref": "#/definitions/ResponseListModel"
+              "$ref": "#/components/schemas/ResponseListModel"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           }
         }
@@ -208,19 +144,19 @@ export const libraryControllerSwagger = {
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/FileEntryFullRes"
+              "$ref": "#/components/schemas/FileEntryFullRes"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           },
           "404": {
             "description": "FileEntry not found",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           }
         }
@@ -256,14 +192,78 @@ export const libraryControllerSwagger = {
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           },
           "404": {
             "description": "FileEntry not found",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
+          }
+        }
+      }
+    }
+  },
+  components: {
+    schemas: {
+      "CreateFileEntryReqBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "integer"
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "languageId",
+          "categoryIds"
+        ]
+      },
+      "FileEntryFullRes": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/LanguageResumedItem"
+          },
+          "file": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "totalViews": {
+            "type": "integer"
+          },
+          "totalDownloads": {
+            "type": "integer"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryResumedRes"
+            }
+          },
+          "description": {
+            "type": "string"
           }
         }
       }

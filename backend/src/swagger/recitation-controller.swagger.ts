@@ -277,69 +277,95 @@ export const recitationControllerSwagger = {
   },
   components: {
     schemas: {
+
       RecitationFullRes: {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/KhatmaResumedRes"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "sequence": {
+                "type": "integer",
+                "description": "Sequence number of the recitation."
+              },
+              "reciter": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the reciter."
+                  },
+                  "id": {
+                    "type": "integer",
+                    "nullable": true,
+                    "description": "ID of the reciter."
+                  },
+                  "image": {
+                    "type": "string",
+                    "nullable": true,
+                    "format": "uri",
+                    "description": "URL of the reciter's image."
+                  }
+                },
+                "description": "Details of the reciter for the recitation."
+              },
+            }
+          }
+        ]
+
+      },
+      "RecitationResumedRes": {
         "type": "object",
         "properties": {
           "id": {
             "type": "integer",
-            "description": "ID of the recitation."
+            "format": "int64",
+            "nullable": true,
+            "description": "Unique identifier of the recitation."
+          },
+          "khatmaId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "description": "Identifier of the associated Khatma."
+          },
+          "title": {
+            "type": "object",
+            "description": "Localized title of the recitation.",
+            "properties": {
+              "ar": {
+                "type": "string",
+                "nullable": true,
+                "description": "Arabic title of the recitation."
+              },
+              "en": {
+                "type": "string",
+                "nullable": true,
+                "description": "English title of the recitation."
+              }
+            }
           },
           "audio": {
             "type": "string",
             "format": "uri",
-            "description": "URL of the audio file for the recitation."
+            "description": "URL of the audio file."
           },
           "image": {
             "type": "string",
             "format": "uri",
-            "description": "URL of the image file for the recitation."
+            "description": "URL of the recitation's image."
           },
-          "title": {
-            "type": "object",
-            "properties": {
-              "en": {
-                "type": "string",
-                "description": "English title."
-              },
-              "ar": {
-                "type": "string",
-                "description": "Arabic title."
-              }
-            },
-            "description": "Localized title of the recitation."
-          },
-          "sequence": {
+          "durationInMilli": {
             "type": "integer",
-            "description": "Sequence number of the recitation."
-          },
-          "reciter": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "Name of the reciter."
-              },
-              "id": {
-                "type": "integer",
-                "nullable": true,
-                "description": "ID of the reciter."
-              },
-              "image": {
-                "type": "string",
-                "nullable": true,
-                "format": "uri",
-                "description": "URL of the reciter's image."
-              }
-            },
-            "description": "Details of the reciter for the recitation."
-          },
-          "khatmaId": {
-            "type": "integer",
-            "description": "ID of the khatma associated with the recitation."
+            "format": "int64",
+            "nullable": true,
+            "description": "Duration of the recitation in milliseconds."
           }
-        }
+        },
+        "description": "Resumed details of a recitation."
       }
-
-    },
+    }
   },
 };
