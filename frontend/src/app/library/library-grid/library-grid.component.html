@@ -1,0 +1,47 @@
+<search-bar></search-bar>
+
+
+<ng-container *ngIf="loading$ | async; else content">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-container>
+
+
+<ng-template #content>
+    <div class="content-portfolio responsive-grid-portfolio">
+        <mat-card *ngFor="let item of values$ | async" (click)="onCardPressed(item)">
+
+            <mat-card-content>
+                <img [src]="item.thumbnail" class="item-image">
+            </mat-card-content>
+
+            <mat-card-header class="album-header">
+
+                <mat-card-title class="item-title">{{item.name}}</mat-card-title>
+                <mat-card-subtitle class="item-title">
+                    <mat-chip-listbox disabled>
+                        <mat-chip class="download-chip">
+                            {{item.language.name}}
+                        </mat-chip>
+                    </mat-chip-listbox>
+                </mat-card-subtitle>
+
+                <mat-chip-row disabled *ngFor="let category of item.categories">
+                    {{category.name}}
+                </mat-chip-row>
+
+                <mat-chip-listbox *ngIf="item?.totalDownloads??0 > 0">
+                    <mat-chip class="download-chip">
+                        {{item.totalDownloads}} Total Downloads
+                    </mat-chip>
+                </mat-chip-listbox>
+
+            </mat-card-header>
+
+        </mat-card>
+    </div>
+
+    <div class="" *ngIf="(loading$ | async)">
+        <mat-card-title> No items existed yet try adding one now</mat-card-title>
+    </div>
+
+</ng-template>

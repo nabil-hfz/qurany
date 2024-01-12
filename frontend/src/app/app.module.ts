@@ -1,6 +1,7 @@
 import { KhatmaService } from './services/khatma/khatma.service';
 
 import { ErrorHandler, NgModule } from '@angular/core';
+import {MatChipsModule} from '@angular/material/chips';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -44,6 +45,8 @@ import { PlayerComponent } from './shared/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { TrackControlComponent } from './shared/track-control/track-control.component';
+import { LibraryGridComponent } from './library/library-grid/library-grid.component';
+import { LibraryService } from './services/library/library.service';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -69,6 +72,9 @@ import { TrackControlComponent } from './shared/track-control/track-control.comp
     ReciterDetailsComponent,
     RecitationsListComponent,
     RecitationCardComponent,
+
+    // Library
+    LibraryGridComponent,
     // SharedComponent
     PlayerComponent,
     KawtharunaAppBarComponent,
@@ -99,6 +105,7 @@ import { TrackControlComponent } from './shared/track-control/track-control.comp
     MatCardModule,
     MatGridListModule,
     MatProgressBarModule,
+    MatChipsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
  
@@ -116,6 +123,7 @@ import { TrackControlComponent } from './shared/track-control/track-control.comp
     KhatmaService,
     RecitersService,
     RecitationsService,
+    LibraryService,
     // RecitationsService
     {
       provide: ErrorHandler,
