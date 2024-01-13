@@ -3,24 +3,16 @@ import { Readable } from "node:stream";
 import { CreateWriteStreamOptions } from "@google-cloud/storage";
 import { v4 as uuidv4 } from 'uuid';
 import { firebaseDep } from '../firebase/firebase-datasource';
-// import { logError, logInfo } from '../utils/logger';
-// import { FileInfo } from 'busboy';
-// import * as busboy from 'busboy';
-// type GetSignedUrlConfig = any;
-// import { once } from 'events';
 
-// import { tmpdir } from 'os';
-// import { join } from 'path';
-// import path = require('path');
 import * as fs from 'fs';
 import * as ffprobe from 'ffprobe';
 import * as ffprobeStatic from 'ffprobe-static';
 import * as tmp from 'tmp';
-import { FileEntity } from "../db/entities/file-entity";
+import { FileEntity } from "../db/entities/file.entity";
+import { ThumbnailImageResponse } from "./thumbnail-service";
 
 
-
-class UploaderService {
+export class UploaderService {
     // private _onFileEvent = 'file';
     private _onErrorEvent = 'error';
     private _onFinishEvent = 'finish';
@@ -39,7 +31,7 @@ class UploaderService {
         const metadata = await ffprobe(tmpFile.name, { path: ffprobeStatic.path });
 
         const audioStream = metadata.streams.find((stream) => stream.codec_type === 'audio');
-        const durtion = Math.round(audioStream?.duration ?? 0);
+        const durtion = Math.round(Number(audioStream?.duration) ?? 0 * 1000);
 
         // Clean up temp file
         fs.unlinkSync(tmpFile.name);
@@ -48,7 +40,7 @@ class UploaderService {
         return durtion;
     }
 
-    async uploadFile(
+    private async uploadFile(
         buffer: Buffer,
         destination: string,
         contentType?: string
@@ -132,17 +124,17 @@ class UploaderService {
 
             const audioFile = new FileEntity();
             audioFile.url = audioUrl;
-            audioFile.mimetype = audioBuffer.mimetype;
+            audioFile.mimeType = audioBuffer.mimetype;
             audioFile.size = audioBuffer.size;
             audioFile.name = audioFileName;
 
             // const refImage = firebaseDep.firestore()
             //     .collection(AppFirebaseCollections.filesImageCollection)
             //     .doc();
-   
+
             const imageFile = new FileEntity();
             imageFile.url = imageUrl;
-            imageFile.mimetype = imageBuffer.mimetype;
+            imageFile.mimeType = imageBuffer.mimetype;
             imageFile.size = imageBuffer.size;
             imageFile.name = imageFileName;
 
@@ -184,185 +176,43 @@ class UploaderService {
 
         const uploadedFile = new FileEntity();
         uploadedFile.url = fileUrl;
-        uploadedFile.mimetype = fileBuffer.mimetype;
+        uploadedFile.mimeType = fileBuffer.mimetype;
         uploadedFile.size = fileBuffer.size;
         uploadedFile.name = currentFileName;
-
-
-        // const uploadedFile = new FileModel({
-        //     url: fileUrl,
-        //     mimetype: fileBuffer.mimetype,
-        //     size: fileBuffer.size,
-        //     name: currentFileName,
-        // });
-
 
         return uploadedFile;
     }
 
-    // async uploadFiles(
-    //     req: any,
-    //     res: any,
-    //     next: any,
-    //     fileLocation: string = "",
-    // ): Promise<{ url: string; duration: number }[]> {
-    //     logInfo('UploaderService is triggering uploadFile func')
+    async saveBufferAsFile(
+        thumbnail: ThumbnailImageResponse,
+        fileLocation = "",
+        // originalFileBuffer?: Express.Multer.File,
 
-    //     try {
-    //         if (fileLocation && fileLocation.length > 0 && !fileLocation.endsWith('/')) fileLocation += '/';
+    ): Promise<FileEntity> {
 
-    //         const fileUploadPromises: Promise<{ url: string; duration: number }>[] = [];
+        if (fileLocation && fileLocation.length > 0) {
+            if (fileLocation.startsWith('/'))
+                fileLocation = fileLocation.substring(1);
+            if (!fileLocation.endsWith('/'))
+                fileLocation += '/';
+        }
 
-    //         const bb = busboy({ headers: req.headers });
+        const { name, ext, buffer, size } = thumbnail;
 
-    //         bb.on(this._onFileEvent, (fieldname: string, file: Readable, fileInfo: FileInfo) => {
-    //             const fileUploadPromise = new Promise<{ url: string; duration: number }>(async (resolve, reject) => {
-    //                 const tmpFilePath = join(tmpdir(), fileInfo.filename);
-
-    //                 // Save the file to a temporary location
-    //                 const writeStream = fs.createWriteStream(tmpFilePath);
-    //                 file.pipe(writeStream);
+        const fileDestination = `${fileLocation}${name}${ext}`;
 
 
-    //                 writeStream.on(this._onErrorEvent, (error) => {
-    //                     // Handle errors during file writing
-    //                     reject(error);
-    //                 });
-    //                 // Wait for the file to be written to disk
-    //                 await once(writeStream, this._onFinishEvent);
-
-    //                 // Get the duration of the audio file
-    //                 const duration = await this.getAudioDuration(tmpFilePath);
-
-    //                 // Upload the file to Google Cloud Storage
-    //                 const storage = firebaseDep.storage();
-    //                 const bucket = storage.bucket();
-    //                 const newBucketFile = bucket.file(`${fileLocation}${fileInfo.filename}`);
-    //                 // const fileExtension = path.extname(tmpFilePath); 
-    //                 // Upload the file from the temporary location to Google Cloud Storage
-    //                 logInfo(`uploadFile func fileInfo:${JSON.stringify(fileInfo)} and fieldname: ${JSON.stringify(fieldname)}`)
-    //                 const options: CreateWriteStreamOptions = {
-    //                     gzip: true,
-    //                     public: true,
-    //                     resumable: true,
-    //                     timeout: 1000 * 60 * 10,
-    //                     // contentType: fileExtension,
-    //                     metadata: {
-    //                         // contentType: fileExtension,
-    //                         metadata: {
-    //                             firebaseStorageDownloadTokens: uuidv4(),
-    //                         },
-
-    //                     }
-    //                 };
-    //                 const readStream = fs.createReadStream(tmpFilePath);
-    //                 readStream.pipe(newBucketFile.createWriteStream(options));
+        const fileUrl = await this.uploadFile(buffer!, fileDestination, ext);
 
 
-    //                 readStream.on(this._onErrorEvent, (error) => {
-    //                     // Handle errors during file writing
-    //                     reject(error);
-    //                 });
-    //                 // Wait for the upload to finish
-    //                 await once(readStream, this._onEndEvent);
+        const uploadedFile = new FileEntity();
+        uploadedFile.url = fileUrl;
+        uploadedFile.mimeType = ext;
+        uploadedFile.size = size ?? 0;
+        uploadedFile.name = name;
 
-    //                 // Delete the temporary file
-    //                 fs.unlinkSync(tmpFilePath);
-
-    //                 const publicUrl = newBucketFile.publicUrl();
-    //                 resolve({ url: publicUrl, duration });
-    //             });
-
-    //             fileUploadPromises.push(fileUploadPromise);
-    //         });
-
-
-    //         const ans: any = req.rawBody;
-    //         bb.end(ans);
-
-    //         // Wait for all the file upload promises to resolve
-    //         const fileUrlsAndDurations = await Promise.all(fileUploadPromises);
-
-    //         return fileUrlsAndDurations;
-
-    //         // bb.on(this._onFileEvent, (fieldname: string, file: Readable, fileInfo: FileInfo) => {
-
-    //         //     // Create a bucket associated to Firebase storage bucket
-    //         //     const storage = firebaseDep.storage();
-    //         //     const bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET_URL);
-    //         //     const newBucketFile = bucket.file(`${fileLocation}${fileInfo.filename}`);
-
-    //         //     // fileInfo is { filename: 'Audio5.mp3', encoding: '7bit', mimeType: 'audio/mpeg' }
-
-    //         //     logInfo(`uploadFile func fileInfo:${JSON.stringify(fileInfo)} and fieldname: ${JSON.stringify(fieldname)}`)
-    //         //     const options: CreateWriteStreamOptions = {
-    //         //         gzip: true,
-    //         //         public: true,
-    //         //         resumable: false,
-    //         //         // contentType: fileInfo.mimeType,
-    //         //         metadata: {
-    //         //             contentType: fileInfo.mimeType,
-    //         //             metadata: {
-    //         //                 firebaseStorageDownloadTokens: uuidv4(),
-    //         //             },
-
-    //         //         }
-    //         //     };
-    //         //     // Wrap the file upload process in a promise and push it to the array
-    //         //     const fileUploadPromise = new Promise<string>(async (resolve, reject) => {
-    //         //         //I don't write a temp file on disk, I directly upload it
-    //         //         file.pipe(newBucketFile.createWriteStream(options))
-    //         //             .on(this._onErrorEvent, function (error: Error) {
-    //         //                 logError(`uploadFile func error happened when reading the file from the buffer in busboy: ${error}`)
-    //         //                 next(error)
-    //         //             })
-    //         //             .on(this._onFinishEvent, async function () {
-    //         //                 logInfo(`uploadFile func file uploaded successfully.`);
-    //         //                 const publicUrl = newBucketFile.publicUrl();
-    //         //                 logInfo(`uploadFile func publicUrl: ` + publicUrl);
-
-    //         //                 // const signedUrlOptions: GetSignedUrlConfig = {
-    //         //                 //     action: 'read',
-    //         //                 //     expires: '03-01-2050',
-    //         //                 // };
-    //         //                 // const signedUrl = await newBucketFile.getSignedUrl(signedUrlOptions);
-    //         //                 // logInfo(`uploadFile func signedUrl: ` + signedUrl);
-    //         //                 // res.send();
-    //         //                 // return publicUrl;
-    //         //                 resolve(publicUrl);
-
-    //         //             });
-
-    //         //     });
-
-    //         //     fileUploadPromises.push(fileUploadPromise);
-
-    //         // });
-    //         // // Triggered once all uploaded files are processed by Busboy.
-    //         // // We still need to wait for the disk writes (saves) to complete.
-    //         // // bb.on(this.onFinishEvent, async () => {
-    //         // //     res.send();
-    //         // // });
-    //         // // console.log("done header ", req.headers);
-    //         // logInfo("uploadFile func  req body length " + req.body.length);
-    //         // logInfo("uploadFile func  req rawBody length " + req.rawBody.length);
-
-    //         // const ans: any = req.rawBody;
-    //         // bb.end(ans);
-    //         // // Wait for all the file upload promises to resolve
-    //         // const fileUrls = await Promise.all(fileUploadPromises);
-
-    //         // return fileUrls;
-    //         // return url;
-    //     } catch (error) {
-    //         logError(`uploadFile func error happened: ${error}`)
-    //         next(error)
-    //         return [];
-    //     }
-
-    // }
-
-
+        return uploadedFile;
+    }
 }
 
 export const uploaderService: UploaderService = new UploaderService();

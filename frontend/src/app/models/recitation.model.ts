@@ -1,5 +1,4 @@
 import { LocalizedModel } from './localized.model';
-import {   FileModel } from './file.model';
 import { ReciterModel } from './reciter.model';
 import { AppBaseModel } from './base.model';
 

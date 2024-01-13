@@ -7,8 +7,8 @@ typings/
 
 # Node.js dependency directory
 node_modules/
-.key/
-.key_aws/
+.keys/
+
 .src/environment/**
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
@@ -21,4 +21,4 @@ src/firebase/*.json
 ./src/firebase/*.json
 src/environment/**
 dist/**
-sql/
+src/db/sql/

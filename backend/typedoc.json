@@ -1,8 +1,15 @@
 {
+    "$schema": "https://typedoc.org/schema.json",
+    "includeVersion": true,
+    "logLevel": "Verbose",
+    "entryPoints": [
+        "src/db/**/*.ts",
+    ],
     "out": "./docs",
-    "entryPoints": ["./src"],
     "exclude": [
-        "**/node_modules/**"
+        "**/node_modules/**",
+        "*.md",
+        "*.json",
     ],
     "excludePrivate": true,
     "theme": "default",

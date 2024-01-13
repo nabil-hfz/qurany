@@ -10,7 +10,7 @@ import { HttpResponseError } from '../../utils/http-response-error';
 import { RecitationFullRes } from './responses/recitation-full-res';
 import { AppRoutes } from '../../constant/app-routes.const';
 import { AppAudiosConst, AppImagesKhatmeConst } from '../../constant/app-storage-paths.const';
-import { ResponseListModel } from '../../db/entities/response-list-model';
+import { ResponseListModel } from '../../repository/response-list-model';
 import { ResponseModel } from '../../db/response-model';
 
 export class RecitationController implements Controller {
@@ -49,17 +49,11 @@ export class RecitationController implements Controller {
 
   private readonly createRecitations: RequestHandler =
     async (req: any, res, next) => {
-      // logStartRequest(req, 'RecitationController', 'createRecitations')
+
       const reqBody: CreateRecitationReqBody = Object.assign({}, req.body);
 
 
       checkIfIsValidCreateRecitationReqBody(reqBody);
-
-      // const reciterIndex = reqBody.reciterIndex
-      // const currentFilesPath = AppImagesKhatmeConst[reciterIndex];
-      // if (!currentFilesPath) {
-      //   throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "reciterIndex"');
-      // }
 
       const audios = req.files['audios'] as Express.Multer.File[];
       if (!audios || !audios.length) {
@@ -75,15 +69,12 @@ export class RecitationController implements Controller {
       const result = await recitationRepository
         .createRecitations(reqBody, images, audios)
 
-      // logEndSuccessRequest(req, 'RecitationController', 'createRecitations')
-
       res.status(200).send(
         ResponseListModel.toResult({
           message: 'Recitations created successfully',
           items: result,
         })
       );
-      next();
     };
 
   private readonly getFilePathPublic: RequestHandler = async (req, res, next) => {
@@ -93,7 +84,6 @@ export class RecitationController implements Controller {
         imagesPath: { ...AppImagesKhatmeConst }
       })
     );
-    next();
   };
 
 
@@ -125,7 +115,6 @@ export class RecitationController implements Controller {
         items: responseList,
       })
     );
-    next();
   };
 
   private readonly getRecitationByIdPublic: RequestHandler = async (
@@ -157,7 +146,7 @@ export class RecitationController implements Controller {
       );
     }
     res.status(200).send(ResponseModel.toResult(new RecitationFullRes(recitation)));
-    next();
+    // next();
   }
 }
 

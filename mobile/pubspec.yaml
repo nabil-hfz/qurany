@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.5+5
 
 environment:
   sdk: '>=3.2.1 <4.0.0'
@@ -192,7 +192,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/app_logo.png"
+  image_path: "assets/images/app_launcher.png"
   #  adaptive_icon_background: "#FFFFFF"
   #  adaptive_icon_foreground: "assets/icon-adaptive-foreground.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
@@ -204,24 +204,24 @@ flutter_launcher_icons:
     theme_color: "#FFFFFF"
   windows:
     generate: true
-    #    image_path: "path/to/image.png"
+    image_path: "assets/images/app_launcher.png"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-#    image_path: "path/to/image.png"
+    image_path: "assets/images/app_launcher.png"
 
 flutter_native_splash:
   color: "#ffffff"
-  image: assets/app_logo.png
+  image: assets/images/app_launcher.png
   #  branding: assets/icon.png
   color_dark: "#121212"
-  image_dark: assets/app_logo.png
+  image_dark: assets/images/app_launcher.png
   #  branding_dark: assets/icon.png
 
   android_12:
-    image: assets/app_logo.png
+    image: assets/images/app_launcher.png
     icon_background_color: "#ffffff"
-    image_dark: assets/app_logo.png
+    image_dark: assets/images/app_launcher.png
     icon_background_color_dark: "#121212"
 
   web: false
@@ -237,7 +237,9 @@ scripts:
 
   # prod environment:
   run-prod: flutter clean && flutter pub get && flutter run --dart-define ENV=prod --flavor=prod
-  build-prod: flutter clean && flutter pub get && flutter build apk --dart-define ENV=prod --flavor=prod
+  run-release-prod: flutter clean && flutter pub get && flutter run --release --dart-define ENV=prod --flavor=prod
+  build-app-prod: flutter clean && flutter pub get && flutter build apk --dart-define ENV=prod --flavor=prod
+  build-bundle-prod: flutter clean && flutter pub get && flutter build appbundle --release --dart-define ENV=prod --flavor=prod
 
   # development scripts:
   generate_files: flutter packages get && flutter pub run build_runner build --delete-conflicting-outputs

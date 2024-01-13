@@ -28,6 +28,6 @@ export class AccountController implements Controller {
     );
 
     res.send(new CreateAccountResBody(refreshedUser));
-    next();
+    // next();
   };
 }

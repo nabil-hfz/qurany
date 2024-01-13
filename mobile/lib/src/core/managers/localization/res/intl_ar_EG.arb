@@ -297,5 +297,10 @@
         
       }
     }
-  }
+  },
+  "seek_forward_button": "زر البحث للأمام",
+  "seek_backward_button": "البحث عن زر للخلف",
+  "menu_button": "البحث عن زر للخلف",
+  "back_button": "زر العودة للخلف",
+  "home_menu_button": "زر القائمة الرئيسية"
 }

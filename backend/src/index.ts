@@ -1,10 +1,12 @@
-import initConfig from "./config/index";
-initConfig();
 
-import { options } from "./config/swagger.config";
+import "reflect-metadata";
+import * as path from "path";
 
-import { initializeDb } from "./db";
-initializeDb();
+
+import dataSource from "./db/data-source"
+
+import { options } from "./swagger/swagger.config";
+
 
 import { Express } from "express";
 import * as express from "express";
@@ -13,12 +15,20 @@ import { HttpServer } from "./controllers";
 import { CONTROLLERS } from "./controllers/controllers";
 import * as cors from "cors";
 import { log } from "./utils/logger";
-import * as bodyParser from "body-parser";
+// import * as bodyParser from "body-parser";
 import * as timeout from "connect-timeout";
 
 import * as swaggerJsdoc from 'swagger-jsdoc';
 import * as swaggerUi from 'swagger-ui-express';
 import { logRequests } from "./middlewares/logging.middleware";
+
+
+
+dataSource.initialize()
+  .then(() => {
+    console.log('Successfully connected to postgres')
+  })
+  .catch(err => console.error('Error connecting to postgres', err));
 
 const swaggerSpec = swaggerJsdoc(options);
 
@@ -30,10 +40,18 @@ app.use(timeout(1000 * 60 * 3))
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
 
-const maxFileSize = 1024 * 1024 * 1024 * 5;
-app.use(bodyParser.json({ limit: maxFileSize }))
+// First
+// const maxFileSize = 1024 * 1024 * 1024 * 5;
+// app.use(bodyParser.json({ limit: maxFileSize, }))
+// app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLimit: maxFileSize }))
 
-app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLimit: maxFileSize }))
+// Second
+// app.use(express.json({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+
+const maxFileSize = '5gb';
+app.use(express.json({ limit: maxFileSize }));
+app.use(express.urlencoded({ limit: maxFileSize, extended: true }));
 
 interceptors.forEach((interceptor) => {
   app.use(interceptor);
@@ -44,26 +62,17 @@ CONTROLLERS.forEach((controller) => {
   controller.initialize(httpServer);
 });
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// app._router.use('/api-docs', swaggerUi.serve);
-// app._router.get('/api-docs', swaggerUi.setup(swaggerSpec));
-// app.router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-// const swaggerSpec = swaggerJSDoc(options);
+// Services the application code documentation
+const index = __dirname.lastIndexOf('/');
+const docsDirPath = __dirname.substring(0, index);
+app.use('/code-docs', express.static(path.join(docsDirPath, 'docs')));
 
-// app.use('/api-docs2', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Services the application API documentation
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hellow world! ');
-});
-
-app.get('/health', (req, res) => {
-  res.status(200).send('Health: OK');
-});
-
-// Listen to the App Engine-specified port, or 8080 otherwise
-const PORT = process.env.PORT || 8085;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   log(`Server listening on port http://localhost:${PORT}...`);
 });
@@ -72,3 +81,4 @@ app.listen(PORT, () => {
 // https://www.youtube.com/watch?v=2Ti6r34odOw
 // https://www.youtube.com/watch?v=0YTs40kvnW0&list=PLjl2dJMjkDjkBIKd_S9YeBMsT92L8KD4m&index=11
 // https://www.youtube.com/watch?v=S45jZCvd2M8&t=43s
+

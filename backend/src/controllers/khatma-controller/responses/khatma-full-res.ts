@@ -1,5 +1,5 @@
 
-import { KhatmaEntity } from "../../../db/entities/khatma-entity";
+import { KhatmaEntity } from "../../../db/entities/khatma.entity";
 import { KhatmaResumedRes } from "./khatma-resumed-res";
 
 export class KhatmaFullRes extends KhatmaResumedRes {

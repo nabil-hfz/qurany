@@ -1,7 +1,7 @@
 name: Deploy Angular Project to Firebase Hosting
 
 on:
-  push:
+  pull_request:
     branches:
       - deployment/frontend
 
@@ -42,6 +42,4 @@ jobs:
 
       - name: Deploy to Firebase Hosting
         run: firebase deploy --only hosting
-        # env:
-        #     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}  # Optional if we use service account, should be deleted later on
         working-directory: ./frontend
