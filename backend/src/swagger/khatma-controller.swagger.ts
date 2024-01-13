@@ -1,61 +1,5 @@
 export const khatmaControllerSwagger = {
-  components: {
-    schemas: {
-      KhatmaFullRes: {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/KhatmaResumedRes"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "totalDownloads": {
-                "type": "integer",
-                "nullable": true,
-                "description": "Total number of downloads for the Khatma."
-              },
-              "totalPlays": {
-                "type": "integer",
-                "nullable": true,
-                "description": "Total number of plays for the Khatma."
-              }
-            }
-          }
-        ]
-      },
-      KhatmaResumedRes: {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "nullable": true,
-            "description": "ID of the Khatma."
-          },
-          "name": {
-            "$ref": "#/components/schemas/LocalizedEntity"
-          },
-          "reciter": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "$ref": "#/components/schemas/LocalizedEntity"
-              },
-              "id": {
-                "type": "integer",
-                "nullable": true
-              },
-              "image": {
-                "type": "string",
-                "nullable": true,
-                "format": "uri",
-                "description": "URL of the reciter's image."
-              }
-            }
-          }
-        }
-      },
-    }
-  },
+
   paths: {
     "/khatma": {
       "post": {
@@ -266,6 +210,63 @@ export const khatmaControllerSwagger = {
         }
       }
     }
-  }
+  },
+  components: {
+    schemas: {
+      KhatmaFullRes: {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/KhatmaResumedRes"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "totalDownloads": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Total number of downloads for the Khatma."
+              },
+              "totalPlays": {
+                "type": "integer",
+                "nullable": true,
+                "description": "Total number of plays for the Khatma."
+              }
+            }
+          }
+        ]
+      },
+      KhatmaResumedRes: {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true,
+            "description": "ID of the Khatma."
+          },
+          "name": {
+            "$ref": "#/components/schemas/LocalizedEntity"
+          },
+          "reciter": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/LocalizedEntity"
+              },
+              "id": {
+                "type": "integer",
+                "nullable": true
+              },
+              "image": {
+                "type": "string",
+                "nullable": true,
+                "format": "uri",
+                "description": "URL of the reciter's image."
+              }
+            }
+          }
+        }
+      },
+    }
+  },
 };
 

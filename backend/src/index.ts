@@ -15,7 +15,7 @@ import { HttpServer } from "./controllers";
 import { CONTROLLERS } from "./controllers/controllers";
 import * as cors from "cors";
 import { log } from "./utils/logger";
-import * as bodyParser from "body-parser";
+// import * as bodyParser from "body-parser";
 import * as timeout from "connect-timeout";
 
 import * as swaggerJsdoc from 'swagger-jsdoc';
@@ -40,10 +40,18 @@ app.use(timeout(1000 * 60 * 3))
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
 
-const maxFileSize = 1024 * 1024 * 1024 * 5;
-app.use(bodyParser.json({ limit: maxFileSize }))
+// First
+// const maxFileSize = 1024 * 1024 * 1024 * 5;
+// app.use(bodyParser.json({ limit: maxFileSize, }))
+// app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLimit: maxFileSize }))
 
-app.use(bodyParser.urlencoded({ limit: maxFileSize, extended: true, parameterLimit: maxFileSize }))
+// Second
+// app.use(express.json({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+
+const maxFileSize = '5gb';
+app.use(express.json({ limit: maxFileSize }));
+app.use(express.urlencoded({ limit: maxFileSize, extended: true }));
 
 interceptors.forEach((interceptor) => {
   app.use(interceptor);

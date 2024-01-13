@@ -199,7 +199,7 @@ export class UploaderService {
 
         const { name, ext, buffer, size } = thumbnail;
 
-        const fileDestination = `${fileLocation}${ext}`;
+        const fileDestination = `${fileLocation}${name}${ext}`;
 
 
         const fileUrl = await this.uploadFile(buffer!, fileDestination, ext);

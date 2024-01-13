@@ -77,4 +77,3 @@ To get the Kawtharuna Backend Server up and running in your development environm
    - By default, the server runs on `localhost:8080` or on a port specified by your `.env.dev` configuration.
 
 Now, your Kawtharuna Backend Server should be operational in your development environment!
-
