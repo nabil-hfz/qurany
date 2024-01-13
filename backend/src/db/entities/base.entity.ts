@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm';
+import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity, DeleteDateColumn } from 'typeorm';
 
 /**
  * Base entity class for TypeORM. This class includes common fields like
@@ -13,5 +13,8 @@ export abstract class AppBaseEntity extends BaseEntity {
 
   @UpdateDateColumn({ nullable: true, default: null })
   updatedAt?: Date = undefined;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 
 }

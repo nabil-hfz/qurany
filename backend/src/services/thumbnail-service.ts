@@ -11,6 +11,9 @@ export class ThumbnailService {
             // Define the file name
             const originalname = file.originalname;
             const { name, ext } = path.parse(originalname);
+            console.log('originalname ', originalname);
+            console.log('name ', name);
+            console.log('ext ', ext);
 
             const directory = path.dirname(__filename);
 
@@ -26,13 +29,18 @@ export class ThumbnailService {
 
             const result = await convert(pageToConvertAsImage, { responseType: "buffer" });
 
-            return {
+
+            console.log('result ', result);
+
+            const thumbnail = {
                 buffer: result.buffer,
                 size: Buffer.byteLength(result.buffer!),
                 page: result.page,
                 name: name,
                 ext: ext,
             };
+            console.log('thumbnail ', thumbnail);
+            return thumbnail;
 
         } catch (error) {
             console.error('Error creating thumbnail:', error);

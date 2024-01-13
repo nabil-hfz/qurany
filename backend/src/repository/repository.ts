@@ -1,5 +1,5 @@
 
-import { Repository as TypeORMRepository, EntityTarget, ObjectLiteral, FindOneOptions, ObjectId, FindManyOptions } from 'typeorm';
+import { Repository as TypeORMRepository, EntityTarget, ObjectLiteral, ObjectId, FindManyOptions } from 'typeorm';
 import { logError } from '../utils/logger';
 import { AppPagination } from '../middlewares/pagination.middleware';
 import dataSource from '../db/data-source';
@@ -59,11 +59,12 @@ export abstract class Repository<T extends ObjectLiteral> {
 
   public async getOneById(id: number): Promise<T | null> {
     try {
-
-
-      const conditions = { id: id };
-      const findOptions: FindOneOptions = { where: conditions };
-      return await this._repository.findOne(findOptions);
+      const conditions: any = { id: id };
+      // const findOptions: FindOneOptions = { where: conditions };
+      console.log('conditions is ', conditions);
+      const result = await this._repository.findOneBy(conditions);
+      console.log('result is ', result);
+      return result;
     } catch (error) {
       logError(error);
       return null;
@@ -87,14 +88,16 @@ export abstract class Repository<T extends ObjectLiteral> {
 
   public async delete(id: number): Promise<boolean> {
     try {
-      const item = await this._repository.delete(id);
+      const item = await this._repository.delete(id,);
 
       console.log(item);
 
       return (item.affected ?? 0) > 0;
     } catch (error) {
-      logError(error);
+      console.log(error);
+      // logError(error);
       return false;
     }
   }
+
 }
