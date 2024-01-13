@@ -67,6 +67,25 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
             }
           }
         },
+        "ResponseListModel": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "Array of items. The structure of these items will depend on the specific use case."
+              }
+            },
+            "message": {
+              "type": "string",
+              "nullable": true,
+              "description": "Optional message accompanying the response."
+            }
+          },
+          "required": ["items"],
+          "description": "A model representing a list response, typically used for paginated data."
+        },
         DeleteResponse: {
           type: "boolean",
           example: true

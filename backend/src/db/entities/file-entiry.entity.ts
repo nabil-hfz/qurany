@@ -38,7 +38,7 @@ export class FileEntryEntity extends AppBaseEntity {
    * The categories associated with this file entry. It's a many-to-many relationship,
    * as each file can belong to multiple categories, and each category can include multiple files.
    */
-  @ManyToMany(() => CategoryEntity, { nullable: false })
+  @ManyToMany(() => CategoryEntity, { nullable: false, cascade: true })
   @JoinTable({
     name: 'file_entry_categories',
     joinColumn: { name: 'file_entry_id', referencedColumnName: 'id' },
@@ -72,4 +72,5 @@ export class FileEntryEntity extends AppBaseEntity {
    */
   @Column({ default: 0 })
   totalDownloads: number = 0;
+
 }

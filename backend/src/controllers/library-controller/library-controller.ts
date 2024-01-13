@@ -9,6 +9,7 @@ import { ResponseModel } from '../../db/response-model';
 import { libraryRepository } from '../../repository/library/library-repository';
 import { FileEntryFullRes } from './responses/file-entry/file-entry-full-res';
 import { FileEntryResumedRes } from './responses/file-entry/file-entry-resumed-res';
+import { filesRepository } from '../../repository/file/files-repository';
 
 export class LibraryController implements Controller {
 
@@ -18,7 +19,7 @@ export class LibraryController implements Controller {
     // File entry
     httpServer.post({
       path: this.url,
-      requestHandler: this.createFileEntrys.bind(this),
+      requestHandler: this.createFileEntry.bind(this),
       fileFields: [{ name: 'file' }],
       customClaims: ['superAdmin'],
     });
@@ -43,7 +44,7 @@ export class LibraryController implements Controller {
   }
 
 
-  private readonly createFileEntrys: RequestHandler =
+  private readonly createFileEntry: RequestHandler =
     async (req: any, res, next) => {
 
       const reqBody: CreateFileEntryReqBody = Object.assign({}, req.body);
@@ -53,6 +54,7 @@ export class LibraryController implements Controller {
       if (!file) {
         throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "file" in the body');
       }
+      console.log('file ', file);
 
       const result = await libraryRepository
         .createFileEntry(reqBody, file[0]);
@@ -100,8 +102,8 @@ export class LibraryController implements Controller {
     res: any,
     next: any,
   ) => {
-    const id = req.params.id;
-    if (!id?.length) {
+    const id = +req.params.id;
+    if (!id) {
       throw new HttpResponseError(
         400,
         "BAD_REQUEST",
@@ -128,24 +130,57 @@ export class LibraryController implements Controller {
     res: any,
     next: any,
   ) => {
-    const id = req.params.id;
-    if (!id?.length) {
+    const id = +req.params.id;
+    if (!id) {
       throw new HttpResponseError(
         400,
         "BAD_REQUEST",
         "Please, no 'id' for file entry is defined " + id
       );
     }
-
-    const isDeleted = await libraryRepository.delete(id);
-
-    if (isDeleted == null) {
+    // libraryRepository.
+    const fileEntry = await libraryRepository.getOneById(id);
+    if (fileEntry == null || fileEntry.id == null) {
       throw new HttpResponseError(
         404,
         "NOT_FOUND",
         "FileEntry id " + id + " not found"
       );
     }
+
+    await libraryRepository.getOneById(id);
+    const isDeleted = await libraryRepository.delete(fileEntry.id);
+    if (!isDeleted) {
+      throw new HttpResponseError(
+        404,
+        "NOT_FOUND",
+        "FileEntry id " + id + " not found"
+      );
+    }
+
+    if (fileEntry.file?.id != null) {
+      const fileId = fileEntry.file!.id;
+      const isFileDeleted = await filesRepository.delete(fileId);
+      if (!isFileDeleted) {
+        throw new HttpResponseError(
+          404,
+          "NOT_FOUND",
+          "File could not be deleted with id " + fileId + " not found"
+        );
+      }
+    }
+    if (fileEntry.thumbnail?.id != null) {
+      const thumbnailId = fileEntry.thumbnail!.id;
+      const isThumbnailDeleted = await filesRepository.delete(thumbnailId);
+      if (!isThumbnailDeleted) {
+        throw new HttpResponseError(
+          404,
+          "NOT_FOUND",
+          "Thumbnail file could not be deleted with id " + thumbnailId + " not found"
+        );
+      }
+    }
+
     res.status(200).send(ResponseModel.toResult(isDeleted));
     // next();
   }

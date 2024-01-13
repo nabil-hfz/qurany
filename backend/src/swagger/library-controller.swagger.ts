@@ -1,91 +1,77 @@
 export const libraryControllerSwagger = {
-  components: {
-    schemas: {
-      "CreateFileEntryReqBody": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "languageId": {
-            "type": "integer"
-          },
-          "categoryIds": {
-            "type": "array",
-            "items": {
-              "type": "integer"
-            }
-          }
-        },
-        "required": [
-          "name",
-          "languageId",
-          "categoryIds"
-        ]
-      },
-      "FileEntryFullRes": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string"
-          },
-          "language": {
-            "$ref": "#/definitions/LanguageResumedItem"
-          },
-          "file": {
-            "type": "string"
-          },
-          "thumbnail": {
-            "type": "string"
-          },
-          "totalViews": {
-            "type": "integer"
-          },
-          "totalDownloads": {
-            "type": "integer"
-          },
-          "categories": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/Category"
-            }
-          },
-          "description": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  },
   paths: {
     "/library": {
       "post": {
-        "summary": "Create a File Entry",
-        "description": "Endpoint to create a new file entry in the library.",
-        "tags": [
-          "Library"
-        ],
-        "parameters": [
-          { "$ref": "#/components/parameters/PageParam" },
-          { "$ref": "#/components/parameters/LimitParam" }
-        ],
+        "summary": "Create File Entry",
+        "description": "Create a new file entry with the provided information.",
+        "tags": ["Library"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the file entry."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the file entry."
+                  },
+                  "languageId": {
+                    "type": "integer",
+                    "description": "The language ID associated with the file entry."
+                  },
+                  "categoryIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "description": "An array of category IDs associated with the file entry."
+                  },
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The file to upload."
+                  }
+                },
+                "required": ["name", "languageId", "categoryIds", "file"],
+
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "File Entry Created Successfully",
-            "schema": {
-              "$ref": "#/definitions/FileEntryFullRes"
+            "description": "File entry created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileEntryFullRes"
+                }
+              }
             }
           },
           "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+            "description": "Bad request, invalid request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
             }
           }
         }
@@ -126,13 +112,13 @@ export const libraryControllerSwagger = {
           "200": {
             "description": "List of File Entries",
             "schema": {
-              "$ref": "#/definitions/ResponseListModel"
+              "$ref": "#/components/schemas/ResponseListModel"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           }
         }
@@ -158,19 +144,19 @@ export const libraryControllerSwagger = {
           "200": {
             "description": "Successful response",
             "schema": {
-              "$ref": "#/definitions/FileEntryFullRes"
+              "$ref": "#/components/schemas/FileEntryFullRes"
             }
           },
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           },
           "404": {
             "description": "FileEntry not found",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           }
         }
@@ -206,14 +192,78 @@ export const libraryControllerSwagger = {
           "400": {
             "description": "Bad Request",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
           },
           "404": {
             "description": "FileEntry not found",
             "schema": {
-              "$ref": "#/definitions/ErrorResponse"
+              "$ref": "#/components/schemas/ErrorResponse"
             }
+          }
+        }
+      }
+    }
+  },
+  components: {
+    schemas: {
+      "CreateFileEntryReqBody": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "languageId": {
+            "type": "integer"
+          },
+          "categoryIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "languageId",
+          "categoryIds"
+        ]
+      },
+      "FileEntryFullRes": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "language": {
+            "$ref": "#/components/schemas/LanguageResumedItem"
+          },
+          "file": {
+            "type": "string"
+          },
+          "thumbnail": {
+            "type": "string"
+          },
+          "totalViews": {
+            "type": "integer"
+          },
+          "totalDownloads": {
+            "type": "integer"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryResumedRes"
+            }
+          },
+          "description": {
+            "type": "string"
           }
         }
       }
