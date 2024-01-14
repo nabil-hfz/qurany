@@ -7,11 +7,14 @@ import { BaseFilter } from '../models/filters/base.filter';
 
 
 export class DataService<T extends any> {
-    constructor(protected url: string, protected http: HttpClient) { }
+    get url() { return URL };
+
+    
+    constructor(protected URL: string, protected http: HttpClient) { }
 
     getAll(params?: HttpParams): Observable<any> {
         return this.http
-            .get<T[]>(this.url, { params: params })
+            .get<T[]>(this.URL, { params: params })
             .pipe(
                 map((response: any) => {
                     if (response.items)
@@ -23,7 +26,7 @@ export class DataService<T extends any> {
     }
 
     getById(id: number): Observable<T> {
-        const url = this.url + '/' + id;
+        const url = this.URL + '/' + id;
         console.log(url);
         const result = this.http
             .get<T>(url)
@@ -33,13 +36,13 @@ export class DataService<T extends any> {
 
     create(resource: any): Observable<T> {
         return this.http
-            .post<T>(this.url, resource)
+            .post<T>(this.URL, resource)
             .pipe(catchError(this.handleError));
     }
 
     update(resource: any, id: number): Observable<T> {
         return this.http
-            .put<T>(this.url + '/' + id, resource)
+            .put<T>(this.URL + '/' + id, resource)
             .pipe(catchError(this.handleError));
 
 
@@ -47,7 +50,7 @@ export class DataService<T extends any> {
 
     delete(id: number): Observable<T> {
         // return throwError(() => { return new AppError() });
-        return this.http.delete<T>(this.url + '/' + id)
+        return this.http.delete<T>(this.URL + '/' + id)
             .pipe(catchError(this.handleError));
 
     }
