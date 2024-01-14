@@ -39,7 +39,7 @@ export class KhatmaDetailsComponent implements OnInit {
 
         this.serivce.getKhatma(this.khatmaId).pipe(
           map((response) => {
-            console.log('response format is ', response);
+            // console.log('response format is ', response);
             return response;
           }),
 
