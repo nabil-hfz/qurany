@@ -16,6 +16,7 @@ import * as fs from 'fs';
 export class ThumbnailService {
     static async createPdfThumbnail(file: Express.Multer.File): Promise<ThumbnailImageResponse> {
         try {
+
             const originalname = file.originalname;
 
             const fileBuffer = file.buffer;
@@ -24,6 +25,7 @@ export class ThumbnailService {
             // console.log(`Original filename: ${originalname}, Name: ${name}, Extension: ${ext}`);
 
             const directory = path.dirname(__filename);
+            
             // console.log(`Saving thumbnails to directory: ${directory}`);
             const tempLocation = path.join(directory, originalname);
             fs.writeFileSync(tempLocation, fileBuffer);
