@@ -97,9 +97,9 @@ describe('DataService', () => {
         error: 'test 400 error',
         status: 400, statusText: 'Bad Request'
       });
-  
+
       httpClientSpy.post.and.returnValue(throwError(() => errorResponse));
-  
+
       service.create(newItem).subscribe({
         next: () => fail('expected an error, not data'),
         error: (error) => expect(error).toBeInstanceOf(AppBadInputError),
@@ -130,20 +130,15 @@ describe('DataService', () => {
         error: 'test 400 error',
         status: 400, statusText: 'Bad Request'
       });
-  
+
       httpClientSpy.put.and.returnValue(throwError(() => errorResponse));
-  
+
       service.update(updateItem, updateItem.id).subscribe({
         next: () => fail('expected an error, not data'),
         error: (error) => expect(error).toBeInstanceOf(AppBadInputError),
       });
     });
-
   });
-
-
-  
-
 
 });
 
