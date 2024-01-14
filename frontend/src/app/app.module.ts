@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 // import { PortfolioListComponent } from './portfolio/portfolio-grid/portfolio-grid.component';
@@ -45,8 +44,11 @@ import { PlayerComponent } from './shared/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { TrackControlComponent } from './shared/track-control/track-control.component';
-import { LibraryGridComponent } from './library/library-grid/library-grid.component';
+// import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { LibraryService } from './services/library/library.service';
+import { RouterOutlet } from '@angular/router';
+import { LibraryGridComponent } from './library/library-grid/library-grid.component';
+import { FileDetailsComponent } from './library/file-details/file-details.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -74,11 +76,13 @@ import { LibraryService } from './services/library/library.service';
     RecitationCardComponent,
 
     // Library
-    LibraryGridComponent,
     // SharedComponent
     PlayerComponent,
     KawtharunaAppBarComponent,
     TrackControlComponent,
+    LibraryGridComponent,
+    FileDetailsComponent,
+
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
