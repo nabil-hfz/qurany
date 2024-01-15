@@ -6,6 +6,8 @@ import { environment } from '../../../environments/environment';
 import { RecitationModel, RecitationTypes } from '../../models/recitation.model';
 import { throwError, of } from 'rxjs';
 import { BaseFilter } from '../../models/filters/base.filter';
+import { LocalizedModel } from '../../models/localized.model';
+import { ReciterModel } from '../../models/reciter.model';
 describe('RecitationsService', () => {
   let service: RecitationsService;
   let httpMock: HttpTestingController;
@@ -41,7 +43,39 @@ describe('RecitationsService', () => {
 
   describe('getRecitation', () => {
     it('should return recitation details for a given ID (GET request)', () => {
-      const mockRecitationDetails: RecitationModel = { /* ... populate with mock data ... */ };
+      const mockRecitationDetails: RecitationModel = {
+        id: 1,
+        title: {
+          ar: 'التلاوة 1',
+          en: 'Recitation 1',
+        } as LocalizedModel,
+        image: 'path/to/image.jpg',
+        audio: 'path/to/audio.mp3',
+        reciter: {
+          id: 1,
+          name: {
+            ar: 'القارئ 1',
+            en: 'Reciter 1',
+          } as LocalizedModel,
+          bio: {
+            ar: 'السيرة الذاتية للقارئ',
+            en: 'Reciter biography',
+          } as LocalizedModel,
+          image: 'path/to/reciter-image.jpg',
+          recitationTypes: [RecitationTypes.Hafs, RecitationTypes.Shoaba],
+          totalPlays: 100,
+          totalDownloads: 50,
+          numberOfKhatmat: 5
+        } as ReciterModel,
+        recitationType: RecitationTypes.Hafs,
+        khatmaId: 1,
+        sequence: 5,
+        totalDownloads: 10,
+        totalPlays: 20,
+        duration: 180,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
       const recitationId = 1;
 
       service.getRecitation(recitationId).subscribe(detail => {
