@@ -132,3 +132,4 @@ describe('RecitationsService', () => {
     httpMock.verify();
   });
 });
+// ng test --include=src/app/services/recitations/recitations.service.spec.ts
