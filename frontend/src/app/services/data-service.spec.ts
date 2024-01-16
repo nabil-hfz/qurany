@@ -24,7 +24,7 @@ describe('DataService', () => {
         error: fail,
       });
 
-      expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
+      expect(httpClientSpy.get.calls.count()).withContext('one call').toBe(1);
     });
 
     it('should return an error when the server returns a 404', () => {
