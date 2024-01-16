@@ -76,7 +76,7 @@ describe('LibraryService', () => {
           expect(files).toEqual(mockLibraryFiles);
         });
 
-        const req = httpMock.expectOne(`${environment.apiUrl}/library`);
+        const req = httpMock.expectOne(`${environment.apiUrl}/library?page=0&limit=20`);
         expect(req.request.method).toBe('GET');
         req.flush(mockLibraryFiles);
       });
@@ -132,32 +132,38 @@ describe('LibraryService', () => {
       it('should handle error when server returns an error for getLibraryFiles', () => {
         const errorResponse = new HttpErrorResponse({
           error: 'test error',
-          status: 500, statusText: 'Internal Server Error'
+          status: 500,
+          statusText: 'Internal Server Error'
         });
         service.getLibraryFiles().subscribe({
           next: () => fail('expected an error, not library files'),
-          error: error => expect(error.message).toContain('500 Internal Server Error')
+          error: error => expect(error.originalError.message).toContain('Internal Server Error')
         });
 
-        const req = httpMock.expectOne(`${environment.apiUrl}/library`);
+        const req = httpMock.expectOne(`${environment.apiUrl}/library?page=0&limit=20`);
         expect(req.request.method).toBe('GET');
         req.flush('Error loading library files', errorResponse);
+
+
       });
     });
 
-    // Error Handling Tests for getFileDetails
+    // // Error Handling Tests for getFileDetails
     describe('getFileDetails Error Handling', () => {
       it('should handle error when server returns an error for getFileDetails', () => {
         const fileId = 1;
         const errorResponse = new HttpErrorResponse({
           error: 'test error',
-          status: 500, statusText: 'Internal Server Error'
+          status: 500,
+          statusText: 'Internal Server Error'
         });
 
 
         service.getFileDetails(fileId).subscribe({
           next: () => fail('expected an error, not file details'),
-          error: error => expect(error.message).toContain('500 Internal Server Error')
+          error: error => {
+            expect(error.originalError.message).toContain('500 Internal Server Error')
+          }
         });
 
         const req = httpMock.expectOne(`${environment.apiUrl}/library/${fileId}`);
