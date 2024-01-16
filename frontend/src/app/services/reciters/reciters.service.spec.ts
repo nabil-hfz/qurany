@@ -38,7 +38,7 @@ describe('RecitersService', () => {
           createdAt: new Date(),
         },
       ];
-      const filter: ReciterFilter = { page: 1, limit: 10 }; // Example filter
+      const filter: ReciterFilter = { page: 1, limit: 10 };  
 
       service.getRecitersList(filter).subscribe(reciters => {
         expect(reciters.length).toBeGreaterThan(0);
