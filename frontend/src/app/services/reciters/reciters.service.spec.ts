@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { RecitersService } from './reciters.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {  HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ReciterModel } from '../../models/reciter.model';
-import { throwError, of } from 'rxjs';
 import { ReciterFilter } from '../../models/filters/reciter.filter';
 import { RecitationTypes } from '../../models/recitation.model';
 import { LocalizedModel } from '../../models/localized.model';
@@ -50,10 +49,10 @@ describe('RecitersService', () => {
       req.flush(mockReciters);
     });
 
-    // Add error handling test here
+
   });
 
-  // Error Handling Tests for getRecitersList
+
   describe('getRecitersList Error Handling', () => {
     it('should handle error when server returns an error for getRecitersList', () => {
       const filter: ReciterFilter = { page: 1, limit: 10 };
