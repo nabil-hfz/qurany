@@ -32,3 +32,4 @@ describe('AppComponent', () => {
 // shared
 
 // ng test --include=src/app/app.component.spec.ts
+// ng test --include="src/app/shared/*/**.spec.ts"
