@@ -8,9 +8,9 @@ describe('NotFoundComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotFoundComponent ]
+      declarations: [NotFoundComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,3 +23,6 @@ describe('NotFoundComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// ng test --include=src/app/shared/not-found/not-found.component.spec.ts
+
