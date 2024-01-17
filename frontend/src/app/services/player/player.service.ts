@@ -8,7 +8,7 @@ export class PlayerService {
   private playTrackSource = new Subject<string>();
   private pauseTrackSource = new Subject<string>();
   private trackEndedSource = new Subject<string>();
-  private currentTrackUrl = new BehaviorSubject<string>('');
+  protected currentTrackUrl = new BehaviorSubject<string>('');
 
   playTrack$ = this.playTrackSource.asObservable();
   pauseTrack$ = this.pauseTrackSource.asObservable();
@@ -33,5 +33,8 @@ export class PlayerService {
     if (this.currentTrackUrl.value === previewUrl) {
       this.currentTrackUrl.next('');
     }
+  }
+  getCurrentTrackUrl(): string {
+    return this.currentTrackUrl.value;
   }
 }
