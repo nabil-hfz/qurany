@@ -41,3 +41,5 @@ describe('ImageSelectorComponent', () => {
   });
 
 });
+
+// ng test --include=src/app/shared/image-selector/image-selector.component.spec.ts
