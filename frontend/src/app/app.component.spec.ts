@@ -27,3 +27,9 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, kawtharuna');
   });
 });
+
+
+// shared
+
+// ng test --include=src/app/app.component.spec.ts
+// ng test --include="src/app/shared/*/**.spec.ts"

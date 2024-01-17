@@ -45,8 +45,10 @@ import { PlayerComponent } from './shared/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { TrackControlComponent } from './shared/track-control/track-control.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { LibraryService } from './services/library/library.service';
+import { FileDetailsComponent } from './library/file-details/file-details.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -72,13 +74,13 @@ import { LibraryService } from './services/library/library.service';
     ReciterDetailsComponent,
     RecitationsListComponent,
     RecitationCardComponent,
-
-    // Library
-    LibraryGridComponent,
     // SharedComponent
     PlayerComponent,
     KawtharunaAppBarComponent,
     TrackControlComponent,
+    PrivacyPolicyComponent,
+    LibraryGridComponent,
+    FileDetailsComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -105,11 +107,11 @@ import { LibraryService } from './services/library/library.service';
     MatCardModule,
     MatGridListModule,
     MatProgressBarModule,
-    MatChipsModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
 
     MatSidenavModule,
+    MatChipsModule,
     MatButtonModule,
     FlexLayoutModule,
     HttpClientModule,

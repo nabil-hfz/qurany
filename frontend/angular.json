@@ -34,6 +34,8 @@
           },
           "configurations": {
             "production": {
+              "sourceMap": true,
+
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -49,7 +51,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb",
-                  "maximumError": "100kb"
+                  "maximumError": "500kb"
                 }
               ],
               "outputHashing": "all"

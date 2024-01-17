@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LibraryModel } from '../../models/library.model';
 import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { LibraryService } from '../../services/library/library.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class LibraryGridComponent {
 
   constructor(
     private service: LibraryService,
-    private router: Router,
+    // private router: Router,
     // private activatedRoute: ActivatedRoute
   ) {
 

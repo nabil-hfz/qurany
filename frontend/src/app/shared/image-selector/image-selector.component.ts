@@ -22,11 +22,13 @@ export class ImageSelectorComponent implements ControlValueAccessor {
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
+    console.log('2- onFileSelected file is ', file);
     if (file) {
       const reader = new FileReader();
       reader.onload = _ => {
         this.imageUrl = reader.result;
-        this.onChange(file); 
+        console.log('3- onFileSelected file is ',     this.imageUrl);
+        this.onChange(file);
       };
       reader.readAsDataURL(file);
     }

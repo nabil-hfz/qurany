@@ -8,6 +8,7 @@ RUN apk update
 
 # Install GraphicsMagick
 RUN apk add graphicsmagick
+RUN apk add ghostscript
 
 # create root application folder
 WORKDIR /app
