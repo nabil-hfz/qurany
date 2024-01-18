@@ -13,42 +13,34 @@ export class KhatmaDetailsComponent implements OnInit {
   reciterName = 'khatma';
 
   constructor(
-    private serivce: KhatmaService,
-    private activaedRoute: ActivatedRoute,
-    private router: Router,
-  ) {
-
-  }
-
-
-
+    private service: KhatmaService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    const value = this.activaedRoute.snapshot.queryParamMap.get('value');
+    // Retrieve query parameters and route parameters.
+    const value = this.activatedRoute.snapshot.queryParamMap.get('value');
+    const khatmaId = this.activatedRoute.snapshot.paramMap.get('khatmaId');
 
-    
-    console.log(value);
-    const khatmaId = this.activaedRoute.snapshot.paramMap.get('khatmaId');
-    console.log('KhatmaDetailsComponent is  khatmaId ', khatmaId);
-
+    // Check if a valid khatmaId is provided in the route parameters.
     if (khatmaId && Number(khatmaId)) {
       this.khatmaId = Number(khatmaId);
       try {
-
-        console.log('Calling getKhatma ', this.khatmaId);
-
-        this.serivce.getKhatma(this.khatmaId).pipe(
+        // Fetch Khatma details using the service based on the khatmaId.
+        this.service.getKhatma(this.khatmaId).pipe(
           map((response) => {
-            // console.log('response format is ', response);
+            // Process the response data here if needed.
             return response;
-          }),
-
-        ).subscribe((v) => console.info(v),);
+          })
+        ).subscribe((khatmaDetails) => {
+          // Handle the fetched Khatma details as needed.
+          console.info(khatmaDetails);
+        });
       } catch (err) {
-        console.error('response err is ', err);
-
+        // Handle any errors that may occur during the data retrieval process.
+        console.error('Error:', err);
       }
     }
   }
-
 }

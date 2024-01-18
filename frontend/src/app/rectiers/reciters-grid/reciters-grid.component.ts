@@ -68,7 +68,7 @@ export class RecitersGridComponent implements OnInit {
     if (value.numberOfKhatmat > 1) {
       this.router.navigate(['/khatmat-grid', value.id, words?.join('-') || '']);
     }
-    // You can add more conditions for other cases if needed.
+
     // else if (value.numberOfKhatmat == 1) {
     //   this.router.navigate(['/khatma-details', value.id, words?.join('-') || ''], {
     //     queryParams: {

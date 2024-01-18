@@ -12,13 +12,15 @@ platformBrowserDynamic()
   .catch(err => console.error(err));
 
 
-// shared
-// services
+
 
 // recitations test + documentation 
 // reciters test + documentation 
-// services test + documentation 
+
 // common test + documentation 
+// models test + documentation 
+// services test + documentation 
+// shared test + documentation 
 
 
 
