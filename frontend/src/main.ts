@@ -15,5 +15,12 @@ platformBrowserDynamic()
 // shared
 // services
 
+// recitations test + documentation 
+// reciters test + documentation 
+// services test + documentation 
+// common test + documentation 
+
+
+
 // ng test --include="src/app/shared/*/**.spec.ts"
 // ng test --include="src/app/services/*/**.spec.ts"
