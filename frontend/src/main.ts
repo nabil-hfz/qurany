@@ -10,3 +10,10 @@ import { AppModule } from './app/app.module';
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch(err => console.error(err));
+
+
+// shared
+// services
+
+// ng test --include="src/app/shared/*/**.spec.ts"
+// ng test --include="src/app/services/*/**.spec.ts"
