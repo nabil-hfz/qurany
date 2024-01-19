@@ -36,7 +36,9 @@ To get started with development, follow these steps:
    `npm run prod`
 
 5. **Building for Production:**  
-   `npm run build_prod`
+```bash
+ `npm run build_prod`
+```
 
 ### 🔧 Running Tests
 
