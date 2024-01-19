@@ -76,7 +76,7 @@ Contributions are greatly appreciated and help make the Kawtharuna community a f
 
 2. **Create Your Feature Branch:**
     ```bash
-    git checkout -b feature/AmazingFeature
+    git checkout -b frontend/feature/AmazingFeature
     ```
 
 
@@ -86,7 +86,7 @@ Contributions are greatly appreciated and help make the Kawtharuna community a f
     ```
 4. **Push to the Branch:**
     ```bash
-    git push origin feature/AmazingFeature
+    git push origin frontend/feature/AmazingFeature
     ```
 
 5. **Open a Pull Request:**
