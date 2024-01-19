@@ -1,5 +1,7 @@
 # 🌐 Kawtharuna Frontend - Angular
 
+For more information about the Kawtharuna System and to use the application, visit our [website](https://www.kawtharuna.com).
+
 ## 🚀 Getting Started with Kawtharuna Frontend
 
 This is the frontend part of the Kawtharuna System, built using Angular. It provides a rich, interactive web interface for accessing Quranic and Islamic library resources.
@@ -93,10 +95,6 @@ Contributions are greatly appreciated and help make the Kawtharuna community a f
 - Adhere to the existing coding standards of the project.
 - Include tests for new features whenever possible.
 - Update the README.md file if necessary, especially when adding new features or making changes that affect how users interact with the application.
-
-### 🌐 Visit Kawtharuna
-
-For more information about the Kawtharuna System and to use the application, visit our [website](https://www.kawtharuna.com).
 
 ### License
 
