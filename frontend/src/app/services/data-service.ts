@@ -115,7 +115,7 @@ export class DataService<T extends any> {
    */
   getAllFields(filter?: BaseFilter) {
     let params = new HttpParams();
-    params = params.append('page', filter?.page?.toString() ?? '0');
+    params = params.append('page', filter?.page?.toString() ?? '1');
     params = params.append('limit', filter?.limit?.toString() ?? '30');
 
     filter?.params?.forEach(obj => {

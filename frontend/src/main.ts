@@ -12,17 +12,5 @@ platformBrowserDynamic()
   .catch(err => console.error(err));
 
 
-
-
-// recitations test + documentation 
-// reciters test + documentation 
-
-// common test + documentation 
-// models test + documentation 
-// services test + documentation 
-// shared test + documentation 
-
-
-
 // ng test --include="src/app/shared/*/**.spec.ts"
 // ng test --include="src/app/services/*/**.spec.ts"

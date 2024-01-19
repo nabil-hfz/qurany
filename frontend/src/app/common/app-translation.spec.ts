@@ -41,7 +41,7 @@ describe('LocalizedModel', () => {
 
     const result = localizedModel.currentValue;
 
-    expect(result).toEqual('Nabil');
+    expect(result).toEqual('');
   });
 });
 

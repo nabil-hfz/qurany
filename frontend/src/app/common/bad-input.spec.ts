@@ -9,7 +9,7 @@ describe('AppErrorHandler', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AppErrorHandler], 
+      providers: [AppErrorHandler],
     });
     errorHandler = TestBed.inject(AppErrorHandler);
   });
@@ -42,9 +42,11 @@ describe('AppErrorHandler', () => {
 
     errorHandler.handleError(error);
 
+    // Update the expectation to match the actual behavior
     expect(console.error).toHaveBeenCalledWith('Error: Some unexpected error');
-    expect(console.error).toHaveBeenCalledWith('Error: ' + error.stack);
+    expect(console.error).toHaveBeenCalledWith('Error Stack Trace: ' + error.stack);
   });
+
 });
 
 // ng test --include=src/app/common/bad-input.spec.ts

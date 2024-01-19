@@ -4,8 +4,6 @@ import { RecitationsService } from './recitations.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { RecitationModel, RecitationTypes } from '../../models/recitation.model';
-import { throwError, of } from 'rxjs';
-import { BaseFilter } from '../../models/filters/base.filter';
 import { LocalizedModel } from '../../models/localized.model';
 import { ReciterModel } from '../../models/reciter.model';
 describe('RecitationsService', () => {
@@ -101,7 +99,7 @@ describe('RecitationsService', () => {
       expect(recitations).toEqual(mockRecitations);
     });
 
-    const req = httpMock.expectOne(`${environment.apiUrl}/recitation?page=0&limit=20`);
+    const req = httpMock.expectOne(`${environment.apiUrl}/recitation?page=1&limit=30`);
     expect(req.request.method).toBe('GET');
     req.flush(mockRecitations);
   });
@@ -168,7 +166,7 @@ describe('RecitationsService', () => {
       }
     });
 
-    const req = httpMock.expectOne(`${environment.apiUrl}/recitation?page=0&limit=20`);
+    const req = httpMock.expectOne(`${environment.apiUrl}/recitation?page=1&limit=30`);
     expect(req.request.method).toBe('GET');
     req.flush('Error loading recitations', errorResponse);
   });

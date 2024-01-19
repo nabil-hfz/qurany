@@ -121,12 +121,10 @@ import { FileDetailsComponent } from './library/file-details/file-details.compon
 
   ],
   providers: [
-    // EntriesService,
     KhatmaService,
     RecitersService,
     RecitationsService,
     LibraryService,
-    // RecitationsService
     {
       provide: ErrorHandler,
       useClass: AppErrorHandler,

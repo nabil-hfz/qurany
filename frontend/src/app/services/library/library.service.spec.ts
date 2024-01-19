@@ -67,7 +67,7 @@ describe('LibraryService', () => {
         expect(files).toEqual(mockLibraryFiles);
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/library?page=0&limit=20`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/library?page=1&limit=30`);
       expect(req.request.method).toBe('GET');
       req.flush(mockLibraryFiles);
     });
@@ -130,7 +130,7 @@ describe('LibraryService', () => {
         error: error => expect(error.originalError.message).toContain('Internal Server Error')
       });
 
-      const req = httpMock.expectOne(`${environment.apiUrl}/library?page=0&limit=20`);
+      const req = httpMock.expectOne(`${environment.apiUrl}/library?page=1&limit=30`);
       expect(req.request.method).toBe('GET');
       req.flush('Error loading library files', errorResponse);
 

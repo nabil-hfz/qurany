@@ -1,4 +1,4 @@
-import { LocalizedModel } from './../../models/localized.model';
+import { LocalizedModel } from '../../models/localized.model';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RecitersGridComponent } from './reciters-grid.component';

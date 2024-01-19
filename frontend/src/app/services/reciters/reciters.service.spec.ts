@@ -13,7 +13,7 @@ import { AppNotFoundError } from '../../common/not-found-error';
 describe('RecitersService', () => {
   let service: RecitersService;
   let httpTestingController: HttpTestingController;
-  const apiUrl = `${environment.apiUrl}/reciter`;
+  const apiUrl = `${environment.apiUrl}/reciter?page=1&limit=10`;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
