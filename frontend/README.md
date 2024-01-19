@@ -24,21 +24,30 @@ This is the frontend part of the Kawtharuna System, built using Angular. It prov
 To get started with development, follow these steps:
 
 1. **Clone the Repository:**  
-   `git clone https://github.com/Kawtharuna/frontend.git`
+```bash
+git clone https://github.com/Kawtharuna/frontend.git
+```
 
 2. **Install Dependencies:**  
-   `npm install`
-
-3. **Running in Development Mode:**  
-   `npm run dev`
-
-4. **Running in Production Mode:**  
-   `npm run prod`
-
-5. **Building for Production:**  
+   - Run in your terminal:
 ```bash
- `npm run build_prod`
+npm run install
 ```
+
+3. **Running in Development Mode:** 
+   - Run in your terminal:
+```bash
+npm run dev
+```
+   - This will start the Angular development server.
+
+4. **View in Browser:**
+   - Open in your web browser:
+```bash
+http://localhost:8080
+```
+   - You should now see the Kawtharuna frontend application running.
+
 
 ### 🔧 Running Tests
 
@@ -48,22 +57,13 @@ To ensure the quality and functionality of your changes, run the tests:
 npm run test
 ```
 
-### 🖥️ How to Run the Project
-
-#### For Development:
-
-1. **Start the Development Server:**
-   - Run `npm run dev` in your terminal.
-   - This will start the Angular development server.
-
-2. **View in Browser:**
-   - Open `http://localhost:8080` in your web browser.
-   - You should now see the Kawtharuna frontend application running.
-
-#### For Production:
+### 🛠️ Production Setup
 
 1. **Build for Production:**
-   - Execute `npm run build_prod` in your terminal.
+   - Execute in your terminal:
+```bash
+npm run build_prod
+```
    - This will build the Angular application for production deployment.
 
 2. **Deploy:**
