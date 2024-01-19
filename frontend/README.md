@@ -40,12 +40,8 @@ npm run install
 npm run dev
 ```
    - This will start the Angular development server.
-
 4. **View in Browser:**
-   - Open in your web browser:
-```bash
-http://localhost:8080
-```
+   - Open in your web browser: `http://localhost:8080`
    - You should now see the Kawtharuna frontend application running.
 
 
@@ -65,7 +61,6 @@ npm run test
 npm run build_prod
 ```
    - This will build the Angular application for production deployment.
-
 2. **Deploy:**
    - Deploy the contents of the `dist/` directory to your production server.
    - This will make the application available for public access.
@@ -80,13 +75,19 @@ Contributions are greatly appreciated and help make the Kawtharuna community a f
    - Create a copy of the project in your own GitHub account.
 
 2. **Create Your Feature Branch:**
-   - `git checkout -b feature/AmazingFeature`
+    ```bash
+    git checkout -b feature/AmazingFeature
+    ```
+
 
 3. **Commit Your Changes:**
-   - `git commit -m 'Add some AmazingFeature'`
-
+    ```bash
+    git commit -m 'Add some AmazingFeature'
+    ```
 4. **Push to the Branch:**
-   - `git push origin feature/AmazingFeature`
+    ```bash
+    git push origin feature/AmazingFeature
+    ```
 
 5. **Open a Pull Request:**
    - Compare your branch with the original project and create a pull request.
