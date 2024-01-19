@@ -1,8 +1,11 @@
-import { AppError } from "./app-error";
+import { AppError } from './app-error';
 
-export class AppNotFoundError extends AppError{
-
-    constructor(){
-        super();
-    }
+/**
+ * Custom error class representing resource not found errors.
+ * Extends the base AppError class.
+ */
+export class AppNotFoundError extends AppError {
+  constructor() {
+    super();
+  }
 }
