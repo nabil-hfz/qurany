@@ -42,7 +42,7 @@ To ensure the quality and functionality of your changes, run the tests:
 
 ```bash
 npm run test
-
+```
 
 ### 🖥️ How to Run the Project
 
