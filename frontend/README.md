@@ -1,5 +1,7 @@
 # 🌐 Kawtharuna Frontend - Angular
 
+For more information about the Kawtharuna System and to use the application, visit our [website](https://www.kawtharuna.com).
+
 ## 🚀 Getting Started with Kawtharuna Frontend
 
 This is the frontend part of the Kawtharuna System, built using Angular. It provides a rich, interactive web interface for accessing Quranic and Islamic library resources.
@@ -22,19 +24,26 @@ This is the frontend part of the Kawtharuna System, built using Angular. It prov
 To get started with development, follow these steps:
 
 1. **Clone the Repository:**  
-   `git clone https://github.com/Kawtharuna/frontend.git`
+```bash
+git clone https://github.com/Kawtharuna/frontend.git
+```
 
 2. **Install Dependencies:**  
-   `npm install`
+   - Run in your terminal:
+```bash
+npm run install
+```
 
-3. **Running in Development Mode:**  
-   `npm run dev`
+3. **Running in Development Mode:** 
+   - Run in your terminal:
+```bash
+npm run dev
+```
+   - This will start the Angular development server.
+4. **View in Browser:**
+   - Open in your web browser: `http://localhost:8080`
+   - You should now see the Kawtharuna frontend application running.
 
-4. **Running in Production Mode:**  
-   `npm run prod`
-
-5. **Building for Production:**  
-   `npm run build_prod`
 
 ### 🔧 Running Tests
 
@@ -42,26 +51,16 @@ To ensure the quality and functionality of your changes, run the tests:
 
 ```bash
 npm run test
+```
 
-
-### 🖥️ How to Run the Project
-
-#### For Development:
-
-1. **Start the Development Server:**
-   - Run `npm run dev` in your terminal.
-   - This will start the Angular development server.
-
-2. **View in Browser:**
-   - Open `http://localhost:8080` in your web browser.
-   - You should now see the Kawtharuna frontend application running.
-
-#### For Production:
+### 🛠️ Production Setup
 
 1. **Build for Production:**
-   - Execute `npm run build_prod` in your terminal.
+   - Execute in your terminal:
+```bash
+npm run build_prod
+```
    - This will build the Angular application for production deployment.
-
 2. **Deploy:**
    - Deploy the contents of the `dist/` directory to your production server.
    - This will make the application available for public access.
@@ -76,13 +75,19 @@ Contributions are greatly appreciated and help make the Kawtharuna community a f
    - Create a copy of the project in your own GitHub account.
 
 2. **Create Your Feature Branch:**
-   - `git checkout -b feature/AmazingFeature`
+    ```bash
+    git checkout -b frontend/feature/AmazingFeature
+    ```
+
 
 3. **Commit Your Changes:**
-   - `git commit -m 'Add some AmazingFeature'`
-
+    ```bash
+    git commit -m 'Add some AmazingFeature'
+    ```
 4. **Push to the Branch:**
-   - `git push origin feature/AmazingFeature`
+    ```bash
+    git push origin frontend/feature/AmazingFeature
+    ```
 
 5. **Open a Pull Request:**
    - Compare your branch with the original project and create a pull request.
@@ -93,10 +98,6 @@ Contributions are greatly appreciated and help make the Kawtharuna community a f
 - Adhere to the existing coding standards of the project.
 - Include tests for new features whenever possible.
 - Update the README.md file if necessary, especially when adding new features or making changes that affect how users interact with the application.
-
-### 🌐 Visit Kawtharuna
-
-For more information about the Kawtharuna System and to use the application, visit our [website](https://www.kawtharuna.com).
 
 ### License
 
