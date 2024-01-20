@@ -49,6 +49,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { LibraryService } from './services/library/library.service';
 import { FileDetailsComponent } from './library/file-details/file-details.component';
+import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -89,6 +90,8 @@ import { FileDetailsComponent } from './library/file-details/file-details.compon
     //Pipes
     // SummaryPipe,
     // AbsoluteUrlPipe,
+    SafeUrlPipe,
+
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ import { FileDetailsComponent } from './library/file-details/file-details.compon
     //
     NgxAudioPlayerModule,
     AppRoutingModule,
+
 
   ],
   providers: [

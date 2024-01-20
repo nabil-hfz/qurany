@@ -1,1 +1,17 @@
-<p>file-details works!</p>
+<div *ngIf="fileUrl">
+    <!-- PDF Viewer -->
+    <ng-container *ngIf="isPDF()">
+      <iframe [src]="fileUrl | safeUrl" width="100%" height="600px"></iframe>
+    </ng-container>
+  
+    <!-- Placeholder for other file types -->
+    <!-- For doc or docx, you can use Google Docs Viewer or similar -->
+    <ng-container *ngIf="!isPDF()">
+      <p>Preview not available for this file type.</p>
+    </ng-container>
+  </div>
+  
+  <!-- You can add a way to input the URL for demonstration -->
+  <input type="text" [(ngModel)]="fileUrl" placeholder="Enter file URL" />
+  <button (click)="loadFile(fileUrl)">Load File</button>
+  
