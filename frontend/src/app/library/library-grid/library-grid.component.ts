@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LibraryModel } from '../../models/library.model';
 import { Observable, of } from 'rxjs';
 import { LibraryService } from '../../services/library/library.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'library-grid',
@@ -15,7 +16,7 @@ export class LibraryGridComponent implements OnInit {
   // Observable to store library data
   values$: Observable<LibraryModel[]> | undefined;
 
-  constructor(private service: LibraryService) {}
+  constructor(private service: LibraryService, private router: Router) {}
 
   ngOnInit(): void {
     // Set loading status to true
@@ -38,7 +39,6 @@ export class LibraryGridComponent implements OnInit {
 
   // Function to handle card click event
   onCardPressed(value: LibraryModel) {
-
-    // Example: this.router.navigate(['library-details', value.id]);
+    this.router.navigate(['/file-details', value.id]); 
   }
 }
