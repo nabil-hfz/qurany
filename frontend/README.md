@@ -1,4 +1,4 @@
-# 🌐 Kawtharuna Frontend - Angular
+# 🌐 Kawtharuna Frontend - Angular (Status - 70% Done)
 
 For more information about the Kawtharuna System and to use the application, visit our [website](https://www.kawtharuna.com).
 
