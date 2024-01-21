@@ -23,3 +23,5 @@ describe('TrackControlComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+// ng test --include=src/app/shared/track-control/track-control.component.spec.ts

@@ -201,9 +201,11 @@ export class UploaderService {
 
         const fileDestination = `${fileLocation}${name}${ext}`;
 
+        console.log('fileDestination ', fileDestination);
 
         const fileUrl = await this.uploadFile(buffer!, fileDestination, ext);
 
+        console.log('fileUrl ', fileUrl);
 
         const uploadedFile = new FileEntity();
         uploadedFile.url = fileUrl;

@@ -1,36 +1,48 @@
+
+export interface ThumbnailImageResponse {
+    size?: number;
+    page?: number;
+    buffer?: Buffer;
+    name?: string;
+    ext?: string;
+}
+
 import { fromBuffer } from "pdf2pic";
 
-// import * as fs from 'fs';
 import * as path from 'path';
+import * as fs from 'fs';
+
+
 export class ThumbnailService {
     static async createPdfThumbnail(file: Express.Multer.File): Promise<ThumbnailImageResponse> {
         try {
 
-            const buffer = file.buffer;
-
-            // Define the file name
             const originalname = file.originalname;
+
+            const fileBuffer = file.buffer;
             const { name, ext } = path.parse(originalname);
-            console.log('originalname ', originalname);
-            console.log('name ', name);
-            console.log('ext ', ext);
+
+            // console.log(`Original filename: ${originalname}, Name: ${name}, Extension: ${ext}`);
 
             const directory = path.dirname(__filename);
+            
+            // console.log(`Saving thumbnails to directory: ${directory}`);
+            const tempLocation = path.join(directory, originalname);
+            fs.writeFileSync(tempLocation, fileBuffer);
 
             const options = {
                 preserveAspectRatio: true,
                 format: 'png',
                 saveFilename: name,
                 savePath: directory,
-
             };
-            const convert = fromBuffer(buffer, options);
+
+            // console.log(`Thumbnail creation options: ${JSON.stringify(options)}`);
+
+            const convert = fromBuffer(fileBuffer, options);
             const pageToConvertAsImage = 1;
 
             const result = await convert(pageToConvertAsImage, { responseType: "buffer" });
-
-
-            console.log('result ', result);
 
             const thumbnail = {
                 buffer: result.buffer,
@@ -39,23 +51,16 @@ export class ThumbnailService {
                 name: name,
                 ext: ext,
             };
-            console.log('thumbnail ', thumbnail);
+            // const { buffer, ...rest } = thumbnail;
+            // console.log(`Thumbnail details: ${JSON.stringify(rest)}`);
             return thumbnail;
 
-        } catch (error) {
-            console.error('Error creating thumbnail:', error);
+        } catch (error: any) {
+            console.error('Error creating thumbnail:', error.message);
+            console.error('Stack Trace:', error.stack);
             throw error;
         }
     }
-}
-
-
-export interface ThumbnailImageResponse {
-    size?: number;
-    page?: number;
-    name?: string;
-    ext?: string;
-    buffer?: Buffer;
 }
 
 

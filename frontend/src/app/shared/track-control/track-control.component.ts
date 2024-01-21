@@ -18,17 +18,21 @@ export class TrackControlComponent implements OnInit, OnDestroy {
   constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
+    // Subscribe to changes in the current audio track URL.
     this.currentTrackSub = this.playerService.currentTrackUrl$.subscribe(url => {
+      // Update the isPlaying flag based on whether the current track URL matches the input audio URL.
       this.isPlaying = (url === this.audio);
     });
   }
 
   ngOnDestroy() {
+    // Unsubscribe from the currentTrackSub subscription to avoid memory leaks.
     this.currentTrackSub.unsubscribe();
   }
 
   onPlayOrPause() {
     if (this.audio) {
+      // Toggle playback state based on the isPlaying flag.
       this.isPlaying ?
         this.playerService.pauseTrack(this.audio) :
         this.playerService.playTrack(this.audio);

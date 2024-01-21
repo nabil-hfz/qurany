@@ -1,45 +1,33 @@
-import { Component } from '@angular/core';
-import { LibraryModel } from '../../models/library.model';
+import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
+import { LibraryModel } from '../../models/library.model';
 import { LibraryService } from '../../services/library/library.service';
 
 @Component({
   selector: 'library-grid',
   templateUrl: './library-grid.component.html',
-  styleUrl: './library-grid.component.scss'
+  styleUrls: ['./library-grid.component.scss']
 })
-export class LibraryGridComponent {
+export class LibraryGridComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
-
-
   values$: Observable<LibraryModel[]> | undefined;
+  selectedFile: LibraryModel | null = null;  
 
-  constructor(
-    private service: LibraryService,
-    private router: Router,
-    // private activatedRoute: ActivatedRoute
-  ) {
-
-  }
+  constructor(private service: LibraryService) { }
 
   ngOnInit(): void {
     this.loading$ = of(true);
-
     this.values$ = this.service.getLibraryFiles();
-    this.values$.subscribe((v) => {
+    this.values$.subscribe(() => {
       this.loading$ = of(false);
-    })
+    });
   }
 
-
-  navigateToForm() {
-    // this.router.navigate(['/portfolios/add']);
+  onCardPressed(value: LibraryModel): void {
+    this.selectedFile = value; 
   }
 
-
-  onCardPressed(value: LibraryModel) {
-    // const words = value.name.ar?.split(' ');
-    // this.router.navigate(['khatma-details', value.id, words?.join('-') || ''], { queryParams: value });
+  closeDetails(): void {
+    this.selectedFile = null;
   }
 }

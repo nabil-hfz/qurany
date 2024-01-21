@@ -59,7 +59,7 @@ export abstract class Repository<T extends ObjectLiteral> {
 
   public async getOneById(id: number): Promise<T | null> {
     try {
-      const conditions: any = { id: id };
+      const conditions: any = { id: +id };
       // const findOptions: FindOneOptions = { where: conditions };
       console.log('conditions is ', conditions);
       const result = await this._repository.findOneBy(conditions);

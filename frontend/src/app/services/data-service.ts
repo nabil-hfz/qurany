@@ -5,81 +5,125 @@ import { AppNotFoundError } from '../common/not-found-error';
 import { AppError } from '../common/app-error';
 import { BaseFilter } from '../models/filters/base.filter';
 
-
+/**
+ * A generic data service for handling CRUD operations with a RESTful API.
+ * @typeparam T - The type of data the service handles.
+ */
 export class DataService<T extends any> {
-    constructor(protected url: string, protected http: HttpClient) { }
+  /**
+   * The base URL of the API.
+   */
+  get url() { return this.URL };
 
-    getAll(params?: HttpParams): Observable<any> {
-        return this.http
-            .get<T[]>(this.url, { params: params })
-            .pipe(
-                map((response: any) => {
-                    if (response.items)
-                        return response.items;
-                    return response;
-                }),
-                catchError(this.handleError)
-            );
-    }
+  /**
+   * Creates an instance of the DataService.
+   * @param URL - The base URL of the API.
+   * @param http - The HttpClient for making HTTP requests.
+   */
+  constructor(protected URL: string, protected http: HttpClient) { }
 
-    getById(id: number): Observable<T> {
-        const url = this.url + '/' + id;
-        console.log(url);
-        const result = this.http
-            .get<T>(url)
-            .pipe(catchError(this.handleError));
-        return result;
-    }
+  /**
+   * Retrieves a list of resources based on optional query parameters.
+   * @param params - Optional query parameters.
+   * @returns An observable of the list of resources.
+   */
+  getAll(params?: HttpParams): Observable<any> {
+    return this.http
+      .get<T[]>(this.URL, { params: params })
+      .pipe(
+        map((response: any) => {
+          if (response.items)
+            return response.items;
+          return response;
+        }),
+        catchError(this.handleError)
+      );
+  }
 
-    create(resource: any): Observable<T> {
-        return this.http
-            .post<T>(this.url, resource)
-            .pipe(catchError(this.handleError));
-    }
+  /**
+   * Retrieves a single resource by its ID.
+   * @param id - The ID of the resource to retrieve.
+   * @returns An observable of the resource.
+   */
+  getById(id: number): Observable<T> {
+    const url = `${this.URL}/${id}`;
+    return this.http
+      .get<T>(url)
+      .pipe(catchError(this.handleError));
+  }
 
-    update(resource: any, id: number): Observable<T> {
-        return this.http
-            .put<T>(this.url + '/' + id, resource)
-            .pipe(catchError(this.handleError));
+  /**
+   * Creates a new resource.
+   * @param resource - The resource data to create.
+   * @returns An observable of the created resource.
+   */
+  create(resource: any): Observable<T> {
+    return this.http
+      .post<T>(this.URL, resource)
+      .pipe(catchError(this.handleError));
+  }
 
+  /**
+   * Updates an existing resource by its ID.
+   * @param resource - The updated resource data.
+   * @param id - The ID of the resource to update.
+   * @returns An observable of the updated resource.
+   */
+  update(resource: any, id: number): Observable<T> {
+    const url = `${this.URL}/${id}`;
+    return this.http
+      .put<T>(url, resource)
+      .pipe(catchError(this.handleError));
+  }
 
-    }
+  /**
+   * Deletes a resource by its ID.
+   * @param id - The ID of the resource to delete.
+   * @returns An observable of the deleted resource.
+   */
+  delete(id: number): Observable<T> {
+    const url = `${this.URL}/${id}`;
+    return this.http
+      .delete<T>(url)
+      .pipe(catchError(this.handleError));
+  }
 
-    delete(id: number): Observable<T> {
-        // return throwError(() => { return new AppError() });
-        return this.http.delete<T>(this.url + '/' + id)
-            .pipe(catchError(this.handleError));
+  /**
+   * Handles HTTP errors and maps them to custom error types.
+   * @param error - The HTTP error response.
+   * @returns An observable of a custom error type.
+   */
+  private handleError(error: HttpErrorResponse) {
+    console.error('error.error is ', error.message);
 
-    }
+    return throwError(() => {
+      if (error.status == 400) {
+        return new AppBadInputError();
+      }
+      if (error.status == 404) {
+        return new AppNotFoundError();
+      } else {
+        return new AppError(error);
+      }
+    });
+  }
 
-    private handleError(error: HttpErrorResponse) {
-        console.error('error.error is ', error.message);
+  /**
+   * Creates HTTP query parameters based on the provided filter.
+   * @param filter - Filter criteria for querying resources (e.g., page and limit).
+   * @returns HTTP query parameters.
+   */
+  getAllFields(filter?: BaseFilter) {
+    let params = new HttpParams();
+    params = params.append('page', filter?.page?.toString() ?? '1');
+    params = params.append('limit', filter?.limit?.toString() ?? '30');
 
-        return throwError(() => {
-            if (error.status == 400) {
-                return new AppBadInputError();
-            }
-            if (error.status == 404) {
-                return new AppNotFoundError();
-            }
-            else {
-                return new AppError(error);
-            }
-        });
-    }
+    filter?.params?.forEach(obj => {
+      Object.keys(obj).forEach(key => {
+        params = params.append(key, obj[key]);
+      });
+    });
 
-    getAllFields(filter?: BaseFilter) {
-        let params = new HttpParams();
-        params = params.append('page', filter?.page ?? 0);
-        params = params.append('limit', filter?.limit ?? 20);
-
-        filter?.params?.forEach(obj => {
-            Object.keys(obj).forEach(key => {
-                params = params.append(key, obj[key]);
-            });
-        });
-
-        return params;
-    }
-
+    return params;
+  }
 }

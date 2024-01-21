@@ -9,17 +9,28 @@ import { ReciterFilter } from '../../models/filters/reciter.filter';
 @Injectable({
   providedIn: 'root'
 })
-export class RecitersService extends DataService<ReciterModel>{
+export class RecitersService extends DataService<ReciterModel> {
 
   constructor(httpClient: HttpClient) {
+    // Define the API URL for reciters.
     const url = `${environment.apiUrl}/reciter`;
+    
+    // Call the constructor of the parent class (DataService) with the API URL and HttpClient.
     super(url, httpClient);
   }
 
+  /**
+   * Retrieves a list of reciters based on the provided filter.
+   * @param filter - Filter criteria for querying reciters (e.g., page and limit).
+   * @returns An observable of the list of reciters.
+   */
   getRecitersList(filter: ReciterFilter) {
-    const params = new HttpParams();
-    params.append('page', filter?.page ?? 0);
-    params.append('limit', filter?.limit ?? 20);
+    // Create HTTP query parameters based on the provided filter.
+    let params = new HttpParams();
+    params = params.set('page', filter?.page?.toString() ?? '0');
+    params = params.set('limit', filter?.limit?.toString() ?? '20');
+    
+    // Make an HTTP GET request to retrieve the list of reciters using the parent class's getAll method.
     return this.getAll(params);
   }
 }

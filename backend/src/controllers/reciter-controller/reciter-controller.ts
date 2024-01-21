@@ -65,7 +65,7 @@ export class ReciterController implements Controller {
     const reciter = await recitersRepository.createReciter(reqBody, filesResult);
 
     res.send(ResponseModel.toResult(new ReciterFullRes(reciter)));
-    next();
+    // next();
   }
 
   private readonly getReciterListPublic: RequestHandler = async (req, res, next) => {
@@ -79,7 +79,7 @@ export class ReciterController implements Controller {
       message: "",
       items: responseList,
     }));
-    next();
+    // next();
   };
 
 
@@ -97,7 +97,7 @@ export class ReciterController implements Controller {
       throw new HttpResponseError(400, "BAD_REQUEST", "Please, reciter with this id not found");
     
       res.send(ResponseModel.toResult(new ReciterFullRes(reciter)));
-    next();
+    // next();
 
   };
 

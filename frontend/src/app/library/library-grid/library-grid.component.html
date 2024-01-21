@@ -38,8 +38,13 @@
             </mat-card-header>
 
         </mat-card>
+  
     </div>
 
+    <div class="overlay" *ngIf="selectedFile">
+        <file-details [file]="selectedFile" (close)="closeDetails()"></file-details>
+    </div>
+    
     <div class="" *ngIf="(loading$ | async)">
         <mat-card-title> No items existed yet try adding one now</mat-card-title>
     </div>

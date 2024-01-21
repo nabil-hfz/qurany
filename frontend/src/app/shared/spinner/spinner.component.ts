@@ -81,28 +81,22 @@ export class SpinnerComponent implements OnDestroy {
     private router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
-    this.router.events.subscribe(
-      (listener : any) => {
-       const event = listener.routerEvent
-       console.log('listener is ',listener);
-       console.log('event is ',event, event instanceof NavigationEnd);
-       console.log('1- isSpinnerVisible is ',this.isSpinnerVisible);
-       if (event instanceof NavigationStart) {
-          this.isSpinnerVisible = true;
-        } else if (
-          event instanceof NavigationEnd ||
-          event instanceof NavigationCancel ||
-          event instanceof NavigationError
-        ) {
-          this.isSpinnerVisible = false;
-        }
-        console.log('2- isSpinnerVisible is ',this.isSpinnerVisible);
-
+    // Subscribe to router events to show/hide the spinner during navigation.
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.isSpinnerVisible = true; // Show the spinner when navigation starts.
+      } else if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        this.isSpinnerVisible = false; // Hide the spinner when navigation ends or encounters an error/cancellation.
       }
-    );
+    });
   }
 
   ngOnDestroy(): void {
+    // Ensure that the spinner is hidden when the component is destroyed.
     this.isSpinnerVisible = false;
   }
 }
