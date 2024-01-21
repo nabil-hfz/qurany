@@ -1,17 +1,21 @@
-<div *ngIf="fileUrl">
-    <!-- PDF Viewer -->
-    <ng-container *ngIf="isPDF()">
-      <iframe [src]="fileUrl | safeUrl" width="100%" height="600px"></iframe>
-    </ng-container>
-  
+<div *ngIf="file" style="align-items: center;">
+    <div class="pdf-toolbar ">
+        <!-- Add buttons for navigation and indicators for current page/view -->
+        <button (click)=" onClose()">Cancel</button>
+        <!-- <span>Page {{ currentPage }} of {{ totalPages }}</span> -->
+        <!-- <button (click)="onNextPage()" [disabled]="currentPage >= totalPages">Next</button> -->
+        <!-- Add other controls as needed -->
+    </div>
+
+
+    <ngx-doc-viewer [url]="file.file" viewer="url" disableContent="popout" viewer="google"
+        
+    style="width:100vw;height:94vh; ">
+    </ngx-doc-viewer>
+
+
     <!-- Placeholder for other file types -->
-    <!-- For doc or docx, you can use Google Docs Viewer or similar -->
     <ng-container *ngIf="!isPDF()">
-      <p>Preview not available for this file type.</p>
+        <p>Preview not available for this file type.</p>
     </ng-container>
-  </div>
-  
-  <!-- You can add a way to input the URL for demonstration -->
-  <input type="text" [(ngModel)]="fileUrl" placeholder="Enter file URL" />
-  <button (click)="loadFile(fileUrl)">Load File</button>
-  
+</div>

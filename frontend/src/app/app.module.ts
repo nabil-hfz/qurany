@@ -50,6 +50,7 @@ import { LibraryGridComponent } from './library/library-grid/library-grid.compon
 import { LibraryService } from './services/library/library.service';
 import { FileDetailsComponent } from './library/file-details/file-details.component';
 import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -121,6 +122,7 @@ import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
     //
     NgxAudioPlayerModule,
     AppRoutingModule,
+    NgxDocViewerModule,
 
 
   ],
