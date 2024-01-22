@@ -12,6 +12,7 @@ class AppEndpoints {
   // Khatma
   static const String _khatma = "khatma";
   static const String getKhatmat = '$_khatma/';
+
   static String getKhatmaDetails(String id) => '$_khatma/$id';
 
   // Reciter
@@ -24,6 +25,14 @@ class AppEndpoints {
   static const String getRecitations = _recitation;
 
   static String getRecitationDetails(String id) => '$_recitation/$id';
+
+  // Library file entry
+  static const String _library = "library";
+  static const String getLibraryFileEntries = _library;
+
+  static String getFileEntryDetails(String id) => '$_library/$id';
+  static String updateFileEntryDetails(String id) => '$_library/$id';
+  static String deleteFileEntryDetails(String id) => '$_library/$id';
 }
 
 abstract class AppQueryParameters {
