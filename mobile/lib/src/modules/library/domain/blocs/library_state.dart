@@ -1,7 +1,7 @@
 part of 'library_cubit.dart';
 
-class FileEntryState {
-  const FileEntryState({
+class LibraryState {
+  const LibraryState({
     required this.getLibraryFileEntries,
     required this.getFileEntry,
     required this.createFileEntry,
@@ -15,7 +15,7 @@ class FileEntryState {
   final BaseState updateFileEntry;
   final BaseState deleteFileEntry;
 
-  factory FileEntryState.initialState() => const FileEntryState(
+  factory LibraryState.initialState() => const LibraryState(
         getLibraryFileEntries: BaseInitState(),
         getFileEntry: BaseInitState(),
         createFileEntry: BaseInitState(),
@@ -23,14 +23,14 @@ class FileEntryState {
         deleteFileEntry: BaseInitState(),
       );
 
-  FileEntryState copyWith({
+  LibraryState copyWith({
     BaseState? getLibraryFileEntries,
     BaseState? getFileEntry,
     BaseState? createFileEntry,
     BaseState? updateFileEntry,
     BaseState? deleteFileEntry,
   }) {
-    return FileEntryState(
+    return LibraryState(
       getLibraryFileEntries:
           getLibraryFileEntries ?? this.getLibraryFileEntries,
       getFileEntry: getFileEntry ?? this.getFileEntry,
@@ -42,7 +42,7 @@ class FileEntryState {
 
   @override
   String toString() {
-    return '$FileEntryState('
+    return '$LibraryState('
         'getLibraryFileEntries: $getLibraryFileEntries, '
         'getFileEntry: $getFileEntry'
         'createFileEntry: $createFileEntry'

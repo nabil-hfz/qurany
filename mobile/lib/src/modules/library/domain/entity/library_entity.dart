@@ -14,20 +14,20 @@ class LibraryListEntity extends BaseEntity {
 
 class FileEntryEntity extends BaseEntity {
   final int id;
-  final String? name;
+  final String name;
   final LibraryLanguageEntity? language;
-  final String? file;
-  final String? thumbnail;
+  final String file;
+  final String thumbnail;
   final int totalViews;
   final int totalDownloads;
   final List<LibraryCategoryEntity>? categories;
 
   const FileEntryEntity({
     required this.id,
-    this.name,
+    required this.name,
     this.language,
-    this.file,
-    this.thumbnail,
+    required this.file,
+    required this.thumbnail,
     required this.totalViews,
     required this.totalDownloads,
     this.categories,
@@ -45,7 +45,6 @@ class FileEntryEntity extends BaseEntity {
         categories,
       ];
 
-  @override
   FileEntryEntity copyWith({
     int? id,
     String? name,

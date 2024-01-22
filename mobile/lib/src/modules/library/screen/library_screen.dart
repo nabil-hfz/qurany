@@ -1,16 +1,36 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:kawtharuna/src/core/constants/app_text_style.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
+import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 import 'package:kawtharuna/src/core/utils/utl_device.dart';
-import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
-import 'package:kawtharuna/src/core/widgets/icons/app_menu_icon_widget.dart';
-import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
+import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
+import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';
+import 'package:kawtharuna/src/modules/library/domain/blocs/library_cubit.dart';
 import 'package:provider/provider.dart';
 
-class LibraryScreen extends StatelessWidget {
+class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
+
+  @override
+  State<LibraryScreen> createState() => _LibraryScreenState();
+}
+
+class _LibraryScreenState extends State<LibraryScreen> {
+  final _bloc = findDep<LibraryCubit>();
+  final _cancelToken = CancelToken();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.getLibraryFileEntries(
+      cancelToken: _cancelToken,
+      isRefresh: true,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +50,50 @@ class LibraryScreen extends StatelessWidget {
         // ),
       ),
       body: SizedBox(
-        height: DeviceUtils.getScaledHeight(context, 1),
-        width: DeviceUtils.getScaledWidth(context, 1),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text(
-              'No files yet, will be added soon.',
-              style: appTextStyle.medium18.copyWith(
-                color: themeStore.appColors.textColor,
-              ),
-            )
-          ],
-        ),
-      ),
+          height: DeviceUtils.getScaledHeight(context, 1),
+          width: DeviceUtils.getScaledWidth(context, 1),
+          child: BlocBuilder<LibraryCubit, LibraryState>(
+            bloc: _bloc,
+            builder: (context, state) {
+              if (state.getLibraryFileEntries is LibraryFileEntriesSuccess) {
+                final fileEntries =
+                    (state.getLibraryFileEntries as LibraryFileEntriesSuccess)
+                        .fileEntries;
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(fileEntries[index].name),
+                    );
+                  },
+                );
+              }
+              if (state.getLibraryFileEntries is BaseFailState) {
+                final error = state.getLibraryFileEntries as BaseFailState;
+                return AppErrorWidget(errorState: error);
+              }
+              return AppLoader();
+            },
+          )
+
+          // Column(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   mainAxisSize: MainAxisSize.max,
+          //   children: [
+          //     Text(
+          //       'No files yet, will be added soon.',
+          //       style: appTextStyle.medium18.copyWith(
+          //         color: themeStore.appColors.textColor,
+          //       ),
+          //     )
+          //   ],
+          // ),
+          ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _cancelToken.cancel();
   }
 }

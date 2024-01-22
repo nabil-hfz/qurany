@@ -12,12 +12,12 @@ import 'package:kawtharuna/src/modules/library/domain/repo/library_repository_im
 part 'library_state.dart';
 
 @Singleton()
-class FileEntryCubit extends BaseCubit<FileEntryState> {
+class LibraryCubit extends BaseCubit<LibraryState> {
   late final ImplLibraryRepository _repository;
 
   final List<FileEntryEntity> _fileEntries = [];
 
-  FileEntryCubit(this._repository) : super(FileEntryState.initialState()) {
+  LibraryCubit(this._repository) : super(LibraryState.initialState()) {
     // _LibraryFileEntriesFilter = FileEntryFilterModel();
     // _categorizedLibraryFileEntriesFilter = FileEntryFilterModel();
   }
@@ -85,7 +85,7 @@ class FileEntryCubit extends BaseCubit<FileEntryState> {
   }
 
   @override
-  void emit(FileEntryState state) {
+  void emit(LibraryState state) {
     super.emit(state);
     // log('$FileEntryCubit emits a $state state');
   }

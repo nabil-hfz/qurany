@@ -129,8 +129,8 @@ Future<_i1.GetIt> init(
       _i25.RecitationCubit(await gh.getAsync<_i22.ImplRecitationRepository>()));
   gh.singletonAsync<_i26.ReciterCubit>(() async =>
       _i26.ReciterCubit(await gh.getAsync<_i23.ImplReciterRepository>()));
-  gh.singletonAsync<_i27.FileEntryCubit>(() async =>
-      _i27.FileEntryCubit(await gh.getAsync<_i21.ImplLibraryRepository>()));
+  gh.singletonAsync<_i27.LibraryCubit>(() async =>
+      _i27.LibraryCubit(await gh.getAsync<_i21.ImplLibraryRepository>()));
   return getIt;
 }
 
