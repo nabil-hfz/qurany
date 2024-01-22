@@ -6,8 +6,8 @@ import 'package:kawtharuna/src/modules/library/data/models/library_model.dart';
 import 'library_data_source_i.dart';
 
 @Singleton()
-class KhatmaLocalDataSource implements IFileEntryDataSource {
-  const KhatmaLocalDataSource();
+class LibraryLocalDataSource implements IFileEntryDataSource {
+  const LibraryLocalDataSource();
 
   @override
   Future<Result<LibraryListModel>> getLibraryFileEntries({

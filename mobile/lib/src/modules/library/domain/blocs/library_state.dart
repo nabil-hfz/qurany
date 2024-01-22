@@ -1,77 +1,78 @@
 part of 'library_cubit.dart';
 
-class KhatmaState {
-  const KhatmaState({
-    required this.getKhatmat,
-    required this.getKhatma,
-    required this.createKhatma,
-    required this.updateKhatma,
-    required this.deleteKhatma,
+class FileEntryState {
+  const FileEntryState({
+    required this.getLibraryFileEntries,
+    required this.getFileEntry,
+    required this.createFileEntry,
+    required this.updateFileEntry,
+    required this.deleteFileEntry,
   });
 
-  final BaseState getKhatmat;
-  final BaseState getKhatma;
-  final BaseState createKhatma;
-  final BaseState updateKhatma;
-  final BaseState deleteKhatma;
+  final BaseState getLibraryFileEntries;
+  final BaseState getFileEntry;
+  final BaseState createFileEntry;
+  final BaseState updateFileEntry;
+  final BaseState deleteFileEntry;
 
-  factory KhatmaState.initialState() => const KhatmaState(
-        getKhatmat: BaseInitState(),
-        getKhatma: BaseInitState(),
-        createKhatma: BaseInitState(),
-        updateKhatma: BaseInitState(),
-        deleteKhatma: BaseInitState(),
+  factory FileEntryState.initialState() => const FileEntryState(
+        getLibraryFileEntries: BaseInitState(),
+        getFileEntry: BaseInitState(),
+        createFileEntry: BaseInitState(),
+        updateFileEntry: BaseInitState(),
+        deleteFileEntry: BaseInitState(),
       );
 
-  KhatmaState copyWith({
-    BaseState? getKhatmat,
-    BaseState? getKhatma,
-    BaseState? createKhatma,
-    BaseState? updateKhatma,
-    BaseState? deleteKhatma,
+  FileEntryState copyWith({
+    BaseState? getLibraryFileEntries,
+    BaseState? getFileEntry,
+    BaseState? createFileEntry,
+    BaseState? updateFileEntry,
+    BaseState? deleteFileEntry,
   }) {
-    return KhatmaState(
-      getKhatmat: getKhatmat ?? this.getKhatmat,
-      getKhatma: getKhatma ?? this.getKhatma,
-      createKhatma: createKhatma ?? this.createKhatma,
-      updateKhatma: updateKhatma ?? this.updateKhatma,
-      deleteKhatma: deleteKhatma ?? this.deleteKhatma,
+    return FileEntryState(
+      getLibraryFileEntries:
+          getLibraryFileEntries ?? this.getLibraryFileEntries,
+      getFileEntry: getFileEntry ?? this.getFileEntry,
+      createFileEntry: createFileEntry ?? this.createFileEntry,
+      updateFileEntry: updateFileEntry ?? this.updateFileEntry,
+      deleteFileEntry: deleteFileEntry ?? this.deleteFileEntry,
     );
   }
 
   @override
   String toString() {
-    return '$KhatmaState('
-        'getKhatmat: $getKhatmat, '
-        'getKhatma: $getKhatma'
-        'createKhatma: $createKhatma'
-        'createKhatma: $createKhatma'
-        'updateKhatma: $updateKhatma'
-        'deleteKhatma: $deleteKhatma'
+    return '$FileEntryState('
+        'getLibraryFileEntries: $getLibraryFileEntries, '
+        'getFileEntry: $getFileEntry'
+        'createFileEntry: $createFileEntry'
+        'createFileEntry: $createFileEntry'
+        'updateFileEntry: $updateFileEntry'
+        'deleteFileEntry: $deleteFileEntry'
         ')';
   }
 }
 
-class KhatmatSuccess extends BaseSuccessState {
-  final List<KhatmaEntity> khatmat;
+class LibraryFileEntriesSuccess extends BaseSuccessState {
+  final List<FileEntryEntity> fileEntries;
 
-  const KhatmatSuccess({required this.khatmat});
-
-  @override
-  List<Object> get props => [khatmat];
+  const LibraryFileEntriesSuccess({required this.fileEntries});
 
   @override
-  String toString() => '$KhatmatSuccess(khatmat: $khatmat)';
+  List<Object> get props => [fileEntries];
+
+  @override
+  String toString() => '$LibraryFileEntriesSuccess(fileEntries: $fileEntries)';
 }
 
-class KhatmaSuccess extends BaseSuccessState {
-  final KhatmaEntity khatma;
+class FileEntrySuccess extends BaseSuccessState {
+  final FileEntryEntity khatma;
 
-  const KhatmaSuccess({required this.khatma});
+  const FileEntrySuccess({required this.khatma});
 
   @override
   List<Object> get props => [khatma];
 
   @override
-  String toString() => '$KhatmaSuccess(khatma: $khatma)';
+  String toString() => '$FileEntrySuccess(khatma: $khatma)';
 }

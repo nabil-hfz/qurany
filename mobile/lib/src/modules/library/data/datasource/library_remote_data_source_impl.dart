@@ -8,12 +8,12 @@ import 'package:kawtharuna/src/modules/library/data/models/library_model.dart';
 import 'library_data_source_i.dart';
 
 @Singleton()
-class FileEntryRemoteDataSource implements IFileEntryDataSource {
+class LibraryRemoteDataSource implements IFileEntryDataSource {
   // dio instance
   final DioClient _dioClient;
 
   // injecting dio instance
-  FileEntryRemoteDataSource(this._dioClient) {
+  LibraryRemoteDataSource(this._dioClient) {
     _dioClient.toString();
   }
 
