@@ -55,8 +55,10 @@ class FileEntryItemListWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalViewAndDownloads(AppThemeManager appTheme,
-      FileEntryEntity file,) {
+  Widget _buildTotalViewAndDownloads(
+    AppThemeManager appTheme,
+    FileEntryEntity file,
+  ) {
     return Row(
       children: [
         _buildIconWithText(
@@ -86,8 +88,8 @@ class FileEntryItemListWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildIconWithText(AppThemeManager appTheme, IconData icon,
-      String title) {
+  Widget _buildIconWithText(
+      AppThemeManager appTheme, IconData icon, String title) {
     return Row(
       children: [
         Icon(
@@ -103,6 +105,6 @@ class FileEntryItemListWidget extends StatelessWidget {
           ),
         ),
       ],
-    )
+    );
   }
 }
