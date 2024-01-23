@@ -23,64 +23,86 @@ class FileEntryItemListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: AppImageWidget(
-            path: file.thumbnail,
-            boxFit: BoxFit.cover,
+        _buildThumbnail(file),
+        _buildFileName(appTheme, file),
+        _buildTotalViewAndDownloads(appTheme, file),
+      ],
+    );
+  }
+
+  Widget _buildThumbnail(FileEntryEntity file) {
+    return Expanded(
+      child: AppImageWidget(
+        path: file.thumbnail,
+        boxFit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Widget _buildFileName(AppThemeManager appTheme, FileEntryEntity file) {
+    return Row(
+      children: [
+        HorizontalTextPadding.with2(),
+        Text(
+          file.name,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: appTextStyle.semiBold16.copyWith(
+            color: appTheme.appColors.textColor,
           ),
-        ),
-        Row(
-          children: [
-            HorizontalTextPadding.with2(),
-            Text(
-              file.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: appTextStyle.semiBold16.copyWith(
-                color: appTheme.appColors.textColor,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            //
-            Icon(
-              Icons.visibility_rounded,
-              color: appTheme.appColors.iconGreyColor,
-              size: AppIconSize.size_20,
-            ),
-            HorizontalTextPadding.with2(),
-            Text(
-              '${file.totalViews}',
-              style: appTextStyle.medium14.copyWith(
-                color: appTheme.appColors.textGrey2Color,
-              ),
-            ),
-            HorizontalTextPadding.with8(),
-            Container(
-              decoration: BoxDecoration(
-                color: appTheme.appColors.textGrey2Color,
-              ),
-              width: 3,
-              height: 3,
-            ),
-            HorizontalTextPadding.with8(),
-            Icon(
-              Icons.file_download_sharp,
-              color: appTheme.appColors.iconGreyColor,
-              size: AppIconSize.size_20,
-            ),
-            HorizontalTextPadding.with2(),
-            Text(
-              '${file.totalDownloads}',
-              style: appTextStyle.medium14.copyWith(
-                color: appTheme.appColors.textGrey2Color,
-              ),
-            ),
-          ],
         ),
       ],
     );
+  }
+
+  Widget _buildTotalViewAndDownloads(AppThemeManager appTheme,
+      FileEntryEntity file,) {
+    return Row(
+      children: [
+        _buildIconWithText(
+            appTheme, Icons.visibility_rounded, file.totalViews.toString()),
+        HorizontalTextPadding.with8(),
+        Container(
+          decoration: BoxDecoration(
+            color: appTheme.appColors.textGrey2Color,
+          ),
+          width: 3,
+          height: 3,
+        ),
+        HorizontalTextPadding.with8(),
+        Icon(
+          Icons.file_download_sharp,
+          color: appTheme.appColors.iconGreyColor,
+          size: AppIconSize.size_20,
+        ),
+        HorizontalTextPadding.with2(),
+        Text(
+          '${file.totalDownloads}',
+          style: appTextStyle.medium14.copyWith(
+            color: appTheme.appColors.textGrey2Color,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIconWithText(AppThemeManager appTheme, IconData icon,
+      String title) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: appTheme.appColors.iconGreyColor,
+          size: AppIconSize.size_20,
+        ),
+        HorizontalTextPadding.with2(),
+        Text(
+          title,
+          style: appTextStyle.medium14.copyWith(
+            color: appTheme.appColors.textGrey2Color,
+          ),
+        ),
+      ],
+    )
   }
 }
