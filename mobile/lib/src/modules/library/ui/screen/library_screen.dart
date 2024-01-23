@@ -38,14 +38,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(
+    AppThemeManager appTheme = Provider.of<AppThemeManager>(
       context,
       listen: true,
     );
     final height = DeviceUtils.getScaledHeight(context, 1);
     final width = DeviceUtils.getScaledWidth(context, 1);
     return Scaffold(
-      backgroundColor: themeStore.appColors.scaffoldBgColor,
+      backgroundColor: appTheme.appColors.scaffoldBgColor,
       appBar: CustomAppBar(
         automaticallyImplyLeading: false,
         title: translate.islamic_library,
@@ -83,7 +83,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 //               child: Text(
                 //                 file.name,
                 //                 style: appTextStyle.semiBold16.copyWith(
-                //                   color: themeStore.appColors.textColor,
+                //                   color: appTheme.appColors.textColor,
                 //                 ),
                 //               ),
                 //             ),
@@ -121,7 +121,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: appTextStyle.semiBold16.copyWith(
-                                color: themeStore.appColors.textColor,
+                                color: appTheme.appColors.textColor,
                               ),
                             ),
                           ],
@@ -131,20 +131,20 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             //
                             Icon(
                               Icons.visibility_rounded,
-                              color: themeStore.appColors.iconGreyColor,
+                              color: appTheme.appColors.iconGreyColor,
                               size: AppIconSize.size_20,
                             ),
                             HorizontalTextPadding.with2(),
                             Text(
                               '${file.totalViews}',
                               style: appTextStyle.medium14.copyWith(
-                                color: themeStore.appColors.textGrey2Color,
+                                color: appTheme.appColors.textGrey2Color,
                               ),
                             ),
                             HorizontalTextPadding.with8(),
                             Container(
                               decoration: BoxDecoration(
-                                color: themeStore.appColors.textGrey2Color,
+                                color: appTheme.appColors.textGrey2Color,
                               ),
                               width: 3,
                               height: 3,
@@ -152,14 +152,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             HorizontalTextPadding.with8(),
                             Icon(
                               Icons.file_download_sharp,
-                              color: themeStore.appColors.iconGreyColor,
+                              color: appTheme.appColors.iconGreyColor,
                               size: AppIconSize.size_20,
                             ),
                             HorizontalTextPadding.with2(),
                             Text(
                               '${file.totalDownloads}',
                               style: appTextStyle.medium14.copyWith(
-                                color: themeStore.appColors.textGrey2Color,
+                                color: appTheme.appColors.textGrey2Color,
                               ),
                             ),
                           ],
@@ -184,7 +184,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           //     Text(
           //       'No files yet, will be added soon.',
           //       style: appTextStyle.medium18.copyWith(
-          //         color: themeStore.appColors.textColor,
+          //         color: appTheme.appColors.textColor,
           //       ),
           //     )
           //   ],
