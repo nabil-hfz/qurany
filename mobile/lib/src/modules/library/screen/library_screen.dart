@@ -96,7 +96,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 8.0,
-                    mainAxisExtent: height * 0.46,
+                    mainAxisExtent: 350,
                     // childAspectRatio: 0.5,
                   ),
                   padding: EdgeInsets.all(8.0),
@@ -109,11 +109,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: Center(
-                              child: AppImageWidget(
-                                path: file.thumbnail,
-                                boxFit: BoxFit.cover,
-                              ),
+                            child: AppImageWidget(
+                              path: file.thumbnail,
+                              boxFit: BoxFit.cover,
                             ),
                           ),
                           Row(
@@ -125,6 +123,22 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 style: appTextStyle.semiBold16.copyWith(
                                   color: themeStore.appColors.textColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              //
+                              Icon(
+                                Icons.visibility_rounded,
+                                color: themeStore.appColors.iconGreyColor,
+                              ),
+                              HorizontalTextPadding.with2(),
+                              Text(
+                                '${file.totalViews}',
+                                style: appTextStyle.semiBold16.copyWith(
+                                  color: themeStore.appColors.textGrey2Color,
                                 ),
                               ),
                             ],
