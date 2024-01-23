@@ -8,6 +8,7 @@ import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 import 'package:kawtharuna/src/core/utils/utl_device.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
+import 'package:kawtharuna/src/core/widgets/common/horizontal_padding.dart';
 import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';
@@ -40,6 +41,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
       context,
       listen: true,
     );
+    final height = DeviceUtils.getScaledHeight(context, 1);
+    final width = DeviceUtils.getScaledWidth(context, 1);
     return Scaffold(
       backgroundColor: themeStore.appColors.scaffoldBgColor,
       appBar: CustomAppBar(
@@ -52,8 +55,8 @@ class _LibraryScreenState extends State<LibraryScreen> {
         // ),
       ),
       body: SizedBox(
-          height: DeviceUtils.getScaledHeight(context, 1),
-          width: DeviceUtils.getScaledWidth(context, 1),
+          height: height,
+          width: width,
           child: BlocBuilder<LibraryCubit, LibraryState>(
             bloc: _bloc,
             builder: (context, state) {
@@ -61,33 +64,73 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 final fileEntries =
                     (state.getLibraryFileEntries as LibraryFileEntriesSuccess)
                         .fileEntries;
+                // return ListView.builder(
+                //     itemCount: fileEntries.length,
+                //     itemBuilder: (context, index) {
+                //       final file = fileEntries[index];
+                //       return Column(
+                //         mainAxisSize: MainAxisSize.max,
+                //         children: [
+                //           AppImageWidget(
+                //             path: file.thumbnail,
+                //             boxFit: BoxFit.fill,
+                //             height: 0.5 * height,
+                //           ),
+                //           Container(
+                //             color: Colors.grey.shade200,
+                //             child: Center(
+                //               child: Text(
+                //                 file.name,
+                //                 style: appTextStyle.semiBold16.copyWith(
+                //                   color: themeStore.appColors.textColor,
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //       );
+                //     });
+
                 return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 8.0,
+                    mainAxisExtent: height * 0.46,
+                    // childAspectRatio: 0.5,
                   ),
                   padding: EdgeInsets.all(8.0),
                   itemCount: fileEntries.length,
                   itemBuilder: (context, index) {
                     final file = fileEntries[index];
-                    return Column(
-                      children: [
-                        Expanded(
-                          child: AppImageWidget(path: file.thumbnail),
-                        ),
-                        Container(
-                          color: Colors.grey.shade200,
-                          child: Center(
-                            child: Text(
-                              file.name,
-                              style: appTextStyle.semiBold16.copyWith(
-                                color: themeStore.appColors.textColor,
+                    return Container(
+                      color: Colors.red,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: AppImageWidget(
+                                path: file.thumbnail,
+                                boxFit: BoxFit.cover,
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              HorizontalTextPadding.with2(),
+                              Text(
+                                file.name,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: appTextStyle.semiBold16.copyWith(
+                                  color: themeStore.appColors.textColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     );
                   },
                 );
