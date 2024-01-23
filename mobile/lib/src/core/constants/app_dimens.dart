@@ -13,6 +13,9 @@ class AppDimens {
   static const double space2 = 2;
 
   ///
+  static const double space3 = 3;
+
+  ///
   static const double space4 = 4;
 
   ///

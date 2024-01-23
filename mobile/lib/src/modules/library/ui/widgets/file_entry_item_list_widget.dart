@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
+import 'package:kawtharuna/src/core/constants/app_radius.dart';
 import 'package:kawtharuna/src/core/constants/app_text_style.dart';
-import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
+import 'package:kawtharuna/src/core/di/di.dart';
+import 'package:kawtharuna/src/core/managers/managers.dart';
+import 'package:kawtharuna/src/core/widgets/common/app_inkwell_widget.dart';
 import 'package:kawtharuna/src/core/widgets/common/horizontal_padding.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:kawtharuna/src/modules/library/domain/entity/library_entity.dart';
@@ -20,21 +24,34 @@ class FileEntryItemListWidget extends StatelessWidget {
     );
     // final height = DeviceUtils.getScaledHeight(context, 1);
     // final width = DeviceUtils.getScaledWidth(context, 1);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildThumbnail(file),
-        _buildFileName(appTheme, file),
-        _buildTotalViewAndDownloads(appTheme, file),
-      ],
+    return AppInkWellWidget(
+      onTap: () {
+        navigator.pushNamed(
+          Routes.pdfViewScreen,
+          arguments: BaseNavigationArg(
+            data: file,
+          ),
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildThumbnail(file),
+          _buildFileName(appTheme, file),
+          _buildTotalViewAndDownloads(appTheme, file),
+          _buildLanguageAndCategories(appTheme, file),
+        ],
+      ),
     );
   }
 
   Widget _buildThumbnail(FileEntryEntity file) {
-    return Expanded(
+    return Flexible(
       child: AppImageWidget(
         path: file.thumbnail,
         boxFit: BoxFit.cover,
+        // color: Colors.red,
       ),
     );
   }
@@ -103,6 +120,32 @@ class FileEntryItemListWidget extends StatelessWidget {
             color: appTheme.appColors.textGrey2Color,
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildLanguageAndCategories(
+    AppThemeManager appTheme,
+    FileEntryEntity file,
+  ) {
+    return Wrap(
+      children: [
+        if (file.language?.name != null)
+          Container(
+            padding: EdgeInsets.all(AppDimens.space3),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(AppRadius.radius10),
+              border: Border.all(
+                color: appTheme.appColors.textGrey2Color,
+              ),
+            ),
+            child: Text(
+              file.language!.name!,
+              style: appTextStyle.medium14.copyWith(
+                color: appTheme.appColors.textGrey2Color,
+              ),
+            ),
+          ),
       ],
     );
   }

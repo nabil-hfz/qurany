@@ -2,19 +2,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
-import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
-import 'package:kawtharuna/src/core/constants/app_text_style.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 import 'package:kawtharuna/src/core/utils/utl_device.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
-import 'package:kawtharuna/src/core/widgets/common/horizontal_padding.dart';
 import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
-import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';
 import 'package:kawtharuna/src/modules/library/domain/blocs/library_cubit.dart';
+import 'package:kawtharuna/src/modules/library/domain/entity/library_entity.dart';
+import 'package:kawtharuna/src/modules/library/ui/widgets/file_entry_item_list_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -97,75 +96,16 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     crossAxisCount: 2,
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 8.0,
-                    mainAxisExtent: 350,
+                    // mainAxisExtent: 380,
+                    childAspectRatio: 5 / 9,
+
                     // childAspectRatio: 0.5,
                   ),
                   padding: EdgeInsets.all(8.0),
                   itemCount: fileEntries.length,
                   itemBuilder: (context, index) {
                     final file = fileEntries[index];
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: AppImageWidget(
-                            path: file.thumbnail,
-                            boxFit: BoxFit.cover,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            HorizontalTextPadding.with2(),
-                            Text(
-                              file.name,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: appTextStyle.semiBold16.copyWith(
-                                color: appTheme.appColors.textColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            //
-                            Icon(
-                              Icons.visibility_rounded,
-                              color: appTheme.appColors.iconGreyColor,
-                              size: AppIconSize.size_20,
-                            ),
-                            HorizontalTextPadding.with2(),
-                            Text(
-                              '${file.totalViews}',
-                              style: appTextStyle.medium14.copyWith(
-                                color: appTheme.appColors.textGrey2Color,
-                              ),
-                            ),
-                            HorizontalTextPadding.with8(),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: appTheme.appColors.textGrey2Color,
-                              ),
-                              width: 3,
-                              height: 3,
-                            ),
-                            HorizontalTextPadding.with8(),
-                            Icon(
-                              Icons.file_download_sharp,
-                              color: appTheme.appColors.iconGreyColor,
-                              size: AppIconSize.size_20,
-                            ),
-                            HorizontalTextPadding.with2(),
-                            Text(
-                              '${file.totalDownloads}',
-                              style: appTextStyle.medium14.copyWith(
-                                color: appTheme.appColors.textGrey2Color,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
+                    return FileEntryItemListWidget(file: file);
                   },
                 );
               }
@@ -197,5 +137,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
   void dispose() {
     super.dispose();
     _cancelToken.cancel();
+  }
+}
+
+class PdfViewPage extends StatelessWidget {
+  const PdfViewPage({required this.args, super.key});
+
+  final FileEntryEntity args;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(title: args.name),
+      body: SfPdfViewer.network(args.file),
+    );
   }
 }
