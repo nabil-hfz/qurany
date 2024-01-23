@@ -62,7 +62,10 @@ class FileEntryItemListWidget extends StatelessWidget {
     return Row(
       children: [
         _buildIconWithText(
-            appTheme, Icons.visibility_rounded, file.totalViews.toString()),
+          appTheme,
+          Icons.visibility_rounded,
+          file.totalViews,
+        ),
         HorizontalTextPadding.with8(),
         Container(
           decoration: BoxDecoration(
@@ -72,34 +75,30 @@ class FileEntryItemListWidget extends StatelessWidget {
           height: 3,
         ),
         HorizontalTextPadding.with8(),
-        Icon(
+        _buildIconWithText(
+          appTheme,
           Icons.file_download_sharp,
-          color: appTheme.appColors.iconGreyColor,
-          size: AppIconSize.size_20,
-        ),
-        HorizontalTextPadding.with2(),
-        Text(
-          '${file.totalDownloads}',
-          style: appTextStyle.medium14.copyWith(
-            color: appTheme.appColors.textGrey2Color,
-          ),
+          file.totalDownloads,
         ),
       ],
     );
   }
 
   Widget _buildIconWithText(
-      AppThemeManager appTheme, IconData icon, String title) {
+    AppThemeManager appTheme,
+    IconData icon,
+    int title,
+  ) {
     return Row(
       children: [
         Icon(
           icon,
           color: appTheme.appColors.iconGreyColor,
-          size: AppIconSize.size_20,
+          size: AppIconSize.size_18,
         ),
         HorizontalTextPadding.with2(),
         Text(
-          title,
+          '$title',
           style: appTextStyle.medium14.copyWith(
             color: appTheme.appColors.textGrey2Color,
           ),
