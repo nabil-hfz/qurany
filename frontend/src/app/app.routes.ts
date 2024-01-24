@@ -12,13 +12,13 @@ const routes: Routes = [
     // Reciter Module
 
     { path: '', redirectTo: '/khatma', pathMatch: 'full' },
-    { path: 'khatma', component: KhatmatGridComponent },
 
     // { path: 'khatmat', component: KhatmatGridComponent },
     { path: 'reciters', component: RecitersGridComponent },
 
     // Khatma Module
     // { path: 'khatmat-grid/:reciterId/:reciterName', component: KhatmatGridComponent },
+    { path: 'khatma', component: KhatmatGridComponent },
     { path: 'khatma-details/:khatmaId/:khatmaName', component: KhatmaDetailsComponent },
 
     // Library Module
