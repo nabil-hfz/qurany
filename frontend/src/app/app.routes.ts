@@ -6,6 +6,7 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
     // Reciter Module
@@ -23,6 +24,7 @@ const routes: Routes = [
     // Library Module
     { path: 'library', component: LibraryGridComponent },
 
+    { path: 'privacy-policy', component: PrivacyPolicyComponent },
 
     { path: '**', component: NotFoundComponent },
 
