@@ -51,6 +51,7 @@ import { LibraryService } from './services/library/library.service';
 import { FileDetailsComponent } from './library/file-details/file-details.component';
 import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { FileFormComponent } from './library/file-form/file-form.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -83,6 +84,7 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
     PrivacyPolicyComponent,
     LibraryGridComponent,
     FileDetailsComponent,
+    FileFormComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,

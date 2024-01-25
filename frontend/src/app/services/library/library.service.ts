@@ -4,6 +4,9 @@ import { DataService } from '../data-service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { BaseFilter } from '../../models/filters/base.filter';
+import { Observable } from 'rxjs';
+import { LibraryLanguageModel } from '../../models/library-language.model';
+import { LibraryCategoryModel } from '../../models/library-category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +46,22 @@ export class LibraryService extends DataService<LibraryModel> {
   getFileDetails(id: number) {
     // Call the getById method of the parent DataService class to fetch details of a specific library file.
     return this.getById(id);
+  }
+
+  getLanguages(filter?: BaseFilter): Observable<LibraryLanguageModel[]> {
+    let params = this.getAllFields(filter);
+
+
+    return this.getAll(params);
+  }
+
+  getCategories(filter?: BaseFilter): Observable<LibraryCategoryModel[]> {
+    let params = this.getAllFields(filter);
+    
+    return this.getAll(params);
+  }
+
+  createFileEntry(fileEntryData: FormData): Observable<any> {
+    return this.create(fileEntryData)
   }
 }
