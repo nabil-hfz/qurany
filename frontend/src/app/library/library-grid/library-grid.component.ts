@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { LibraryModel } from '../../models/library.model';
 import { LibraryService } from '../../services/library/library.service';
+import { FileFormComponent } from '../file-form/file-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'library-grid',
@@ -11,9 +13,17 @@ import { LibraryService } from '../../services/library/library.service';
 export class LibraryGridComponent implements OnInit {
   loading$: Observable<boolean> = of(true);
   values$: Observable<LibraryModel[]> | undefined;
-  selectedFile: LibraryModel | null = null;  
+  selectedFile: LibraryModel | null = null;
 
-  constructor(private service: LibraryService) { }
+  constructor(private service: LibraryService, public dialog: MatDialog) { }
+
+  openAddFileDialog() {
+    // Example: Open a dialog
+    this.dialog.open(FileFormComponent, {
+      width: '1600px',
+      // other dialog options
+    });
+  }
 
   ngOnInit(): void {
     this.loading$ = of(true);
@@ -24,7 +34,7 @@ export class LibraryGridComponent implements OnInit {
   }
 
   onCardPressed(value: LibraryModel): void {
-    this.selectedFile = value; 
+    this.selectedFile = value;
   }
 
   closeDetails(): void {

@@ -1,35 +1,37 @@
+<search-bar [withSearch]="false"></search-bar>
 <form [formGroup]="fileForm" (ngSubmit)="submit()">
     <mat-form-field appearance="fill">
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
-      <mat-error *ngIf="fileForm.get('name')?.errors?.['required'] ">Name is required.</mat-error>
-      <mat-error *ngIf="fileForm.get('name')?.errors?.['minlength']">Name must be at least 10 characters.</mat-error>
-      <mat-error *ngIf="fileForm.get('name')?.errors?.['maxlength']">Name must be less than 80 characters.</mat-error>
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="fileForm.get('name')?.errors?.['required'] ">Name is required.</mat-error>
+        <mat-error *ngIf="fileForm.get('name')?.errors?.['minlength']">Name must be at least 10 characters.</mat-error>
+        <mat-error *ngIf="fileForm.get('name')?.errors?.['maxlength']">Name must be less than 80 characters.</mat-error>
     </mat-form-field>
-  
+
     <mat-form-field appearance="fill">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description"></textarea>
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
-  
+
     <mat-form-field appearance="fill">
-      <mat-label>Language</mat-label>
-      <mat-select formControlName="language">
-        <mat-option *ngFor="let language of languages$ | async" [value]="language.id">{{ language.name }}</mat-option>
-      </mat-select>
+        <mat-label>Language</mat-label>
+        <mat-select formControlName="language">
+            <mat-option *ngFor="let language of languages$ | async" [value]="language.id">{{ language.name
+                }}</mat-option>
+        </mat-select>
     </mat-form-field>
-  
+
     <mat-form-field appearance="fill">
-      <mat-label>Categories</mat-label>
-      <mat-select formControlName="categories" multiple>
-        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{ category.name.currentValue }}</mat-option>
-      </mat-select>
+        <mat-label>Categories</mat-label>
+        <mat-select formControlName="categories" multiple>
+            <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{ category.name.currentValue
+                }}</mat-option>
+        </mat-select>
     </mat-form-field>
-  
+
     <div>
-      <input type="file" (change)="onFileSelect($event)" [multiple]="false">
+        <input type="file" (change)="onFileSelect($event)" [multiple]="false">
     </div>
-  
+
     <button mat-raised-button color="primary" type="submit" [disabled]="!fileForm.valid">Submit</button>
-  </form>
-  
+</form>
