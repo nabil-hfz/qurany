@@ -4,6 +4,7 @@ import { LibraryModel } from '../../models/library.model';
 import { LibraryService } from '../../services/library/library.service';
 import { FileFormComponent } from '../file-form/file-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import { FileDetailsComponent } from '../file-details/file-details.component';
 
 @Component({
   selector: 'library-grid',
@@ -18,10 +19,10 @@ export class LibraryGridComponent implements OnInit {
   constructor(private service: LibraryService, public dialog: MatDialog) { }
 
   openAddFileDialog() {
-    // Example: Open a dialog
+
     this.dialog.open(FileFormComponent, {
-      width: '1600px',
-      // other dialog options
+      width: '2000px',
+
     });
   }
 
@@ -34,10 +35,16 @@ export class LibraryGridComponent implements OnInit {
   }
 
   onCardPressed(value: LibraryModel): void {
-    this.selectedFile = value;
+    this.dialog.open(FileDetailsComponent, {
+      width: '100%',
+      height: '100%',
+      data: value,
+      disableClose: false,
+    });
+    // this.selectedFile = value;
   }
 
   closeDetails(): void {
-    this.selectedFile = null;
+    // this.selectedFile = null;
   }
 }
