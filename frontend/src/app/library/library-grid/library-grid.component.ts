@@ -36,9 +36,9 @@ export class LibraryGridComponent implements OnInit {
 
   onCardPressed(value: LibraryModel): void {
     this.dialog.open(FileDetailsComponent, {
+      data: value,
       width: '100%',
       height: '100%',
-      data: value,
       disableClose: false,
     });
     // this.selectedFile = value;

@@ -52,13 +52,13 @@ export class LibraryService extends DataService<LibraryModel> {
     let params = this.getAllFields(filter);
 
 
-    return this.getAll(params);
+    return this.getAll(params, 'language');
   }
 
   getCategories(filter?: BaseFilter): Observable<LibraryCategoryModel[]> {
     let params = this.getAllFields(filter);
     
-    return this.getAll(params);
+    return this.getAll(params, 'category');
   }
 
   createFileEntry(fileEntryData: FormData): Observable<any> {

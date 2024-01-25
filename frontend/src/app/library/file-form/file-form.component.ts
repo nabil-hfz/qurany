@@ -27,6 +27,11 @@ export class FileFormComponent implements OnInit {
       categories: [[], Validators.required],
       file: [null, Validators.required]
     });
+
+    this.categories$.pipe((data) => {
+      console.log('categories$ data ', data);
+      return data;
+    });
   }
 
   onFileSelect(event: Event) {
