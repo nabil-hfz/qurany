@@ -55,58 +55,42 @@ class _LibraryScreenState extends State<LibraryScreen> {
         // ),
       ),
       body: SizedBox(
-          height: height,
-          width: width,
-          child: BlocBuilder<LibraryCubit, LibraryState>(
-            bloc: _bloc,
-            builder: (context, state) {
-              if (state.getLibraryFileEntries is LibraryFileEntriesSuccess) {
-                final fileEntries =
-                    (state.getLibraryFileEntries as LibraryFileEntriesSuccess)
-                        .fileEntries;
+        height: height,
+        width: width,
+        child: BlocBuilder<LibraryCubit, LibraryState>(
+          bloc: _bloc,
+          builder: (context, state) {
+            if (state.getLibraryFileEntries is LibraryFileEntriesSuccess) {
+              final fileEntries =
+                  (state.getLibraryFileEntries as LibraryFileEntriesSuccess)
+                      .fileEntries;
 
-                return RefreshIndicator(
-                  onRefresh: _onRefresh,
-                  child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 8.0,
-                      crossAxisSpacing: 8.0,
-                      // mainAxisExtent: 380,
-                      childAspectRatio: 5 / 9,
-
-                      // childAspectRatio: 0.5,
-                    ),
-                    padding: EdgeInsets.all(8.0),
-                    itemCount: fileEntries.length,
-                    itemBuilder: (context, index) {
-                      final file = fileEntries[index];
-                      return FileEntryItemListWidget(file: file);
-                    },
+              return RefreshIndicator(
+                onRefresh: _onRefresh,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 8.0,
+                    childAspectRatio: 5 / 9,
                   ),
-                );
-              }
-              if (state.getLibraryFileEntries is BaseFailState) {
-                final error = state.getLibraryFileEntries as BaseFailState;
-                return AppErrorWidget(errorState: error);
-              }
-              return AppLoader();
-            },
-          )
-
-          // Column(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   mainAxisSize: MainAxisSize.max,
-          //   children: [
-          //     Text(
-          //       'No files yet, will be added soon.',
-          //       style: appTextStyle.medium18.copyWith(
-          //         color: appTheme.appColors.textColor,
-          //       ),
-          //     )
-          //   ],
-          // ),
-          ),
+                  padding: EdgeInsets.all(8.0),
+                  itemCount: fileEntries.length,
+                  itemBuilder: (context, index) {
+                    final file = fileEntries[index];
+                    return FileEntryItemListWidget(file: file);
+                  },
+                ),
+              );
+            }
+            if (state.getLibraryFileEntries is BaseFailState) {
+              final error = state.getLibraryFileEntries as BaseFailState;
+              return AppErrorWidget(errorState: error);
+            }
+            return AppLoader();
+          },
+        ),
+      ),
     );
   }
 
