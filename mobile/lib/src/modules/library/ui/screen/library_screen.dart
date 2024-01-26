@@ -64,32 +64,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 final fileEntries =
                     (state.getLibraryFileEntries as LibraryFileEntriesSuccess)
                         .fileEntries;
-                // return ListView.builder(
-                //     itemCount: fileEntries.length,
-                //     itemBuilder: (context, index) {
-                //       final file = fileEntries[index];
-                //       return Column(
-                //         mainAxisSize: MainAxisSize.max,
-                //         children: [
-                //           AppImageWidget(
-                //             path: file.thumbnail,
-                //             boxFit: BoxFit.fill,
-                //             height: 0.5 * height,
-                //           ),
-                //           Container(
-                //             color: Colors.grey.shade200,
-                //             child: Center(
-                //               child: Text(
-                //                 file.name,
-                //                 style: appTextStyle.semiBold16.copyWith(
-                //                   color: appTheme.appColors.textColor,
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ],
-                //       );
-                //     });
 
                 return RefreshIndicator(
                   onRefresh: _onRefresh,
