@@ -31,8 +31,8 @@
     width: 100%;
     min-height: 120px;
     max-height: 200px;
-    object-fit: cover; 
- }
+    object-fit: cover;
+}
 
 
 
@@ -88,5 +88,13 @@ button[disabled] {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
-  }
+    z-index: 4;
+}
+
+.add-file-fab {
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+    z-index: 3;
+}
