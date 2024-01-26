@@ -112,7 +112,7 @@ class _PlayPauseButtonWidgetState extends State<PlayPauseButtonWidget>
           title: widget.recitation.title?.en ?? '',
           album: "Science Friday",
           artist: "Science Friday and WNYC Studios",
-          duration: Duration(milliseconds: widget.recitation.durationInSecond),
+          duration: Duration(milliseconds: widget.recitation.durationInMilli),
           artUri: Uri.parse(widget.recitation.image ?? ''),
         ),
       );

@@ -57,7 +57,7 @@ class RecitationModel extends BaseModel<RecitationEntity> {
       title: title?.toEntity(),
       audio: audio,
       image: image,
-      durationInSecond: durationInMilli ?? 0,
+      durationInMilli: durationInMilli ?? 0,
     );
   }
 }

@@ -39,7 +39,7 @@ class RecitationDetailsModel extends RecitationModel {
       title: title?.toEntity(),
       audio: audio,
       image: image,
-      durationInSecond: super.durationInMilli ?? 0,
+      durationInMilli: super.durationInMilli ?? 0,
       audioFileSizeInByte: audioFileSizeInByte ?? 0,
       totalDownloads: totalDownloads ?? 0,
       totalPlays: totalPlays ?? 0,
