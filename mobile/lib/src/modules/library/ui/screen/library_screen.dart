@@ -91,22 +91,25 @@ class _LibraryScreenState extends State<LibraryScreen> {
                 //       );
                 //     });
 
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 8.0,
-                    crossAxisSpacing: 8.0,
-                    // mainAxisExtent: 380,
-                    childAspectRatio: 5 / 9,
+                return RefreshIndicator(
+                  onRefresh: _onRefresh,
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0,
+                      // mainAxisExtent: 380,
+                      childAspectRatio: 5 / 9,
 
-                    // childAspectRatio: 0.5,
+                      // childAspectRatio: 0.5,
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                    itemCount: fileEntries.length,
+                    itemBuilder: (context, index) {
+                      final file = fileEntries[index];
+                      return FileEntryItemListWidget(file: file);
+                    },
                   ),
-                  padding: EdgeInsets.all(8.0),
-                  itemCount: fileEntries.length,
-                  itemBuilder: (context, index) {
-                    final file = fileEntries[index];
-                    return FileEntryItemListWidget(file: file);
-                  },
                 );
               }
               if (state.getLibraryFileEntries is BaseFailState) {
@@ -131,6 +134,10 @@ class _LibraryScreenState extends State<LibraryScreen> {
           // ),
           ),
     );
+  }
+
+  Future<void> _onRefresh() {
+    return _bloc.getLibraryFileEntries(isRefresh: true);
   }
 
   @override
