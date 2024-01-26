@@ -1,6 +1,7 @@
 // Flutter imports:
 // Package imports:
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:kawtharuna/src/core/constants/colors/app_colors.dart';
 import 'package:kawtharuna/src/core/generated_files/assets/assets.gen.dart';
@@ -50,36 +51,33 @@ class _ImageNetworkCircleWidgetState extends State<ImageNetworkCircleWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(
-            widget.imageBorderRadiusTopLeft ? widget.imageBorderRadius! : 0.0,
-          ),
-          topRight: Radius.circular(
-            widget.imageBorderRadiusTopRight ? widget.imageBorderRadius! : 0.0,
-          ),
-          bottomLeft: Radius.circular(
-            widget.imageBorderRadiusBottomLeft
-                ? widget.imageBorderRadius!
-                : 0.0,
-          ),
-          bottomRight: Radius.circular(
-            widget.imageBorderRadiusBottomRight
-                ? widget.imageBorderRadius!
-                : 0.0,
-          ),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(
+          widget.imageBorderRadiusTopLeft ? widget.imageBorderRadius! : 0.0,
         ),
-        child: SizedBox(
-            width: widget.imageWidth,
-            height: widget.imageHeight,
-            child: CachedNetworkImage(
-              imageUrl: widget.imageUrl ?? "",
-              // httpHeaders: optionsMedia,
-              placeholder: (context, url) => placeholderWidget(),
-              errorWidget: (context, url, error) => errorWidget(),
-              height: widget.imageHeight,
-              width: widget.imageWidth,
-              fit: widget.boxFit,
-            )));
+        topRight: Radius.circular(
+          widget.imageBorderRadiusTopRight ? widget.imageBorderRadius! : 0.0,
+        ),
+        bottomLeft: Radius.circular(
+          widget.imageBorderRadiusBottomLeft ? widget.imageBorderRadius! : 0.0,
+        ),
+        bottomRight: Radius.circular(
+          widget.imageBorderRadiusBottomRight ? widget.imageBorderRadius! : 0.0,
+        ),
+      ),
+      child: SizedBox(
+        width: widget.imageWidth,
+        height: widget.imageHeight,
+        child: CachedNetworkImage(
+          imageUrl: widget.imageUrl ?? "",
+          placeholder: (context, url) => placeholderWidget(),
+          errorWidget: (context, url, error) => errorWidget(),
+          height: widget.imageHeight,
+          width: widget.imageWidth,
+          fit: widget.boxFit,
+        ),
+      ),
+    );
   }
 
   Widget placeholderWidget() => Container(

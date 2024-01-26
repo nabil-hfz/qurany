@@ -18,27 +18,27 @@ import 'package:shared_preferences/shared_preferences.dart' as _i10;
 import '../../modules/khatmat/data/datasource/khatma_local_data_source_impl.dart'
     as _i6;
 import '../../modules/khatmat/data/datasource/khatma_remote_data_source_impl.dart'
-    as _i17;
+    as _i16;
 import '../../modules/khatmat/domain/blocs/khatma_cubit.dart' as _i24;
-import '../../modules/khatmat/domain/repo/khatma_repository_impl.dart' as _i21;
+import '../../modules/khatmat/domain/repo/khatma_repository_impl.dart' as _i20;
 import '../../modules/library/data/datasource/library_local_data_source_impl.dart'
     as _i7;
 import '../../modules/library/data/datasource/library_remote_data_source_impl.dart'
-    as _i16;
-import '../../modules/library/domain/blocs/library_cubit.dart' as _i25;
-import '../../modules/library/domain/repo/khatma_repository_impl.dart' as _i20;
+    as _i17;
+import '../../modules/library/domain/blocs/library_cubit.dart' as _i27;
+import '../../modules/library/domain/repo/library_repository_impl.dart' as _i21;
 import '../../modules/recitations/data/datasource/recitation_local_data_source_impl.dart'
     as _i8;
 import '../../modules/recitations/data/datasource/recitation_remote_data_source_impl.dart'
     as _i18;
-import '../../modules/recitations/domain/blocs/recitation_cubit.dart' as _i26;
+import '../../modules/recitations/domain/blocs/recitation_cubit.dart' as _i25;
 import '../../modules/recitations/domain/repo/recitation_repository_impl.dart'
     as _i22;
 import '../../modules/reciter/data/datasource/reciter_local_data_source_impl.dart'
     as _i9;
 import '../../modules/reciter/data/datasource/reciter_remote_data_source_impl.dart'
     as _i19;
-import '../../modules/reciter/domain/blocs/reciter_cubit.dart' as _i27;
+import '../../modules/reciter/domain/blocs/reciter_cubit.dart' as _i26;
 import '../../modules/reciter/domain/repo/reciter_repository_impl.dart' as _i23;
 import '../helpers/hlp_shared_preference.dart' as _i11;
 import '../managers/audio/audio_controller.dart' as _i4;
@@ -69,7 +69,7 @@ Future<_i1.GetIt> init(
     preResolve: true,
   );
   gh.singleton<_i6.KhatmaLocalDataSource>(const _i6.KhatmaLocalDataSource());
-  gh.singleton<_i7.KhatmaLocalDataSource>(const _i7.KhatmaLocalDataSource());
+  gh.singleton<_i7.LibraryLocalDataSource>(const _i7.LibraryLocalDataSource());
   gh.singleton<_i8.RecitationLocalDataSource>(
       const _i8.RecitationLocalDataSource());
   gh.singleton<_i9.ReciterLocalDataSource>(const _i9.ReciterLocalDataSource());
@@ -91,10 +91,10 @@ Future<_i1.GetIt> init(
       () => serviceModule.getDio(gh<_i11.SharedPreferenceHelper>()));
   gh.singletonAsync<_i15.DioClient>(
       () async => _i15.DioClient(await gh.getAsync<_i14.Dio>()));
-  gh.singletonAsync<_i16.FileEntryRemoteDataSource>(() async =>
-      _i16.FileEntryRemoteDataSource(await gh.getAsync<_i15.DioClient>()));
-  gh.singletonAsync<_i17.KhatmaRemoteDataSource>(() async =>
-      _i17.KhatmaRemoteDataSource(await gh.getAsync<_i15.DioClient>()));
+  gh.singletonAsync<_i16.KhatmaRemoteDataSource>(() async =>
+      _i16.KhatmaRemoteDataSource(await gh.getAsync<_i15.DioClient>()));
+  gh.singletonAsync<_i17.LibraryRemoteDataSource>(() async =>
+      _i17.LibraryRemoteDataSource(await gh.getAsync<_i15.DioClient>()));
   gh.singletonAsync<_i18.RecitationRemoteDataSource>(() async =>
       _i18.RecitationRemoteDataSource(await gh.getAsync<_i15.DioClient>()));
   gh.singletonAsync<_i19.ReciterRemoteDataSource>(() async =>
@@ -102,14 +102,14 @@ Future<_i1.GetIt> init(
   gh.singletonAsync<_i20.ImplKhatmaRepository>(
       () async => _i20.ImplKhatmaRepository(
             gh<_i5.InternetConnectionChecker>(),
-            await gh.getAsync<_i17.KhatmaRemoteDataSource>(),
+            await gh.getAsync<_i16.KhatmaRemoteDataSource>(),
             gh<_i6.KhatmaLocalDataSource>(),
           ));
-  gh.singletonAsync<_i21.ImplKhatmaRepository>(
-      () async => _i21.ImplKhatmaRepository(
+  gh.singletonAsync<_i21.ImplLibraryRepository>(
+      () async => _i21.ImplLibraryRepository(
             gh<_i5.InternetConnectionChecker>(),
-            await gh.getAsync<_i17.KhatmaRemoteDataSource>(),
-            gh<_i6.KhatmaLocalDataSource>(),
+            await gh.getAsync<_i17.LibraryRemoteDataSource>(),
+            gh<_i7.LibraryLocalDataSource>(),
           ));
   gh.singletonAsync<_i22.ImplRecitationRepository>(
       () async => _i22.ImplRecitationRepository(
@@ -124,13 +124,13 @@ Future<_i1.GetIt> init(
             gh<_i9.ReciterLocalDataSource>(),
           ));
   gh.singletonAsync<_i24.KhatmaCubit>(() async =>
-      _i24.KhatmaCubit(await gh.getAsync<_i21.ImplKhatmaRepository>()));
-  gh.singletonAsync<_i25.KhatmaCubit>(() async =>
-      _i25.KhatmaCubit(await gh.getAsync<_i21.ImplKhatmaRepository>()));
-  gh.singletonAsync<_i26.RecitationCubit>(() async =>
-      _i26.RecitationCubit(await gh.getAsync<_i22.ImplRecitationRepository>()));
-  gh.singletonAsync<_i27.ReciterCubit>(() async =>
-      _i27.ReciterCubit(await gh.getAsync<_i23.ImplReciterRepository>()));
+      _i24.KhatmaCubit(await gh.getAsync<_i20.ImplKhatmaRepository>()));
+  gh.singletonAsync<_i25.RecitationCubit>(() async =>
+      _i25.RecitationCubit(await gh.getAsync<_i22.ImplRecitationRepository>()));
+  gh.singletonAsync<_i26.ReciterCubit>(() async =>
+      _i26.ReciterCubit(await gh.getAsync<_i23.ImplReciterRepository>()));
+  gh.singletonAsync<_i27.LibraryCubit>(() async =>
+      _i27.LibraryCubit(await gh.getAsync<_i21.ImplLibraryRepository>()));
   return getIt;
 }
 

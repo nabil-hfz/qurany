@@ -10,4 +10,6 @@ class Routes {
 
   static const String khatmatListScreen = '/khatmat';
   static const String khatmaDetailsScreen = '/khatma-details';
+
+  static const String pdfViewScreen = '/pdf-view';
 }

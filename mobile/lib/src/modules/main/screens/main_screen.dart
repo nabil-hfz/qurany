@@ -4,7 +4,7 @@ import 'package:kawtharuna/src/core/constants/app_text_style.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/audio/app_player.dart';
 import 'package:kawtharuna/src/modules/khatmat/ui/screens/khatmat_list_screen.dart';
-import 'package:kawtharuna/src/modules/library/screen/library_screen.dart';
+import 'package:kawtharuna/src/modules/library/ui/screen/library_screen.dart';
 import 'package:kawtharuna/src/modules/main/widgets/app_bottom_navigation_bar.dart';
 import 'package:miniplayer/miniplayer.dart';
 import 'package:provider/provider.dart';

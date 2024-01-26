@@ -1,6 +1,5 @@
 import 'package:kawtharuna/src/core/entity/base/base_entity.dart';
 import 'package:kawtharuna/src/core/entity/localization/localized_entity.dart';
-import 'package:kawtharuna/src/modules/reciter/domain/entity/reciter_entity.dart';
 
 class LibraryListEntity extends BaseEntity {
   final List<FileEntryEntity> items;
@@ -15,19 +14,88 @@ class LibraryListEntity extends BaseEntity {
 
 class FileEntryEntity extends BaseEntity {
   final int id;
-  final LocalizedEntity? name;
-  final ReciterEntity? reciter;
+  final String name;
+  final LibraryLanguageEntity? language;
+  final String file;
+  final String thumbnail;
+  final int totalViews;
+  final int totalDownloads;
+  final List<LibraryCategoryEntity>? categories;
 
   const FileEntryEntity({
     required this.id,
-    this.name,
-    this.reciter,
+    required this.name,
+    this.language,
+    required this.file,
+    required this.thumbnail,
+    required this.totalViews,
+    required this.totalDownloads,
+    this.categories,
   });
 
   @override
   List<Object?> get props => [
         id,
         name,
-        reciter,
+        language,
+        file,
+        thumbnail,
+        totalViews,
+        totalDownloads,
+        categories,
+      ];
+
+  FileEntryEntity copyWith({
+    int? id,
+    String? name,
+    LibraryLanguageEntity? language,
+    String? file,
+    String? thumbnail,
+    int? totalViews,
+    int? totalDownloads,
+    List<LibraryCategoryEntity>? categories,
+  }) {
+    return FileEntryEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      language: language ?? this.language,
+      file: file ?? this.file,
+      thumbnail: thumbnail ?? this.thumbnail,
+      totalViews: totalViews ?? this.totalViews,
+      totalDownloads: totalDownloads ?? this.totalDownloads,
+      categories: categories ?? this.categories,
+    );
+  }
+}
+
+class LibraryCategoryEntity extends BaseEntity {
+  final int id;
+  final LocalizedEntity? name;
+
+  const LibraryCategoryEntity({
+    required this.id,
+    this.name,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+      ];
+}
+
+class LibraryLanguageEntity extends BaseEntity {
+  final int id;
+  final String? name;
+
+  const LibraryLanguageEntity({
+    required this.id,
+    this.name,
+  });
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
       ];
 }
