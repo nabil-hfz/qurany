@@ -22,7 +22,7 @@ class ImageNetworkCircleWidget extends StatefulWidget {
   final Widget? errorWidget;
 
   const ImageNetworkCircleWidget({
-    Key? key,
+    super.key,
     this.boxFit = BoxFit.cover,
     required this.imageUrl,
     this.imageHeight,
@@ -35,7 +35,7 @@ class ImageNetworkCircleWidget extends StatefulWidget {
     this.imageBorderRadiusBottomLeft = true,
     this.imageBorderRadiusBottomRight = true,
     this.imagePlaceHolderBackgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   _ImageNetworkCircleWidgetState createState() =>

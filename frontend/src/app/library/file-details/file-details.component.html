@@ -1,4 +1,4 @@
-<div *ngIf="file" style="align-items: center;">
+<div *ngIf="file" style="height:94%;width:100%;  align-items: center;">
     <div class="pdf-toolbar ">
         <!-- Add buttons for navigation and indicators for current page/view -->
         <button (click)=" onClose()">Cancel</button>
@@ -8,9 +8,7 @@
     </div>
 
 
-    <ngx-doc-viewer [url]="file.file" viewer="url" disableContent="popout" viewer="google"
-        
-    style="width:100vw;height:94vh; ">
+    <ngx-doc-viewer [url]="file.file" viewer="url" disableContent="popout" viewer="google" style="height:100%; ">
     </ngx-doc-viewer>
 
 

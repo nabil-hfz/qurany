@@ -6,6 +6,7 @@ import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.co
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
+import { FileFormComponent } from './library/file-form/file-form.component';
 
 const routes: Routes = [
     // Reciter Module
@@ -22,6 +23,7 @@ const routes: Routes = [
 
     // Library Module
     { path: 'library', component: LibraryGridComponent },
+    { path: 'library-form', component: FileFormComponent },
 
 
     { path: '**', component: NotFoundComponent },

@@ -27,9 +27,12 @@ export class DataService<T extends any> {
    * @param params - Optional query parameters.
    * @returns An observable of the list of resources.
    */
-  getAll(params?: HttpParams): Observable<any> {
+  getAll(params?: HttpParams, path?: string): Observable<any> {
+    let url =  this.URL;
+     if (path)
+     url = `${this.URL}/${path}`;
     return this.http
-      .get<T[]>(this.URL, { params: params })
+      .get<T[]>(url, { params: params })
       .pipe(
         map((response: any) => {
           if (response.items)
