@@ -16,6 +16,7 @@ class AppBackIconWidget extends StatelessWidget {
     this.withBgColor = true,
     this.onPressed,
   });
+
   final bool withBgColor;
   final Color? color;
   final void Function()? onPressed;
@@ -68,6 +69,7 @@ class AppIconButton extends StatelessWidget {
     this.backgroundColor,
     this.iconSize,
   });
+
   final Widget icon;
   final void Function()? onPressed;
   final Color? backgroundColor;
@@ -151,7 +153,7 @@ class AppIconButton extends StatelessWidget {
     );
   }
 
-  factory AppIconButton.share({
+  factory AppIconButton.download({
     required void Function()? onPressed,
     Color? color,
     Color? backgroundColor,
@@ -162,7 +164,7 @@ class AppIconButton extends StatelessWidget {
       icon: Padding(
         padding: const EdgeInsets.all(0.0),
         child: Icon(
-          Icons.share_outlined,
+          Icons.file_download,
           size: AppIconSize.size_20,
           color: color,
         ),

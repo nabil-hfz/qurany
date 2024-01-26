@@ -47,44 +47,11 @@ class _LibraryScreenState extends State<LibraryScreen> {
       appBar: CustomAppBar(
         automaticallyImplyLeading: false,
         title: translate.islamic_library,
+        // actions: [AppIconButton.download(onPressed: () {})],
       ),
       body: SizedBox(
         height: height,
         width: width,
-        /*
-        RefreshWrapper(
-          enablePullUp: true,
-          enablePullDown: true,
-          withInitialRefresh: false,
-          onControllerInitiated: (RefreshControllerHandler controller) {
-            _controller.add(controller);
-          },
-          onLoading: _onLoading,
-          onRefresh: _onRefresh,
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: edgeInsets,
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate.fixed([
-                    LocationRequest(
-                      onLocation: _onLocationUpdate,
-                    ),
-                    const UpcomingOneBooking(),
-                    const SalonLiveOffers(),
-                    const CategoriesHomeGrid(),
-                  ]),
-                ),
-              ),
-              _buildGap(12),
-              const SliverPadding(
-                padding: edgeInsets,
-                sliver: SalonsSuggestedForUserWidget(),
-              ),
-            ],
-          ),
-        ),
-         */
         child: BlocBuilder<LibraryCubit, LibraryState>(
           bloc: _bloc,
           builder: (context, state) {
@@ -108,6 +75,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 8.0,
                     childAspectRatio: 5 / 9,
+                    // mainAxisExtent: 390,
                   ),
                   padding: EdgeInsets.all(AppDimens.space8),
                   itemCount: fileEntries.length,
