@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:kawtharuna/src/core/models/base/base_filter.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
 import 'package:kawtharuna/src/modules/library/data/models/library_model.dart';
 
@@ -12,6 +13,7 @@ class LibraryLocalDataSource implements IFileEntryDataSource {
   @override
   Future<Result<LibraryListModel>> getLibraryFileEntries({
     CancelToken? cancelToken,
+    required BaseFilter filter,
   }) {
     // TODO: implement getServices
     throw UnimplementedError();

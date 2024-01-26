@@ -6,6 +6,8 @@ import 'package:kawtharuna/src/core/bloc/base/states/base_init_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_loading_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_state.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_success_state.dart';
+import 'package:kawtharuna/src/core/widgets/common/refresh_wrapper.dart';
+import 'package:kawtharuna/src/modules/library/data/models/library_filter_model.dart';
 import 'package:kawtharuna/src/modules/library/domain/entity/library_entity.dart';
 import 'package:kawtharuna/src/modules/library/domain/repo/library_repository_impl.dart';
 
@@ -16,37 +18,58 @@ class LibraryCubit extends BaseCubit<LibraryState> {
   late final ImplLibraryRepository _repository;
 
   final List<FileEntryEntity> _fileEntries = [];
+  late LibraryFilterModel _libraryFilter;
 
   LibraryCubit(this._repository) : super(LibraryState.initialState()) {
     // _LibraryFileEntriesFilter = FileEntryFilterModel();
     // _categorizedLibraryFileEntriesFilter = FileEntryFilterModel();
+    _libraryFilter = LibraryFilterModel(
+        // orders: ordersDesc,
+        // withDefaultOrder: false,
+        // fromDate: dateTimeNow,
+        // fromSelectedDateTime: dateTimeNow,
+        );
   }
 
   Future<void> getLibraryFileEntries({
     CancelToken? cancelToken,
+    RefreshControllerHandler? controller,
     bool isRefresh = false,
   }) async {
     if (isRefresh) {
       emit(state.copyWith(getLibraryFileEntries: const BaseLoadingState()));
+      _libraryFilter.page = 1;
     }
-    final results = await _repository.getLibraryFileEntries(
+
+    final result = await _repository.getLibraryFileEntries(
       cancelToken: cancelToken,
+      filter: _libraryFilter,
     );
 
-    if (results.hasDataOnly) {
+    controller?.handleList(result.data?.items, pageIndex: _libraryFilter.page);
+
+    if (result.hasDataOnly) {
+      _libraryFilter.page++;
       if (isRefresh) _fileEntries.clear();
-      if (results.data?.items != null) _fileEntries.addAll(results.data!.items);
-      emit(state.copyWith(
+      if (result.data?.items != null) _fileEntries.addAll(result.data!.items);
+      emit(
+        state.copyWith(
           getLibraryFileEntries: LibraryFileEntriesSuccess(
-        fileEntries: _fileEntries,
-      )));
+            fileEntries: _fileEntries,
+          ),
+        ),
+      );
     } else {
       emit(
         state.copyWith(
           getLibraryFileEntries: BaseFailState(
-            results.error,
+            result.error,
             callback: () {
-              getLibraryFileEntries(cancelToken: cancelToken);
+              getLibraryFileEntries(
+                cancelToken: cancelToken,
+                controller: controller,
+                isRefresh: isRefresh,
+              );
             },
           ),
         ),

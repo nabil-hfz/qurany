@@ -93,6 +93,7 @@ dependencies:
   another_flushbar: ^1.12.29
 
   syncfusion_flutter_pdfviewer: ^24.1.47
+  pull_to_refresh: ^2.0.0
 
 
 #  flutter pub upgrade --major-versions
@@ -144,6 +145,7 @@ dev_dependencies:
 
   flutter_gen_runner: ^5.2.0
   flutter_gen: ^5.3.2
+
 
 flutter:
   uses-material-design: true

@@ -1,22 +1,23 @@
-// import 'package:json_annotation/json_annotation.dart';
-// import 'package:salon_app/core/model/base_filter.dart';
-// import 'package:salon_app/core/model/base_sort_model.dart';
-// import 'package:salon_app/core/model/pagination_model.dart';
-//
-// part 'service_filter_model.g.dart';
-//
-// @JsonSerializable()
-// class ServiceFilterModel extends BaseFilter {
-//   ServiceFilterModel()
-//       : super(BaseSortModel(), PaginationModel.defaultValues());
-//
-//   factory ServiceFilterModel.fromJson(Map<String, dynamic> json) =>
-//       _$ServiceFilterModelFromJson(json);
-//
-//   Map<String, dynamic> toJson() => _$ServiceFilterModelToJson(this);
-//
-//   @override
-//   String toString() {
-//     return "ServiceFilterModel(${toJson()}";
-//   }
-// }
+import 'package:json_annotation/json_annotation.dart';
+import 'package:kawtharuna/src/core/models/base/base_filter.dart';
+import 'package:kawtharuna/src/core/models/base/base_sort_model.dart';
+import 'package:kawtharuna/src/core/models/pagination/pagination_model.dart';
+
+part 'library_filter_model.g.dart';
+
+@JsonSerializable(explicitToJson: true, anyMap: true, includeIfNull: false)
+class LibraryFilterModel extends BaseFilter {
+  LibraryFilterModel()
+      : super(BaseSortModel(), PaginationModel.defaultValues());
+
+  factory LibraryFilterModel.fromJson(Map<String, dynamic> json) =>
+      _$LibraryFilterModelFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$LibraryFilterModelToJson(this);
+
+  @override
+  String toString() {
+    return "$LibraryFilterModel(${toJson()}";
+  }
+}

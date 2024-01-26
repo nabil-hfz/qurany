@@ -302,5 +302,10 @@
   "seek_backward_button": "البحث عن زر للخلف",
   "menu_button": "البحث عن زر للخلف",
   "back_button": "زر العودة للخلف",
-  "home_menu_button": "زر القائمة الرئيسية"
+  "home_menu_button": "زر القائمة الرئيسية",
+  "idle_loading_text": "تحرير للتحميل",
+  "loading_text": "جارٍ التحميل...",
+  "no_more_data_text": "لا توجد مزيد من البيانات",
+  "load_failed_text": "فشل في التحميل",
+  "can_loading_text": "يمكن التحميل"
 }

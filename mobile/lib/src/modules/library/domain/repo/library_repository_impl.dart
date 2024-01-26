@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:kawtharuna/src/core/data_source/base_repository.dart';
+import 'package:kawtharuna/src/core/models/base/base_filter.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
 import 'package:kawtharuna/src/modules/library/data/datasource/library_local_data_source_impl.dart';
 import 'package:kawtharuna/src/modules/library/data/datasource/library_remote_data_source_impl.dart';
@@ -27,9 +28,11 @@ class ImplLibraryRepository extends ILibraryRepository {
   @override
   Future<Result<LibraryListEntity>> getLibraryFileEntries({
     CancelToken? cancelToken,
+    required BaseFilter filter,
   }) async {
     final result = await _remoteDataSource.getLibraryFileEntries(
       cancelToken: cancelToken,
+      filter: filter,
     );
     return BaseRepository.execute(
       remoteResult: result,
