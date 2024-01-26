@@ -105,10 +105,10 @@ class _RecitationListWidgetState extends State<RecitationListWidget> {
     int crossAxisCount = width <= AppConstants.desktopThreshold ? 2 : 3;
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
-        (ctx, i) {
+        (ctx, index) {
           return RecitationListItem(
-            index: i,
-            recitation: recitations[i],
+            index: index,
+            recitation: recitations[index],
           );
         },
         childCount: recitations.length,

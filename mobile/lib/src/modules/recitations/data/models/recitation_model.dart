@@ -33,7 +33,7 @@ class RecitationModel extends BaseModel<RecitationEntity> {
   final LocalizedModel? title;
   final String? audio;
   final String? image;
-  final int? durationInSecond;
+  final int? durationInMilli;
 
   RecitationModel({
     this.id,
@@ -41,7 +41,7 @@ class RecitationModel extends BaseModel<RecitationEntity> {
     this.title,
     this.audio,
     this.image,
-    this.durationInSecond,
+    this.durationInMilli,
   });
 
   factory RecitationModel.fromJson(Map<String, dynamic> json) =>
@@ -57,7 +57,7 @@ class RecitationModel extends BaseModel<RecitationEntity> {
       title: title?.toEntity(),
       audio: audio,
       image: image,
-      durationInSecond: durationInSecond ?? 0,
+      durationInSecond: durationInMilli ?? 0,
     );
   }
 }
