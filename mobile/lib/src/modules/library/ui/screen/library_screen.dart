@@ -48,11 +48,6 @@ class _LibraryScreenState extends State<LibraryScreen> {
       appBar: CustomAppBar(
         automaticallyImplyLeading: false,
         title: translate.islamic_library,
-        // leading: AppMenuIconWidget(
-        //   onDrawerPressed: () {
-        //     mainKey.currentState?.openDrawer();
-        //   },
-        // ),
       ),
       body: SizedBox(
         height: height,
