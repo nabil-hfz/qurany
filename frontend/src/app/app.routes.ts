@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';

@@ -25,8 +25,8 @@ import { AppRoutingModule } from './app.routes';
 import { AppErrorHandler } from './common/app-error-handler';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 // import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 import { MatSidenavModule } from "@angular/material/sidenav";
@@ -41,10 +41,10 @@ import { RecitationsListComponent } from './recitations/recitations-list/recitat
 // import { MatListModule, MatIconModule } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { PlayerComponent } from './shared/player/player.component';
+import { PlayerComponent } from './shared/components/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
-import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
-import { TrackControlComponent } from './shared/track-control/track-control.component';
+import { KawtharunaAppBarComponent } from './shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { TrackControlComponent } from './shared/components/track-control/track-control.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { LibraryService } from './services/library/library.service';

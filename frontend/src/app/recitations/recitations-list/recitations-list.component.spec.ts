@@ -7,7 +7,7 @@ import { RecitationsService } from '../../services/recitations/recitations.servi
 import { PlayerService } from '../../services/player/player.service';
 import { LocalizedModel } from '../../models/localized.model';
 import { ReciterModel } from '../../models/reciter.model';
-import { KawtharunaAppBarComponent } from '../../shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { KawtharunaAppBarComponent } from '../../shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { ItunesService } from '../../services/itunes/itunes.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 

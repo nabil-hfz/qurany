@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PlayerComponent } from './player.component';
-import { PlayerService } from '../../services/player/player.service';
+import { PlayerService } from '../../../services/player/player.service';
 import { of, Subject } from 'rxjs';
 import { ElementRef } from '@angular/core';
 

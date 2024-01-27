@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ItunesService } from '../../services/itunes/itunes.service';
+import { ItunesService } from '../../../services/itunes/itunes.service';
 // import { fromEvent, debounceTime } from 'rxjs';
 
 @Component({

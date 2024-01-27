@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { PlayerService } from '../../services/player/player.service';
+import { PlayerService } from '../../../services/player/player.service';
 
 @Component({
   selector: 'track-control',
