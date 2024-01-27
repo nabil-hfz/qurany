@@ -1,14 +1,9 @@
 import { Injectable } from "@angular/core";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
-import {
-  AngularFireStorage,
-  AngularFireStorageReference,
-  AngularFireUploadTask,
-} from "@angular/fire/compat/storage";
+// import { AngularFirestore } from "@angular/fire/compat/firestore";
+
 import { from } from "rxjs";
 import { concatMap, last, map, switchMap } from "rxjs/operators";
-import { computeLength } from "../utils/compute-file-length";
-import { convertSnap } from "../utils/state-helper";
+
 
 export const enum MediaType {
   Image,
@@ -31,8 +26,8 @@ export interface FileData {
 })
 export class UploadHelperService {
   constructor(
-    private storage: AngularFireStorage,
-    private db: AngularFirestore
+    // private storage: AngularFireStorage,
+    // private db: AngularFirestore
   ) { }
 
   /**
@@ -44,8 +39,8 @@ export class UploadHelperService {
     file: File,
     id: string
   ): {
-    task: AngularFireUploadTask;
-    ref: AngularFireStorageReference;
+    // task: AngularFireUploadTask;
+    // ref: AngularFireStorageReference;
   } {
     const filePath = `${id}/${file.name}`;
     const task = this.storage.upload(filePath, file, {
@@ -118,6 +113,6 @@ export class UploadHelperService {
    * @param  {string} url
    */
   deleteByRefFromUrl(url: string) {
-    this.storage.refFromURL(url).delete();
+    // this.storage.refFromURL(url).delete();
   }
 }

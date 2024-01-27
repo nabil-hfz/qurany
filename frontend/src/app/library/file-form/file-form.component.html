@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <search-bar [withSearch]="false"></search-bar>
     <form [formGroup]="fileForm" (ngSubmit)="submit()">
         <mat-form-field appearance="fill">
@@ -39,4 +39,95 @@
 
         <button mat-raised-button color="primary" type="submit" [disabled]="!fileForm.valid">Submit</button>
     </form>
-</div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+<mat-card>
+    <mat-progress-bar *ngIf="!(loaded$ | async)" mode="indeterminate"></mat-progress-bar>
+    <div class="title">
+        <mat-card-title>
+            <span>{{ pageTitle}}</span>
+        </mat-card-title>
+        <div class="actions">
+            <button mat-flat-button color="accent" *ngIf="fileId" (click)="copy()">Duplicate</button>
+            <button routerLink="{{ fileId ? '../../' : '../' }}" mat-flat-button color="primary">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+                Back to list
+            </button>
+        </div>
+    </div>
+    
+    <mat-card-content>
+        <form [formGroup]="form" *ngIf="form">
+            <div class="field-container">
+                <app-upload-club-image [imageId]="imageCtrl.value" (newImage)="setImage($event)">
+                </app-upload-club-image>
+
+                <ng-container formGroupName="name">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="en" />
+                        <mat-error *ngIf="nameCtrl?.errors?.required">this field is required</mat-error>
+                    </mat-form-field>
+                </ng-container>
+
+                <ng-container formGroupName="description">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="en" rows="10" required></textarea>
+                        <mat-error *ngIf="descriptionCtrl?.errors?.required">this field is required</mat-error>
+                    </mat-form-field>
+                </ng-container>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option *ngFor="let status of statuses" [value]="status.value">
+                            {{ status.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Categories</mat-label>
+                    <mat-select formControlName="category">
+                        <mat-option *ngFor="let cat of categories$ | async" [value]="cat.id">
+                            {{ cat.name.en }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div  class="autoJoinedAndFees">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Auto join for new user</mat-label>
+                        <mat-select [value]="true" formControlName="autoJoined">
+                            <mat-option [value]="true">Yes</mat-option>
+                            <mat-option [value]="false">No</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Club Fees</mat-label>
+                        <input matInput formControlName="clubFees" type="number" min="0" />
+                        <mat-error *ngIf="clubFeesCtrl?.errors?.required">this field is required</mat-error>
+                        <mat-error *ngIf="clubFeesCtrl?.errors?.min">should be at least 0</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+        <button mat-flat-button type="submit" (click)="submit()" [disabled]="isDisabled$ | async" class="action"
+            color="primary">
+            Save
+        </button>
+    </mat-card-actions>
+</mat-card>

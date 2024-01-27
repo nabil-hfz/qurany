@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { finalize, map, takeUntil } from "rxjs/operators";
+import { ClearSubscriptionsComponent } from "../clear-subscriptions/clear-subscriptions.component";
 // import { ClearSubscriptionsComponent } from "src/app/shared/components/clear-subscriptions/clear-subscriptions.component";
 // import { UploadHelperService } from "src/app/shared/services/upload-helper.service";
 

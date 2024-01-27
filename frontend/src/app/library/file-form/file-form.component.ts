@@ -11,12 +11,14 @@ import { Observable } from 'rxjs/internal/Observable';
   styleUrl: './file-form.component.scss'
 })
 export class FileFormComponent implements OnInit {
-  fileForm!: FormGroup;
+  form!: FormGroup;
   languages$ = this.libraryService.getLanguages();
   categories$ = this.libraryService.getCategories();
+  isDisabled$!: Observable<boolean>;
   loaded$!: Observable<boolean>;
   pageTitle = "Add File";
   fileId = -1;
+
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +32,7 @@ export class FileFormComponent implements OnInit {
       // this.setFile();
       this.pageTitle = "Edit File";
     }
- 
+
     this.initForm();
     this.categories$.pipe((data) => {
       console.log('categories$ data ', data);
@@ -40,7 +42,7 @@ export class FileFormComponent implements OnInit {
 
 
   initForm() {
-    this.fileForm = this.fb.group({
+    this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(80)]],
       description: [''],
       language: ['', Validators.required],
@@ -69,14 +71,14 @@ export class FileFormComponent implements OnInit {
   onFileSelect(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.fileForm.patchValue({ file: file });
+      this.form.patchValue({ file: file });
     }
   }
 
   submit() {
-    if (this.fileForm.valid) {
+    if (this.form.valid) {
       const formData = new FormData();
-      Object.entries(this.fileForm.value).forEach(([key, value]) => {
+      Object.entries(this.form.value).forEach(([key, value]) => {
         if (key === 'categories') {
           // value.forEach((v: any) => formData.append('categories[]', v));
         } else {
