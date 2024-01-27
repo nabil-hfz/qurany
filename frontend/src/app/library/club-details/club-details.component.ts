@@ -193,7 +193,7 @@
 //   }
 
 //   initForm() {
-//     this.form = new FormGroup({
+//     this.new FormGroup({
 //       name: new FormGroup({
 //         en: new FormControl(null, Validators.required),
 //         ar: new FormControl(""),

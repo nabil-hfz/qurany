@@ -1,0 +1,24 @@
+<label for="upload-img">Upload Club Image</label>
+<mat-error>{{errorMsg}}</mat-error>
+<div
+  (click)="fileUpload.click()"
+  class="container"
+  [ngClass]="{ noImageStyle: !imageUrl }"
+>
+  <input
+    type="file"
+    hidden
+    accept=".jpg,.jpeg,.png"
+    (change)="onFileSelected($event)"
+    #fileUpload
+  />
+  <mat-icon class="center-item" *ngIf="!imageUrl">add</mat-icon>
+
+  <img [src]="imageUrl" *ngIf="imageUrl" />
+
+  <mat-spinner
+    [diameter]="50"
+    *ngIf="loadingMedia"
+    class="loading-icon center-item"
+  ></mat-spinner>
+</div>

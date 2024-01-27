@@ -2,24 +2,44 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { LibraryService } from '../../services/library/library.service';
+import { Observable } from 'rxjs/internal/Observable';
 // import { LibraryService } from '../library.service';
 
 @Component({
   selector: 'file-form',
   templateUrl: './file-form.component.html',
-  styleUrl: './file-form.component.css'
+  styleUrl: './file-form.component.scss'
 })
 export class FileFormComponent implements OnInit {
   fileForm!: FormGroup;
   languages$ = this.libraryService.getLanguages();
   categories$ = this.libraryService.getCategories();
+  loaded$!: Observable<boolean>;
+  pageTitle = "Add File";
+  fileId = -1;
 
   constructor(
     private fb: FormBuilder,
     private libraryService: LibraryService,
   ) { }
 
+
   ngOnInit(): void {
+    // if (this.fileId)
+    {
+      // this.setFile();
+      this.pageTitle = "Edit File";
+    }
+ 
+    this.initForm();
+    this.categories$.pipe((data) => {
+      console.log('categories$ data ', data);
+      return data;
+    });
+  }
+
+
+  initForm() {
     this.fileForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(80)]],
       description: [''],
@@ -28,12 +48,24 @@ export class FileFormComponent implements OnInit {
       file: [null, Validators.required]
     });
 
-    this.categories$.pipe((data) => {
-      console.log('categories$ data ', data);
-      return data;
-    });
-  }
 
+    // this.new FormGroup({
+    //   name: new FormGroup({
+    //     en: new FormControl(null, Validators.required),
+    //     ar: new FormControl(""),
+    //   }),
+    //   description: new FormGroup({
+    //     en: new FormControl(null, Validators.required),
+    //     ar: new FormControl(""),
+    //   }),
+    //   status: new FormControl(null, Validators.required),
+    //   category: new FormControl(null, Validators.required),
+    //   skill: new FormControl(6),
+    //   image: new FormControl(null),
+    //   clubFees: new FormControl(null, [Validators.required, Validators.min(0)]),
+    //   autoJoined: new FormControl(true, [Validators.required]),
+    // });
+  }
   onFileSelect(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -58,4 +90,7 @@ export class FileFormComponent implements OnInit {
       });
     }
   }
+
+  copy() { }
+
 }
