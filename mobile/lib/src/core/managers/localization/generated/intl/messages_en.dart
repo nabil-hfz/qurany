@@ -88,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "by": MessageLookupByLibrary.simpleMessage("By"),
         "by_sheikh": m0,
         "calendar": MessageLookupByLibrary.simpleMessage("Calendar"),
+        "can_loading_text": MessageLookupByLibrary.simpleMessage("Can load"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "catalog": MessageLookupByLibrary.simpleMessage("Catalog"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
@@ -229,6 +230,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Home menu button"),
         "hours_count": m1,
         "hours_count_short": m2,
+        "idle_loading_text":
+            MessageLookupByLibrary.simpleMessage("Release to load"),
         "instagram": MessageLookupByLibrary.simpleMessage("Instagram"),
         "islamic_library":
             MessageLookupByLibrary.simpleMessage("Islamic Library"),
@@ -243,6 +246,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "library": MessageLookupByLibrary.simpleMessage("Library"),
         "links": MessageLookupByLibrary.simpleMessage("Links"),
+        "load_failed_text":
+            MessageLookupByLibrary.simpleMessage("Loading failed"),
+        "loading_text": MessageLookupByLibrary.simpleMessage("Loading..."),
         "location": MessageLookupByLibrary.simpleMessage("Location"),
         "log_in": MessageLookupByLibrary.simpleMessage("Log In"),
         "log_out": MessageLookupByLibrary.simpleMessage("Log out"),
@@ -261,6 +267,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "new_account": MessageLookupByLibrary.simpleMessage("New account"),
         "new_password": MessageLookupByLibrary.simpleMessage("New password"),
         "new_service": MessageLookupByLibrary.simpleMessage("New Service"),
+        "no_more_data_text":
+            MessageLookupByLibrary.simpleMessage("No more data"),
         "not_set": MessageLookupByLibrary.simpleMessage("Not set"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "notifications_settings":

@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "by": MessageLookupByLibrary.simpleMessage("من قبل"),
         "by_sheikh": m0,
         "calendar": MessageLookupByLibrary.simpleMessage("التقويم"),
+        "can_loading_text":
+            MessageLookupByLibrary.simpleMessage("يمكن التحميل"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلفاء"),
         "catalog": MessageLookupByLibrary.simpleMessage("قائمة"),
         "categories": MessageLookupByLibrary.simpleMessage("الفئات"),
@@ -216,6 +218,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("زر القائمة الرئيسية"),
         "hours_count": m1,
         "hours_count_short": m2,
+        "idle_loading_text":
+            MessageLookupByLibrary.simpleMessage("تحرير للتحميل"),
         "instagram": MessageLookupByLibrary.simpleMessage("انستغرام"),
         "islamic_library":
             MessageLookupByLibrary.simpleMessage("المكتبة الاسلامية"),
@@ -229,6 +233,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "later": MessageLookupByLibrary.simpleMessage("لاحقاً"),
         "library": MessageLookupByLibrary.simpleMessage("المكتبة"),
         "links": MessageLookupByLibrary.simpleMessage("الروابط"),
+        "load_failed_text":
+            MessageLookupByLibrary.simpleMessage("فشل في التحميل"),
+        "loading_text": MessageLookupByLibrary.simpleMessage("جارٍ التحميل..."),
         "location": MessageLookupByLibrary.simpleMessage("الموقع"),
         "log_in": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "log_out": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
@@ -247,6 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "new_password":
             MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
         "new_service": MessageLookupByLibrary.simpleMessage("اضافة خدمة"),
+        "no_more_data_text":
+            MessageLookupByLibrary.simpleMessage("لا توجد مزيد من البيانات"),
         "not_set": MessageLookupByLibrary.simpleMessage("Not set"),
         "notifications": MessageLookupByLibrary.simpleMessage("الإشعارات"),
         "notifications_settings":

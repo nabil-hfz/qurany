@@ -343,6 +343,11 @@ class LightColors implements AppColors {
   @override
   Color get unselectedIconBottomNavigationBarColor => Colors.black;
 
+  ///
+  /// Refresh Header Color
+  @override
+  Color get refreshHeaderColor => Colors.grey.shade50;
+
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

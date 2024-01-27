@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kawtharuna/src/core/constants/app_endpoints.dart';
 import 'package:kawtharuna/src/core/managers/network/dio_client.dart';
+import 'package:kawtharuna/src/core/models/base/base_filter.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
 import 'package:kawtharuna/src/modules/library/data/models/library_model.dart';
 
@@ -34,9 +35,11 @@ class LibraryRemoteDataSource implements IFileEntryDataSource {
   @override
   Future<Result<LibraryListModel>> getLibraryFileEntries({
     CancelToken? cancelToken,
+    required BaseFilter filter,
   }) async {
     return await _dioClient.get<LibraryListModel>(
       AppEndpoints.getLibraryFileEntries,
+      queryParameters: filter.toJson(),
       cancelToken: cancelToken,
       converterMap: (json) {
         return LibraryListModel.fromJson(json);

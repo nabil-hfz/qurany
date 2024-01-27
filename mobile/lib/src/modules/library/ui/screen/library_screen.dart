@@ -2,11 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kawtharuna/src/core/bloc/base/states/base_fail_state.dart';
+import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 import 'package:kawtharuna/src/core/managers/theme/app_them_manager.dart';
 import 'package:kawtharuna/src/core/utils/utl_device.dart';
 import 'package:kawtharuna/src/core/widgets/app_bar/salony_app_bar.dart';
+import 'package:kawtharuna/src/core/widgets/common/refresh_wrapper.dart';
 import 'package:kawtharuna/src/core/widgets/error/app_error_widget.dart';
 import 'package:kawtharuna/src/core/widgets/loader/app_loading_indicator.dart';
 import 'package:kawtharuna/src/modules/library/domain/blocs/library_cubit.dart';
@@ -29,10 +31,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   void initState() {
     super.initState();
-    _bloc.getLibraryFileEntries(
-      cancelToken: _cancelToken,
-      isRefresh: true,
-    );
+    _onRefresh(null);
   }
 
   @override
@@ -48,6 +47,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
       appBar: CustomAppBar(
         automaticallyImplyLeading: false,
         title: translate.islamic_library,
+        // actions: [AppIconButton.download(onPressed: () {})],
       ),
       body: SizedBox(
         height: height,
@@ -60,7 +60,14 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   (state.getLibraryFileEntries as LibraryFileEntriesSuccess)
                       .fileEntries;
 
-              return RefreshIndicator(
+              return RefreshWrapper(
+                enablePullUp: true,
+                enablePullDown: true,
+                withInitialRefresh: false,
+                // onControllerInitiated: (RefreshControllerHandler controller) {
+                //   // _controller.add(controller);
+                // },
+                onLoading: _onLoading,
                 onRefresh: _onRefresh,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -68,8 +75,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 8.0,
                     childAspectRatio: 5 / 9,
+                    // mainAxisExtent: 390,
                   ),
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(AppDimens.space8),
                   itemCount: fileEntries.length,
                   itemBuilder: (context, index) {
                     final file = fileEntries[index];
@@ -89,8 +97,20 @@ class _LibraryScreenState extends State<LibraryScreen> {
     );
   }
 
-  Future<void> _onRefresh() {
-    return _bloc.getLibraryFileEntries(isRefresh: true);
+  Future<void> _onLoading([RefreshControllerHandler? controller]) {
+    return _bloc.getLibraryFileEntries(
+      controller: controller,
+      cancelToken: _cancelToken,
+      isRefresh: false,
+    );
+  }
+
+  Future<void> _onRefresh([RefreshControllerHandler? controller]) {
+    return _bloc.getLibraryFileEntries(
+      controller: controller,
+      cancelToken: _cancelToken,
+      isRefresh: true,
+    );
   }
 
   @override

@@ -25,20 +25,20 @@ import '../../modules/library/data/datasource/library_local_data_source_impl.dar
     as _i7;
 import '../../modules/library/data/datasource/library_remote_data_source_impl.dart'
     as _i17;
-import '../../modules/library/domain/blocs/library_cubit.dart' as _i27;
+import '../../modules/library/domain/blocs/library_cubit.dart' as _i25;
 import '../../modules/library/domain/repo/library_repository_impl.dart' as _i21;
 import '../../modules/recitations/data/datasource/recitation_local_data_source_impl.dart'
     as _i8;
 import '../../modules/recitations/data/datasource/recitation_remote_data_source_impl.dart'
     as _i18;
-import '../../modules/recitations/domain/blocs/recitation_cubit.dart' as _i25;
+import '../../modules/recitations/domain/blocs/recitation_cubit.dart' as _i26;
 import '../../modules/recitations/domain/repo/recitation_repository_impl.dart'
     as _i22;
 import '../../modules/reciter/data/datasource/reciter_local_data_source_impl.dart'
     as _i9;
 import '../../modules/reciter/data/datasource/reciter_remote_data_source_impl.dart'
     as _i19;
-import '../../modules/reciter/domain/blocs/reciter_cubit.dart' as _i26;
+import '../../modules/reciter/domain/blocs/reciter_cubit.dart' as _i27;
 import '../../modules/reciter/domain/repo/reciter_repository_impl.dart' as _i23;
 import '../helpers/hlp_shared_preference.dart' as _i11;
 import '../managers/audio/audio_controller.dart' as _i4;
@@ -125,12 +125,12 @@ Future<_i1.GetIt> init(
           ));
   gh.singletonAsync<_i24.KhatmaCubit>(() async =>
       _i24.KhatmaCubit(await gh.getAsync<_i20.ImplKhatmaRepository>()));
-  gh.singletonAsync<_i25.RecitationCubit>(() async =>
-      _i25.RecitationCubit(await gh.getAsync<_i22.ImplRecitationRepository>()));
-  gh.singletonAsync<_i26.ReciterCubit>(() async =>
-      _i26.ReciterCubit(await gh.getAsync<_i23.ImplReciterRepository>()));
-  gh.singletonAsync<_i27.LibraryCubit>(() async =>
-      _i27.LibraryCubit(await gh.getAsync<_i21.ImplLibraryRepository>()));
+  gh.singletonAsync<_i25.LibraryCubit>(() async =>
+      _i25.LibraryCubit(await gh.getAsync<_i21.ImplLibraryRepository>()));
+  gh.singletonAsync<_i26.RecitationCubit>(() async =>
+      _i26.RecitationCubit(await gh.getAsync<_i22.ImplRecitationRepository>()));
+  gh.singletonAsync<_i27.ReciterCubit>(() async =>
+      _i27.ReciterCubit(await gh.getAsync<_i23.ImplReciterRepository>()));
   return getIt;
 }
 

@@ -53,6 +53,10 @@ abstract class AppColors {
   late Color scaffoldBgClearColor;
 
   ///
+  /// Refresh Header Color
+  late Color refreshHeaderColor;
+
+  ///
   /// Appbar Colors
   late Color appBarColor;
   late Color appBarGreyColor;
