@@ -48,7 +48,7 @@
             <span>{{ pageTitle}}</span>
         </mat-card-title>
         <div class="actions">
-            <button mat-flat-button color="accent" *ngIf="fileId" (click)="copy()">Duplicate</button>
+            <!-- <button mat-flat-button color="accent" *ngIf="fileId" (click)="copy()">Duplicate</button> -->
             <button routerLink="{{ fileId ? '../../' : '../' }}" mat-flat-button color="primary">
                 <mat-icon>keyboard_arrow_left</mat-icon>
                 Back to list

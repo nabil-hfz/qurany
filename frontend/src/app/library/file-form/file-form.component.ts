@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { LibraryService } from '../../services/library/library.service';
 import { Observable } from 'rxjs/internal/Observable';
+import { checkFormValidaty } from '../../common/form-validaty';
 // import { LibraryService } from '../library.service';
 
 @Component({
@@ -50,7 +51,7 @@ export class FileFormComponent implements OnInit {
     // if (this.fileId)
     {
       // this.setFile();
-      this.pageTitle = "Edit File";
+      // this.pageTitle = "Edit File";
     }
 
     this.initForm();
@@ -58,6 +59,8 @@ export class FileFormComponent implements OnInit {
       console.log('categories$ data ', data);
       return data;
     });
+    this.isDisabled$ = checkFormValidaty(this.form, this.loaded$);
+
   }
 
 
