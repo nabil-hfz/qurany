@@ -8,10 +8,53 @@ import { NgModule } from '@angular/core';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { FileFormComponent } from './library/file-form/file-form.component';
+import { FullComponent } from './shared/components/layouts/full/full.component';
 
 const routes: Routes = [
-    // Reciter Module
 
+    {
+        path: "",
+        component: FullComponent,
+        // canActivate: [AuthGuard],
+        children: [
+        //   {
+        //     path: "my-profile",
+        //     canLoad: [AuthGuard],
+        //     loadChildren: () =>
+        //       import("./my-profile/my-profile.module").then(
+        //         (m) => m.MyProfileModule
+        //       ),
+        //   },
+        //   {
+        //     path: "dashboard",
+        //     canLoad: [AuthGuard],
+        //     loadChildren: () =>
+        //       import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
+        //   },
+        //   {
+        //     path: ROUTES.USERS,
+        //     canLoad: [AuthGuard],
+        //     loadChildren: () =>
+        //       import("./mobile-users/mobile-users.module").then(
+        //         (m) => m.MobileUsersModule
+        //       ),
+        //   },
+        //   {
+        //     path: ROUTES.POSTS,
+        //     canLoad: [AuthGuard],
+        //     loadChildren: () =>
+        //       import("./posts/posts.module").then((m) => m.PostsModule),
+        //   },
+         
+          {
+            path: "",
+            redirectTo: "/dashboard",
+            pathMatch: "full",
+          },
+        ],
+      },
+
+    // Reciter Module
     { path: '', redirectTo: '/khatma', pathMatch: 'full' },
 
     // { path: 'khatmat', component: KhatmatGridComponent },

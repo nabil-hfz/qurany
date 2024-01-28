@@ -1,0 +1,14 @@
+
+<ng-container *ngIf="user$ | async as user">
+  <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+    <app-image-appbar  class="profile-pic" [imageId]="user?.image?.id ?? user?.image?? null" >
+    </app-image-appbar>
+  </button>
+  <mat-menu #profile="matMenu" class="mymegamenu">
+ 
+    <button mat-menu-item routerLink="my-profile"><mat-icon>account_box</mat-icon> Profile</button>
+     <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon> Sign Out
+    </button>
+  </mat-menu>
+</ng-container>
