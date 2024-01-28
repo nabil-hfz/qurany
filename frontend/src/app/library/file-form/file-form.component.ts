@@ -19,6 +19,26 @@ export class FileFormComponent implements OnInit {
   pageTitle = "Add File";
   fileId = -1;
 
+  get nameCtrl() {
+    return this.form.get("name") as FormControl;
+  }
+
+  get descriptionCtrl() {
+    return this.form.get("description") as FormControl;
+  }
+
+  get languageCtrl() {
+    return this.form.get("language") as FormControl;
+  }
+
+  get categoriesCtrl() {
+    return this.form.get("categories") as FormControl;
+  }
+
+  get fileCtrl() {
+    return this.form.get("file") as FormControl;
+  }
+
 
   constructor(
     private fb: FormBuilder,

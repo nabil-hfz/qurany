@@ -53,6 +53,7 @@ import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { FileFormComponent } from './library/file-form/file-form.component';
 import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -108,6 +109,7 @@ import { MatOptionModule } from '@angular/material/core';
     MatIconModule,
     MatOptionModule,
     MatButtonModule,
+    MatSelectModule,
 
     FormsModule,
     MatFormFieldModule,
@@ -121,7 +123,6 @@ import { MatOptionModule } from '@angular/material/core';
 
     MatSidenavModule,
     MatChipsModule,
-    MatButtonModule,
     FlexLayoutModule,
     HttpClientModule,
     //
