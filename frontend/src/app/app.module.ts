@@ -61,6 +61,7 @@ import { DemoMaterialModule } from './demo-material-module';
 import { AppHeaderComponent } from './shared/components/layouts/full/header/header.component';
 import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/sidebar.component';
 import { SharedModule } from './shared/shared.module';
+import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, PermissionsAccessDirective, ScrollableDirective } from './shared/accordion';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -109,6 +110,13 @@ import { SharedModule } from './shared/shared.module';
     // AbsoluteUrlPipe,
     SafeUrlPipe,
 
+    AccordionAnchorDirective,
+    AccordionLinkDirective,
+    AccordionDirective,
+    //
+    PermissionsAccessDirective,
+    ScrollableDirective,
+
   ],
   imports: [
     DemoMaterialModule,
@@ -126,7 +134,7 @@ import { SharedModule } from './shared/shared.module';
     NgxAudioPlayerModule,
     NgxDocViewerModule,
 
-    SharedModule,
+    // SharedModule,
 
     
 

@@ -8,7 +8,7 @@ import { RoleModel } from "../../models/role.model";
   selector: "[permissionsAccess]",
 })
 export class PermissionsAccessDirective implements OnInit, OnDestroy {
-  @Input() permission!: string;
+  @Input() permission?: string | undefined;
   @Input() displayType: string = "block";
 
   sub = new Subscription();
@@ -46,7 +46,7 @@ export class PermissionsAccessDirective implements OnInit, OnDestroy {
               userPermissions.push(...role?.permissions?.map((p) => p?.key));
           });
 
-          if (userPermissions.includes(this.permission)) return true;
+          if (this.permission && userPermissions.includes(this.permission)) return true;
           return false;
         })
       );

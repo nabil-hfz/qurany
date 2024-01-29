@@ -24,11 +24,12 @@ import { AskDialogComponent } from './components/ask-dialog/ask-dialog.component
 
 @NgModule({
   declarations: [
-    AccordionAnchorDirective,
-    AccordionLinkDirective,
-    AccordionDirective,
-    PermissionsAccessDirective,
-    ScrollableDirective,
+    // AccordionAnchorDirective,
+    // AccordionLinkDirective,
+    // AccordionDirective,
+    // //
+    // PermissionsAccessDirective,
+    // ScrollableDirective,
     // UploadSingleMediaComponent,
     // UploadProfileImageComponent,
     // ScrollableDirective,
@@ -42,9 +43,12 @@ import { AskDialogComponent } from './components/ask-dialog/ask-dialog.component
     AskDialogComponent,
   ],
   exports: [
-    AccordionAnchorDirective,
-    AccordionLinkDirective,
-    AccordionDirective,
+    // AccordionAnchorDirective,
+    // AccordionLinkDirective,
+    // AccordionDirective,
+    // //
+    // PermissionsAccessDirective,
+    // ScrollableDirective,
     // UploadSingleMediaComponent,
     // UploadProfileImageComponent,
     // ScrollableDirective,

@@ -1,12 +1,9 @@
 import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { MediaMatcher } from "@angular/cdk/layout";
-// import { MenuItems } from "../../../shared/menu-items/menu-items";
-// import { AuthSelector } from "src/app/store";
-import { Select } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { SystemUser } from "../../../../../models/user-system.model";
 import { MenuItems } from "../../../../menu-items/menu-items";
-// import { SystemUser } from "src/app/models/user-system.model";
+
 @Component({
   selector: "app-sidebar",
   templateUrl: "./sidebar.component.html",
