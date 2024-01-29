@@ -14,7 +14,8 @@
   <!-- ============================================================== -->
   <div class="profile-text">
     <a class="">
-      {{ user?.firstName }} {{ user?.lastName }}
+      Nabil Alhafez
+      <!-- {{ user?.firstName }} {{ user?.lastName }} -->
       <i class="ti-angle-down font-12 m-l-5"></i></a>
   </div>
   <mat-menu #sdprofile="matMenu" class="mymegamenu">
@@ -29,7 +30,7 @@
 
 <mat-nav-list appAccordion>
   <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
-    group="{{ menuitem.state }}" permissionsAccess [permission]="menuitem?.permission">
+    group="{{ menuitem!.state! }}" permissionsAccess [permission]="menuitem?.permission">
     <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
       <mat-icon>{{ menuitem.icon }}</mat-icon>
       <span>{{ menuitem.name }}</span>

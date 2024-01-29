@@ -60,6 +60,7 @@ import { FullComponent } from './shared/components/layouts/full/full.component';
 import { DemoMaterialModule } from './demo-material-module';
 import { AppHeaderComponent } from './shared/components/layouts/full/header/header.component';
 import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/sidebar.component';
+import { SharedModule } from './shared/shared.module';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -124,6 +125,8 @@ import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/si
     //
     NgxAudioPlayerModule,
     NgxDocViewerModule,
+
+    SharedModule,
 
     
 
