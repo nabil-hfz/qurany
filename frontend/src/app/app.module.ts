@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+
 // import { SummaryPipe } from './pipes/summary.pipe';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -54,6 +56,10 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { FileFormComponent } from './library/file-form/file-form.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { FullComponent } from './shared/components/layouts/full/full.component';
+import { DemoMaterialModule } from './demo-material-module';
+import { AppHeaderComponent } from './shared/components/layouts/full/header/header.component';
+import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/sidebar.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -79,6 +85,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReciterDetailsComponent,
     RecitationsListComponent,
     RecitationCardComponent,
+
     // SharedComponent
     PlayerComponent,
     KawtharunaAppBarComponent,
@@ -87,6 +94,10 @@ import { MatSelectModule } from '@angular/material/select';
     LibraryGridComponent,
     FileDetailsComponent,
     FileFormComponent,
+    FullComponent,
+    AppHeaderComponent,
+
+    AppSidebarComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -99,37 +110,22 @@ import { MatSelectModule } from '@angular/material/select';
 
   ],
   imports: [
+    DemoMaterialModule,
+    
     BrowserModule,
     BrowserAnimationsModule,
-
     CommonModule,
     RouterOutlet,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatOptionModule,
-    MatButtonModule,
-    MatSelectModule,
-
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatCardModule,
-    MatGridListModule,
-    MatProgressBarModule,
+    HttpClientModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
+    AppRoutingModule,
 
-    MatSidenavModule,
-    MatChipsModule,
-    FlexLayoutModule,
-    HttpClientModule,
     //
     NgxAudioPlayerModule,
-    AppRoutingModule,
     NgxDocViewerModule,
 
+    
 
   ],
   providers: [

@@ -12,74 +12,74 @@ import { FullComponent } from './shared/components/layouts/full/full.component';
 
 const routes: Routes = [
 
-    {
+  {
+    path: "",
+    component: FullComponent,
+    // canActivate: [AuthGuard],
+    children: [
+      //   {
+      //     path: "my-profile",
+      //     canLoad: [AuthGuard],
+      //     loadChildren: () =>
+      //       import("./my-profile/my-profile.module").then(
+      //         (m) => m.MyProfileModule
+      //       ),
+      //   },
+      //   {
+      //     path: "dashboard",
+      //     canLoad: [AuthGuard],
+      //     loadChildren: () =>
+      //       import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
+      //   },
+      //   {
+      //     path: ROUTES.USERS,
+      //     canLoad: [AuthGuard],
+      //     loadChildren: () =>
+      //       import("./mobile-users/mobile-users.module").then(
+      //         (m) => m.MobileUsersModule
+      //       ),
+      //   },
+      //   {
+      //     path: ROUTES.POSTS,
+      //     canLoad: [AuthGuard],
+      //     loadChildren: () =>
+      //       import("./posts/posts.module").then((m) => m.PostsModule),
+      //   },
+      // Reciter Module
+      { path: '', redirectTo: '/khatma', pathMatch: 'full' },
+
+      // { path: 'khatmat', component: KhatmatGridComponent },
+      { path: 'reciters', component: RecitersGridComponent },
+
+      // Khatma Module
+      // { path: 'khatmat-grid/:reciterId/:reciterName', component: KhatmatGridComponent },
+      { path: 'khatma', component: KhatmatGridComponent },
+      { path: 'khatma-details/:khatmaId/:khatmaName', component: KhatmaDetailsComponent },
+
+      // Library Module
+      { path: 'library', component: LibraryGridComponent },
+      { path: 'library-form', component: FileFormComponent },
+
+      { path: 'privacy-policy', component: PrivacyPolicyComponent },
+
+      { path: '**', component: NotFoundComponent },
+      {
         path: "",
-        component: FullComponent,
-        // canActivate: [AuthGuard],
-        children: [
-        //   {
-        //     path: "my-profile",
-        //     canLoad: [AuthGuard],
-        //     loadChildren: () =>
-        //       import("./my-profile/my-profile.module").then(
-        //         (m) => m.MyProfileModule
-        //       ),
-        //   },
-        //   {
-        //     path: "dashboard",
-        //     canLoad: [AuthGuard],
-        //     loadChildren: () =>
-        //       import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
-        //   },
-        //   {
-        //     path: ROUTES.USERS,
-        //     canLoad: [AuthGuard],
-        //     loadChildren: () =>
-        //       import("./mobile-users/mobile-users.module").then(
-        //         (m) => m.MobileUsersModule
-        //       ),
-        //   },
-        //   {
-        //     path: ROUTES.POSTS,
-        //     canLoad: [AuthGuard],
-        //     loadChildren: () =>
-        //       import("./posts/posts.module").then((m) => m.PostsModule),
-        //   },
-         
-          {
-            path: "",
-            redirectTo: "/dashboard",
-            pathMatch: "full",
-          },
-        ],
+        redirectTo: "/dashboard",
+        pathMatch: "full",
       },
+    ],
+  },
 
-    // Reciter Module
-    { path: '', redirectTo: '/khatma', pathMatch: 'full' },
 
-    // { path: 'khatmat', component: KhatmatGridComponent },
-    { path: 'reciters', component: RecitersGridComponent },
-
-    // Khatma Module
-    // { path: 'khatmat-grid/:reciterId/:reciterName', component: KhatmatGridComponent },
-    { path: 'khatma', component: KhatmatGridComponent },
-    { path: 'khatma-details/:khatmaId/:khatmaName', component: KhatmaDetailsComponent },
-
-    // Library Module
-    { path: 'library', component: LibraryGridComponent },
-    { path: 'library-form', component: FileFormComponent },
-
-    { path: 'privacy-policy', component: PrivacyPolicyComponent },
-
-    { path: '**', component: NotFoundComponent },
 
 ];
 
 
 
 @NgModule({
-    imports: [CommonModule, RouterModule.forRoot(routes, { useHash: true })],
-    exports: [RouterModule],
-    declarations: [],
+  imports: [CommonModule, RouterModule.forRoot(routes, { useHash: true })],
+  exports: [RouterModule],
+  declarations: [],
 })
 export class AppRoutingModule { }

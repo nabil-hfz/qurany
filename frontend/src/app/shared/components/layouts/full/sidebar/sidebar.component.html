@@ -5,8 +5,8 @@
   *ngIf="user$ | async as user">
   <!-- User profile image -->
   <div class="profile-img">
-    <app-image-appbar  class="profile-pic" [imageId]="user?.image?.id ?? user?.image?? null">
-    </app-image-appbar>
+    <!-- <app-image-appbar  class="profile-pic" [imageId]="user?.image?.id ?? user?.image?? null">
+    </app-image-appbar> -->
   </div>
   <!-- User profile text-->
   <!-- ============================================================== -->
@@ -26,6 +26,7 @@
     <button mat-menu-item><mat-icon>exit_to_app</mat-icon> Sign Out</button>
   </mat-menu>
 </div>
+
 <mat-nav-list appAccordion>
   <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
     group="{{ menuitem.state }}" permissionsAccess [permission]="menuitem?.permission">

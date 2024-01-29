@@ -2,9 +2,9 @@ import { Component, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Select, Store } from "@ngxs/store";
 import { Observable, Subscription } from "rxjs";
-import { SystemUser } from "src/app/models/user-system.model";
-import { ROUTES } from "src/app/shared/consts/routes";
-import { Auth, AuthSelector } from "src/app/store";
+// import { SystemUser } from "src/app/models/user-system.model";
+// import { ROUTES } from "src/app/shared/consts/routes";
+// import { Auth, AuthSelector } from "src/app/store";
 
 @Component({
   selector: "app-header",
@@ -12,8 +12,8 @@ import { Auth, AuthSelector } from "src/app/store";
   styleUrls: [],
 })
 export class AppHeaderComponent implements OnDestroy {
-  @Select(AuthSelector.user) user$!: Observable<SystemUser>;
-  sub = new Subscription();
+  // @Select(AuthSelector.user) user$!: Observable<SystemUser>;
+  // sub = new Subscription();
 
   defaultMedia = "assets/images/users/thumb-2.png";
 
@@ -21,15 +21,15 @@ export class AppHeaderComponent implements OnDestroy {
     }
 
   logout() {
-    this.sub.add(
-      this.store.dispatch(new Auth.LogoutAction()).subscribe((state) => {
-        if (state?.auth?.isLoggedIn) return;
-        this.router.navigate(["./auth", ROUTES.LOGIN]);
-      })
-    );
+    // this.sub.add(
+    //   this.store.dispatch(new Auth.LogoutAction()).subscribe((state) => {
+    //     if (state?.auth?.isLoggedIn) return;
+    //     this.router.navigate(["./auth", ROUTES.LOGIN]);
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 }

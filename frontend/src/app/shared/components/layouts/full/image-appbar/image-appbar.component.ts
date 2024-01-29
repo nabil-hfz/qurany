@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Observable } from "rxjs";
 import { finalize, map, takeUntil } from "rxjs/operators";
-import { ClearSubscriptionsComponent } from "src/app/shared/components/clear-subscriptions/clear-subscriptions.component";
-import { UploadHelperService } from "src/app/shared/services/upload-helper.service";
+import { ClearSubscriptionsComponent } from "../../../clear-subscriptions/clear-subscriptions.component";
+// import { ClearSubscriptionsComponent } from "src/app/shared/components/clear-subscriptions/clear-subscriptions.component";
+// import { UploadHelperService } from "src/app/shared/services/upload-helper.service";
 
 @Component({
   selector: 'app-image-appbar',
@@ -29,7 +30,9 @@ export class ImageAppbarComponent
 
   @Output() newImage = new EventEmitter<any>();
 
-  constructor(private upload: UploadHelperService) {
+  constructor(
+    // private upload: UploadHelperService
+    ) {
     super();
   }
 
@@ -37,11 +40,11 @@ export class ImageAppbarComponent
   }
 
   getImage() {
-    this.upload.getFileData(this._imageId).pipe(map(res => res.url!))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(res => {
-        this.imageUrl = res;
-      })
+    // this.upload.getFileData(this._imageId).pipe(map(res => res.url!))
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(res => {
+    //     this.imageUrl = res;
+    //   })
   }
 }
 
