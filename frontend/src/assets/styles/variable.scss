@@ -1,0 +1,201 @@
+/*
+Template Name: Material Pro Admin
+Author: Themedesigner
+Email: niravjoshi87@gmail.com
+File: scss
+*/
+// Variables
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
+
+$bodyfont: "Poppins", sans-serif;
+$headingfont: "Poppins", sans-serif;
+
+@import "~@angular/material/theming";
+
+/*Material Theme Colors*/
+$podlines: (
+  50: #fdeae9,
+  100: #fbcac7,
+  200: #f8a7a2,
+  300: #f5837d,
+  400: #f26961,
+  500: #f04e45,
+  600: #ee473e,
+  700: #ec3d36,
+  800: #e9352e,
+  900: #e5251f,
+  contrast: (50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$podlife: (
+  50 :#ECE9F1,
+  100 :#CFC8DC,
+  200 :#AFA3C4,
+  300 :#8E7EAC,
+  400 :#76629B,
+  500 :#5E4689,
+  600 :#563F81,
+  700 :#4C3776,
+  800 :#422F6C,
+  900 :#312059,
+  contrast: (50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$podlife-accent: (
+  50: #E9F4F5,
+  100: #C9E4E7,
+  200: #A5D3D7,
+  300: #81C1C7,
+  400: #66B3BB,
+  500: #4BA6AF,
+  600: #449EA8,
+  700: #3B959F,
+  800: #338B96,
+  900: #237B86,
+   contrast: (50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$primary: mat-palette($podlife, 500);
+$accent: mat-palette($podlife-accent, 500);
+$warn: mat-palette($mat-pink, 500);
+$theme: mat-light-theme($primary, $accent, $warn);
+$background: map-get($theme, background);
+$foreground: map-get($theme, foreground);
+
+@include mat-core();
+
+$custom-typography: mat-typography-config($font-family: "Poppins, sans-serif",
+  );
+
+// Override the typography in the core CSS.
+@include mat-core($custom-typography);
+
+// Default Theme
+@include angular-material-theme($theme);
+
+// Dark Theme
+
+// @TODO: move the theme colors into a separate file
+/*Theme Colors*/
+
+$topbar: #2196f3;
+$sidebar: #fff;
+$sidebar-white: #e5edef;
+$sidebar-alt: #f2f6f8;
+$bodycolor: #F8F8F8;
+$headingtext: #455a64;
+$bodytext: #67757c;
+$sidebar-text: #607d8b;
+$sidebar-icons: #99abb4;
+
+$font-16: 16px;
+
+$light-text: #a6b7bf;
+$themecolor: #f04e45;
+$themecolor-alt: #ffb459;
+$themecolor-dark: #028ee1;
+
+// common color
+$activated: #4BA6AF;
+$activated-bg: #EFF8E4CC;
+$activated-light: #eff8e4;
+
+$deactivated: #F04E45;
+$deactivated-bg: #FDEBEB;
+$deactivated-light: #fdebeb;
+
+$pending: #7B5C9B;
+$pending-bg: #7B5C9B1A;
+
+$pending-light: #ffecd9;
+
+/*bootstrap Color*/
+$danger: #f04e45;
+$success: #26c6da;
+$warning: #ffb22b;
+$primary: #7460ee;
+$info: #1e88e5;
+$inverse: #2f3d4a;
+$muted: #99abb4;
+$dark: #263238;
+$light: #f2f4f8;
+$extra-light: #ebf3f5;
+$secondary: #727b84;
+
+/*Light colors*/
+$light-danger: #f9e7eb;
+$light-success: #e8fdf8;
+$light-warning: #fff8ec;
+$light-primary: #f1effd;
+$light-info: #e3f3fd;
+$light-inverse: #f6f6f6;
+$light-megna: #e0f2f4;
+
+$danger-dark: #e6294b;
+$success-dark: #1eacbe;
+$warning-dark: #e9ab2e;
+$primary-dark: #6352ce;
+$info-dark: #028ee1;
+$red-dark: #d61f1f;
+$inverse-dark: #232a37;
+$dark-transparent: rgba(0, 0, 0, 0.05);
+
+/*Normal Color*/
+$white: #ffffff;
+$red: #fb3a3a;
+$yellow: #a0aec4;
+$purple: #7460ee;
+$blue: #02bec9;
+$megna: #00897b;
+
+/*Extra Variable*/
+$rgt: right;
+$lft: left;
+$border: rgba(120, 130, 140, 0.13);
+$table-border: #f3f1f1;
+$card-brd: #d7dfe3;
+$dark-text: #848a96;
+$radius: 4px;
+$form-brd: #d9d9d9;

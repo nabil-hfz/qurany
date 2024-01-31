@@ -20,8 +20,8 @@ export class AppErrorHandler implements ErrorHandler {
       alert('Bad request.');
     } else {
       // Handle other unexpected errors by logging them to the console.
-      console.error('Error: ' + error.message);
-      console.error('Error Stack Trace: ' + error.stack);
+      console.error('Error: ' + error?.message);
+      console.error('Error Stack Trace: ' + error?.stack);
     }
   }
 }

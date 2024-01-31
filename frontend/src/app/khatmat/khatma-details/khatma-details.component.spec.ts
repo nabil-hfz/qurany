@@ -11,7 +11,7 @@ import { RecitationsListComponent } from '../../recitations/recitations-list/rec
 import { RecitationsService } from '../../services/recitations/recitations.service';
 import { PlayerService } from '../../services/player/player.service';
 import { ItunesService } from '../../services/itunes/itunes.service';
-import { KawtharunaAppBarComponent } from '../../shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { KawtharunaAppBarComponent } from '../../shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 describe('KhatmaDetailsComponent', () => {

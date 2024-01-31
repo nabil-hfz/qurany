@@ -15,6 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+
 // import { SummaryPipe } from './pipes/summary.pipe';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -25,8 +27,8 @@ import { AppRoutingModule } from './app.routes';
 import { AppErrorHandler } from './common/app-error-handler';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 // import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 import { MatSidenavModule } from "@angular/material/sidenav";
@@ -41,10 +43,10 @@ import { RecitationsListComponent } from './recitations/recitations-list/recitat
 // import { MatListModule, MatIconModule } from '@angular/material';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { PlayerComponent } from './shared/player/player.component';
+import { PlayerComponent } from './shared/components/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
-import { KawtharunaAppBarComponent } from './shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
-import { TrackControlComponent } from './shared/track-control/track-control.component';
+import { KawtharunaAppBarComponent } from './shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { TrackControlComponent } from './shared/components/track-control/track-control.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { LibraryService } from './services/library/library.service';
@@ -53,6 +55,13 @@ import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { FileFormComponent } from './library/file-form/file-form.component';
 import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { FullComponent } from './shared/components/layouts/full/full.component';
+import { DemoMaterialModule } from './demo-material-module';
+import { AppHeaderComponent } from './shared/components/layouts/full/header/header.component';
+import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/sidebar.component';
+import { SharedModule } from './shared/shared.module';
+import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, PermissionsAccessDirective, ScrollableDirective } from './shared/accordion';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -78,6 +87,7 @@ import { MatOptionModule } from '@angular/material/core';
     ReciterDetailsComponent,
     RecitationsListComponent,
     RecitationCardComponent,
+
     // SharedComponent
     PlayerComponent,
     KawtharunaAppBarComponent,
@@ -86,6 +96,10 @@ import { MatOptionModule } from '@angular/material/core';
     LibraryGridComponent,
     FileDetailsComponent,
     FileFormComponent,
+    FullComponent,
+    AppHeaderComponent,
+
+    AppSidebarComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -96,39 +110,33 @@ import { MatOptionModule } from '@angular/material/core';
     // AbsoluteUrlPipe,
     SafeUrlPipe,
 
+    AccordionAnchorDirective,
+    AccordionLinkDirective,
+    AccordionDirective,
+    //
+    PermissionsAccessDirective,
+    ScrollableDirective,
+
   ],
   imports: [
+    DemoMaterialModule,
+    
     BrowserModule,
     BrowserAnimationsModule,
-
     CommonModule,
     RouterOutlet,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    MatOptionModule,
-    MatButtonModule,
-
-    FormsModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatCardModule,
-    MatGridListModule,
-    MatProgressBarModule,
+    HttpClientModule,
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
+    AppRoutingModule,
 
-    MatSidenavModule,
-    MatChipsModule,
-    MatButtonModule,
-    FlexLayoutModule,
-    HttpClientModule,
     //
     NgxAudioPlayerModule,
-    AppRoutingModule,
     NgxDocViewerModule,
 
+    // SharedModule,
+
+    
 
   ],
   providers: [
