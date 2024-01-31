@@ -1,5 +1,3 @@
-// import { Localization } from "./utils.model";
-
 import { LocalizedModel } from "./localized.model";
 
 export interface RoleModel {
