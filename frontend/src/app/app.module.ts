@@ -51,7 +51,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { LibraryService } from './services/library/library.service';
 import { FileDetailsComponent } from './library/file-details/file-details.component';
-import { SafeUrlPipe } from './common/pipes/safe-url.pipe';
+import { SafeUrlPipe } from './shared/pipes/safe-url.pipe';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import { FileFormComponent } from './library/file-form/file-form.component';
 import { MatOptionModule } from '@angular/material/core';

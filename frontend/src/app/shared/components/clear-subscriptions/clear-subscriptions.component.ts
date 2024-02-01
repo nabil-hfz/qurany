@@ -9,7 +9,7 @@ export class ClearSubscriptionsComponent implements OnDestroy {
   destroy$ = new Subject();
 
   ngOnDestroy() {
-    this.destroy$.next();
+    this.destroy$.next(null);
     this.destroy$.complete();
   }
 }
