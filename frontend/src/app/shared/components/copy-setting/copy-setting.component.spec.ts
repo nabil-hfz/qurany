@@ -13,8 +13,6 @@ describe('CopySettingComponent', () => {
       declarations: [CopySettingComponent],
       providers: [
         { provide: MatDialogRef, useValue: { close: closeSpy } },
-
-        // { provide: MatDialogRef, useValue: { closeSpy } },
         { provide: MAT_DIALOG_DATA, useValue: { settings: [{ label: 'Test Label', key: 'test_key', checked: true }] } }
       ],
       schemas: [NO_ERRORS_SCHEMA]
