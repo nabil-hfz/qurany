@@ -6,12 +6,15 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('CopySettingComponent', () => {
   let component: CopySettingComponent;
   let fixture: ComponentFixture<CopySettingComponent>;
-
+  let closeSpy: any;
   beforeEach(async () => {
+    closeSpy = jasmine.createSpy('close');
     await TestBed.configureTestingModule({
       declarations: [CopySettingComponent],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
+        { provide: MatDialogRef, useValue: { close: closeSpy } },
+
+        // { provide: MatDialogRef, useValue: { closeSpy } },
         { provide: MAT_DIALOG_DATA, useValue: { settings: [{ label: 'Test Label', key: 'test_key', checked: true }] } }
       ],
       schemas: [NO_ERRORS_SCHEMA]
@@ -33,10 +36,10 @@ describe('CopySettingComponent', () => {
   });
 
   it('should close the dialog with the correct list data on save', () => {
-    const dialogRefSpy = spyOn(TestBed.get(MatDialogRef), 'close');
-    component.list = [{ key: 'test_key', value: 'Test Value' }]; // Assuming this list is populated somehow in your component
+    // const dialogRefSpy = spyOn(TestBed.get(MatDialogRef), 'close');
+    component.list = [{ key: 'test_key', value: 'Test Value' }];
     component.save();
-    expect(dialogRefSpy).toHaveBeenCalledWith({ list: [{ key: 'test_key', value: 'Test Value' }] });
+    expect(closeSpy).toHaveBeenCalledWith({ list: [{ key: 'test_key', value: 'Test Value' }] });
   });
 
 });
