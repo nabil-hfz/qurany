@@ -19,11 +19,11 @@ export class ItunesService {
   constructor(private http: HttpClient) { }
 
   search(param: string) {
-    return this.http.jsonp(
-      `${API.SEARCH
-      }callback=JSONP_CALLBACK&media=music&country=US&entity=musicArtist&term=${param}`,
-      'jsonp'
-    );
+    // return this.http.jsonp(
+    //   `${API.SEARCH
+    //   }callback=JSONP_CALLBACK&media=music&country=US&entity=musicArtist&term=${param}`,
+    //   'jsonp'
+    // );
   }
 
   getAlbum(artistId: number) {
