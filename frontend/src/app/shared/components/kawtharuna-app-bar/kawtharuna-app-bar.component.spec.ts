@@ -3,31 +3,35 @@ import { KawtharunaAppBarComponent } from './kawtharuna-app-bar.component';
 import { ItunesService } from '../../../services/itunes/itunes.service';
 import { of } from 'rxjs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('KawtharunaAppBarComponent', () => {
   let component: KawtharunaAppBarComponent;
   let fixture: ComponentFixture<KawtharunaAppBarComponent>;
-  let itunesServiceMock: ItunesService;
+  let itunesServiceMock: any;
+
 
   beforeEach(async () => {
     // Mock ItunesService
-    // itunesServiceMock = {
-    //   search: jasmine.createSpy('search').and.returnValue(of([]))
-    // };
+    itunesServiceMock = {
+      search: jasmine.createSpy('search').and.returnValue(of([]))
+    };
 
     await TestBed.configureTestingModule({
-      declarations: [ KawtharunaAppBarComponent ],
+      declarations: [KawtharunaAppBarComponent],
       providers: [
         { provide: ItunesService, useValue: itunesServiceMock }
       ],
-      imports: [ MatToolbarModule ] 
+
+      imports: [MatToolbarModule, HttpClientTestingModule]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(KawtharunaAppBarComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -47,10 +51,10 @@ describe('KawtharunaAppBarComponent', () => {
   it('should call search method with expected parameter', () => {
     const testParam = 'test';
     component.search(testParam);
-    // expect(itunesServiceMock.search).toHaveBeenCalledWith(testParam);
+    expect(itunesServiceMock.search).toHaveBeenCalledWith(testParam);
   });
 
 });
 
 
-// ng test --include=src/app/shared/kawtharuna-app-bar/kawtharuna-app-bar.component.spec.ts
+// ng test --include=src/app/shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component.spec.ts

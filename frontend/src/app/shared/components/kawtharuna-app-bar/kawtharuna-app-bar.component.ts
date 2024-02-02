@@ -14,7 +14,7 @@ export class KawtharunaAppBarComponent implements OnInit, AfterViewInit {
   withSearch: boolean = true;
 
   hideResult: boolean = false;
-  
+
   @ViewChild('searchBox') searchInput: ElementRef | undefined;
   searchResults: Array<any> = [];
 
@@ -39,8 +39,9 @@ export class KawtharunaAppBarComponent implements OnInit, AfterViewInit {
   }
 
 
-  search(param: any) {
-    // this.ituneService.search(param).subscribe(
+  search(param: any): any {
+    this.ituneService.search(param);
+    // .subscribe(
     //   (data: any) => {
     //     // console.log(data['results']);
     //     this.hideResult = false;
@@ -48,5 +49,6 @@ export class KawtharunaAppBarComponent implements OnInit, AfterViewInit {
     //   },
     //   err => console.log(err)
     // );
+    return param;
   }
 }
