@@ -8,8 +8,16 @@ import { ItunesService } from './services/itunes/itunes.service';
 })
 export class AppComponent implements OnInit {
   title = 'kawtharuna';
-  
+  public isExpanded = true;
   constructor() { }
+
+
+  public toggleMenu() {
+    this.isExpanded = !this.isExpanded;
+  }
+
 
   ngOnInit() { }
 }
+
+

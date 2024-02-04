@@ -62,6 +62,7 @@ import { AppHeaderComponent } from './shared/components/layouts/full/header/head
 import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/sidebar.component';
 import { SharedModule } from './shared/shared.module';
 import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, PermissionsAccessDirective, ScrollableDirective } from './shared/accordion';
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -100,6 +101,7 @@ import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, P
     AppHeaderComponent,
 
     AppSidebarComponent,
+    SidenavComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -120,7 +122,7 @@ import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, P
   ],
   imports: [
     DemoMaterialModule,
-    
+
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
@@ -136,7 +138,7 @@ import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, P
 
     // SharedModule,
 
-    
+
 
   ],
   providers: [

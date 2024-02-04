@@ -18,3 +18,11 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background: #fafafa;
 }
+
+// override material inline style to allow mini nav state
+mat-sidenav[style] {
+    visibility: visible !important;
+  }
+  .mat-drawer {
+    transform: none !important;
+  }
