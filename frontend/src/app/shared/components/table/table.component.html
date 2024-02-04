@@ -1,24 +1,24 @@
 <div class="table-wrapper" scrollable (scrollPosition)="onScroll.emit($event)">
   <table mat-table [dataSource]="data">
     <!-- Start Text Columns -->
-    <ng-container *ngFor="let col of textCols" [matColumnDef]="col?.columnName">
+    <ng-container *ngFor="let col of textCols" [matColumnDef]="col!.columnName">
       <th mat-header-cell *matHeaderCellDef>{{ col?.columnLabel }}</th>
       <td mat-cell *matCellDef="let element">
         <ng-container [ngSwitch]="col?.type">
           <p
             *ngSwitchCase="'description'"
             class="desc-column"
-            [matTooltip]="element[col?.columnName]"
+            [matTooltip]="element[col!.columnName]"
           >
-            {{ element[col?.columnName] || "Not Found" }}
+            {{ element[col!.columnName] || "Not Found" }}
           </p>
 
           <span class="date" *ngSwitchCase="'date'">
-            {{ element[col?.columnName] | date: "medium" }}
+            {{ element[col!.columnName] | date: "medium" }}
           </span>
 
-          <p class="desc-column" [matTooltip]="element[col?.columnName]" *ngSwitchDefault>{{
-            element[col?.columnName] || "Not Found"
+          <p class="desc-column" [matTooltip]="element[col!.columnName]" *ngSwitchDefault>{{
+            element[col!.columnName] || "Not Found"
           }}</p>
         </ng-container>
       </td>
@@ -33,7 +33,7 @@
       <th mat-header-cell *matHeaderCellDef>{{ col?.columnLabel }}</th>
       <td mat-cell *matCellDef="let element">
         <img
-          [src]="element[col?.columnName] || defaultMedia"
+          [src]="element[col!.columnName] || defaultMedia"
           class="rounded-circle avatar"
           alt="image"
         />
@@ -44,12 +44,12 @@
     <!-- Start Status -->
     <ng-container
       *ngFor="let col of statusCols"
-      [matColumnDef]="col?.columnName"
+      [matColumnDef]="col!.columnName"
     >
       <th mat-header-cell *matHeaderCellDef>{{ col?.columnLabel }}</th>
       <td mat-cell *matCellDef="let element">
-        <div [class]="element[col?.columnName]?.cssClasses">{{
-          element[col?.columnName]?.label || "Not Found"
+        <div [class]="element[col!.columnName]?.cssClasses">{{
+          element[col!.columnName]?.label || "Not Found"
         }}</div>
       </td>
     </ng-container>
