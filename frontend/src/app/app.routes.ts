@@ -12,11 +12,11 @@ import { FullComponent } from './shared/components/layouts/full/full.component';
 
 const routes: Routes = [
 
-  {
-    path: "",
-    component: FullComponent,
-    // canActivate: [AuthGuard],
-    children: [
+  // {
+  //   path: "",
+  //   component: FullComponent,
+  //   // canActivate: [AuthGuard],
+  //   children: [
       //   {
       //     path: "my-profile",
       //     canLoad: [AuthGuard],
@@ -68,8 +68,8 @@ const routes: Routes = [
         redirectTo: "/dashboard",
         pathMatch: "full",
       },
-    ],
-  },
+  //   ],
+  // },
 
 
 
