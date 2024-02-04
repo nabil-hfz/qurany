@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
           <div class="double-bounce2"></div>
         </div>
     </div>`,
-    styles: `
+  styles: `
     .preloader {
     position: absolute;
     margin: 0 auto;
@@ -81,22 +81,21 @@ export class SpinnerComponent implements OnDestroy {
     private router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
-    // Subscribe to router events to show/hide the spinner during navigation.
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.isSpinnerVisible = true; // Show the spinner when navigation starts.
+        this.isSpinnerVisible = true;
       } else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        this.isSpinnerVisible = false; // Hide the spinner when navigation ends or encounters an error/cancellation.
+        this.isSpinnerVisible = false;
       }
     });
   }
 
   ngOnDestroy(): void {
-    // Ensure that the spinner is hidden when the component is destroyed.
     this.isSpinnerVisible = false;
   }
 }
