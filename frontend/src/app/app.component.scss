@@ -1,7 +1,9 @@
-.body_container {
+.content-container {
   margin-top: 65px;
   // margin-bottom: 120px;
   padding-bottom: 120px;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 
 .mat-elevation-z3 {
