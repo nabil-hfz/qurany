@@ -12,11 +12,12 @@ import { FullComponent } from './shared/components/layouts/full/full.component';
 
 const routes: Routes = [
 
-  // {
-  //   path: "",
-  //   component: FullComponent,
-  //   // canActivate: [AuthGuard],
-  //   children: [
+  {
+    path: "",
+    component: FullComponent,
+
+    // canActivate: [AuthGuard],
+    children: [
       //   {
       //     path: "my-profile",
       //     canLoad: [AuthGuard],
@@ -46,8 +47,8 @@ const routes: Routes = [
       //       import("./posts/posts.module").then((m) => m.PostsModule),
       //   },
       // Reciter Module
-      { path: '', redirectTo: '/khatma', pathMatch: 'full' },
 
+      { path: '', redirectTo: '/khatma', pathMatch: 'full' },
       // { path: 'khatmat', component: KhatmatGridComponent },
       { path: 'reciters', component: RecitersGridComponent },
 
@@ -63,13 +64,12 @@ const routes: Routes = [
       { path: 'privacy-policy', component: PrivacyPolicyComponent },
 
       { path: '**', component: NotFoundComponent },
-      {
-        path: "",
-        redirectTo: "/dashboard",
-        pathMatch: "full",
-      },
-  //   ],
-  // },
+
+    ],
+  },
+
+  { path: '', redirectTo: '/khatma', pathMatch: 'full' },
+  { path: 'khatma', component: KhatmatGridComponent },
 
 
 
