@@ -17,37 +17,8 @@ const routes: Routes = [
     component: FullComponent,
 
     // canActivate: [AuthGuard],
+    canActivate: [],
     children: [
-      //   {
-      //     path: "my-profile",
-      //     canLoad: [AuthGuard],
-      //     loadChildren: () =>
-      //       import("./my-profile/my-profile.module").then(
-      //         (m) => m.MyProfileModule
-      //       ),
-      //   },
-      //   {
-      //     path: "dashboard",
-      //     canLoad: [AuthGuard],
-      //     loadChildren: () =>
-      //       import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
-      //   },
-      //   {
-      //     path: ROUTES.USERS,
-      //     canLoad: [AuthGuard],
-      //     loadChildren: () =>
-      //       import("./mobile-users/mobile-users.module").then(
-      //         (m) => m.MobileUsersModule
-      //       ),
-      //   },
-      //   {
-      //     path: ROUTES.POSTS,
-      //     canLoad: [AuthGuard],
-      //     loadChildren: () =>
-      //       import("./posts/posts.module").then((m) => m.PostsModule),
-      //   },
-      // Reciter Module
-
       { path: '', redirectTo: '/khatma', pathMatch: 'full' },
       // { path: 'khatmat', component: KhatmatGridComponent },
       { path: 'reciters', component: RecitersGridComponent },
@@ -69,10 +40,6 @@ const routes: Routes = [
   },
 
   { path: '', redirectTo: '/khatma', pathMatch: 'full' },
-  { path: 'khatma', component: KhatmatGridComponent },
-
-
-
 ];
 
 
