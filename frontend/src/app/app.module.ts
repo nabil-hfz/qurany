@@ -31,7 +31,6 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 // import { SpinnerComponent } from './shared/spinner/spinner.component';
 
-import { MatSidenavModule } from "@angular/material/sidenav";
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
 import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.component';
@@ -41,8 +40,6 @@ import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { RecitationsService } from './services/recitations/recitations.service';
 import { RecitationsListComponent } from './recitations/recitations-list/recitations-list.component';
 // import { MatListModule, MatIconModule } from '@angular/material';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { PlayerComponent } from './shared/components/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
@@ -131,15 +128,9 @@ import { SidenavComponent } from './shared/components/sidenav/sidenav.component'
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
     AppRoutingModule,
-
     //
     NgxAudioPlayerModule,
     NgxDocViewerModule,
-
-    // SharedModule,
-
-
-
   ],
   providers: [
     KhatmaService,

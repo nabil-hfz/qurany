@@ -8,9 +8,7 @@ import {
   PermissionsAccessDirective,
   ScrollableDirective,
 } from "./accordion";
-// import { UploadSingleMediaComponent } from "./upload-single-media/upload-single-media.component";
-import { DemoMaterialModule } from "../demo-material-module";
-import { CommonModule } from "@angular/common";
+
 // import { ScrollableDirective } from "./directives/scrollabel.directive";
 import { ConfirmDialogComponent } from "./components/confirm-dialog/confirm-dialog.component";
 // import { PermissionsAccessDirective } from "./directives/permissions-access.directive";
@@ -58,7 +56,7 @@ import { AskDialogComponent } from './components/ask-dialog/ask-dialog.component
     NotificationComponent,
     // AccessObjValuePipe
   ],
-  imports: [DemoMaterialModule, CommonModule],
+  imports: [],
   providers: [MenuItems],
 })
 export class SharedModule {}
