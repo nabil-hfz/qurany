@@ -12,11 +12,9 @@ import {
 // import { ScrollableDirective } from "./directives/scrollabel.directive";
 import { ConfirmDialogComponent } from "./components/confirm-dialog/confirm-dialog.component";
 // import { PermissionsAccessDirective } from "./directives/permissions-access.directive";
-import { TableComponent } from "./components/table/table.component";
 import { ClearSubscriptionsComponent } from "./components/clear-subscriptions/clear-subscriptions.component";
 import { NotificationComponent } from './components/notification/notification.component';
 // import { AccessObjValuePipe } from './pipes/access-obj-value.pipe';
-import { CopySettingComponent } from './components/copy-setting/copy-setting.component';
 import { AskDialogComponent } from './components/ask-dialog/ask-dialog.component';
 // import { UploadProfileImageComponent } from "../my-profile/upload-profile-image/upload-profile-image.component";
 
@@ -33,11 +31,9 @@ import { AskDialogComponent } from './components/ask-dialog/ask-dialog.component
     // ScrollableDirective,
     ConfirmDialogComponent,
     // PermissionsAccessDirective,
-    TableComponent,
     ClearSubscriptionsComponent,
     NotificationComponent,
     // AccessObjValuePipe,
-    CopySettingComponent,
     AskDialogComponent,
   ],
   exports: [
@@ -51,7 +47,6 @@ import { AskDialogComponent } from './components/ask-dialog/ask-dialog.component
     // UploadProfileImageComponent,
     // ScrollableDirective,
     // PermissionsAccessDirective,
-    TableComponent,
     ClearSubscriptionsComponent,
     NotificationComponent,
     // AccessObjValuePipe

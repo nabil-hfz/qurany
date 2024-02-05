@@ -124,13 +124,14 @@ import { SidenavComponent } from './shared/components/sidenav/sidenav.component'
     BrowserAnimationsModule,
     CommonModule,
     RouterOutlet,
-    HttpClientModule,
+
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
     AppRoutingModule,
     //
     NgxAudioPlayerModule,
     NgxDocViewerModule,
+    HttpClientModule,
   ],
   providers: [
     KhatmaService,
