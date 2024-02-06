@@ -60,6 +60,8 @@ import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/si
 import { SharedModule } from './shared/shared.module';
 import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, PermissionsAccessDirective, ScrollableDirective } from './shared/accordion';
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { LibraryCategoryService } from './services/library/library-category.service';
+import { LibraryLanguageService } from './services/library/library-language.service';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -137,6 +139,8 @@ import { SidenavComponent } from './shared/components/sidenav/sidenav.component'
     KhatmaService,
     RecitersService,
     RecitationsService,
+    LibraryCategoryService,
+    LibraryLanguageService,
     LibraryService,
     {
       provide: ErrorHandler,
