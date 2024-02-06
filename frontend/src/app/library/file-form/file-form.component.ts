@@ -55,8 +55,7 @@ export class FileFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // if (this.fileId)
-    {
+    if (this.fileId){
       // this.setFile();
       // this.pageTitle = "Edit File";
     }
@@ -67,9 +66,8 @@ export class FileFormComponent implements OnInit {
       console.log('categories$ data ', data);
       return data;
     });
-    this.languages$ = this.libraryService.getLanguages();
-    this.categories$ = this.libraryService.getCategories();
-
+    this.languages$ = this.libraryLanguageService.getLanguages();
+    this.categories$ = this.libraryCategoryService.getCategories();
 
   }
 
@@ -80,28 +78,12 @@ export class FileFormComponent implements OnInit {
       description: [''],
       language: ['', Validators.required],
       categories: [[], Validators.required],
-      file: [null, Validators.required]
+      // file: [null, Validators.required]
     });
     this.isDisabled$ = checkFormValidaty(this.form, this.loaded$);
-
-
-    // this.new FormGroup({
-    //   name: new FormGroup({
-    //     en: new FormControl(null, Validators.required),
-    //     ar: new FormControl(""),
-    //   }),
-    //   description: new FormGroup({
-    //     en: new FormControl(null, Validators.required),
-    //     ar: new FormControl(""),
-    //   }),
-    //   status: new FormControl(null, Validators.required),
-    //   category: new FormControl(null, Validators.required),
-    //   skill: new FormControl(6),
-    //   image: new FormControl(null),
-    //   clubFees: new FormControl(null, [Validators.required, Validators.min(0)]),
-    //   autoJoined: new FormControl(true, [Validators.required]),
-    // });
   }
+
+
   onFileSelect(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -113,17 +95,19 @@ export class FileFormComponent implements OnInit {
     if (this.form.valid) {
       const formData = new FormData();
       Object.entries(this.form.value).forEach(([key, value]) => {
-        if (key === 'categories') {
-          // value.forEach((v: any) => formData.append('categories[]', v));
-        } else {
-          // formData.append(key, value);
-        }
+        console.log(key, value);
+        // if (key === 'categories') {
+        //   value.forEach((v: any) => formData.append('categories[]', v));
+        // } else {
+
+        //   formData.append(key, value);
+        // }
       });
 
-      this.libraryService.createFileEntry(formData).subscribe({
-        next: (response) => console.log('File entry created successfully', response),
-        error: (error) => console.error('Error creating file entry', error)
-      });
+      // this.libraryService.createFileEntry(formData).subscribe({
+      //   next: (response) => console.log('File entry created successfully', response),
+      //   error: (error) => console.error('Error creating file entry', error)
+      // });
     }
   }
 
