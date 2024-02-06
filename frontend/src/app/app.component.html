@@ -1,4 +1,4 @@
-<!-- <mat-sidenav-container class="sidenav-container" autosize>
+<mat-sidenav-container class="sidenav-container" autosize>
 
     <mat-sidenav #sidenav fixedInViewport="true" mode="side" opened="{{ true }}">
         <side-nav (toggleMenu)="toggleMenu()" [isExpanded]="isExpanded"></side-nav>
@@ -16,67 +16,8 @@
             <app-player></app-player>
         </mat-toolbar>
     </mat-sidenav-content>
-</mat-sidenav-container> -->
+</mat-sidenav-container>
 
-
-<!-- ============================================================== -->
-<!-- Main wrapper - style you can find in pages.scss -->
-<!-- ============================================================== -->
-<div class="main-container">
-    <!-- ============================================================== -->
-    <!-- Topbar - style you can find in header.scss -->
-    <!-- ============================================================== -->
-    <mat-toolbar color="primary" class="topbar telative">
-        <!-- ============================================================== -->
-        <!-- Logo - style you can find in header.scss -->
-        <!-- ============================================================== -->
-        <div>
-            <h3 style="letter-spacing: 12px">PODLIFE</h3>
-        </div>
-        <!-- ============================================================== -->
-        <!-- sidebar toggle -->
-        <!-- ============================================================== -->
-
-        <button mat-icon-button (click)="snav.toggle()" value="sidebarclosed">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span fxFlex></span>
-        <!-- ============================================================== -->
-        <!-- app header component - style you can find in header.scss / header.component.ts-->
-        <!-- ============================================================== -->
-        <app-header></app-header>
-    </mat-toolbar>
-    <!-- ============================================================== -->
-    <!-- End Topbar - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
-        <!-- ============================================================== -->
-        <!-- Sidebar - style you can find in sidebar.scss -->
-        <!-- ============================================================== -->
-        <mat-sidenav #snav id="snav" class="dark-sidebar pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'"
-            fixedTopGap="0" [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches">
-            <app-sidebar></app-sidebar>
-        </mat-sidenav>
-        <!-- ============================================================== -->
-        <!-- Sidebar - style you can find in sidebar.scss -->
-        <!-- ============================================================== -->
-
-        <!-- ============================================================== -->
-        <!-- Page container - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <mat-sidenav-content class="page-wrapper">
-            <div class="page-content">
-                <router-outlet>
-                    <!-- <app-spinner></app-spinner> -->
-                </router-outlet>
-            </div>
-
-        </mat-sidenav-content>
-        <!-- ============================================================== -->
-        <!-- Page container - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-    </mat-sidenav-container>
-</div>
 
 <!-- <div class="body_container">
     <router-outlet></router-outlet>

@@ -32,6 +32,7 @@ const routes: Routes = [
       { path: 'library-form', component: FileFormComponent },
 
       { path: 'privacy-policy', component: PrivacyPolicyComponent },
+      { path: 'file-form', component: FileFormComponent },
 
       { path: '**', component: NotFoundComponent },
 
