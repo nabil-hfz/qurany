@@ -8,15 +8,23 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 export class UploadLibraryFileComponent {
   loadingMedia!: boolean;
 
-  private _fileId!: string;
+  private _fileUrl!: string;
+  private _fileName?: string;
   errorMsg?: string;
 
-  get fileId() {
-    return this._fileId;
+  get fileUrl() {
+    return this._fileUrl;
   }
 
-  @Input() set fileId(data: string) {
-    this._fileId = data;
+  get fileName() {
+    return this._fileName;
+  }
+
+  get hasFile() {
+    return this._fileName;
+  }
+  @Input() set fileUrl(value: string) {
+    this._fileUrl = value;
 
   }
 
@@ -27,27 +35,20 @@ export class UploadLibraryFileComponent {
   ngOnInit(): void { }
 
   onFileSelected(e: any) {
+    this.loadingMedia = true;
+
     const file: File = e.target.files[0];
     this.errorMsg = "";
     if (!["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].some(type => file.type === type)) {
       this.errorMsg = "Only PDF, DOC, and DOCX files are allowed.";
+      this.loadingMedia = false;
+      this._fileName = undefined;
       return;
     }
+    this._fileName = file.name;
+    this.newFile.emit(file);
 
-    // Your file upload logic here
-    this.loadingMedia = true;
+    this.loadingMedia = false;
 
-
-    
-    // Example: Upload the file and emit the event
-    // this.upload.uploadAndSave(file, "docs/library")
-    //   .subscribe(res => {
-    //     this.loadingMedia = false;
-    //     this.newFile.emit(res.id);
-    //     // Handle the file URL or ID as needed
-    //   }, error => {
-    //     this.loadingMedia = false;
-    //     this.errorMsg = "Error uploading file";
-    //   });
   }
 }

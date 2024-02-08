@@ -1,4 +1,3 @@
-// import { Component, OnInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { LibraryService } from '../../services/library/library.service';
@@ -9,7 +8,6 @@ import { LibraryCategoryService } from '../../services/library/library-category.
 import { LibraryLanguageModel } from '../../models/library-language.model';
 import { LibraryCategoryModel } from '../../models/library-category.model';
 import { of } from 'rxjs';
-// import { LibraryService } from '../library.service';
 
 @Component({
   selector: 'file-form',
@@ -25,26 +23,6 @@ export class FileFormComponent implements OnInit {
   loaded$: Observable<boolean> = of(true);
   pageTitle = "Add File";
   fileId = -1;
-
-  get nameCtrl() {
-    return this.form.get("name") as FormControl;
-  }
-
-  get descriptionCtrl() {
-    return this.form.get("description") as FormControl;
-  }
-
-  get languageCtrl() {
-    return this.form.get("language") as FormControl;
-  }
-
-  get categoriesCtrl() {
-    return this.form.get("categories") as FormControl;
-  }
-
-  get fileCtrl() {
-    return this.form.get("file") as FormControl;
-  }
 
 
   constructor(
@@ -84,12 +62,35 @@ export class FileFormComponent implements OnInit {
     this.isDisabled$ = checkFormValidaty(this.form, this.loaded$);
   }
 
+  get nameCtrl() {
+    return this.form.get("name") as FormControl;
+  }
+
+  get descriptionCtrl() {
+    return this.form.get("description") as FormControl;
+  }
+
+  get languageCtrl() {
+    return this.form.get("language") as FormControl;
+  }
+
+  get categoriesCtrl() {
+    return this.form.get("categories") as FormControl;
+  }
+
+  get fileCtrl() {
+    return this.form.get("file") as FormControl;
+  }
+
 
   onFileSelect(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.form.patchValue({ file: file });
-    }
+    // const file = (event.target as HTMLInputElement).files?.[0];
+    console.log('file ', event);
+    // if (file) {
+    //   this.form.patchValue({ file: file });
+    //   this.nameCtrl?.setValue(file.name);
+    //   // this.form.patchValue({ name: file.name });
+    // }
   }
 
   submit() {
@@ -112,10 +113,18 @@ export class FileFormComponent implements OnInit {
     }
   }
 
-  copy() { }
+  setFile(file: any) {
+    if (file) {
+      let name: string[] = file.name.split('.');
+      if (name.length > 1) {
+        name = name.slice(0, name.length - 1);
+      } else {
+        name = name;
+      }
 
-  setFile(eve: any) {
-    this.fileCtrl.setValue(eve);
+      this.form.patchValue({ file: file, name: name });
+
+    }
   }
 
 }
