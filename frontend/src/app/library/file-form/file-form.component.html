@@ -42,9 +42,9 @@
 </div> -->
 
 <mat-card>
-    
+
     <mat-progress-bar *ngIf="!(loaded$ | async)" mode="indeterminate"></mat-progress-bar>
-    
+
     <div class="title">
         <mat-card-title>
             <span>{{ pageTitle}}</span>
@@ -64,23 +64,27 @@
                 <!-- <app-upload-club-image [imageId]="imageCtrl.value" (newImage)="setImage($event)">
                 </app-upload-club-image> -->
 
-                <div class="autoJoinedAndFees">
+                <div class="stretch-row">
                     <mat-form-field appearance="outline">
                         <mat-label>Name</mat-label>
-                        <input matInput formControlName="name" />
-                        <mat-error *ngIf="nameCtrl?.errors?.['required']">this field is required</mat-error>
+                        <input matInput formControlName="name" minlength="10" maxlength="80" />
+                        <mat-error *ngIf="nameCtrl?.errors?.['required']">This field is required</mat-error>
+                        <mat-error *ngIf="nameCtrl?.errors?.['minlength']">Minimum length of 10 characters is
+                            required</mat-error>
+                        <mat-error *ngIf="nameCtrl?.errors?.['maxLength']">Maximum length of 80 characters
+                            exceeded</mat-error>
                     </mat-form-field>
                 </div>
 
-                <div class="autoJoinedAndFees">
+                <div class="stretch-row">
                     <mat-form-field class="first-row" appearance="outline">
                         <mat-label>Description</mat-label>
-                        <textarea matInput formControlName="description" rows="10" required></textarea>
-                        <mat-error *ngIf="descriptionCtrl?.errors?.['required']">this field is required</mat-error>
+                        <textarea formControlName="description" matInput rows="7"></textarea>
+                        <mat-hint class="optional">Optional</mat-hint>
                     </mat-form-field>
                 </div>
 
-                <div class="autoJoinedAndFees">
+                <div class="two-columns">
                     <mat-form-field appearance="outline">
                         <mat-label>Language</mat-label>
                         <mat-select formControlName="language">
@@ -88,6 +92,7 @@
                                 {{ language.name }}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="languageCtrl?.errors?.['required']">This field is required</mat-error>
                     </mat-form-field>
 
 
@@ -98,9 +103,10 @@
                                 {{ cat.name.en }}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="categoriesCtrl?.errors?.['required']">This field is required</mat-error>
                     </mat-form-field>
                 </div>
-                <!-- <div class="autoJoinedAndFees"> -->
+                <!-- <div class="stretch-row"> -->
                 <!-- <mat-form-field appearance="outline">
                         <mat-label>Auto join for new user</mat-label>
                         <mat-select [value]="true" formControlName="autoJoined">
@@ -112,7 +118,7 @@
                 <!-- <mat-form-field appearance="outline">
                         <mat-label>Club Fees</mat-label>
                         <input matInput formControlName="clubFees" type="number" min="0" />
-                        <mat-error *ngIf="clubFeesCtrl?.errors?.['required']">this field is required</mat-error>
+                        <mat-error *ngIf="clubFeesCtrl?.errors?.['required']">This field is required</mat-error>
                         <mat-error *ngIf="clubFeesCtrl?.errors?.['min']">should be at least 0</mat-error>
                     </mat-form-field> -->
                 <!-- </div> -->
@@ -125,7 +131,7 @@
 
     <mat-card-actions align="end">
 
-        
+
         <button mat-flat-button type="submit" (click)="submit()" [disabled]="isDisabled$ | async" class="action"
             color="primary">
             Save
