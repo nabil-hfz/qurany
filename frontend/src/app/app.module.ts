@@ -62,6 +62,7 @@ import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, P
 import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
 import { LibraryCategoryService } from './services/library/library-category.service';
 import { LibraryLanguageService } from './services/library/library-language.service';
+import { UploadLibraryFileComponent } from './shared/components/upload-file/upload-library-file.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -98,6 +99,7 @@ import { LibraryLanguageService } from './services/library/library-language.serv
     FileFormComponent,
     FullComponent,
     AppHeaderComponent,
+    UploadLibraryFileComponent,
 
     AppSidebarComponent,
     SidenavComponent,
@@ -134,6 +136,7 @@ import { LibraryLanguageService } from './services/library/library-language.serv
     NgxAudioPlayerModule,
     NgxDocViewerModule,
     HttpClientModule,
+    
   ],
   providers: [
     KhatmaService,

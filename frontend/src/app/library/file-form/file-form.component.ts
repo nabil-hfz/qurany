@@ -46,6 +46,7 @@ export class FileFormComponent implements OnInit {
     return this.form.get("file") as FormControl;
   }
 
+
   constructor(
     private fb: FormBuilder,
     private libraryService: LibraryService,
@@ -55,7 +56,7 @@ export class FileFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    if (this.fileId){
+    if (this.fileId) {
       // this.setFile();
       // this.pageTitle = "Edit File";
     }
@@ -78,7 +79,7 @@ export class FileFormComponent implements OnInit {
       description: [''],
       language: ['', Validators.required],
       categories: [[], Validators.required],
-      // file: [null, Validators.required]
+      file: [null, Validators.required]
     });
     this.isDisabled$ = checkFormValidaty(this.form, this.loaded$);
   }
@@ -112,5 +113,9 @@ export class FileFormComponent implements OnInit {
   }
 
   copy() { }
+
+  setFile(eve: any) {
+    this.fileCtrl.setValue(eve);
+  }
 
 }
