@@ -4,6 +4,7 @@ export abstract class AppStoragePathsConst {
 
   static audiosPath = "audios";
   static imagesPath = "images";
+  static imagesUserPath = `${AppStoragePathsConst.imagesPath}/users`;
   private static libraryPath = "library";
 
   static filesImageCollection = "files_image";

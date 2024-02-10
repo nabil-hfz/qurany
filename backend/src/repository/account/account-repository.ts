@@ -5,25 +5,22 @@ import { uploaderService } from "../../services/uploader-service";
 import { logInfo } from "../../utils/logger";
 import { FilesRepository, filesRepository } from "../file/files-repository";
 import { AppAudiosConst, AppImagesKhatmeConst } from "../../constant/app-storage-paths.const";
-import { KhatmeRepository, khatmeRepository } from "../khatma/khatme-repository";
 import { EntityTarget } from "typeorm";
-import { RecitationEntity } from "../../db/entities/recitation.entity";
 import { ReciterEntity } from "../../db/entities/reciter.entity";
-import { AppPagination } from "../../middlewares/pagination.middleware";
+import { UserEntity } from "../../db/entities/user.entity";
 
-export class RecitationRepository extends Repository<RecitationEntity> {
+export class AccountRepository extends Repository<UserEntity> {
 
   constructor(
-    model: EntityTarget<RecitationEntity>,
-    private filesRepository: FilesRepository,
-    private khatmeRepository: KhatmeRepository) {
+    model: EntityTarget<UserEntity>,
+    private filesRepository: FilesRepository
+  ) {
     super(model);
   }
 
-  async createRecitations(
+  async createUser(
     request: CreateRecitationReqBody,
-    images: Express.Multer.File[],
-    audios: Express.Multer.File[]
+    image: Express.Multer.File,
   ): Promise<any> {
 
     const khatmaId = Number(request.khatmaId);
@@ -61,8 +58,8 @@ export class RecitationRepository extends Repository<RecitationEntity> {
 
 
     let index = Number(request.sequence) ?? 1;
-    const docs: RecitationEntity[] = filesResult.map((data) => {
-      const result = new RecitationEntity();
+    const docs: UserEntity[] = filesResult.map((data) => {
+      const result = new UserEntity();
 
       result.audio = data.audioFile;
       result.durationInMilli = data.duration;
@@ -85,65 +82,33 @@ export class RecitationRepository extends Repository<RecitationEntity> {
     const imgs = docs.map(recitation => recitation.image);
     const auds = docs.map(recitation => recitation.audio);
     await this.filesRepository.createAll(imgs);
-    await this.filesRepository.createAll(auds);
 
-    const savedRecitation = await this.createAll(docs,);
 
-    const temp = savedRecitation?.map(recitation => ({
-      id: recitation?.id,
-      audio: recitation?.audio.url,
-      image: recitation?.image.url,
-      title: recitation?.name,
-    }));
+    const savedRecitation = await this.createAll(docs);
 
-    return temp;
+  }
+  async login(
+    email: string,
+    password: string
+  ) {
+
+
+
+    return await this.getAll();
   }
 
-  async getRecitationById(recitationId: number): Promise<RecitationEntity | null> {
-    const recitationRes = await this.getOneById(recitationId
-      // , "image audio reciter"
-    );
-    if (!recitationRes || !recitationRes?.id) {
+  async getUserProfile(resourceId: number): Promise<UserEntity | null> {
+    const resource = await this.getOneById(resourceId);
+    if (!resource || !resource?.id) {
       return null;
     }
 
-    return recitationRes;
+    return resource;
   }
 
-  async getRecitations(
-    reciterId: number | undefined,
-    khatmaId: number | undefined,
-    pagination?: AppPagination
-  ) {
-    let options: any = { reciter: {} };
-
-    if (khatmaId) {
-      options.khatmaId = khatmaId;
-    }
-
-    if (reciterId) {
-      options.reciter.id = reciterId;
-    }
-
-    return await this.getAll(
-      {
-        conditions: {
-          ...options,
-          ...pagination
-        },
-        relations: {
-          image: true,
-          audio: true,
-          reciter: true,
-        }
-      }
-
-    );
-  }
 }
 
-export const recitationRepository = new RecitationRepository(
-  RecitationEntity,
-  filesRepository,
-  khatmeRepository
+export const accountsService = new AccountRepository(
+  UserEntity,
+  filesRepository
 );

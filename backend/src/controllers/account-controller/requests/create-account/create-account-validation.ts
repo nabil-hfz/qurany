@@ -11,15 +11,15 @@ export function checkIfIsValidCreateAccountReqBody(body: CreateAccountReqBody) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'Invalid "email"');
   }
 
-  if (!body?.password?.length || body.password.length < 6) {
+  if (!body?.password?.length || body.password.length < 8) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'Invalid "password"');
   }
 
-  if (body?.role != "superAdmin" && body.role != "user") {
+  if (body?.role != "superAdmin" && body.role != "admin" && body.role != "user") {
     throw new HttpResponseError(
       400,
       "BAD_REQUEST",
-      'Invalid "role", neither "storeOwner" or "buyer"'
+      'Invalid "role", neither "superAdmin", "admin" or "user"'
     );
   }
 }

@@ -11,6 +11,7 @@ export class AccountController implements Controller {
   url = AppRoutes.accountRoute;
 
   initialize(httpServer: HttpServer): void {
+
     httpServer.post({
       path: `${this.url}/register`,
       requestHandler: this.register.bind(this),
@@ -21,6 +22,7 @@ export class AccountController implements Controller {
       path: `${this.url}/login`,
       requestHandler: this.logIn.bind(this),
     });
+
   }
 
   private readonly register: RequestHandler = async (req, res, next) => {
@@ -36,7 +38,6 @@ export class AccountController implements Controller {
     );
 
     res.send(new CreateAccountResBody(refreshedUser));
-    // next();
   };
 
 
