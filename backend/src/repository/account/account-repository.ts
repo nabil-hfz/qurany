@@ -4,10 +4,12 @@ import { HttpResponseError } from "../../utils/http-response-error";
 import { uploaderService } from "../../services/uploader-service";
 import { logInfo } from "../../utils/logger";
 import { FilesRepository, filesRepository } from "../file/files-repository";
-import { AppAudiosConst, AppImagesKhatmeConst } from "../../constant/app-storage-paths.const";
+import { AppAudiosConst, AppImagesKhatmeConst, AppStoragePathsConst } from "../../constant/app-storage-paths.const";
 import { EntityTarget } from "typeorm";
 import { ReciterEntity } from "../../db/entities/reciter.entity";
 import { UserEntity } from "../../db/entities/user.entity";
+import { CreateAccountReqBody } from "../../controllers/account-controller/requests/create-account/create-account-req-body";
+import { FileEntity } from "../../db/entities/file.entity";
 
 export class AccountRepository extends Repository<UserEntity> {
 
@@ -19,41 +21,27 @@ export class AccountRepository extends Repository<UserEntity> {
   }
 
   async createUser(
-    request: CreateRecitationReqBody,
+    request: CreateAccountReqBody,
     image: Express.Multer.File,
   ): Promise<any> {
 
-    const khatmaId = Number(request.khatmaId);
 
-    const khatma = await this.khatmeRepository.getOneById(khatmaId);
+    let filesResult: FileEntity;
 
-    if (!khatma || !khatma?.id) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'No khatma found with this "khatmaId"');
+    if (image) {
+      const imagePath = AppStoragePathsConst.imagesUserPath;
+      logInfo('imagePath is: ' + imagePath);
+      filesResult = await uploaderService
+        .saveFile(image, imagePath);
     }
 
-    const reciter: ReciterEntity | undefined = khatma.reciter;
-    const reciterId: number | undefined = reciter?.id;
-    if (!reciter || !reciterId) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'No reciter found with this "khatmaId"');
-    }
+    let isExisted = this._repository.exists({
+      where: {
+        email: request.email
+      }
+    });
 
-
-    const reciterIndex = reciter.reciterIndex;
-
-    const audiosPath = AppAudiosConst[reciterIndex] + `/${khatma.recitationType}`;
-    const imagesPath = AppImagesKhatmeConst[reciterIndex] + `/${khatma.recitationType}`;
-
-
-    logInfo('khatmaId is: ' + khatmaId);
-    logInfo('audiosPath is: ' + audiosPath);
-    logInfo('imagesPath is: ' + imagesPath);
-
-    const filesResult = await uploaderService
-      .handleFiles(images, audios, audiosPath, imagesPath);
-
-    if (!filesResult || !filesResult.length) {
-      throw new HttpResponseError(400, "BAD_REQUEST", 'No files found "filesResult"');
-    }
+    let user: UserEntity = new UserEntity();
 
 
 
