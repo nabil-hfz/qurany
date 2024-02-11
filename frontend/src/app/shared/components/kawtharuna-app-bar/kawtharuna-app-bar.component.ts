@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ItunesService } from '../../../services/itunes/itunes.service';
+import { LoginComponent } from '../../../login/login.component';
+import { MatDialog } from '@angular/material/dialog';
 // import { fromEvent, debounceTime } from 'rxjs';
 
 @Component({
@@ -18,7 +20,7 @@ export class KawtharunaAppBarComponent implements OnInit, AfterViewInit {
   @ViewChild('searchBox') searchInput: ElementRef | undefined;
   searchResults: Array<any> = [];
 
-  constructor(private ituneService: ItunesService) { }
+  constructor(private ituneService: ItunesService, public dialog: MatDialog,) { }
 
   ngOnInit() { }
 
@@ -50,5 +52,13 @@ export class KawtharunaAppBarComponent implements OnInit, AfterViewInit {
     //   err => console.log(err)
     // );
     return param;
+  }
+
+  onLogin() {
+    console.log('onLogin');
+    this.dialog.open(LoginComponent, {
+      width: '30%',
+      // disableClose: false,
+    });
   }
 }

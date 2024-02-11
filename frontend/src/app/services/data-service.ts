@@ -28,9 +28,9 @@ export class DataService<T extends any> {
    * @returns An observable of the list of resources.
    */
   getAll(params?: HttpParams, path?: string): Observable<any> {
-    let url =  this.URL;
-     if (path)
-     url = `${this.URL}/${path}`;
+    let url = this.URL;
+    if (path)
+      url = `${this.URL}/${path}`;
     return this.http
       .get<T[]>(url, { params: params })
       .pipe(
@@ -60,9 +60,12 @@ export class DataService<T extends any> {
    * @param resource - The resource data to create.
    * @returns An observable of the created resource.
    */
-  create(resource: any): Observable<T> {
+  create(resource: any, path?: string): Observable<T> {
+    let url = this.URL;
+    if (path)
+      url = `${this.URL}/${path}`;
     return this.http
-      .post<T>(this.URL, resource)
+      .post<T>(url, resource)
       .pipe(catchError(this.handleError));
   }
 
