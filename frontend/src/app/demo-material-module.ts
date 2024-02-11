@@ -51,6 +51,7 @@ import { ObserversModule } from "@angular/cdk/observers";
 import { PortalModule } from "@angular/cdk/portal";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { HttpClientModule } from "@angular/common/http";
 
 /**
  * NgModule that includes all Material modules that are required to serve the demo-app.
@@ -107,6 +108,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    HttpClientModule,
+  ],
+  imports: [
+    HttpClientModule,
   ],
 })
 export class DemoMaterialModule {}

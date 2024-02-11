@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItunesService } from './services/itunes/itunes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,20 @@ import { ItunesService } from './services/itunes/itunes.service';
 })
 export class AppComponent implements OnInit {
   title = 'kawtharuna';
-  
-  constructor() { }
+  public isExpanded = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      console.log('event is AppComponent ' + event);
+    });
+  }
+
+
+  public toggleMenu() {
+    this.isExpanded = !this.isExpanded;
+  }
+
 
   ngOnInit() { }
 }
+

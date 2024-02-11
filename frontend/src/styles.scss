@@ -10,11 +10,21 @@
 
 html,
 body {
-    height: 100%;
+  height: 100%;
+  color-scheme: #06668E;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background: #fafafa;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #fafafa;
+}
+
+// override material inline style to allow mini nav state
+mat-sidenav[style] {
+  visibility: visible !important;
+}
+
+.mat-drawer {
+  transform: none !important;
 }

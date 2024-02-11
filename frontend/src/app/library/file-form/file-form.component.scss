@@ -30,12 +30,23 @@
     display: flex;
     gap: 10px;
 }
-.autoJoinedAndFees{
+.stretch-row{
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 3fr;
+    gap: 1rem;
+}
+
+.two-columns{
+    margin-top: 1rem;
     display: grid;
     grid-template-columns: 3fr 3fr;
     gap: 1rem;
 }
 
+.optional{
+    color: grey;
+}
 
 
 // .dialog-progress-bar {

@@ -31,7 +31,6 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 // import { SpinnerComponent } from './shared/spinner/spinner.component';
 
-import { MatSidenavModule } from "@angular/material/sidenav";
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
 import { RecitersGridComponent } from './rectiers/reciters-grid/reciters-grid.component';
@@ -41,8 +40,6 @@ import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { RecitationsService } from './services/recitations/recitations.service';
 import { RecitationsListComponent } from './recitations/recitations-list/recitations-list.component';
 // import { MatListModule, MatIconModule } from '@angular/material';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
 import { PlayerComponent } from './shared/components/player/player.component';
 import { RecitationCardComponent } from './recitations/recitation-card/recitation-card.component';
 import { KawtharunaAppBarComponent } from './shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
@@ -62,6 +59,10 @@ import { AppHeaderComponent } from './shared/components/layouts/full/header/head
 import { AppSidebarComponent } from './shared/components/layouts/full/sidebar/sidebar.component';
 import { SharedModule } from './shared/shared.module';
 import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, PermissionsAccessDirective, ScrollableDirective } from './shared/accordion';
+import { SidenavComponent } from './shared/components/sidenav/sidenav.component';
+import { LibraryCategoryService } from './services/library/library-category.service';
+import { LibraryLanguageService } from './services/library/library-language.service';
+import { UploadLibraryFileComponent } from './shared/components/upload-file/upload-library-file.component';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -98,8 +99,10 @@ import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, P
     FileFormComponent,
     FullComponent,
     AppHeaderComponent,
+    UploadLibraryFileComponent,
 
     AppSidebarComponent,
+    SidenavComponent,
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -120,29 +123,27 @@ import { AccordionAnchorDirective, AccordionDirective, AccordionLinkDirective, P
   ],
   imports: [
     DemoMaterialModule,
-    
+
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
     RouterOutlet,
-    HttpClientModule,
+
     ToastrModule.forRoot({ preventDuplicates: true }),
     // RouterModule.forRoot(routes),
     AppRoutingModule,
-
     //
     NgxAudioPlayerModule,
     NgxDocViewerModule,
-
-    // SharedModule,
-
+    HttpClientModule,
     
-
   ],
   providers: [
     KhatmaService,
     RecitersService,
     RecitationsService,
+    LibraryCategoryService,
+    LibraryLanguageService,
     LibraryService,
     {
       provide: ErrorHandler,

@@ -1,0 +1,24 @@
+<section [class.sidenav]="isExpanded" [style.width]="isExpanded ? '200px' : '65px'">
+    <div class="{{isExpanded ? 'expanded-header' : 'collapsed-header'}}">
+        <button mat-icon-button (click)="toggleMenu.emit(null)">
+            <mat-icon style="justify-content: center;">
+                {{ isExpanded ? "keyboard_backspace" : "dehaze" }}
+            </mat-icon>
+        </button>
+    </div>
+
+
+    <mat-nav-list appAccordion>
+        <mat-list-item appAccordionLink *ngFor="let route of routeLinks" routerLinkActive="selected">
+            <div appAccordionToggle [routerLink]="[ route.link]" class="list-item-content"
+                [matTooltip]="!isExpanded ? route.name : ''" matTooltipPosition="right">
+                <mat-icon>{{route.icon}}</mat-icon>
+
+                <span *ngIf="isExpanded">{{ route.name }}</span>
+                <span fxFlex></span>
+
+            </div>
+        </mat-list-item>
+    </mat-nav-list>
+
+</section>

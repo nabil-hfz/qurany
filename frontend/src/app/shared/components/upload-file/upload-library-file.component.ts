@@ -1,63 +1,54 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Observable } from "rxjs";
-import { finalize, map, takeUntil } from "rxjs/operators";
-import { ClearSubscriptionsComponent } from "../clear-subscriptions/clear-subscriptions.component";
-// import { ClearSubscriptionsComponent } from "src/app/shared/components/clear-subscriptions/clear-subscriptions.component";
-// import { UploadHelperService } from "src/app/shared/services/upload-helper.service";
 
 @Component({
   selector: "upload-library-file",
   templateUrl: "./upload-library-file.component.html",
   styleUrls: ["./upload-library-file.component.scss"],
 })
-export class UploadClubImageComponent
-  extends ClearSubscriptionsComponent
-  implements OnInit {
+export class UploadLibraryFileComponent {
   loadingMedia!: boolean;
-  imageUrl!: string;
-  private _imageId!: string;
+
+  private _fileUrl!: string;
+  private _fileName?: string;
   errorMsg?: string;
 
-  get imageId() {
-    return this._imageId
-  }
-  @Input() set imageId(data: string) {
-    this._imageId = data;
-    this.getImage()
+  get fileUrl() {
+    return this._fileUrl;
   }
 
-  @Output() newImage = new EventEmitter<any>();
-
-  constructor(private upload: UploadHelperService) {
-    super();
+  get fileName() {
+    return this._fileName;
   }
 
-  ngOnInit(): void {
+  get hasFile() {
+    return this._fileName;
+  }
+  @Input() set fileUrl(value: string) {
+    this._fileUrl = value;
+
   }
 
-  getImage() {
-    this.upload.getFileData(this.imageId).pipe(map(res => res.url!))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(res => {
-        this.imageUrl = res
-      })
-  }
+  @Output() newFile = new EventEmitter<any>();
+
+  constructor() { }
+
+  ngOnInit(): void { }
 
   onFileSelected(e: any) {
+    this.loadingMedia = true;
+
     const file: File = e.target.files[0];
     this.errorMsg = "";
-    if (!["png", "jpeg", "jpg"].some((type) => file.type.includes(type))) {
-      this.errorMsg = "only images allowed to upload";
+    if (!["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].some(type => file.type === type)) {
+      this.errorMsg = "Only PDF, DOC, and DOCX files are allowed.";
+      this.loadingMedia = false;
+      this._fileName = undefined;
       return;
     }
+    this._fileName = file.name;
+    this.newFile.emit(file);
 
-    this.loadingMedia = true;
-    this.upload.uploadAndSave(file, "images/clubs")
-      .pipe(takeUntil(this.destroy$), finalize(() => this.loadingMedia = false))
-      .subscribe(res => {
-        this.loadingMedia = false;
-        this.newImage.emit(res.id);
-        this.imageUrl = res.url
-      })
+    this.loadingMedia = false;
+
   }
 }

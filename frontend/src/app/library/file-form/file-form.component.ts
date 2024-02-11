@@ -1,10 +1,13 @@
-// import { Component, OnInit } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { LibraryService } from '../../services/library/library.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { checkFormValidaty } from '../../common/form-validaty';
-// import { LibraryService } from '../library.service';
+import { LibraryLanguageService } from '../../services/library/library-language.service';
+import { LibraryCategoryService } from '../../services/library/library-category.service';
+import { LibraryLanguageModel } from '../../models/library-language.model';
+import { LibraryCategoryModel } from '../../models/library-category.model';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'file-form',
@@ -13,12 +16,51 @@ import { checkFormValidaty } from '../../common/form-validaty';
 })
 export class FileFormComponent implements OnInit {
   form!: FormGroup;
-  languages$ = this.libraryService.getLanguages();
-  categories$ = this.libraryService.getCategories();
-  isDisabled$!: Observable<boolean>;
-  loaded$!: Observable<boolean>;
+  languages$: Observable<LibraryLanguageModel[]> = of([]);
+  categories$: Observable<LibraryCategoryModel[]> = of([]);
+
+  isDisabled$: Observable<boolean> = of(false);
+  loaded$: Observable<boolean> = of(true);
   pageTitle = "Add File";
   fileId = -1;
+
+
+  constructor(
+    private fb: FormBuilder,
+    private libraryService: LibraryService,
+    private libraryLanguageService: LibraryLanguageService,
+    private libraryCategoryService: LibraryCategoryService,
+  ) { }
+
+
+  ngOnInit(): void {
+    if (this.fileId) {
+      // this.setFile();
+      // this.pageTitle = "Edit File";
+    }
+
+    this.initForm();
+
+    this.categories$.pipe((data) => {
+      console.log('categories$ data ', data);
+      return data;
+    });
+    this.languages$ = this.libraryLanguageService.getLanguages();
+    this.categories$ = this.libraryCategoryService.getCategories();
+
+  }
+
+
+  initForm() {
+    this.form = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(80)]],
+      description: [''],
+      language: ['', Validators.required],
+      categories: [[], Validators.required],
+      file: [null, Validators.required]
+    });
+    this.isDisabled$ = checkFormValidaty(this.form, this.loaded$);
+  }
 
   get nameCtrl() {
     return this.form.get("name") as FormControl;
@@ -41,81 +83,48 @@ export class FileFormComponent implements OnInit {
   }
 
 
-  constructor(
-    private fb: FormBuilder,
-    private libraryService: LibraryService,
-  ) { }
-
-
-  ngOnInit(): void {
-    // if (this.fileId)
-    {
-      // this.setFile();
-      // this.pageTitle = "Edit File";
-    }
-
-    this.initForm();
-    this.categories$.pipe((data) => {
-      console.log('categories$ data ', data);
-      return data;
-    });
-    this.isDisabled$ = checkFormValidaty(this.form, this.loaded$);
-
-  }
-
-
-  initForm() {
-    this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(80)]],
-      description: [''],
-      language: ['', Validators.required],
-      categories: [[], Validators.required],
-      file: [null, Validators.required]
-    });
-
-
-    // this.new FormGroup({
-    //   name: new FormGroup({
-    //     en: new FormControl(null, Validators.required),
-    //     ar: new FormControl(""),
-    //   }),
-    //   description: new FormGroup({
-    //     en: new FormControl(null, Validators.required),
-    //     ar: new FormControl(""),
-    //   }),
-    //   status: new FormControl(null, Validators.required),
-    //   category: new FormControl(null, Validators.required),
-    //   skill: new FormControl(6),
-    //   image: new FormControl(null),
-    //   clubFees: new FormControl(null, [Validators.required, Validators.min(0)]),
-    //   autoJoined: new FormControl(true, [Validators.required]),
-    // });
-  }
   onFileSelect(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.form.patchValue({ file: file });
-    }
+    // const file = (event.target as HTMLInputElement).files?.[0];
+    console.log('file ', event);
+    // if (file) {
+    //   this.form.patchValue({ file: file });
+    //   this.nameCtrl?.setValue(file.name);
+    //   // this.form.patchValue({ name: file.name });
+    // }
   }
 
   submit() {
     if (this.form.valid) {
       const formData = new FormData();
       Object.entries(this.form.value).forEach(([key, value]) => {
-        if (key === 'categories') {
-          // value.forEach((v: any) => formData.append('categories[]', v));
-        } else {
-          // formData.append(key, value);
-        }
+        console.log(key, value);
+        // if (key === 'categories') {
+        //   value.forEach((v: any) => formData.append('categories[]', v));
+        // } else {
+
+        //   formData.append(key, value);
+        // }
       });
 
-      this.libraryService.createFileEntry(formData).subscribe({
-        next: (response) => console.log('File entry created successfully', response),
-        error: (error) => console.error('Error creating file entry', error)
-      });
+      // this.libraryService.createFileEntry(formData).subscribe({
+      //   next: (response) => console.log('File entry created successfully', response),
+      //   error: (error) => console.error('Error creating file entry', error)
+      // });
     }
   }
 
-  copy() { }
+  setFile(file: any) {
+    if (file) {
+      let name: string[] = file.name.split('.');
+      if (name.length > 1) {
+        name = name.slice(0, name.length - 1);
+      } else {
+        name = name;
+      }
+
+      this.form.patchValue({ file: file, name: name });
+
+    }
+  }
 
 }

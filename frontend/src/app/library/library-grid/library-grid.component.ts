@@ -5,6 +5,7 @@ import { LibraryService } from '../../services/library/library.service';
 import { FileFormComponent } from '../file-form/file-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FileDetailsComponent } from '../file-details/file-details.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'library-grid',
@@ -16,14 +17,14 @@ export class LibraryGridComponent implements OnInit {
   values$: Observable<LibraryModel[]> | undefined;
   selectedFile: LibraryModel | null = null;
 
-  constructor(private service: LibraryService, public dialog: MatDialog) { }
+  constructor(private service: LibraryService, public dialog: MatDialog, private router: Router) { }
 
   openAddFileDialog() {
-
-    this.dialog.open(FileFormComponent, {
-      width: '2000px',
-
-    });
+    this.router.navigate(['file-form'])
+    // this
+    // this.dialog.open(FileFormComponent, {
+    //   width: '2000px',
+    // });
   }
 
   ngOnInit(): void {
