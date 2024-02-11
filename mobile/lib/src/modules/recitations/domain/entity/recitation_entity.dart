@@ -18,7 +18,7 @@ class RecitationEntity extends BaseEntity {
   final LocalizedEntity? title;
   final String? audio;
   final String? image;
-  final int durationInSecond;
+  final int durationInMilli;
 
   const RecitationEntity({
     required this.id,
@@ -26,7 +26,7 @@ class RecitationEntity extends BaseEntity {
     this.title,
     this.audio,
     this.image,
-    required this.durationInSecond,
+    required this.durationInMilli,
   });
 
   @override
@@ -36,6 +36,6 @@ class RecitationEntity extends BaseEntity {
         title,
         audio,
         image,
-        durationInSecond,
+        durationInMilli,
       ];
 }

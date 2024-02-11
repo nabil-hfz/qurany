@@ -29,7 +29,7 @@ RecitationModel _$RecitationModelFromJson(Map json) => RecitationModel(
               Map<String, dynamic>.from(json['title'] as Map)),
       audio: json['audio'] as String?,
       image: json['image'] as String?,
-      durationInSecond: json['durationInSecond'] as int?,
+      durationInMilli: json['durationInMilli'] as int?,
     );
 
 Map<String, dynamic> _$RecitationModelToJson(RecitationModel instance) =>
@@ -39,5 +39,5 @@ Map<String, dynamic> _$RecitationModelToJson(RecitationModel instance) =>
       'title': instance.title,
       'audio': instance.audio,
       'image': instance.image,
-      'durationInSecond': instance.durationInSecond,
+      'durationInMilli': instance.durationInMilli,
     };

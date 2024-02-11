@@ -29,8 +29,8 @@ class AccountsService {
     }
 
     await admin.auth().setCustomUserClaims(createUserRes.uid, {
-      storeOwner: role == "superAdmin", // true or false
-      buyer: role == "user", // true or false
+      storeOwner: role == "superAdmin",  
+      buyer: role == "user",  
     });
 
     return admin.auth().getUser(createUserRes.uid);

@@ -67,7 +67,9 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.black38,
-                      borderRadius: BorderRadius.circular(AppRadius.radius6),
+                      borderRadius: BorderRadius.circular(
+                        AppRadius.radius6,
+                      ),
                     ),
                   ),
                   Center(
@@ -78,9 +80,7 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
                           themeStore,
                           AudioControllerOverlayAction.seekBackward,
                         ),
-                        PlayPauseButtonWidget(
-                          recitation: widget.recitation,
-                        ),
+                        PlayPauseButtonWidget(recitation: widget.recitation),
                         _buildSeekButton(
                           themeStore,
                           AudioControllerOverlayAction.seekForward,
@@ -95,8 +95,10 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
                     child:
                         // Display seek bar. Using StreamBuilder, this widget rebuilds
                         // each time the position, buffered position or duration changes.
-                        SeekBarWidget(audio: widget.recitation.audio),
-                  )
+                        SeekBarWidget(
+                      audio: widget.recitation.audio,
+                    ),
+                  ),
                 ],
               )
             : Container(
@@ -121,7 +123,7 @@ class _AudioControlOverlayState extends State<AudioControlOverlay>
                         child: Text(
                           StringHelper.formatDuration(
                             Duration(
-                              seconds: widget.recitation.durationInSecond,
+                              milliseconds: widget.recitation.durationInMilli,
                             ),
                           ),
                           style: appTextStyle.medium14.copyWith(

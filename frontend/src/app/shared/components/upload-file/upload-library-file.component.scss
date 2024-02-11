@@ -1,0 +1,87 @@
+label {
+  font-weight: 500;
+}
+
+.container {
+  position: relative;
+  height: 13rem;
+  width: 20rem;
+  margin-bottom: 1.3rem;
+  border-radius: 15px;
+  margin: auto;
+  margin-block: 1rem;
+  cursor: pointer;
+
+
+  // img {
+  //   width: 100%;
+  //   height: 100%;
+  //   object-fit: cover;
+  // }
+
+  .loading-icon {
+    position: absolute;
+  }
+
+  .span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.noImageStyle {
+  background-color: lightgray;
+  position: relative;
+
+  mat-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+    color: white;
+  }
+}
+
+.hasImageStyle {
+  background-color: #06668E;
+  position: relative;
+
+  mat-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+    color: white;
+  }
+}
+
+
+.center-item {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.file-name {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+
+}

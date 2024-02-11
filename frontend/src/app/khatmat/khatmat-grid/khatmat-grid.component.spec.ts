@@ -7,7 +7,7 @@ import { KhatmaModel } from '../../models/khatma.model';
 import { ReciterModel } from '../../models/reciter.model';
 import { LocalizedModel } from '../../models/localized.model';
 import { RecitationTypes } from '../../models/recitation.model';
-import { KawtharunaAppBarComponent } from '../../shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { KawtharunaAppBarComponent } from '../../shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { ItunesService } from '../../services/itunes/itunes.service';
 import { MatToolbarModule } from '@angular/material/toolbar';
 

@@ -334,6 +334,10 @@
   "seek_forward_button": "Seek forward button",
   "seek_backward_button": "Seek backward button",
   "back_button": "Back button",
-  "home_menu_button": "Home menu button"
-
+  "home_menu_button": "Home menu button",
+  "idle_loading_text": "Release to load",
+  "loading_text": "Loading...",
+  "no_more_data_text": "No more data",
+  "load_failed_text": "Loading failed",
+  "can_loading_text": "Can load"
 }

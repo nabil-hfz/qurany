@@ -2721,6 +2721,56 @@ class Translations {
       args: [],
     );
   }
+
+  /// `Release to load`
+  String get idle_loading_text {
+    return Intl.message(
+      'Release to load',
+      name: 'idle_loading_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loading_text {
+    return Intl.message(
+      'Loading...',
+      name: 'loading_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No more data`
+  String get no_more_data_text {
+    return Intl.message(
+      'No more data',
+      name: 'no_more_data_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading failed`
+  String get load_failed_text {
+    return Intl.message(
+      'Loading failed',
+      name: 'load_failed_text',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can load`
+  String get can_loading_text {
+    return Intl.message(
+      'Can load',
+      name: 'can_loading_text',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<Translations> {

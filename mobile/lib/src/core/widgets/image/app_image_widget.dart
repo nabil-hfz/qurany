@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kawtharuna/src/core/widgets/image/image_network_circle.dart';
 
-import 'image_network_circle.dart';
+// Project imports:
 
 /// General Image widget which can accept all image types url, svg and assets.
 ///
@@ -40,8 +41,8 @@ class AppImageWidget extends StatelessWidget {
     this.width,
     this.height,
     this.isCircular = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   bool get isNetworkImage {
     return path == null ||

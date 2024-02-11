@@ -12,6 +12,7 @@ import {
 import { logWarn } from "../utils/logger";
 import * as multer from 'multer';
 import { paginationMiddleware } from "../middlewares/pagination.middleware";
+import { AppRoles } from "../constant/app-roles.const";
 
 const upload = multer();
 
@@ -19,13 +20,13 @@ type PostParams = {
   path: string;
   requestHandler: RequestHandler[] | RequestHandler;
   fileFields?: any[];
-  customClaims?: string[];
+  customClaims?: AppRoles[];
 };
 
 type GetParams = {
   path: string;
   requestHandler: RequestHandler[] | RequestHandler;
-  customClaims?: string[];
+  customClaims?: AppRoles[];
 };
 
 export interface Controller {
@@ -74,7 +75,7 @@ export class HttpServer {
   put(
     path: string,
     requestHandler: RequestHandler,
-    customClaims?: string[]
+    customClaims?: AppRoles[]
   ): void {
     this.express.put(
       path,
@@ -84,7 +85,7 @@ export class HttpServer {
 
   private readonly _catchErrorHandler = (
     requestHandlers: RequestHandler[] | RequestHandler,
-    customClaims?: string[]
+    customClaims?: AppRoles[]
   ) => {
     return async (req: Request, res: Response, next: NextFunction) => {
       const checkCustomClaim = () => {

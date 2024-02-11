@@ -62,11 +62,13 @@
   "dependencies": {
     "@firebase/storage": "^0.11.2",
     "@google-cloud/error-reporting": "^3.0.5",
+    "@types/bcryptjs": "^2.4.6",
     "abbrev": "^1.1.1",
     "ansi-regex": "^5.0.1",
     "ansi-styles": "^4.3.0",
     "anymatch": "^3.1.2",
     "balanced-match": "^1.0.2",
+    "bcryptjs": "^2.4.3",
     "binary-extensions": "^2.2.0",
     "body-parser": "^1.20.0",
     "brace-expansion": "^1.1.11",

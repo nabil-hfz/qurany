@@ -1,0 +1,11 @@
+<div (click)="fileUpload.click()" class="container" [ngClass]="{ noImageStyle: !hasFile, hasImageStyle:hasFile }">
+  <input type="file" hidden
+    accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+    (change)="onFileSelected($event)" #fileUpload />
+  <mat-icon class="center-item" *ngIf="!hasFile">add</mat-icon>
+  <mat-icon class="center-item" *ngIf="hasFile">edit</mat-icon>
+  <mat-spinner [diameter]="50" *ngIf="loadingMedia" class="loading-icon center-item"></mat-spinner>
+
+  <div *ngIf="hasFile" class="center-item file-name">{{ fileName }}</div>
+</div>
+<mat-error *ngIf="errorMsg">{{errorMsg}}</mat-error>

@@ -8,7 +8,7 @@ class PaginationModel {
   int limit;
 
   PaginationModel({
-    required this.page,
+    this.page = 1,
     this.limit = 10,
   });
 

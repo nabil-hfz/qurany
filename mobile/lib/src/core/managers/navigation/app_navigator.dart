@@ -12,6 +12,8 @@ import 'package:kawtharuna/src/core/utils/utl_device.dart';
 import 'package:kawtharuna/src/core/widgets/error/not_found_screen.dart';
 import 'package:kawtharuna/src/modules/khatmat/domain/entity/khatma_entity.dart';
 import 'package:kawtharuna/src/modules/khatmat/ui/screens/khatma_details_screen.dart';
+import 'package:kawtharuna/src/modules/library/domain/entity/library_entity.dart';
+import 'package:kawtharuna/src/modules/library/ui/screen/library_screen.dart';
 import 'package:kawtharuna/src/modules/main/screens/main_screen.dart';
 import 'package:kawtharuna/src/modules/spalsh/ui/pages/splash_screen.dart';
 
@@ -177,6 +179,17 @@ abstract class AppRouter {
         pageBuilder: (context, state) {
           const child = MainMenuScreen();
           return pageBuilder(context, state, child, key: _scaffoldKey);
+        },
+      ),
+      GoRoute(
+        name: Routes.pdfViewScreen,
+        path: Routes.pdfViewScreen,
+        pageBuilder: (context, state) {
+          var navArgs = state.extra as BaseNavigationArg;
+          var args = navArgs.data as FileEntryEntity;
+
+          final child = PdfViewPage(args: args);
+          return pageBuilder(context, state, child);
         },
       ),
       GoRoute(

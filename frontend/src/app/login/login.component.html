@@ -1,0 +1,31 @@
+<mat-card>
+
+    <div class="header">
+        <span class="action">Log in</span>
+        <button mat-flat-button mat-dialog-close (click)="onClose()" [disabled]="loading$ | async">
+            <mat-icon class="actions">close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content>
+        <form (ngSubmit)="onLogin()">
+
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="email" name="email" type="email" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput [(ngModel)]="password" name="password" type="password" required>
+            </mat-form-field>
+            <span *ngIf="!!error"> Error happened</span>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="loading$ | async">
+                <mat-spinner *ngIf="loading$ | async" diameter="20"></mat-spinner>
+                <span *ngIf="!(loading$ | async)">Login</span>
+            </button>
+
+        </form>
+    </mat-dialog-content>
+</mat-card>

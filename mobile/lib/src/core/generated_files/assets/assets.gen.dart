@@ -421,18 +421,11 @@ class Assets {
 
   static const $AssetsPermanentMarkerGen permanentMarker =
       $AssetsPermanentMarkerGen();
-  static const AssetGenImage appLogo = AssetGenImage('assets/app_logo.png');
-  static const AssetGenImage iconAdaptiveForeground =
-      AssetGenImage('assets/icon-adaptive-foreground.png');
-  static const AssetGenImage icon = AssetGenImage('assets/icon.png');
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
   static const $AssetsMusicGen music = $AssetsMusicGen();
   static const $AssetsRecitersGen reciters = $AssetsRecitersGen();
   static const $AssetsSfxGen sfx = $AssetsSfxGen();
-
-  /// List of all assets
-  List<AssetGenImage> get values => [appLogo, iconAdaptiveForeground, icon];
 }
 
 class AssetGenImage {

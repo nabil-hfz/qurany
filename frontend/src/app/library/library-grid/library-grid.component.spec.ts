@@ -7,7 +7,7 @@ import { LibraryCategoryModel } from '../../models/library-category.model';
 import { LibraryLanguageModel } from '../../models/library-language.model';
 import { LibraryModel } from '../../models/library.model';
 import { ItunesService } from '../../services/itunes/itunes.service';
-import { KawtharunaAppBarComponent } from '../../shared/kawtharuna-app-bar/kawtharuna-app-bar.component';
+import { KawtharunaAppBarComponent } from '../../shared/components/kawtharuna-app-bar/kawtharuna-app-bar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 describe('LibraryGridComponent', () => {

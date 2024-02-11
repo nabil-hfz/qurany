@@ -111,6 +111,7 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
                     language: true,
                     file: true,
                     thumbnail: true,
+                    categories: true,
                 }
             }
 

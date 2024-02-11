@@ -6,7 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { PlayerComponent } from './shared/player/player.component';
+import { PlayerComponent } from './shared/components/player/player.component';
 import { Subject } from 'rxjs';
 import { PlayerService } from './services/player/player.service';
 

@@ -1,0 +1,27 @@
+.expanded-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: start;
+    padding: 8px;
+}
+
+.collapsed-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 8px;
+}
+
+.list-item-content {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+
+mat-icon {
+    margin-right: 8px;
+}

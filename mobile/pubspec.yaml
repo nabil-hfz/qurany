@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.5+5
+version: 1.0.7+7
 
 environment:
   sdk: '>=3.2.1 <4.0.0'
@@ -55,7 +55,7 @@ dependencies:
   cloud_firestore: ^4.4.4
   get_it: ^7.2.0
   injectable: ^2.1.0
-  device_info_plus: ^8.1.0
+  device_info_plus: ^9.1.1
   google_fonts: ^4.0.3
   flex_color_scheme: ^7.3.1
   internet_connection_checker: ^1.0.0+1
@@ -91,6 +91,9 @@ dependencies:
   # Customize your text, button, duration, animations and much more.
   # For Android devs, it is made to replace Snackbars and Toasts.
   another_flushbar: ^1.12.29
+
+  syncfusion_flutter_pdfviewer: ^24.1.47
+  pull_to_refresh: ^2.0.0
 
 
 #  flutter pub upgrade --major-versions
@@ -142,6 +145,7 @@ dev_dependencies:
 
   flutter_gen_runner: ^5.2.0
   flutter_gen: ^5.3.2
+
 
 flutter:
   uses-material-design: true

@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:kawtharuna/src/core/managers/localization/app_translation.dart';
 // import 'package:kawtharuna/src/core/widgets/app_bar/empty_app_bar_widget.dart';
-// import 'package:kawtharuna/src/modules/khatmat/domain/entity/khatma_entity.dart';
+// import 'package:kawtharuna/src/modules/khatmat/domain/entity/library_entity.dart';
 // import 'package:kawtharuna/src/modules/khatmat/ui/widgets/katma_list_time.dart';
 // import 'package:kawtharuna/src/modules/recitations/ui/widgets/recitation_list_widget.dart';
 //

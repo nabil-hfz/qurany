@@ -1,0 +1,56 @@
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.action {
+    margin: 1rem;
+}
+
+.field-container {
+    font-size: 14px;
+}
+
+.container {
+    margin-top: 1rem;
+}
+
+.first-row {
+    margin-top: 1rem;
+}
+
+.upload-image {
+    margin: auto;
+    margin-block: 1rem;
+}
+
+.actions{
+    display: flex;
+    gap: 10px;
+}
+.stretch-row{
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 3fr;
+    gap: 1rem;
+}
+
+.two-columns{
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: 3fr 3fr;
+    gap: 1rem;
+}
+
+.optional{
+    color: grey;
+}
+
+
+// .dialog-progress-bar {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+// }

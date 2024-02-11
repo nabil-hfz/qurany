@@ -5,7 +5,7 @@ import { PlayerService } from '../../services/player/player.service';
 import { MatCardModule } from '@angular/material/card';
 import { LocalizedModel } from '../../models/localized.model';
 import { ReciterModel } from '../../models/reciter.model';
-import { TrackControlComponent } from '../../shared/track-control/track-control.component';
+import { TrackControlComponent } from '../../shared/components/track-control/track-control.component';
 
 describe('RecitationCardComponent', () => {
   let component: RecitationCardComponent;

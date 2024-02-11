@@ -1,0 +1,14 @@
+<div mat-dialog-content class="text-center">
+  <h2>Warning</h2>
+  <h4>{{ data?.message }}</h4>
+  <img
+    src="assets/styles/icons/material-design-iconic-font/fonts/warning-signs-svgrepo-com.svg"
+    class="icon"
+    alt="warning image"
+  />
+</div>
+
+<div mat-dialog-actions>
+  <button mat-flat-button color="base" mat-dialog-close (click)="close()">Close</button>
+  <button mat-flat-button *ngIf="data && !data?.hideDlelteBtn" (click)="confirm()" color="warn" id="warn-id">Confirm</button>
+</div>

@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
   navBarBackgroundColor: 'blue',
-  apiUrl: "https://api.kawtharuna.com/v1",
+  apiUrl: "http://localhost:8080/v1",
 
 };

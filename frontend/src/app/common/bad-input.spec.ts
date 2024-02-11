@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppErrorHandler } from './app-error-handler';
 import { AppNotFoundError } from './not-found-error';
-import { AppBadInputError } from './bad-input';
+import { AppBadError } from './bad-error';
 
 describe('AppErrorHandler', () => {
   let errorHandler: AppErrorHandler;
@@ -29,7 +29,7 @@ describe('AppErrorHandler', () => {
 
   it('should handle AppBadInputError', () => {
     spyOn(window, 'alert');
-    const error = new AppBadInputError();
+    const error = new AppBadError();
 
     errorHandler.handleError(error);
 
