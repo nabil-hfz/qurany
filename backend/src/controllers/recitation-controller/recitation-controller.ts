@@ -12,6 +12,7 @@ import { AppRoutes } from '../../constant/app-routes.const';
 import { AppAudiosConst, AppImagesKhatmeConst } from '../../constant/app-storage-paths.const';
 import { ResponseListModel } from '../../repository/response-list-model';
 import { ResponseModel } from '../../db/response-model';
+import { AppRoles } from '../../constant/app-roles.const';
 
 export class RecitationController implements Controller {
 
@@ -22,28 +23,26 @@ export class RecitationController implements Controller {
       path: this.url,
       requestHandler: this.createRecitations.bind(this),
       fileFields: [{ name: 'audios' }, { name: 'images' }],
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.admin],
     });
 
     httpServer.get({
       path: this.url,
       requestHandler: this.getRecitationListPublic.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
 
     httpServer.get({
       path: `${this.url}-files-path`,
       requestHandler: this.getFilePathPublic.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
 
     httpServer.get({
       path: `${this.url}/:recitationId`,
       requestHandler: this.getRecitationByIdPublic.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
-
-
 
   }
 
@@ -106,7 +105,7 @@ export class RecitationController implements Controller {
         khatmaId,
         pagination
       );
-      
+
     const responseList = recitations.items.map(
       (recitation) => new RecitationResumedRes(recitation)
     );

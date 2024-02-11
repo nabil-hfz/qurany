@@ -8,6 +8,7 @@ import { checkIfIsValidCreateLanguagesReqBody } from './requests/create-language
 import { languageRepository } from '../../repository/library/language-repository';
 import { LanguageResumedRes } from './responses/language/language-resumed-res';
 import { CreateLanguagesReqBody } from './requests/create-language/create-language-req-body';
+import { AppRoles } from '../../constant/app-roles.const';
 
 export class LanguageController implements Controller {
 
@@ -19,19 +20,19 @@ export class LanguageController implements Controller {
     httpServer.post({
       path: this.url,
       requestHandler: this.createLanguages.bind(this),
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.admin],
     });
 
     httpServer.get({
       path: this.url,
       requestHandler: this.getLanguageList.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.user],
     });
 
     httpServer.delete({
       path: `${this.url}/:id`,
       requestHandler: this.deleteLanguageById.bind(this),
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.superAdmin],
     });
   }
 

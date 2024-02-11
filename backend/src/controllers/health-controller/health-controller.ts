@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import { Controller, HttpServer } from "../index";
 import { AppRoutes } from '../../constant/app-routes.const';
+import { AppRoles } from '../../constant/app-roles.const';
 
 
 export class HealthController implements Controller {
@@ -11,7 +12,7 @@ export class HealthController implements Controller {
     httpServer.get({
       path: this.url,
       requestHandler: this.getFileEntryList.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
   }
 

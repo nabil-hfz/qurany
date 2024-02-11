@@ -9,6 +9,7 @@ import { KhatmaResumedRes } from "./responses/khatma-resumed-res";
 import { AppRoutes } from "../../constant/app-routes.const";
 import { ResponseListModel } from "../../repository/response-list-model";
 import { ResponseModel } from "../../db/response-model";
+import { AppRoles } from "../../constant/app-roles.const";
 
 export class KhatmaController implements Controller {
 
@@ -18,19 +19,19 @@ export class KhatmaController implements Controller {
     httpServer.post({
       path: this.url,
       requestHandler: this.createNewKhatma.bind(this),
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.admin],
     });
 
     httpServer.get({
       path: `${this.url}`,
       requestHandler: this.getKhatmaListPublic.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
 
     httpServer.get({
       path: `${this.url}/:khatmaId`,
       requestHandler: this.getKhatmaByIdPublic.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
   }
 
