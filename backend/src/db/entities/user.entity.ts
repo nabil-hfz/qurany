@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { AppBaseEntity } from './base.entity';
+import { FileEntity } from './file.entity';
 
 /**
  * Represents a user entity in the database.
@@ -13,6 +14,12 @@ export class UserEntity extends AppBaseEntity {
    */
   @Column({ nullable: true })
   email?: string;
+
+  /**
+   * The user's password.
+   */
+  @Column({ nullable: true })
+  password?: string;
 
   /**
    * Whether the user's email address has been verified.
@@ -29,9 +36,10 @@ export class UserEntity extends AppBaseEntity {
   /**
    * The URL of the user's profile picture.
    */
-  @Column({ nullable: true })
-  photoURL?: string;
-
+  @OneToOne(() => FileEntity, { eager: true, nullable: false })
+  @JoinColumn()
+  photo?: FileEntity;
+  
   /**
    * The user's primary phone number.
    */

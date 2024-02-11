@@ -1,32 +1,29 @@
 import { Repository } from "../repository";
-import { CreateRecitationReqBody } from "../../controllers/recitation-controller/requests/create-recitation/create-recitation-req-body";
 import { HttpResponseError } from "../../utils/http-response-error";
 import { uploaderService } from "../../services/uploader-service";
 import { logInfo } from "../../utils/logger";
-import { FilesRepository, filesRepository } from "../file/files-repository";
-import { AppAudiosConst, AppImagesKhatmeConst, AppStoragePathsConst } from "../../constant/app-storage-paths.const";
+import { AppStoragePathsConst } from "../../constant/app-storage-paths.const";
 import { EntityTarget } from "typeorm";
-import { ReciterEntity } from "../../db/entities/reciter.entity";
 import { UserEntity } from "../../db/entities/user.entity";
 import { CreateAccountReqBody } from "../../controllers/account-controller/requests/create-account/create-account-req-body";
 import { FileEntity } from "../../db/entities/file.entity";
+import { AppPasswordUtils } from "../../utils/password-utils";
 
 export class AccountRepository extends Repository<UserEntity> {
 
   constructor(
-    model: EntityTarget<UserEntity>,
-    private filesRepository: FilesRepository
+    model: EntityTarget<UserEntity>
   ) {
     super(model);
   }
 
   async createUser(
     request: CreateAccountReqBody,
-    image: Express.Multer.File,
-  ): Promise<any> {
+    image?: Express.Multer.File,
+  ): Promise<UserEntity> {
 
 
-    let filesResult: FileEntity;
+    let filesResult: FileEntity | undefined;
 
     if (image) {
       const imagePath = AppStoragePathsConst.imagesUserPath;
@@ -35,54 +32,76 @@ export class AccountRepository extends Repository<UserEntity> {
         .saveFile(image, imagePath);
     }
 
-    let isExisted = this._repository.exists({
+    let isExisted = await this._repository.exists({
       where: {
         email: request.email
       }
     });
 
+    if (isExisted) {
+      throw new HttpResponseError(
+        400,
+        "EXISTING_EMAIL",
+        "Email is already in use"
+      );
+    }
+
     let user: UserEntity = new UserEntity();
 
+    if (filesResult) {
+      user.photo = filesResult!;
+    }
+    user.email = request.email;
+    user.displayName = request.name;
+    user.customClaims = { 'role': request.role };
+
+    let hashedPassword = await AppPasswordUtils.encryptPassword(request.password);
+    user.password = hashedPassword;
 
 
-    let index = Number(request.sequence) ?? 1;
-    const docs: UserEntity[] = filesResult.map((data) => {
-      const result = new UserEntity();
-
-      result.audio = data.audioFile;
-      result.durationInMilli = data.duration;
-      result.image = data.imageFile;
-
-      result.name = {
-        en: `Chapter ${index}`,
-        ar: `الجزء ${index}`,
-      };
-      result.sequence = index;
-      result.reciter = reciter;
-      result.khatmaId = khatmaId;
-      index += 1;
-      return result;
-    }) ?? [];
-
-
-
-
-    const imgs = docs.map(recitation => recitation.image);
-    const auds = docs.map(recitation => recitation.audio);
-    await this.filesRepository.createAll(imgs);
-
-
-    const savedRecitation = await this.createAll(docs);
-
+    const resource = await this.create(user);
+    return resource;
   }
+
   async login(
     email: string,
     password: string
-  ) {
+  ): Promise<UserEntity> {
+    let isExisted = await this._repository.exists({
+      where: { email: email }
+    });
+    if (!isExisted) {
+      throw new HttpResponseError(
+        400,
+        "WRONG_CREDENTIALS",
+        "Email or password is wrong"
+      );
+    }
+
+    let user = await this._repository.findOneBy({
+      email: email
+    });
+    if (!user) {
+      throw new HttpResponseError(
+        400,
+        "WRONG_CREDENTIALS",
+        "Email or password is wrong"
+      );
+    }
+
+    let samePassword = await AppPasswordUtils.comparPassword(password, user!.password!);
+    if (!samePassword) {
+      throw new HttpResponseError(
+        400,
+        "WRONG_CREDENTIALS",
+        "Email or password is wrong"
+      );
+    }
 
 
 
-    return await this.getAll();
+    user.password = password;
+    return user;
   }
 
   async getUserProfile(resourceId: number): Promise<UserEntity | null> {
@@ -96,7 +115,6 @@ export class AccountRepository extends Repository<UserEntity> {
 
 }
 
-export const accountsService = new AccountRepository(
-  UserEntity,
-  filesRepository
+export const accountsRepository = new AccountRepository(
+  UserEntity
 );
