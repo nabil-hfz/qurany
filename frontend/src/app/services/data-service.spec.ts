@@ -2,7 +2,7 @@ import { DataService } from './data-service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { AppNotFoundError } from '../common/not-found-error';
-import { AppBadInputError } from '../common/bad-input';
+import { AppBadError } from '../common/bad-error';
 
 describe('DataService', () => {
   let service: DataService<any>;
@@ -102,7 +102,7 @@ describe('DataService', () => {
 
       service.create(newItem).subscribe({
         next: () => fail('expected an error, not data'),
-        error: (error) => expect(error).toBeInstanceOf(AppBadInputError),
+        error: (error) => expect(error).toBeInstanceOf(AppBadError),
       });
     });
 
@@ -135,7 +135,7 @@ describe('DataService', () => {
 
       service.update(updateItem, updateItem.id).subscribe({
         next: () => fail('expected an error, not data'),
-        error: (error) => expect(error).toBeInstanceOf(AppBadInputError),
+        error: (error) => expect(error).toBeInstanceOf(AppBadError),
       });
     });
   });

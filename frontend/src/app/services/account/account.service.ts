@@ -24,17 +24,12 @@ export class AccountService extends DataService<any> {
   }
 
   login(email: string, password: string) {
-    console.log(`login Email: ${email}, Password: ${password}`);
-    try {
-      const result = this.create({ "email": email, "password": password }, 'login');
-      console.log(result);
-    } catch (error: any) {
-      console.error('error is ', error);
-
-    }
-    // .pipe((response) => {
-    //   console.log('response ', response);
-    //   return response;
-    // });
+    return this.create({ "email": email, "password": password }, 'login')
+      // .pipe(
+      //   map((response) => {
+      //     console.log('login response ', response);
+      //     return response.token != null && response.token.length > 0;
+      //   })
+      // );
   }
 }

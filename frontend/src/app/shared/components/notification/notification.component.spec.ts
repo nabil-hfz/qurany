@@ -3,7 +3,7 @@ import { NotificationComponent } from './notification.component';
 import { ToastrService } from 'ngx-toastr';
 import { Actions, NgxsModule, ofActionErrored, ofActionSuccessful } from '@ngxs/store';
 import { Observable, Subject, of, throwError } from 'rxjs';
-import { AppBadInputError } from '../../../common/bad-input';
+import { AppBadError } from '../../../common/bad-error';
 
 describe('NotificationComponent', () => {
   let component: NotificationComponent;
