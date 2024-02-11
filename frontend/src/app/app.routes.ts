@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
@@ -32,7 +33,7 @@ const routes: Routes = [
       { path: 'library-form', component: FileFormComponent },
 
       { path: 'privacy-policy', component: PrivacyPolicyComponent },
-      { path: 'file-form', component: FileFormComponent },
+      { path: 'file-form', component: FileFormComponent, canActivate: [AuthGuard], },
 
       { path: '**', component: NotFoundComponent },
 

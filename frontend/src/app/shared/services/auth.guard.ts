@@ -1,42 +1,48 @@
-// import { Injectable } from "@angular/core";
-// import { AngularFireAuth } from "@angular/fire/compat/auth";
-// import {
-//   ActivatedRouteSnapshot,
-//   CanActivate,
-//   CanLoad,
-//   Route,
-//   Router,
-//   UrlSegment,
-// } from "@angular/router";
-// import { Observable } from "rxjs";
-// import { map, take } from "rxjs/operators";
+import { Injectable } from "@angular/core";
+import {
+    ActivatedRouteSnapshot,
+    CanActivate,
+    CanLoad,
+    Route,
+    Router,
+    UrlSegment,
+} from "@angular/router";
+import { Observable } from "rxjs";
+import { map, take } from "rxjs/operators";
+import { AccountService } from "../../services/account/account.service";
+import { MatDialog } from "@angular/material/dialog";
+import { LoginComponent } from "../../login/login.component";
 
-// @Injectable({
-//   providedIn: "root",
-// })
-// export class AuthGuard implements CanActivate, CanLoad {
-//   constructor(private authFire: AngularFireAuth, private router: Router) {}
+@Injectable({
+    providedIn: "root",
+})
+export class AuthGuard implements CanActivate, CanLoad {
+    constructor(
+        public dialog: MatDialog,
+        private accountService: AccountService,
+        private router: Router
+    ) { }
 
-//   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-//     return this.isLoggedIn(route.url);
-//   }
+    canActivate(route: ActivatedRouteSnapshot): boolean {
+        return this.isLoggedIn(route.url);
+    }
 
-//   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
-//     return this.isLoggedIn(segments);
-//   }
+    canLoad(route: Route, segments: UrlSegment[]): boolean {
+        return this.isLoggedIn(segments);
+    }
 
-//   isLoggedIn(url: UrlSegment[]) {
-//     return this.authFire.user.pipe(
-//       take(1),
-//       map((res) => {
-//         if (res?.uid) return true;
+    isLoggedIn(url: UrlSegment[]): boolean {
+        const isLoggedIn = this.accountService.isLoggedIn();
+        if (isLoggedIn)
+            return true;
+        this.router.navigate(["/khatma"], {
+            queryParams: { returnUrl: url },
+        });
+        this.dialog.open(LoginComponent, {
+            width: '30%',
+        });
 
-//         this.router.navigate(["/auth"], {
-//           queryParams: { returnUrl: url },
-//         });
+        return false;
 
-//         return false;
-//       })
-//     );
-//   }
-// }
+    }
+}

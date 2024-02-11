@@ -32,9 +32,16 @@
     </div>
 
 
+    <div *ngIf="isLoggedIn">
+        <button mat-flat-button color="primary" (click)="onLogout()">
+            <span class="header-text"> Logout </span>
+        </button>
+    </div>
+    <div *ngIf="!isLoggedIn">
+        <button mat-flat-button color="primary" (click)="onLogin()">
+            <span class="header-text"> Login </span>
+        </button>
+    </div>
 
-    <button mat-flat-button color="primary" (click)="onLogin()">
-        <span class="header-text"> Login </span>
 
-    </button>
 </mat-toolbar>

@@ -6,6 +6,7 @@ import { FileFormComponent } from '../file-form/file-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { FileDetailsComponent } from '../file-details/file-details.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AccountService } from '../../services/account/account.service';
 
 @Component({
   selector: 'library-grid',
@@ -17,7 +18,17 @@ export class LibraryGridComponent implements OnInit {
   values$: Observable<LibraryModel[]> | undefined;
   selectedFile: LibraryModel | null = null;
 
-  constructor(private service: LibraryService, public dialog: MatDialog, private router: Router) { }
+  constructor(
+    private service: LibraryService,
+    public dialog: MatDialog,
+    private router: Router,
+    private accountService: AccountService,
+
+  ) { }
+
+  get isLoggedIn(): boolean {
+    return this.accountService.isLoggedIn();
+  }
 
   openAddFileDialog() {
     this.router.navigate(['file-form'])

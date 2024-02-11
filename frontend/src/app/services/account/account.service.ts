@@ -11,6 +11,11 @@ import { map } from 'rxjs';
 })
 export class AccountService extends DataService<any> {
 
+  // Method to get the current token
+  get token(): string | null {
+    return localStorage.getItem('token');
+  }
+
   /**
    * Constructs an instance of the AccountService.
    * @param httpClient - The HttpClient service for making HTTP requests.
@@ -25,11 +30,22 @@ export class AccountService extends DataService<any> {
 
   login(email: string, password: string) {
     return this.create({ "email": email, "password": password }, 'login')
-      // .pipe(
-      //   map((response) => {
-      //     console.log('login response ', response);
-      //     return response.token != null && response.token.length > 0;
-      //   })
-      // );
+      .pipe(
+        map((response) => {
+          console.log('login response', response);
+          localStorage.setItem('token', response.token);
+          return response;
+        })
+      );
+  }
+
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+
+  }
+
+  logout() {
+    localStorage.removeItem('token');
   }
 }
