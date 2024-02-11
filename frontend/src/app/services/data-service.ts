@@ -64,7 +64,8 @@ export class DataService<T extends any> {
     let url = this.URL;
     if (path)
       url = `${this.URL}/${path}`;
-    return this.http
+      console.log(`create url: ${url}`);
+      return this.http
       .post<T>(url, resource)
       .pipe(catchError(this.handleError));
   }

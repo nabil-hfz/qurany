@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 // import { PortfolioListComponent } from './portfolio/portfolio-grid/portfolio-grid.component';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -65,6 +65,7 @@ import { LibraryLanguageService } from './services/library/library-language.serv
 import { UploadLibraryFileComponent } from './shared/components/upload-file/upload-library-file.component';
 import { LoginComponent } from './login/login.component';
 import { AccountService } from './services/account/account.service';
+// import { AccountService } from './services/account/account.service';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -106,7 +107,7 @@ import { AccountService } from './services/account/account.service';
 
     AppSidebarComponent,
     SidenavComponent,
-    
+
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -129,7 +130,7 @@ import { AccountService } from './services/account/account.service';
     DemoMaterialModule,
 
     BrowserModule,
-    // BrowserAnimationsModule,
+    BrowserAnimationsModule,
     CommonModule,
     RouterOutlet,
 
@@ -140,7 +141,7 @@ import { AccountService } from './services/account/account.service';
     NgxAudioPlayerModule,
     NgxDocViewerModule,
     HttpClientModule,
-    
+
   ],
   providers: [
     KhatmaService,

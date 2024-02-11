@@ -1,27 +1,19 @@
 import { AppBaseModel } from './base.model';
 
-/**
- * Represents a file with associated metadata.
- */
-export class FileModel extends AppBaseModel {
 
-  /**
-   * The URL of the file.
-   */
-  public url!: string;
+export interface LoginResponseModel {
+  token: string;
+  profile: UserProfileModel;
+}
 
-  /**
-   * The size of the file in bytes, if available.
-   */
-  public size?: number;
+interface UserProfileModel extends AppBaseModel {
+  uid: number;
+  email: string;
+  displayName: string;
+  phoneNumber: string | null;
+  customClaims: UserClaims;
+}
 
-  /**
-   * The MIME type of the file, if available.
-   */
-  public mimetype?: string;
-
-  /**
-   * The name of the file, if available.
-   */
-  public name?: string;
+interface UserClaims {
+  role: string;
 }
