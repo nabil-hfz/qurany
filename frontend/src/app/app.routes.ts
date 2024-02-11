@@ -8,7 +8,6 @@ import { NgModule } from '@angular/core';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { FileFormComponent } from './library/file-form/file-form.component';
-import { FullComponent } from './shared/components/layouts/full/full.component';
 
 const routes: Routes = [
 
