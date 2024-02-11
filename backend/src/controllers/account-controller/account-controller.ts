@@ -9,6 +9,7 @@ import { accountsRepository } from "../../repository/account/account-repository"
 import { CreateAccountResBody } from "./responses/create-account-res-body";
 import { LoginAccountReqBody } from "./requests/login-account/login-account-req-body";
 import { AppJsonWebTokenUtils } from "../../utils/json-web-token-utils";
+import { ResponseModel } from "../../db/response-model";
 
 export class AccountController implements Controller {
   url = AppRoutes.accountRoute;
@@ -18,12 +19,14 @@ export class AccountController implements Controller {
     httpServer.post({
       path: `${this.url}/register`,
       requestHandler: this.register.bind(this),
-      customClaims: [AppRoles.superAdmin],
+      fileFields: [{ name: 'image' }],
+      customClaims: [AppRoles.admin],
     });
 
     httpServer.post({
       path: `${this.url}/login`,
       requestHandler: this.logIn.bind(this),
+      customClaims: [AppRoles.user],
     });
 
   }
@@ -33,7 +36,7 @@ export class AccountController implements Controller {
 
     checkIfIsValidCreateAccountReqBody(body);
 
-    const image = req.files?.['images'] as Express.Multer.File[] | undefined;
+    const image = req.files?.['image'] as Express.Multer.File[] | undefined;
 
     const refreshedUser = await accountsRepository.createUser(
       body,
@@ -57,8 +60,6 @@ export class AccountController implements Controller {
       refreshedUser.email!,
       refreshedUser.customClaims!
     );
-
-    res.send(new UserAccountResBody(refreshedUser, token));
-    // next();
+    res.status(200).send(ResponseModel.toResult(new UserAccountResBody(refreshedUser, token)));
   };
 }

@@ -8,6 +8,7 @@ import { checkIfIsValidCreateCategoriesReqBody } from './requests/create-categor
 import { CreateCategoriesReqBody } from './requests/create-category/create-category-req-body';
 import { categoryRepository } from '../../repository/library/category-repository';
 import { CategoryResumedRes } from './responses/category/category-resumed-res';
+import { AppRoles } from '../../constant/app-roles.const';
 
 export class CategoryController implements Controller {
 
@@ -18,19 +19,19 @@ export class CategoryController implements Controller {
     httpServer.post({
       path: this.url,
       requestHandler: this.createCategories.bind(this),
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.admin],
     });
 
     httpServer.get({
       path: this.url,
       requestHandler: this.getCategoriesList.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
 
     httpServer.delete({
       path: `${this.url}/:id`,
       requestHandler: this.deleteCategoryById.bind(this),
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.superAdmin],
     });
 
   }

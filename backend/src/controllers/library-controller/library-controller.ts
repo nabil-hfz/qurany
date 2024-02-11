@@ -10,6 +10,7 @@ import { libraryRepository } from '../../repository/library/library-repository';
 import { FileEntryFullRes } from './responses/file-entry/file-entry-full-res';
 import { FileEntryResumedRes } from './responses/file-entry/file-entry-resumed-res';
 import { filesRepository } from '../../repository/file/files-repository';
+import { AppRoles } from '../../constant/app-roles.const';
 
 export class LibraryController implements Controller {
 
@@ -21,25 +22,25 @@ export class LibraryController implements Controller {
       path: this.url,
       requestHandler: this.createFileEntry.bind(this),
       fileFields: [{ name: 'file' }],
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.admin],
     });
 
     httpServer.get({
       path: this.url,
       requestHandler: this.getFileEntryList.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
 
     httpServer.get({
       path: `${this.url}/:id`,
       requestHandler: this.getFileEntryById.bind(this),
-      customClaims: ['user'],
+      customClaims: [AppRoles.guest],
     });
 
     httpServer.delete({
       path: `${this.url}/:id`,
       requestHandler: this.deleteFileEntryById.bind(this),
-      customClaims: ['superAdmin'],
+      customClaims: [AppRoles.superAdmin],
     });
   }
 

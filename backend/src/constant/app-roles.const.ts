@@ -1,8 +1,6 @@
-
-export abstract class AppRoles {
-
-    static superAdmin = 'superAdmin';
-    static admin = 'admin';
-    static user = 'user';
-
+export enum AppRoles {
+    superAdmin = 1,
+    admin = 2,
+    user = 3,
+    guest = 4,
 }

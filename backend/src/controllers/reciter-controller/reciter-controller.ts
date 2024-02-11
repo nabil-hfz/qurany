@@ -13,6 +13,7 @@ import { AppImagesRecitersConst } from "../../constant/app-storage-paths.const";
 import { ResponseModel } from "../../db/response-model";
 import { ResponseListModel } from "../../repository/response-list-model";
 import { RecitationTypesList } from "../../db/entities/reciter.entity";
+import { AppRoles } from "../../constant/app-roles.const";
 
 export class ReciterController implements Controller {
 
@@ -20,11 +21,24 @@ export class ReciterController implements Controller {
 
   initialize(httpServer: HttpServer): void {
 
-    httpServer.post({ path: this.url, requestHandler: this.createReciter.bind(this), fileFields: [{ name: 'image' }], customClaims: ['superAdmin'] });
+    httpServer.post({
+      path: this.url,
+      requestHandler: this.createReciter.bind(this),
+      fileFields: [{ name: 'image' }],
+      customClaims: [AppRoles.admin],
+    });
 
-    httpServer.get({ path: this.url, requestHandler: this.getReciterListPublic.bind(this), customClaims: ["user"] });
+    httpServer.get({
+      path: this.url,
+      requestHandler: this.getReciterListPublic.bind(this),
+      customClaims: [AppRoles.guest],
+    });
 
-    httpServer.get({ path: `${this.url}/:reciterId`, requestHandler: this.getReciterByIdPublic.bind(this), customClaims: ["user"] });
+    httpServer.get({
+      path: `${this.url}/:reciterId`,
+      requestHandler: this.getReciterByIdPublic.bind(this),
+      customClaims: [AppRoles.guest],
+    });
 
     // httpServer.get(url, this.getProductListPublic.bind(this));
     // httpServer.post(urlUploadFiles, this.createNewKhatmaAndRecitation.bind(this));
@@ -95,8 +109,8 @@ export class ReciterController implements Controller {
     const reciter = await recitersRepository.getReciterById(reciterId);
     if (!reciter)
       throw new HttpResponseError(400, "BAD_REQUEST", "Please, reciter with this id not found");
-    
-      res.send(ResponseModel.toResult(new ReciterFullRes(reciter)));
+
+    res.send(ResponseModel.toResult(new ReciterFullRes(reciter)));
     // next();
 
   };
