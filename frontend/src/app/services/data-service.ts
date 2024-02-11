@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError, map } from 'rxjs';
-import { AppBadInputError } from '../common/bad-input';
+import { AppBadError } from '../common/bad-error';
 import { AppNotFoundError } from '../common/not-found-error';
 import { AppError } from '../common/app-error';
 import { BaseFilter } from '../models/filters/base.filter';
@@ -28,9 +28,9 @@ export class DataService<T extends any> {
    * @returns An observable of the list of resources.
    */
   getAll(params?: HttpParams, path?: string): Observable<any> {
-    let url =  this.URL;
-     if (path)
-     url = `${this.URL}/${path}`;
+    let url = this.URL;
+    if (path)
+      url = `${this.URL}/${path}`;
     return this.http
       .get<T[]>(url, { params: params })
       .pipe(
@@ -60,9 +60,13 @@ export class DataService<T extends any> {
    * @param resource - The resource data to create.
    * @returns An observable of the created resource.
    */
-  create(resource: any): Observable<T> {
-    return this.http
-      .post<T>(this.URL, resource)
+  create(resource: any, path?: string): Observable<T> {
+    let url = this.URL;
+    if (path)
+      url = `${this.URL}/${path}`;
+      console.log(`create url: ${url}`);
+      return this.http
+      .post<T>(url, resource)
       .pipe(catchError(this.handleError));
   }
 
@@ -97,11 +101,11 @@ export class DataService<T extends any> {
    * @returns An observable of a custom error type.
    */
   private handleError(error: HttpErrorResponse) {
-    console.error('error.error is ', error.message);
+    console.error('handleError error is ', error);
 
     return throwError(() => {
       if (error.status == 400) {
-        return new AppBadInputError();
+        return new AppBadError();
       }
       if (error.status == 404) {
         return new AppNotFoundError();

@@ -1,3 +1,4 @@
+import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule, Routes } from '@angular/router';
 import { KhatmatGridComponent } from './khatmat/khatmat-grid/khatmat-grid.component';
 import { KhatmaDetailsComponent } from './khatmat/khatma-details/khatma-details.component';
@@ -7,7 +8,6 @@ import { NgModule } from '@angular/core';
 import { LibraryGridComponent } from './library/library-grid/library-grid.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { FileFormComponent } from './library/file-form/file-form.component';
-import { FullComponent } from './shared/components/layouts/full/full.component';
 
 const routes: Routes = [
 
@@ -32,7 +32,7 @@ const routes: Routes = [
       { path: 'library-form', component: FileFormComponent },
 
       { path: 'privacy-policy', component: PrivacyPolicyComponent },
-      { path: 'file-form', component: FileFormComponent },
+      { path: 'file-form', component: FileFormComponent, canActivate: [AuthGuard], },
 
       { path: '**', component: NotFoundComponent },
 

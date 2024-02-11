@@ -43,7 +43,7 @@ export class AccountController implements Controller {
       image && image.length > 0 ? image[0] : undefined,
     );
 
-    res.send(new CreateAccountResBody(refreshedUser));
+    res.status(200).send(ResponseModel.toResult(new CreateAccountResBody(refreshedUser)));
   };
 
 

@@ -63,6 +63,9 @@ import { SidenavComponent } from './shared/components/sidenav/sidenav.component'
 import { LibraryCategoryService } from './services/library/library-category.service';
 import { LibraryLanguageService } from './services/library/library-language.service';
 import { UploadLibraryFileComponent } from './shared/components/upload-file/upload-library-file.component';
+import { LoginComponent } from './login/login.component';
+import { AccountService } from './services/account/account.service';
+// import { AccountService } from './services/account/account.service';
 
 // import { ToastrModule } from "ngx-toastr";
 // import { ImageSelectorComponent } from './shared/image-selector/image-selector.component';
@@ -100,9 +103,11 @@ import { UploadLibraryFileComponent } from './shared/components/upload-file/uplo
     FullComponent,
     AppHeaderComponent,
     UploadLibraryFileComponent,
+    LoginComponent,
 
     AppSidebarComponent,
     SidenavComponent,
+
     // PortfolioListComponent,
     // PortfolioDetailsComponent,
     // ImageSelectorComponent,
@@ -136,7 +141,7 @@ import { UploadLibraryFileComponent } from './shared/components/upload-file/uplo
     NgxAudioPlayerModule,
     NgxDocViewerModule,
     HttpClientModule,
-    
+
   ],
   providers: [
     KhatmaService,
@@ -145,6 +150,7 @@ import { UploadLibraryFileComponent } from './shared/components/upload-file/uplo
     LibraryCategoryService,
     LibraryLanguageService,
     LibraryService,
+    AccountService,
     {
       provide: ErrorHandler,
       useClass: AppErrorHandler,

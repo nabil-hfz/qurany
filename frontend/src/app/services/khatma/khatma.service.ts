@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data-service';
 import { environment } from '../../../environments/environment';
 import { KhatmaModel } from '../../models/khatma.model';

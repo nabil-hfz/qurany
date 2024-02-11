@@ -6,6 +6,7 @@ import { languageControllerSwagger } from './library-language-controller.swagger
 import { recitationControllerSwagger } from './recitation-controller.swagger';
 import { reciterControllerSwagger } from './reciter-controller.swagger';
 import { libraryCategoryControllerSwagger } from './library-category-controller.swagger';
+import { accountServiceControllerSwagger } from './account-controller.swagger';
 
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
@@ -120,6 +121,7 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
         ...libraryControllerSwagger.components.schemas,
         ...languageControllerSwagger.components.schemas,
         ...libraryCategoryControllerSwagger.components.schemas,
+        ...accountServiceControllerSwagger.components.schemas,
 
       }
     },
@@ -131,6 +133,7 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
       ...libraryControllerSwagger.paths,
       ...languageControllerSwagger.paths,
       ...libraryCategoryControllerSwagger.paths,
+      ...accountServiceControllerSwagger.paths,
     },
   };
   return combined;

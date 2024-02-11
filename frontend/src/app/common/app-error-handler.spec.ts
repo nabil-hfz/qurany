@@ -1,6 +1,6 @@
 import { AppErrorHandler } from "./app-error-handler";
 import { AppNotFoundError } from "./not-found-error";
-import { AppBadInputError } from "./bad-input";
+import { AppBadError } from "./bad-error";
 
 describe("AppErrorHandler", () => {
   let errorHandler: AppErrorHandler;
@@ -21,7 +21,7 @@ describe("AppErrorHandler", () => {
   });
 
   it("should handle AppBadInputError by displaying an alert", () => {
-    const badInputError = new AppBadInputError();
+    const badInputError = new AppBadError();
     spyOn(window, "alert");
 
     errorHandler.handleError(badInputError);

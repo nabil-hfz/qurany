@@ -4,8 +4,7 @@
 
         <span>
             <!-- <i class="fa fa-compact-disc"></i> -->
-            <img src="../../../assets/images/app_launcher.png" alt="" 
-            style="width: 36px; height: 36px;">
+            <img src="../../../assets/images/app_launcher.png" alt="" style="width: 36px; height: 36px;">
             &nbsp;
             <span class="header-text"> Kawtharuna</span>
         </span>
@@ -31,5 +30,18 @@
         </div>
 
     </div>
+
+
+    <div *ngIf="isLoggedIn">
+        <button mat-flat-button color="primary" (click)="onLogout()">
+            <span class="header-text"> Logout </span>
+        </button>
+    </div>
+    <div *ngIf="!isLoggedIn">
+        <button mat-flat-button color="primary" (click)="onLogin()">
+            <span class="header-text"> Login </span>
+        </button>
+    </div>
+
 
 </mat-toolbar>
