@@ -64,7 +64,7 @@ export class HttpServer {
   }
 
   delete(
-    param:GetParams,
+    param: GetParams,
   ): void {
     this.express.delete(
       param.path,
@@ -88,8 +88,15 @@ export class HttpServer {
     customClaims?: AppRoles[]
   ) => {
     return async (req: Request, res: Response, next: NextFunction) => {
+      console.log('req.authenticated is ', req.authenticated);
+      console.log('req.token is ', req.token);
+      console.log('req.customClaims is ', req.customClaims);
       const checkCustomClaim = () => {
-        if (customClaims?.length) {
+
+        let result = customClaims?.filter(claim => claim < AppRoles.guest);
+        console.log('result is ', result);
+
+        if (customClaims?.length && result?.length) {
           // assert(req.authenticated != null);
           // assert(req.auth != null);
 
@@ -97,12 +104,12 @@ export class HttpServer {
             throw new HttpResponseError(
               403,
               "FORBIDDEN",
-              "You should be authenticated on a Firebase Auth account that have this/these custom claims: " +
-              customClaims
+              "You should be authenticated on a Kawtharuna Auth account that have this/these custom claims: " +
+              customClaims.map(claim => AppRoles[claim])
             );
           }
           for (const claim of customClaims) {
-            if ((req.auth!.customClaims ?? {})[claim]) {
+            if ((req!.customClaims ?? {})[claim]) {
               return;
             }
           }
@@ -114,8 +121,8 @@ export class HttpServer {
         }
       };
       try {
-        checkCustomClaim.toString();
-        // checkCustomClaim();
+        // checkCustomClaim.toString();
+        checkCustomClaim();
         // noinspection ES6RedundantAwait
         // Handle both array and single request handler
         if (Array.isArray(requestHandlers)) {
@@ -126,7 +133,7 @@ export class HttpServer {
           await requestHandlers(req, res, next);
         }
       } catch (e: any) {
-        const userInfo = !req.auth?.uid?.length ? "" : ` uid: ${req.auth.uid}`;
+        const userInfo = !req?.uid ? "" : ` uid: ${req?.uid}`;
 
         if (e instanceof HttpResponseError) {
           logWarn(
