@@ -31,6 +31,11 @@ export const accountServiceControllerSwagger = {
                     "nullable": true,
                     "description": "The phone number of the user."
                   },
+                  "role": {
+                    "type": "integer",
+                    "nullable": false,
+                    "description": "The role index number."
+                  },
                   "image": {
                     "type": "string",
                     "format": "binary",
