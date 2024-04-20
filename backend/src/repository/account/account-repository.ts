@@ -30,19 +30,19 @@ export class AccountRepository extends Repository<UserEntity> {
         .saveFile(image, imagePath);
     }
 
-    // let isExisted = await this._repository.exists({
-    //   where: {
-    //     email: request.email
-    //   }
-    // });
+    let isExisted = await this._repository.exists({
+      where: {
+        email: request.email
+      }
+    });
 
-    // if (isExisted) {
-    //   throw new HttpResponseError(
-    //     400,
-    //     "EXISTING_EMAIL",
-    //     "Email is already in use"
-    //   );
-    // }
+    if (isExisted) {
+      throw new HttpResponseError(
+        400,
+        "EXISTING_EMAIL",
+        "Email is already in use"
+      );
+    }
 
     let user: UserEntity = new UserEntity();
 
@@ -65,11 +65,11 @@ export class AccountRepository extends Repository<UserEntity> {
     email: string,
     password: string
   ): Promise<UserEntity> {
-    console.log(`AccountRepository _repository is ${this._repository} `);
+
     let isExisted = await this._repository.exists({
       where: { email: email }
     });
-    console.log(`AccountRepository isExisted is ${isExisted} `);
+
     if (!isExisted) {
       throw new HttpResponseError(
         400,
@@ -81,7 +81,6 @@ export class AccountRepository extends Repository<UserEntity> {
     let user = await this._repository.findOneBy({
       email: email
     });
-    console.log(`AccountRepository user is ${user} `);
 
     if (!user) {
       throw new HttpResponseError(
@@ -90,10 +89,8 @@ export class AccountRepository extends Repository<UserEntity> {
         "Email or password is wrong"
       );
     }
-    console.log('user ', user);
 
     let samePassword = await AppPasswordUtils.comparPassword(password, user!.password!);
-    console.log(`AccountRepository samePassword is ${samePassword} `);
 
     if (!samePassword) {
       throw new HttpResponseError(

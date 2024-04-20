@@ -85,44 +85,30 @@ export class HttpServer {
 
   private readonly _catchErrorHandler = (
     requestHandlers: RequestHandler[] | RequestHandler,
-    customClaims?: AppRoles[]
+    allowedRoles?: AppRoles[]
   ) => {
     return async (req: Request, res: Response, next: NextFunction) => {
       console.log('req.authenticated is ', req.authenticated);
       console.log('req.token is ', req.token);
       console.log('req.customClaims is ', req.customClaims);
+
+      const userRoles = req.customClaims;
+
       const checkCustomClaim = () => {
 
-        let result = customClaims?.filter(claim => claim < AppRoles.guest);
-        console.log('result is ', result);
+        const hasPermission = allowedRoles?.some(role => userRoles?.role >= role);
 
-        if (customClaims?.length && result?.length) {
-          // assert(req.authenticated != null);
-          // assert(req.auth != null);
-
-          if (!req.authenticated) {
-            throw new HttpResponseError(
-              403,
-              "FORBIDDEN",
-              "You should be authenticated on a Kawtharuna Auth account that have this/these custom claims: " +
-              customClaims.map(claim => AppRoles[claim])
-            );
-          }
-          for (const claim of customClaims) {
-            if ((req!.customClaims ?? {})[claim]) {
-              return;
-            }
-          }
+        if (userRoles?.length && !hasPermission) {
           throw new HttpResponseError(
             403,
             "FORBIDDEN",
-            `Only ${customClaims.toString().replace(/,/g, ", ")} can access`
+            "You do not have sufficent permission to do this action."
           );
         }
       };
       try {
         // checkCustomClaim.toString();
-        checkCustomClaim();
+        await checkCustomClaim();
         // noinspection ES6RedundantAwait
         // Handle both array and single request handler
         if (Array.isArray(requestHandlers)) {
@@ -141,6 +127,7 @@ export class HttpServer {
             }`
           );
           res.statusCode = e.status;
+          console.error('1- Error happened ', e)
           res.send(
             new ErrorResponseBody({
               status: e.status,
@@ -151,7 +138,7 @@ export class HttpServer {
           // next();
           return;
         }
-        console.error('Error happened ', e)
+        console.error('2- Error happened ', e)
         // logError(`[${req.method.toUpperCase()}] ${req.path}${userInfo}`);
         // logError(e.stack);
         // logError.toString();

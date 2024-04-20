@@ -9,6 +9,7 @@ export const verifyValidUidTokenInterceptor = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log('req.headers["authorization"] ', req.headers["authorization"]);
   const authorizationHeaderValue: string | undefined = (
     req.headers["Authorization"]?.length
       ? req.headers["Authorization"]
@@ -20,25 +21,23 @@ export const verifyValidUidTokenInterceptor = async (
     return;
   }
 
-  let finished = false;
+  // let finished = false;
 
-  setTimeout(() => {
-    if (!finished) {
-      finished = true;
-      return res.status(401).send(
-        new ErrorResponseBody({
-          status: 401,
-          code: "UNAUTHORIZED",
-          description: "Invalid 'Authorization' token (timeout)",
-        })
-      );
-    } return;
-  }, 5500);
+  // setTimeout(() => {
+  //   if (!finished) {
+  //     finished = true;
+  //     return res.status(401).send(
+  //       new ErrorResponseBody({
+  //         status: 401,
+  //         code: "UNAUTHORIZED",
+  //         description: "Invalid 'Authorization' token (timeout)",
+  //       })
+  //     );
+  //   } return;
+  // }, 5500);
 
   if (authorizationHeaderValue.startsWith("Bearer ")) {
-    const AuthToken: string = authorizationHeaderValue.substring(
-      "Bearer ".length
-    );
+    const AuthToken: string = authorizationHeaderValue.substring("Bearer ".length);
 
     console.log("AuthToken ", AuthToken);
 
@@ -55,9 +54,9 @@ export const verifyValidUidTokenInterceptor = async (
       return;
     }
 
-    if (!finished) {
-      finished = true;
-    }
+    // if (!finished) {
+    //   finished = true;
+    // }
     return res.status(401).send(
       new ErrorResponseBody({
         status: 401,

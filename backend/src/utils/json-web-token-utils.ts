@@ -13,7 +13,7 @@ export abstract class AppJsonWebTokenUtils {
       {
         uid: userId,
         email: email,
-        role: role
+        customClaims: role
       }, // Payload data
       JWT_SECRET_KEY!,                    // Secret key
       { expiresIn: '7d' }                // Token expiration time

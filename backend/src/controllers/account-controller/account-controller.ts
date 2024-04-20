@@ -33,7 +33,6 @@ export class AccountController implements Controller {
 
   private readonly register: RequestHandler = async (req: any, res, next) => {
     const body: CreateAccountReqBody = Object.assign({}, req.body);
-    console.log(`AccountRepository register is ${body} `);
 
     checkIfIsValidCreateAccountReqBody(body);
 
@@ -50,7 +49,6 @@ export class AccountController implements Controller {
 
   private readonly logIn: RequestHandler = async (req, res, next) => {
     const body: LoginAccountReqBody = Object.assign({}, req.body);
-    console.log(`AccountRepository logIn is ${body} `);
 
     const refreshedUser = await accountsRepository.login(
       body.email,
