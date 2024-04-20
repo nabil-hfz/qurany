@@ -1,3 +1,4 @@
+import { JwtPayload } from 'jsonwebtoken';
 import { DecodedIdToken, UserRecord } from "firebase-admin/lib/auth";
 
 export type CacheOfFunction<T, TProducer extends (...args: any[]) => T> = (
@@ -9,14 +10,20 @@ export type CacheOfFunction<T, TProducer extends (...args: any[]) => T> = (
 declare global {
   namespace Express {
     interface Request {
-      /** Indicates whether the user is authenticated on Firebase Authentication */
+      /** Indicates whether the user is authenticated or not */
       authenticated: boolean;
 
-      /** If authenticated: Contains user data of Firebase Authentication.  */
-      auth?: UserRecord;
+      /** If authenticated: represents user id.  */
+      uid?: number;
 
-      /** If authenticated: Contains token data of Firebase Authentication. */
-      token?: DecodedIdToken;
+      /** If authenticated: represents user email.  */
+      email?: string;
+
+      /** If authenticated: Contains token data of JWT. */
+      token?: string;
+
+      /** If authenticated: Contains all user's roles. */
+      customClaims?: { [key: string]: any };
 
       /**
        * Caches the result of a function based on the `cacheId` param.

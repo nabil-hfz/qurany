@@ -11,9 +11,7 @@ import { AppPasswordUtils } from "../../utils/password-utils";
 
 export class AccountRepository extends Repository<UserEntity> {
 
-  constructor(
-    model: EntityTarget<UserEntity>
-  ) {
+  constructor(model: EntityTarget<UserEntity>) {
     super(model);
   }
 
@@ -67,9 +65,11 @@ export class AccountRepository extends Repository<UserEntity> {
     email: string,
     password: string
   ): Promise<UserEntity> {
+
     let isExisted = await this._repository.exists({
       where: { email: email }
     });
+
     if (!isExisted) {
       throw new HttpResponseError(
         400,
@@ -81,6 +81,7 @@ export class AccountRepository extends Repository<UserEntity> {
     let user = await this._repository.findOneBy({
       email: email
     });
+
     if (!user) {
       throw new HttpResponseError(
         400,
@@ -90,6 +91,7 @@ export class AccountRepository extends Repository<UserEntity> {
     }
 
     let samePassword = await AppPasswordUtils.comparPassword(password, user!.password!);
+
     if (!samePassword) {
       throw new HttpResponseError(
         400,
@@ -115,6 +117,4 @@ export class AccountRepository extends Repository<UserEntity> {
 
 }
 
-export const accountsRepository = new AccountRepository(
-  UserEntity
-);
+export const accountsRepository = new AccountRepository(UserEntity);

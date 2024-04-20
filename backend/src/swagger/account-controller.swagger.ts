@@ -22,7 +22,7 @@ export const accountServiceControllerSwagger = {
                     "format": "password",
                     "description": "The user's password."
                   },
-                  "displayName": {
+                  "name": {
                     "type": "string",
                     "description": "The display name of the user."
                   },
@@ -169,7 +169,7 @@ export const accountServiceControllerSwagger = {
                 "type": "string",
                 "description": "Email address of the user."
               },
-              "displayName": {
+              "name": {
                 "type": "string",
                 "description": "Display name of the user."
               },

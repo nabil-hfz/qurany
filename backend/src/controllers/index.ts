@@ -64,7 +64,7 @@ export class HttpServer {
   }
 
   delete(
-    param:GetParams,
+    param: GetParams,
   ): void {
     this.express.delete(
       param.path,
@@ -85,37 +85,30 @@ export class HttpServer {
 
   private readonly _catchErrorHandler = (
     requestHandlers: RequestHandler[] | RequestHandler,
-    customClaims?: AppRoles[]
+    allowedRoles?: AppRoles[]
   ) => {
     return async (req: Request, res: Response, next: NextFunction) => {
-      const checkCustomClaim = () => {
-        if (customClaims?.length) {
-          // assert(req.authenticated != null);
-          // assert(req.auth != null);
+      console.log('req.authenticated is ', req.authenticated);
+      console.log('req.token is ', req.token);
+      console.log('req.customClaims is ', req.customClaims);
 
-          if (!req.authenticated) {
-            throw new HttpResponseError(
-              403,
-              "FORBIDDEN",
-              "You should be authenticated on a Firebase Auth account that have this/these custom claims: " +
-              customClaims
-            );
-          }
-          for (const claim of customClaims) {
-            if ((req.auth!.customClaims ?? {})[claim]) {
-              return;
-            }
-          }
+      const userRoles = req.customClaims;
+
+      const checkCustomClaim = () => {
+
+        const hasPermission = allowedRoles?.some(role => userRoles?.role >= role);
+
+        if (userRoles?.length && !hasPermission) {
           throw new HttpResponseError(
             403,
             "FORBIDDEN",
-            `Only ${customClaims.toString().replace(/,/g, ", ")} can access`
+            "You do not have sufficent permission to do this action."
           );
         }
       };
       try {
-        checkCustomClaim.toString();
-        // checkCustomClaim();
+        // checkCustomClaim.toString();
+        await checkCustomClaim();
         // noinspection ES6RedundantAwait
         // Handle both array and single request handler
         if (Array.isArray(requestHandlers)) {
@@ -126,7 +119,7 @@ export class HttpServer {
           await requestHandlers(req, res, next);
         }
       } catch (e: any) {
-        const userInfo = !req.auth?.uid?.length ? "" : ` uid: ${req.auth.uid}`;
+        const userInfo = !req?.uid ? "" : ` uid: ${req?.uid}`;
 
         if (e instanceof HttpResponseError) {
           logWarn(
@@ -134,6 +127,7 @@ export class HttpServer {
             }`
           );
           res.statusCode = e.status;
+          console.error('1- Error happened ', e)
           res.send(
             new ErrorResponseBody({
               status: e.status,
@@ -144,7 +138,7 @@ export class HttpServer {
           // next();
           return;
         }
-        console.error('Error happened ', e)
+        console.error('2- Error happened ', e)
         // logError(`[${req.method.toUpperCase()}] ${req.path}${userInfo}`);
         // logError(e.stack);
         // logError.toString();

@@ -1,15 +1,20 @@
 import * as jwt from 'jsonwebtoken';
 import { JwtPayload } from 'jsonwebtoken';
+import { JWTSecretKeyError } from './json-web-token-errors';
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-if (!JWT_SECRET_KEY) throw new Error();
+if (!JWT_SECRET_KEY) throw new JWTSecretKeyError();
 
 export abstract class AppJsonWebTokenUtils {
 
-  static async generateToken(userId: number, username: string, role: any): Promise<string> {
+  static async generateToken(userId: number, email: string, role: any): Promise<string> {
 
     const token = jwt.sign(
-      { userId: userId, username: username, role: role }, // Payload data
+      {
+        uid: userId,
+        email: email,
+        customClaims: role
+      }, // Payload data
       JWT_SECRET_KEY!,                    // Secret key
       { expiresIn: '7d' }                // Token expiration time
     );

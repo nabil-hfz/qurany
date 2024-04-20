@@ -26,7 +26,7 @@ export class AccountController implements Controller {
     httpServer.post({
       path: `${this.url}/login`,
       requestHandler: this.logIn.bind(this),
-      customClaims: [AppRoles.user],
+      customClaims: [AppRoles.guest],
     });
 
   }

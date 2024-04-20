@@ -36,7 +36,7 @@ export class UserEntity extends AppBaseEntity {
   /**
    * The URL of the user's profile picture.
    */
-  @OneToOne(() => FileEntity, { eager: true, nullable: false })
+  @OneToOne(() => FileEntity, { eager: true, nullable: true })
   @JoinColumn()
   photo?: FileEntity;
   
