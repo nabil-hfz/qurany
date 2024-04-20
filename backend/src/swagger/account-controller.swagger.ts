@@ -43,7 +43,7 @@ export const accountServiceControllerSwagger = {
                     "description": "Profile image of the user."
                   }
                 },
-                "required": ["email", "password"]
+                "required": ["name", "email", "password", "role"]
               }
             }
           }
