@@ -332,9 +332,20 @@ class DarkColors implements AppColors {
   Color get serviceDetailsAppBarGradientEndColor => Colors.transparent;
 
   ///
+  /// Bottom Navigation Bar
+  @override
+  Color get backgroundBottomNavigationBarColor => Colors.white;
+
+  @override
+  Color get selectedIconBottomNavigationBarColor => AppColors.appPrimaryColor;
+
+  @override
+  Color get unselectedIconBottomNavigationBarColor => Colors.grey;
+
+  ///
   /// Refresh Header Color
   @override
-  Color get refreshHeaderColor => Colors.grey.shade900;
+  Color get refreshHeaderColor => Colors.grey.shade50;
 
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);

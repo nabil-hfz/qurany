@@ -91,15 +91,18 @@ class MyApp extends StatelessWidget {
               return Consumer<AppThemeManager>(
                 builder: (context, appTheme, _) {
                   return MaterialApp.router(
-                    title: envVariables.appName,
-                    debugShowCheckedModeBanner: false,
-                    theme:
-                        // appTheme.isDarkMode
-                        //     ? appTheme.getDarkTheme
-                        //     :
-                        appTheme.getLightTheme,
-                    // scaffoldMessengerKey: scaffoldMessengerKey,
+                    builder: (context, widget) => AnnotatedRegion(
+                      value: appTheme.systemUiOverlayStyle,
+                      child: widget!,
+                    ),
                     locale: appLanguage.appLocal,
+                    debugShowCheckedModeBanner: false,
+                    theme: appTheme.getLightTheme,
+                    darkTheme: appTheme.getDarkTheme,
+                    themeMode: appTheme.getThemeMode,
+
+                    title: envVariables.appName,
+
                     supportedLocales: Translations.delegate.supportedLocales,
                     localeResolutionCallback: (locale, supportedLocales) {
                       return locale;
