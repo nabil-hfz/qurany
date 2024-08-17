@@ -1,7 +1,7 @@
 module.exports = {
     apps: [
         {
-            name: 'My Application',
+            name: 'kawtharuna-server',
             script: './dist/src/index.js',
         },
     ],
