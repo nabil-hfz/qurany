@@ -21,10 +21,7 @@ class MainMenuScreen extends StatelessWidget {
     // final gamesServicesController = context.watch<GamesServicesController?>();
     // final settingsController = context.watch<SettingsController>();
     // final audioController = context.watch<AudioController>();
-    AppThemeManager themeStore = Provider.of<AppThemeManager>(
-      context,
-      listen: true,
-    );
+    AppThemeManager themeStore = Provider.of<AppThemeManager>(context);
     return MiniplayerWillPopScope(
       onWillPop: () async {
         final NavigatorState? navigator = _navigatorKey.currentState;
@@ -34,6 +31,21 @@ class MainMenuScreen extends StatelessWidget {
         return false;
       },
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Text('here'),
+          onPressed: () {
+            try {
+              if (themeStore.isDarkMode) {
+                themeStore.toggleTheme(ThemeMode.light);
+              } else {
+                themeStore.toggleTheme(ThemeMode.dark);
+              }
+            } catch (e) {
+              print("error is $e");
+            }
+            // appTheme.onChange(themeMode)
+          },
+        ),
         backgroundColor: themeStore.appColors.scaffoldBgColor,
         key: mainKey,
         drawer: Drawer(

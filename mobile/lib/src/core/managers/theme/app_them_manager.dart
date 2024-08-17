@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kawtharuna/src/core/constants/app_theme.dart';
 import 'package:kawtharuna/src/core/constants/constants.dart';
+import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/helpers/hlp_shared_preference.dart';
 import 'package:kawtharuna/src/core/utils/utl_app.dart';
 
@@ -27,13 +28,17 @@ class AppThemeManager with ChangeNotifier {
   late final SharedPreferenceHelper _sharedPreference;
 
   /// Used to listen to the changes upon the system of brightness.
-  SingletonFlutterWindow get _window {
-    return WidgetsBinding.instance.window;
+  PlatformDispatcher? get _window {
+    if (navigator.navigatorKey.currentContext != null) {
+      return View.of(navigator.navigatorKey.currentContext!).platformDispatcher;
+    }
+    return null;
+    // PlatformDispatcher.instance.
   }
 
   /// Used to utilize using of system's brightness.
   Brightness get currentBrightness {
-    return _window.platformBrightness;
+    return _window?.platformBrightness ?? Brightness.light;
   }
 
   /// A derived class [DarkColors] that has implemented the
@@ -103,10 +108,10 @@ class AppThemeManager with ChangeNotifier {
     /// if there is a value we should look for this value, if is it system
     /// value then we can listen as well. If not then will not listen
     _sharedPreference.getThemeMode.then((value) {
-      print('value is $value');
       _isPossibleToListenToSystemChanges = (value != null);
       if (value != null) {
-        var result = $enumDecodeNullable(themeModeEnumMap, value);
+        var result =
+            $enumDecodeNullable(themeModeEnumMap, value.split('.').last);
         _isPossibleToListenToSystemChanges = result == ThemeMode.system;
         toggleTheme(result ?? ThemeMode.system);
       } else {
@@ -119,9 +124,11 @@ class AppThemeManager with ChangeNotifier {
     SystemChrome.setSystemUIChangeCallback((systemOverlaysAreVisible) {
       return Future.value(null);
     });
+  }
 
+  void initAppListener() {
     /// This callback gets invoked every time brightness changes.
-    _window.onPlatformBrightnessChanged = () {
+    _window?.onPlatformBrightnessChanged = () {
       if (_isPossibleToListenToSystemChanges) onChange(ThemeMode.system);
     };
   }
@@ -150,10 +157,10 @@ class AppThemeManager with ChangeNotifier {
       systemNavigationBarColor: _appDarkColors.systemBottomNavigationBarColor,
       systemNavigationBarDividerColor: _appDarkColors.systemDividerColor,
     );
-    AppUtils.debugPrint('AppThemeManager setDarkMode $_systemUiOverlayStyle');
+    appPrint('AppThemeManager setDarkMode $_systemUiOverlayStyle');
     notifyListeners();
-    unawaited(_sharedPreference.changeTheme(_internalThemeMode.toString()));
-    unawaited(_sharedPreference.changeBrightnessStatus(_brightness.toString()));
+    await _sharedPreference.changeTheme(_internalThemeMode.toString());
+    await _sharedPreference.changeBrightnessStatus(_brightness.toString());
   }
 
   /// Loads and saves light configurations.
@@ -166,10 +173,10 @@ class AppThemeManager with ChangeNotifier {
       systemNavigationBarColor: _appLightColors.systemBottomNavigationBarColor,
       systemNavigationBarDividerColor: _appLightColors.systemDividerColor,
     );
-    AppUtils.debugPrint('AppThemeManager setLightMode $_systemUiOverlayStyle');
+    appPrint('AppThemeManager setLightMode $_systemUiOverlayStyle');
     notifyListeners();
-    unawaited(_sharedPreference.changeTheme(_internalThemeMode.toString()));
-    unawaited(_sharedPreference.changeBrightnessStatus(_brightness.toString()));
+    await _sharedPreference.changeTheme(_internalThemeMode.toString());
+    await _sharedPreference.changeBrightnessStatus(_brightness.toString());
   }
 
   void onChange(ThemeMode themeMode) {
@@ -192,7 +199,7 @@ class AppThemeManager with ChangeNotifier {
   }
 
   void listener() {
-    AppUtils.debugPrint("Theme mode is $_internalThemeMode");
+    appPrint("Theme mode is $_internalThemeMode");
   }
 
   /// Cleans the listener of system theme changes.
@@ -201,7 +208,7 @@ class AppThemeManager with ChangeNotifier {
   @disposeMethod
   void disposeManager() {
     removeListener(listener);
-    _window.onPlatformBrightnessChanged = null;
+    _window?.onPlatformBrightnessChanged = null;
     super.dispose();
   }
 }
