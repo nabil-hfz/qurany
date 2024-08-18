@@ -69,8 +69,10 @@ export class RecitationRepository extends Repository<RecitationEntity> {
       result.image = data.imageFile;
 
       result.name = {
-        en: `Chapter ${index}`,
-        ar: `الجزء ${index}`,
+        translations: {
+          en: `Chapter ${index}`,
+          ar: `الجزء ${index}`,
+        }
       };
       result.sequence = index;
       result.reciter = reciter;
