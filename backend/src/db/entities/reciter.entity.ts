@@ -16,10 +16,10 @@ export const RecitationTypesList = [
 @Entity({ name: 'reciters' })
 export class ReciterEntity extends AppBaseEntity {
 
-  @Column(type => LocalizedEntity)
+  @Column({ type: 'jsonb', nullable: true })
   name?: LocalizedEntity;
 
-  @Column(type => LocalizedEntity)
+  @Column({ type: 'jsonb', nullable: true })
   bio?: LocalizedEntity;
 
   @OneToOne(() => FileEntity, { eager: true })
@@ -33,7 +33,7 @@ export class ReciterEntity extends AppBaseEntity {
     type: "int",
     array: true,
     // default: () => `'{${RecitationTypes.Hafs}}'` // Correctly formatted default value
-    default: () => [RecitationTypes.Hafs] 
+    default: () => [RecitationTypes.Hafs]
   })
   recitationTypes!: number[];
 
