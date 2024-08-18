@@ -26,8 +26,17 @@ export class ReciterEntity extends AppBaseEntity {
   @JoinColumn({ name: 'image_id' })
   image?: FileEntity;
 
-  @Column("int", { array: true, default: [RecitationTypes.Hafs] })
+  // @Column("int", { array: true, default: [RecitationTypes.Hafs] })
+  // recitationTypes!: number[];
+
+  @Column({
+    type: "int",
+    array: true,
+    // default: () => `'{${RecitationTypes.Hafs}}'` // Correctly formatted default value
+    default: () => [RecitationTypes.Hafs] 
+  })
   recitationTypes!: number[];
+
 
   @Column({ nullable: false })
   reciterIndex!: number;
