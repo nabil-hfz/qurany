@@ -20,7 +20,7 @@ export class CategoryEntity extends AppBaseEntity {
    * This field is required and must be unique across all categories.
    * The `LocalizedEntity` type allows for storing names in different languages.
    */
-  @Column(() => LocalizedEntity)
+  @Column({ type: 'jsonb', nullable: true })
   name!: LocalizedEntity;
 
   /**

@@ -10,7 +10,7 @@ import { RecitationTypes, ReciterEntity } from './reciter.entity';
 @Entity({ name: 'khatmat' })
 export class KhatmaEntity extends AppBaseEntity {
 
-  @Column(() => LocalizedEntity)
+  @Column({ type: 'jsonb', nullable: true })
   name!: LocalizedEntity;
 
   @Column({

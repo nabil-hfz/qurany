@@ -22,13 +22,17 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
     },
     servers: [
       {
-        url: 'https://api.kawtharuna.com/v1',
-        description: 'Production server.',
+        url: 'http://localhost:8080/v1',
+        description: 'Development server, when you run the application directly from the command line on your local machine.',
       },
       {
         url: 'https://api.dev.kawtharuna.com/v1',
         description: 'Development server, when you run the application directly from the command line on your local machine.',
-      }
+      },
+      {
+        url: 'https://api.kawtharuna.com/v1',
+        description: 'Production server.',
+      },
 
     ],
     components: {

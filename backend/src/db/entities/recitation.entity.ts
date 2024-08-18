@@ -8,7 +8,8 @@ import { AppBaseEntity } from './base.entity';
 
 @Entity({ name: 'recitations' })
 export class RecitationEntity extends AppBaseEntity {
-  @Column(type => LocalizedEntity)
+
+  @Column({ type: 'jsonb', nullable: true })
   name!: LocalizedEntity;
 
   @OneToOne(() => FileEntity, {
@@ -33,8 +34,8 @@ export class RecitationEntity extends AppBaseEntity {
     type: "int",
     default: RecitationTypes.Hafs // Assuming RecitationTypes.Hafs is 1
   })
-  recitationType!: number; 
-  
+  recitationType!: number;
+
   @Column()
   khatmaId!: number;
 
