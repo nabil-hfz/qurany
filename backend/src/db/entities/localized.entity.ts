@@ -1,9 +1,6 @@
 import { Column } from 'typeorm';
 
 export class LocalizedEntity {
-  @Column({ nullable: true })
-  ar?: string;
-
-  @Column({ nullable: true })
-  en?: string;
+  @Column({ type: 'jsonb', nullable: true })
+  translations?: { [key: string]: string };
 }

@@ -5,16 +5,21 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { AppBaseEntity } from './base.entity';
 import { LocalizedEntity } from './localized.entity';
-import { ReciterEntity } from './reciter.entity';
+import { RecitationTypes, ReciterEntity } from './reciter.entity';
 
 @Entity({ name: 'khatmat' })
 export class KhatmaEntity extends AppBaseEntity {
 
-  @Column(type => LocalizedEntity)
+  @Column(() => LocalizedEntity)
   name!: LocalizedEntity;
 
-  @Column()
-  recitationType!: number;
+  @Column({
+    type: "enum",
+    enum: RecitationTypes,
+    default: RecitationTypes.Hafs
+  })
+  recitationType!: RecitationTypes;
+
 
   @Column({ default: 0 })
   totalDownloads!: number;
@@ -25,9 +30,9 @@ export class KhatmaEntity extends AppBaseEntity {
   // @ManyToOne(() => Author, (author) => author.photos)
 
   @ManyToOne((type) => ReciterEntity, //(reciter) => reciter.image,
-   {
-    eager: true,
-  })
+    {
+      eager: true,
+    })
   @JoinColumn()
   reciter?: ReciterEntity;
 }
