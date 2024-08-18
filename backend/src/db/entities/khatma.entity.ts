@@ -14,11 +14,10 @@ export class KhatmaEntity extends AppBaseEntity {
   name!: LocalizedEntity;
 
   @Column({
-    type: "enum",
-    enum: RecitationTypes,
+    type: "int",
     default: RecitationTypes.Hafs
   })
-  recitationType!: RecitationTypes;
+  recitationType!: number;
 
 
   @Column({ default: 0 })
