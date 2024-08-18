@@ -30,12 +30,11 @@ export class RecitationEntity extends AppBaseEntity {
   reciter!: ReciterEntity;
 
   @Column({
-    type: "enum",
-    enum: RecitationTypes,
-    default: RecitationTypes.Hafs
+    type: "int",
+    default: RecitationTypes.Hafs // Assuming RecitationTypes.Hafs is 1
   })
-  recitationType!: RecitationTypes;
-
+  recitationType!: number; 
+  
   @Column()
   khatmaId!: number;
 
