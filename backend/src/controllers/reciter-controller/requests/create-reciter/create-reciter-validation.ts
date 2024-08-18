@@ -7,11 +7,11 @@ export function checkIfIsValidCreateReciterReqBody(body: CreateReciterReqBody) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "reciterIndex" defined ');
   }
 
-  if (!body?.name?.en?.length || !body?.name?.ar?.length) {
+  if (!body?.name?.translations?.en?.length || !body?.name?.translations?.ar?.length) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "name en or ar" defined');
   }
 
-  if (!body?.bio?.en?.length || !body?.bio?.ar?.length) {
+  if (!body?.bio?.translations?.en?.length || !body?.bio?.translations?.ar?.length) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'Invalid "bio"');
   }
   if (!body?.numberOfKhatmat) {

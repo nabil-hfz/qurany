@@ -19,8 +19,10 @@ export class CategoryRepository extends Repository<CategoryEntity> {
         const entities: CategoryEntity[] = request.categories.map((data) => {
             const entity = new CategoryEntity();
             const localized = new LocalizedEntity();
-            localized.ar = data.ar;
-            localized.en = data.en;
+            localized.translations = {
+                ar: data.ar,
+                en: data.en,
+            };
             entity.name = localized;
             return entity;
 
