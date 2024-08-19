@@ -1,17 +1,17 @@
 
 import { KhatmaEntity } from "../../../db/entities/khatma.entity";
-import { LocalizedEntity } from "../../../db/entities/localized.entity";
+// import { LocalizedEntity } from "../../../db/entities/localized.entity";
 import { Nullable } from "../../../utils/types";
 
 export class KhatmaResumedRes {
   public readonly id: Nullable<number>;
-  public readonly name: LocalizedEntity;
-  public readonly reciter: { name: LocalizedEntity | undefined, image: string | undefined, id: number | undefined };
+  public readonly name: { [key: string]: string };
+  public readonly reciter: { name: { [key: string]: string } | undefined, image: string | undefined, id: number | undefined };
 
 
   constructor(data: KhatmaEntity) {
     this.id = data.id ?? "";
-    this.name = data.name;
+    this.name = data.name ?? {};
     this.reciter = {
       name: data.reciter?.name,
       id: data.reciter?.id,

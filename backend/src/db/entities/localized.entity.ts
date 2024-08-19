@@ -1,6 +1,6 @@
-import { Column } from 'typeorm';
+// import { Column } from 'typeorm';
 
-export class LocalizedEntity {
-  @Column({ type: 'jsonb', nullable: true })
-  translations?: { [key: string]: string };
-}
+// export class LocalizedEntity {
+//   @Column({ type: 'jsonb', nullable: true })
+//   translations?: { [key: string]: string };
+// }

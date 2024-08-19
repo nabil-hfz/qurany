@@ -1,10 +1,9 @@
 import { FileEntryResumedRes } from "./file-entry-resumed-res";
 import { FileEntryEntity } from "../../../../db/entities/file-entiry.entity";
-import { LocalizedEntity } from "../../../../db/entities/localized.entity";
 import { Nullable } from "../../../../utils/types";
 
 export class FileEntryFullRes extends FileEntryResumedRes {
-  public readonly categories: Nullable<{ id: number, name: LocalizedEntity }[]>;
+  public readonly categories: Nullable<{ id: number, name: { [key: string]: string } }[]>;
   public readonly description: Nullable<string>;
 
 
@@ -13,7 +12,7 @@ export class FileEntryFullRes extends FileEntryResumedRes {
 
     this.categories = data
       .categories
-      ?.map(category => ({ id: category.id, name: category.name }));
+      ?.map(category => ({ id: category.id, name: category.name ?? {} }));
 
     this.description = data.description;
   }

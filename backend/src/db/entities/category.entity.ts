@@ -2,7 +2,7 @@
 import { AppBaseEntity } from './base.entity';
 import { Entity } from 'typeorm/decorator/entity/Entity';
 import { Column } from 'typeorm/decorator/columns/Column';
-import { LocalizedEntity } from './localized.entity';
+// import { LocalizedEntity } from './localized.entity';
 import { ManyToMany } from 'typeorm';
 import { FileEntryEntity } from './file-entiry.entity';
 /**
@@ -21,7 +21,9 @@ export class CategoryEntity extends AppBaseEntity {
    * The `LocalizedEntity` type allows for storing names in different languages.
    */
   @Column({ type: 'jsonb', nullable: true })
-  name!: LocalizedEntity;
+  name?: { [key: string]: string };
+  // @Column({ type: 'jsonb', nullable: true })
+  // name!: LocalizedEntity;
 
   /**
    * A collection of file entries associated with this category.

@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
-import { LocalizedEntity } from './localized.entity';
+// import { LocalizedEntity } from './localized.entity';
 import { FileEntity } from './file.entity';
 import { RecitationTypes, ReciterEntity } from './reciter.entity';
 import { AppBaseEntity } from './base.entity';
@@ -9,8 +9,11 @@ import { AppBaseEntity } from './base.entity';
 @Entity({ name: 'recitations' })
 export class RecitationEntity extends AppBaseEntity {
 
+  // @Column({ type: 'jsonb', nullable: true })
+  // name!: LocalizedEntity;
+
   @Column({ type: 'jsonb', nullable: true })
-  name!: LocalizedEntity;
+  name?: { [key: string]: string };
 
   @OneToOne(() => FileEntity, {
     eager: true,

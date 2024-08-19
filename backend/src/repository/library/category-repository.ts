@@ -2,7 +2,7 @@ import { Repository } from "../repository";
 import { EntityTarget } from "typeorm";
 import { AppPagination } from "../../middlewares/pagination.middleware";
 import { CategoryEntity } from "../../db/entities/category.entity";
-import { LocalizedEntity } from "../../db/entities/localized.entity";
+// import { LocalizedEntity } from "../../db/entities/localized.entity";
 import { CreateCategoriesReqBody } from "../../controllers/library-category-controller/requests/create-category/create-category-req-body";
 
 export class CategoryRepository extends Repository<CategoryEntity> {
@@ -18,11 +18,11 @@ export class CategoryRepository extends Repository<CategoryEntity> {
     ): Promise<any> {
         const entities: CategoryEntity[] = request.categories.map((data) => {
             const entity = new CategoryEntity();
-            const localized = new LocalizedEntity();
-            localized.translations = {
+            const localized = {
                 ar: data.ar,
                 en: data.en,
             };
+
             entity.name = localized;
             return entity;
 

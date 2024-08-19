@@ -1,6 +1,6 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 import { FileEntity } from './file.entity';
-import { LocalizedEntity } from './localized.entity';
+// import { LocalizedEntity } from './localized.entity';
 import { AppBaseEntity } from './base.entity';
 
 export enum RecitationTypes {
@@ -16,11 +16,18 @@ export const RecitationTypesList = [
 @Entity({ name: 'reciters' })
 export class ReciterEntity extends AppBaseEntity {
 
-  @Column({ type: 'jsonb', nullable: true })
-  name?: LocalizedEntity;
+  // @Column({ type: 'jsonb', nullable: true })
+  // name?: LocalizedEntity;
 
   @Column({ type: 'jsonb', nullable: true })
-  bio?: LocalizedEntity;
+  name?: { [key: string]: string };
+
+
+  @Column({ type: 'jsonb', nullable: true })
+  bio?: { [key: string]: string };
+
+  // @Column({ type: 'jsonb', nullable: true })
+  // bio?: LocalizedEntity;
 
   @OneToOne(() => FileEntity, { eager: true })
   @JoinColumn({ name: 'image_id' })
