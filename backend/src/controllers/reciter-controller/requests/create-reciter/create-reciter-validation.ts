@@ -7,7 +7,7 @@ export function checkIfIsValidCreateReciterReqBody(body: CreateReciterReqBody) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "reciterIndex" defined ');
   }
 
-  if (!body?.name?.translations?.en?.length || !body?.name?.translations?.ar?.length) {
+  if (!body?.name?.en?.length || !body?.name?.translations?.ar?.length) {
     throw new HttpResponseError(400, "BAD_REQUEST", 'No "name en or ar" defined');
   }
 

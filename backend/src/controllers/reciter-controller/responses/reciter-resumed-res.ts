@@ -1,11 +1,11 @@
-import { LocalizedEntity } from "../../../db/entities/localized.entity";
+// import { LocalizedEntity } from "../../../db/entities/localized.entity";
 import { ReciterEntity } from "../../../db/entities/reciter.entity";
 import { Nullable } from "../../../utils/types";
 
 export class ReciterResumedRes {
   public readonly id: number;
   public readonly numberOfKhatmat: number;
-  public readonly name: Nullable<LocalizedEntity>;
+  public readonly name: Nullable<{ [key: string]: string }>;
   public readonly image: Nullable<string>;
 
 

@@ -4,14 +4,17 @@
 
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { AppBaseEntity } from './base.entity';
-import { LocalizedEntity } from './localized.entity';
+// import { LocalizedEntity } from './localized.entity';
 import { RecitationTypes, ReciterEntity } from './reciter.entity';
 
 @Entity({ name: 'khatmat' })
 export class KhatmaEntity extends AppBaseEntity {
 
+  // @Column({ type: 'jsonb', nullable: true })
+  // name!: LocalizedEntity;
+
   @Column({ type: 'jsonb', nullable: true })
-  name!: LocalizedEntity;
+  name?: { [key: string]: string };
 
   @Column({
     type: "int",
