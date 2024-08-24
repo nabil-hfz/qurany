@@ -1,10 +1,10 @@
-import { LocalizedEntity } from "../../../../db/entities/localized.entity";
+// import { LocalizedEntity } from "../../../../db/entities/localized.entity";
 
 
 export type CreateKhatmaReqBody = {
   // public:
   reciterId: number;
-  name: LocalizedEntity;
+  name: { [key: string]: string };
   khatmaType: number;
 
 };
