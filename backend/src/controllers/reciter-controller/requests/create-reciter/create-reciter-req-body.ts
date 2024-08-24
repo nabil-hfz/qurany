@@ -1,11 +1,10 @@
-import { LocalizedEntity } from "../../../../db/entities/localized.entity";
-
+// import { LocalizedEntity } from "../../../../db/entities/localized.entity";
 
 export type CreateReciterReqBody = {
   // public:
-  bio: LocalizedEntity;
+  bio: { [key: string]: string };
   reciterIndex: number;
-  name: LocalizedEntity;
+  name: { [key: string]: string };
   numberOfKhatmat: number;
   recitationTypes: number[];
 };
