@@ -20,3 +20,4 @@ export class RecitationResumedRes {
     this.durationInMilli = data.durationInMilli;
   }
 }
+// /Users/nabil.alhafez/QuranBackend/backend/src/controllers/recitation-controller/responses/recitation-resumed-res.ts
