@@ -38,24 +38,24 @@ export abstract class AppStoragePathsConst {
 
 export const AppImagesKhatmeConst: { [key: number]: string } = {
   1: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.maherAlMueaqly}`,
-  2: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.khaledAlabi}`,
+  2: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.abuBakrAlShatri}`,
   3: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.abdulRahmanAlSudais}`,
-  4: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.abuBakrAlShatri}`,
+  4: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.khaledAlabi}`,
 }
 
 export const AppAudiosConst: { [key: number]: string } = {
   1: `${AppStoragePathsConst.audiosPath}/${AppStoragePathsConst.maherAlMueaqly}`,
-  2: `${AppStoragePathsConst.audiosPath}/${AppStoragePathsConst.khaledAlabi}`,
+  2: `${AppStoragePathsConst.audiosPath}/${AppStoragePathsConst.abuBakrAlShatri}`,
   3: `${AppStoragePathsConst.audiosPath}/${AppStoragePathsConst.abdulRahmanAlSudais}`,
-  4: `${AppStoragePathsConst.audiosPath}/${AppStoragePathsConst.abuBakrAlShatri}`,
+  4: `${AppStoragePathsConst.audiosPath}/${AppStoragePathsConst.khaledAlabi}`,
 }
 
 
 
 export const AppImagesRecitersConst: { [key: number]: string } = {
   1: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.maherAlMueaqlyImages}`,
-  2: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.khaledAlabiImages}`,
+  2: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.abuBakrAlShatriImages}`,
   3: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.abdulRahmanAlSudaisImages}`,
-  4: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.abuBakrAlShatriImages}`,
+  4: `${AppStoragePathsConst.imagesPath}/${AppStoragePathsConst.khaledAlabiImages}`,
 }
 
