@@ -17,10 +17,7 @@
     "typeorm:migrate": "typeorm migration:run -d dist/db/data-source-prod.js",
     "typeorm:revert": "npx typeorm-ts-node-esm migration:revert -d dist/db/data-source-prod.js",
     "typeorm:drop": "npx typeorm-ts-node-esm schema:drop -d dist/db/data-source-prod.js",
-    "pm2": "tsc && pm2 start pm2.config.js",
-    "pm2-dev": "tsc && pm2 start pm2-dev.config.js"
-
-  },
+    "pm2": "tsc && pm2 start pm2.config.js"  },
   "keywords": [
     "authentication",
     "typescript",
@@ -120,6 +117,7 @@
     "pdf2pic": "^3.1.0",
     "pg": "^8.11.3",
     "picomatch": "^2.3.1",
+    "pm2": "^5.4.2",
     "prettier": "^2.8.8",
     "pstree.remy": "^1.1.8",
     "readdirp": "^3.6.0",
