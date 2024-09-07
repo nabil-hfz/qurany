@@ -1,0 +1,6 @@
+{
+  "APP_BASE_URL": "https://api.kawtharuna.com/v1/",
+  "APP_NAME": "Kawtharuna Local",
+  "ENV": "local"
+
+}

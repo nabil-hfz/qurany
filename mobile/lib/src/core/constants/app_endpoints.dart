@@ -1,10 +1,11 @@
 import 'package:kawtharuna/main.dart';
+import 'package:kawtharuna/src/core/config/env_variables.dart';
 
 class AppEndpoints {
   AppEndpoints._();
 
   // base url
-  static String baseUrl = envVariables.baseUrl;
+  static String baseUrl = EnvVariables.apiURL;
 
   static const int receiveTimeout = 15000;
   static const int connectionTimeout = 30000;

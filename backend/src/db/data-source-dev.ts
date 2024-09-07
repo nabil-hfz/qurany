@@ -16,11 +16,11 @@ let connectionOptions: DataSourceOptions = {
     password: POSTGRESQL_DB_PASSWORD,
     database: POSTGRESQL_DB,
     namingStrategy: new SnakeNamingStrategy(),
-    entities: [
-        __dirname + "/entities/*.ts",
+     entities: [
+        __dirname + "/../dist/entities/*.js",
     ],
     migrations: [
-        __dirname + "/migrations/*.ts",
+        __dirname + "/../dist/migrations/*.js",
     ],
     synchronize: false,
     logging: isDevelopment,

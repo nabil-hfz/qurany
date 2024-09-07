@@ -17,7 +17,7 @@
     "typeorm:migrate": "typeorm migration:run -d dist/db/data-source-prod.js",
     "typeorm:revert": "npx typeorm-ts-node-esm migration:revert -d dist/db/data-source-prod.js",
     "typeorm:drop": "npx typeorm-ts-node-esm schema:drop -d dist/db/data-source-prod.js",
-    "pm2": "tsc && pm2 start pm2.config.js && pm2 save && pm2 startup"
+    "pm2": "tsc --build && pm2 start pm2.config.js && pm2 save && pm2 startup"
   },
   "keywords": [
     "authentication",

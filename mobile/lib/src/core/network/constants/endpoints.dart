@@ -1,4 +1,5 @@
 import 'package:kawtharuna/main.dart';
+import 'package:kawtharuna/src/core/config/env_variables.dart';
 
 class Endpoints {
   Endpoints._();
@@ -10,7 +11,7 @@ class Endpoints {
   static const int connectionTimeout = 15000;
 
   // booking endpoints
-  static String getPosts = "${envVariables.baseUrl}/podcast";
+  static String getPosts = "${EnvVariables.apiURL}/podcast";
   static const String registerUser = "/users/registration";
   static const String verifyUser = "/users/verificationStatus";
   static const String deleteUser = "/users/";
