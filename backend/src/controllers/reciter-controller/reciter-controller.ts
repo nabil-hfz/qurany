@@ -12,8 +12,8 @@ import { AppRoutes } from "../../constant/app-routes.const";
 import { AppImagesRecitersConst } from "../../constant/app-storage-paths.const";
 import { ResponseModel } from "../../db/response-model";
 import { ResponseListModel } from "../../repository/response-list-model";
-import { RecitationTypesList } from "../../db/entities/reciter.entity";
 import { AppRoles } from "../../constant/app-roles.const";
+import { RecitationTypesList } from "../../db/recitation-types";
 
 export class ReciterController implements Controller {
 

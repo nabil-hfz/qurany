@@ -1,8 +1,9 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 // import { LocalizedEntity } from './localized.entity';
 import { FileEntity } from './file.entity';
-import { RecitationTypes, ReciterEntity } from './reciter.entity';
+import { ReciterEntity } from './reciter.entity';
 import { AppBaseEntity } from './base.entity';
+import { RecitationTypes } from '../recitation-types';
 
 
 

@@ -5,7 +5,8 @@
 import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { AppBaseEntity } from './base.entity';
 // import { LocalizedEntity } from './localized.entity';
-import { RecitationTypes, ReciterEntity } from './reciter.entity';
+import {  ReciterEntity } from './reciter.entity';
+import { RecitationTypes } from '../recitation-types';
 
 @Entity({ name: 'khatmat' })
 export class KhatmaEntity extends AppBaseEntity {
