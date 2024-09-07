@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kawtharuna/main.dart';
+import 'package:kawtharuna/src/core/config/env_variables.dart';
 import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/ads/ads_controller.dart';
 import 'package:kawtharuna/src/core/managers/app_lifecycle/app_lifecycle.dart';
@@ -101,7 +102,7 @@ class MyApp extends StatelessWidget {
                     darkTheme: appTheme.getDarkTheme,
                     themeMode: appTheme.getThemeMode,
 
-                    title: envVariables.appName,
+                    title: EnvVariables.appName,
 
                     supportedLocales: Translations.delegate.supportedLocales,
                     localeResolutionCallback: (locale, supportedLocales) {
