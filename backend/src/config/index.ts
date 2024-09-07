@@ -23,4 +23,8 @@ function init() {
   console.log(`process env ${currentEnv}`);
 }
 init();
+export const isProduction = process.env.NODE_ENV === "production" || process.env.NODE_ENV === "prod";
+
+export const isLocal = process.env.NODE_ENV === "local";
+
 export const isDevelopment = currentEnv == "dev";

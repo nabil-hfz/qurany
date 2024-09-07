@@ -7,7 +7,9 @@ import { recitationControllerSwagger } from './recitation-controller.swagger';
 import { reciterControllerSwagger } from './reciter-controller.swagger';
 import { libraryCategoryControllerSwagger } from './library-category-controller.swagger';
 import { accountServiceControllerSwagger } from './account-controller.swagger';
+import { isDevelopment, isLocal, isProduction } from '../config';
 
+isDevelopment;
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
@@ -21,18 +23,20 @@ const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
       description: 'This is a REST API application made with Express.',
     },
     servers: [
-      {
-        url: 'http://localhost:8080/v1',
-        description: 'Development server, when you run the application directly from the command line on your local machine.',
-      },
-      {
+      ...(isDevelopment ? [{
         url: 'https://api.dev.kawtharuna.com/v1',
         description: 'Development server, when you run the application directly from the command line on your local machine.',
-      },
-      {
+      }] : []),
+
+      ...(isProduction ? [{
         url: 'https://api.kawtharuna.com/v1',
-        description: 'Production server.',
-      },
+        description: 'Development server, when you run the application directly from the command line on your local machine.',
+      }] : []),
+
+      ...(isLocal ? [{
+        url: 'http://localhost:8080/v1',
+        description: 'Development server, when you run the application directly from the command line on your local machine.',
+      }] : []),
 
     ],
     components: {
