@@ -9,7 +9,9 @@ import { libraryCategoryControllerSwagger } from './library-category-controller.
 import { accountServiceControllerSwagger } from './account-controller.swagger';
 import { isDevelopment, isLocal, isProduction } from '../config';
 
-isDevelopment;
+console.log("isDevelopment: ", isDevelopment);
+console.log("isLocal: ", isLocal);
+console.log("isProduction: ", isProduction);
 
 const combineSwaggerDocs = (): swaggerJSDoc.SwaggerDefinition => {
 
