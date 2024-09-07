@@ -31,13 +31,13 @@ export class UploaderService {
         const metadata = await ffprobe(tmpFile.name, { path: ffprobeStatic.path });
 
         const audioStream = metadata.streams.find((stream) => stream.codec_type === 'audio');
-        const durtion = Math.round(Number(audioStream?.duration) ?? 0 * 1000);
+        const duration = Math.round((Number(audioStream?.duration ?? 0)) * 1000);  // Proper conversion to milliseconds
 
         // Clean up temp file
         fs.unlinkSync(tmpFile.name);
         tmpFile.removeCallback();
 
-        return durtion;
+        return duration;
     }
 
     private async uploadFile(
