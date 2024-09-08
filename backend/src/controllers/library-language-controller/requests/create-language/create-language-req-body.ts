@@ -1,5 +1,5 @@
 
 
 export type CreateLanguagesReqBody = {
-  languages: string[];
+  languages: {name:string, language_code:string}[];
 };

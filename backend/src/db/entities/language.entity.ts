@@ -10,4 +10,7 @@ export class LanguageEntity extends AppBaseEntity {
   @Column({ nullable: false, unique: true, })
   name!: string;
 
+
+  @Column({ nullable: false, unique: true, })
+  language_code!: string;
 }
