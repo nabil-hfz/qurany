@@ -201,7 +201,7 @@ export class UploaderService {
 
         const fileDestination = `${fileLocation}${name}${ext}`;
 
-        console.log('fileDestination ', fileDestination);
+        console.log('saveBufferAsFile fileDestination ', fileDestination);
 
         const fileUrl = await this.uploadFile(buffer!, fileDestination, ext);
 
