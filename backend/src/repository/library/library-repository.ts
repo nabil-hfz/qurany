@@ -42,15 +42,6 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
             categories.push(category);
         }
 
-        const filePath = AppStoragePathsConst.libraryFileEntry + `/language_${languageId}`;
-        const uploadedFileResult = await this.uploaderService
-            .saveFile(file, filePath);
-
-        if (!uploadedFileResult) {
-            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "uploadedFileResult" is null');
-        }
-        const savedFileResult = await this.filesRepository.create(uploadedFileResult);
-
 
         const thumbnailFilePath = await ThumbnailService.createPdfThumbnail(file);
         if (!thumbnailFilePath) {
@@ -64,6 +55,17 @@ export class LibraryRepository extends Repository<FileEntryEntity> {
             throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "thumbnailResult" is null');
         }
         const savedThumbnailResult = await this.filesRepository.create(uploadedThumbnailResult);
+
+
+        const filePath = AppStoragePathsConst.libraryFileEntry + `/language_${languageId}`;
+        const uploadedFileResult = await this.uploaderService
+            .saveFile(file, filePath);
+
+        if (!uploadedFileResult) {
+            throw new HttpResponseError(400, "BAD_REQUEST", 'No file found "uploadedFileResult" is null');
+        }
+        const savedFileResult = await this.filesRepository.create(uploadedFileResult);
+
 
 
         const entity = new FileEntryEntity();
