@@ -231,7 +231,7 @@ export class LibraryController implements Controller {
       );
     }
 
-    res.status(200).send(ResponseModel.toResult(fileEntry));
+    res.status(200).send(ResponseModel.toResult(new FileEntryFullRes(fileEntry)));
   }
 
 
@@ -265,8 +265,7 @@ export class LibraryController implements Controller {
         "FileEntry id " + id + " not found"
       );
     }
-
-    res.status(200).send(ResponseModel.toResult(fileEntry));
+    res.status(200).send(ResponseModel.toResult(new FileEntryFullRes(fileEntry)));
   }
 }
 
