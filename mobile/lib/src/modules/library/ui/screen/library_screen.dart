@@ -120,16 +120,29 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 }
 
-class PdfViewPage extends StatelessWidget {
+class PdfViewPage extends StatefulWidget {
   const PdfViewPage({required this.args, super.key});
 
   final FileEntryEntity args;
 
   @override
+  State<PdfViewPage> createState() => _PdfViewPageState();
+}
+
+class _PdfViewPageState extends State<PdfViewPage> {
+  final _bloc = findDep<LibraryCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.increaseFileViewCount(file: widget.args);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: args.name),
-      body: SfPdfViewer.network(args.file),
+      appBar: CustomAppBar(title: widget.args.name),
+      body: SfPdfViewer.network(widget.args.file),
     );
   }
 }

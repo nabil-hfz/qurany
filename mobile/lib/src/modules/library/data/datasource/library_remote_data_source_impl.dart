@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kawtharuna/src/core/constants/app_endpoints.dart';
 import 'package:kawtharuna/src/core/managers/network/dio_client.dart';
 import 'package:kawtharuna/src/core/models/base/base_filter.dart';
+import 'package:kawtharuna/src/core/models/empty_result/empty_result_model.dart';
 import 'package:kawtharuna/src/core/models/result.dart';
 import 'package:kawtharuna/src/modules/library/data/models/library_model.dart';
 
@@ -43,6 +44,34 @@ class LibraryRemoteDataSource implements IFileEntryDataSource {
       cancelToken: cancelToken,
       converterMap: (json) {
         return LibraryListModel.fromJson(json);
+      },
+    );
+  }
+
+  @override
+  Future<Result<FileEntryModel>> increaseFileDownloadsCount({
+    required int fileId,
+    CancelToken? cancelToken,
+  }) async {
+    return await _dioClient.put<FileEntryModel>(
+      AppEndpoints.increaseFileDownloadsCount(fileId),
+      cancelToken: cancelToken,
+      converter: (json) {
+        return FileEntryModel.fromJson(json as Map<String, dynamic>);
+      },
+    );
+  }
+
+  @override
+  Future<Result<FileEntryModel>> increaseFileViewsCount({
+    required int fileId,
+    CancelToken? cancelToken,
+  }) async {
+    return await _dioClient.put<FileEntryModel>(
+      AppEndpoints.increaseFileViewsCount(fileId),
+      cancelToken: cancelToken,
+      converter: (json) {
+        return FileEntryModel.fromJson(json as Map<String, dynamic>);
       },
     );
   }

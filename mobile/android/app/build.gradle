@@ -97,19 +97,12 @@ android {
     }
     flavorDimensions "flavorversion"
     productFlavors {
-        local {
-            dimension "flavorversion"
-            applicationIdSuffix ".local"
-            versionNameSuffix " local"
-            println "Using local google-service.json"
-        }
         dev {
             dimension "flavorversion"
             applicationIdSuffix ".dev"
             versionNameSuffix " development"
             println "Using dev google-service.json"
         }
-
         prod {
             dimension "flavorversion"
             applicationIdSuffix ""

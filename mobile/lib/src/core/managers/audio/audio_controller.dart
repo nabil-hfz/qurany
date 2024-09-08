@@ -24,7 +24,7 @@ class AudioController {
   AudioController() {
     _musicPlayer = AudioPlayer();
     _playlist = Queue.of([]);
-
+    // curl -I https://storage.googleapis.com/kawtharuna-dev.appspot.com/audios/khatme/abdul_rahman_al_sudais/1/04.mp3?GoogleAccessId=firebase-adminsdk-axnz0%40kawtharuna-dev.iam.gserviceaccount.com&Expires=16447017600&Signature=YidddliVfdCocOJXZkMlDBo06YV6YXZWJoEVzW2ngXS1s%2BRDnIC1CP1il6FGLeldD2OZtF0%2FD%2BZlj4SmI3IrW2yqqIFpROEomhKrgxJLVt06k1L4EgzGygoub%2FUh1%2B8oWGcdvDhmcxeJtGNWocVSSrRzoDROmQ1lwBfCbHuVNu9FcTKvAAH0OecaUnlQNzSm6QC6WhAWIGL2rWaxbQW1lBNo7wJoWa9PI%2FUtUz1xXjiHdcPnA2TdXh3KShfD0sgIvJ7LnBuYkQz3onwDKPqFK7WP8IzFfa4qqk4%2BAr92hfLlsD6NRyI%2FhZlMV3etO%2FaQDBkVkmW1LbRocQQPwaG7ng%3D%3D
     // audioHandler.playbackState.add(PlaybackState(
     //   // Which buttons should appear in the notification now
     //   controls: [

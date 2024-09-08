@@ -104,6 +104,8 @@ class _PlayPauseButtonWidgetState extends State<PlayPauseButtonWidget>
   }
 
   void _togglePlayPause() {
+    print(
+        "milliseconds: widget.recitation.durationInMilli is ${widget.recitation.durationInMilli}");
     if (audioUrl != null) {
       // player.playAudioFromUrl(audioUrl!);
       audioHandler.addQueueItem(

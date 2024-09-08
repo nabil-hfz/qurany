@@ -1,4 +1,3 @@
-import 'package:kawtharuna/main.dart';
 import 'package:kawtharuna/src/core/config/env_variables.dart';
 
 class AppEndpoints {
@@ -31,8 +30,16 @@ class AppEndpoints {
   static const String _library = "library";
   static const String getLibraryFileEntries = _library;
 
+  static String increaseFileDownloadsCount(dynamic id) =>
+      '$_library/increase-downloads-count/$id';
+
+  static String increaseFileViewsCount(dynamic id) =>
+      '$_library/increase-views-count/$id';
+
   static String getFileEntryDetails(String id) => '$_library/$id';
+
   static String updateFileEntryDetails(String id) => '$_library/$id';
+
   static String deleteFileEntryDetails(String id) => '$_library/$id';
 }
 

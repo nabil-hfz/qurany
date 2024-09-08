@@ -54,9 +54,8 @@ class LibraryCubit extends BaseCubit<LibraryState> {
       if (result.data?.items != null) _fileEntries.addAll(result.data!.items);
       emit(
         state.copyWith(
-          getLibraryFileEntries: LibraryFileEntriesSuccess(
-            fileEntries: _fileEntries,
-          ),
+          getLibraryFileEntries:
+              LibraryFileEntriesSuccess(fileEntries: _fileEntries),
         ),
       );
     } else {
@@ -100,6 +99,109 @@ class LibraryCubit extends BaseCubit<LibraryState> {
             result.error,
             callback: () {
               getFileEntry(cancelToken: cancelToken, id: id);
+            },
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> increaseFileViewCount({
+    required FileEntryEntity file,
+    bool isRefresh = false,
+    CancelToken? cancelToken,
+  }) async {
+    if (isRefresh) {
+      emit(state.copyWith(increaseFileViewCount: const BaseLoadingState()));
+    }
+    final result = await _repository.increaseFileViewsCount(
+      cancelToken: cancelToken,
+      fileId: file.id,
+    );
+
+    if (result.hasDataOnly) {
+      int index =
+          _fileEntries.indexWhere((fileEntry) => fileEntry.id == file.id);
+      if (index >= 0) {
+        if (result.data != null) {
+          _fileEntries[index] = result.data!;
+        } else {
+          _fileEntries[index] = file.copyWith(totalViews: file.totalViews + 1);
+        }
+      }
+      emit(
+        state.copyWith(
+          getLibraryFileEntries:
+              LibraryFileEntriesSuccess(fileEntries: _fileEntries),
+        ),
+      );
+
+      emit(state.copyWith(increaseFileViewCount: BaseSuccessState()));
+    } else {
+      emit(
+        state.copyWith(
+          increaseFileViewCount: BaseFailState(
+            result.error,
+            callback: () {
+              increaseFileViewCount(
+                file: file,
+                isRefresh: isRefresh,
+                cancelToken: cancelToken,
+              );
+            },
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> increaseFileDownloadsCount({
+    required FileEntryEntity file,
+    bool isRefresh = false,
+    CancelToken? cancelToken,
+  }) async {
+    if (isRefresh) {
+      emit(
+        state.copyWith(
+          increaseFileDownloadsCount: const BaseLoadingState(),
+        ),
+      );
+    }
+    final result = await _repository.increaseFileDownloadsCount(
+      cancelToken: cancelToken,
+      fileId: file.id,
+    );
+
+    if (result.hasDataOnly) {
+      int index =
+          _fileEntries.indexWhere((fileEntry) => fileEntry.id == file.id);
+      if (index >= 0) {
+        if (result.data != null) {
+          _fileEntries[index] = result.data!;
+        } else {
+          _fileEntries[index] =
+              file.copyWith(totalDownloads: file.totalDownloads + 1);
+        }
+      }
+      emit(
+        state.copyWith(
+          getLibraryFileEntries:
+              LibraryFileEntriesSuccess(fileEntries: _fileEntries),
+        ),
+      );
+
+      emit(state.copyWith(increaseFileDownloadsCount: BaseSuccessState()));
+    } else {
+      emit(
+        state.copyWith(
+          increaseFileDownloadsCount: BaseFailState(
+            result.error,
+            callback: () {
+              increaseFileDownloadsCount(
+                file: file,
+                isRefresh: isRefresh,
+                cancelToken: cancelToken,
+              );
             },
           ),
         ),

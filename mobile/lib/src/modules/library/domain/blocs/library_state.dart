@@ -7,6 +7,8 @@ class LibraryState {
     required this.createFileEntry,
     required this.updateFileEntry,
     required this.deleteFileEntry,
+    required this.increaseFileViewCount,
+    required this.increaseFileDownloadsCount,
   });
 
   final BaseState getLibraryFileEntries;
@@ -14,18 +16,24 @@ class LibraryState {
   final BaseState createFileEntry;
   final BaseState updateFileEntry;
   final BaseState deleteFileEntry;
+  final BaseState increaseFileViewCount;
+  final BaseState increaseFileDownloadsCount;
 
   factory LibraryState.initialState() => const LibraryState(
-        getLibraryFileEntries: BaseInitState(),
         getFileEntry: BaseInitState(),
+        getLibraryFileEntries: BaseInitState(),
         createFileEntry: BaseInitState(),
         updateFileEntry: BaseInitState(),
         deleteFileEntry: BaseInitState(),
+        increaseFileViewCount: BaseInitState(),
+        increaseFileDownloadsCount: BaseInitState(),
       );
 
   LibraryState copyWith({
     BaseState? getLibraryFileEntries,
     BaseState? getFileEntry,
+    BaseState? increaseFileViewCount,
+    BaseState? increaseFileDownloadsCount,
     BaseState? createFileEntry,
     BaseState? updateFileEntry,
     BaseState? deleteFileEntry,
@@ -34,6 +42,10 @@ class LibraryState {
       getLibraryFileEntries:
           getLibraryFileEntries ?? this.getLibraryFileEntries,
       getFileEntry: getFileEntry ?? this.getFileEntry,
+      increaseFileViewCount:
+          increaseFileViewCount ?? this.increaseFileViewCount,
+      increaseFileDownloadsCount:
+          increaseFileDownloadsCount ?? this.increaseFileDownloadsCount,
       createFileEntry: createFileEntry ?? this.createFileEntry,
       updateFileEntry: updateFileEntry ?? this.updateFileEntry,
       deleteFileEntry: deleteFileEntry ?? this.deleteFileEntry,
@@ -45,7 +57,8 @@ class LibraryState {
     return '$LibraryState('
         'getLibraryFileEntries: $getLibraryFileEntries, '
         'getFileEntry: $getFileEntry'
-        'createFileEntry: $createFileEntry'
+        'increaseFileViewCount: $increaseFileViewCount'
+        'increaseFileDownloadsCount: $increaseFileDownloadsCount'
         'createFileEntry: $createFileEntry'
         'updateFileEntry: $updateFileEntry'
         'deleteFileEntry: $deleteFileEntry'

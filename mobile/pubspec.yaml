@@ -236,13 +236,14 @@ flutter_native_splash:
 # dart pub global activate flutter_scripts
 scripts:
   # dev environment:
-  run-dev: flutter clean && flutter pub get && flutter run --dart-define ENV=dev --flavor=dev
-  build-dev: flutter clean && flutter pub get && flutter build apk --dart-define ENV=dev --flavor=dev
+
+  build-release-prod: flutter clean && flutter pub get && flutter build --release -t lib/main.dart --flavor prod --dart-define-from-file="env/prod.json"
+  build-release-dev:  flutter clean && flutter pub get && flutter build --release -t lib/main.dart --flavor dev  --dart-define-from-file="env/dev.json"
+
+  run-release-prod: flutter clean && flutter pub get && flutter run --release -t lib/main.dart --flavor prod --dart-define-from-file="env/prod.json"
+  run-release-dev:  flutter clean && flutter pub get && flutter run --release -t lib/main.dart --flavor dev  --dart-define-from-file="env/dev.json"
 
   # prod environment:
-  run-prod: flutter clean && flutter pub get && flutter run --dart-define ENV=prod --flavor=prod
-  run-release-prod: flutter clean && flutter pub get && flutter run --release --dart-define ENV=prod --flavor=prod
-  build-app-prod: flutter clean && flutter pub get && flutter build apk --dart-define ENV=prod --flavor=prod
   build-bundle-prod: flutter clean && flutter pub get && flutter build appbundle --release --dart-define ENV=prod --flavor=prod
 
   # development scripts:

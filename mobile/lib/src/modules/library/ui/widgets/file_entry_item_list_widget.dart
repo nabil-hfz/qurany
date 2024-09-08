@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:kawtharuna/src/core/constants/app_dimens.dart';
 import 'package:kawtharuna/src/core/constants/app_icon_size.dart';
@@ -8,6 +7,7 @@ import 'package:kawtharuna/src/core/di/di.dart';
 import 'package:kawtharuna/src/core/managers/managers.dart';
 import 'package:kawtharuna/src/core/widgets/common/app_inkwell_widget.dart';
 import 'package:kawtharuna/src/core/widgets/common/horizontal_padding.dart';
+import 'package:kawtharuna/src/core/widgets/common/vertical_padding.dart';
 import 'package:kawtharuna/src/core/widgets/image/app_image_widget.dart';
 import 'package:kawtharuna/src/modules/library/domain/entity/library_entity.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +40,8 @@ class FileEntryItemListWidget extends StatelessWidget {
         children: [
           _buildThumbnail(file),
           _buildFileName(appTheme, file),
+          VerticalTextPadding.with4(),
           _buildTotalViewAndDownloads(appTheme, file),
-          _buildLanguageAndCategories(appTheme, file),
         ],
       ),
     );
@@ -52,6 +52,7 @@ class FileEntryItemListWidget extends StatelessWidget {
       child: AppImageWidget(
         path: file.thumbnail,
         boxFit: BoxFit.cover,
+        borderRadius: AppRadius.cardRadius8,
         // color: Colors.red,
       ),
     );
@@ -60,13 +61,14 @@ class FileEntryItemListWidget extends StatelessWidget {
   Widget _buildFileName(AppThemeManager appTheme, FileEntryEntity file) {
     return Row(
       children: [
-        HorizontalTextPadding.with2(),
-        Text(
-          file.name,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: appTextStyle.semiBold16.copyWith(
-            color: appTheme.appColors.textColor,
+        Expanded(
+          child: Text(
+            file.name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: appTextStyle.semiBold16.copyWith(
+              color: appTheme.appColors.textColor,
+            ),
           ),
         ),
       ],
@@ -79,25 +81,32 @@ class FileEntryItemListWidget extends StatelessWidget {
   ) {
     return Row(
       children: [
-        _buildIconWithText(
-          appTheme,
-          Icons.visibility_rounded,
-          file.totalViews,
-        ),
-        HorizontalTextPadding.with8(),
-        Container(
-          decoration: BoxDecoration(
-            color: appTheme.appColors.textGrey2Color,
+        _buildLanguageAndCategories(appTheme, file),
+        Spacer(),
+        if (file.totalViews > 0)
+          _buildIconWithText(
+            appTheme,
+            Icons.visibility_rounded,
+            file.totalViews,
           ),
-          width: 3,
-          height: 3,
-        ),
-        HorizontalTextPadding.with8(),
-        _buildIconWithText(
-          appTheme,
-          Icons.file_download_sharp,
-          file.totalDownloads,
-        ),
+        // HorizontalTextPadding.with4(),
+        if (file.totalViews > 0 && file.totalDownloads > 0)
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: AppDimens.space4),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: appTheme.appColors.textGrey2Color,
+            ),
+            width: 3,
+            height: 3,
+          ),
+        // HorizontalTextPadding.with4(),
+        if (file.totalDownloads > 0)
+          _buildIconWithText(
+            appTheme,
+            Icons.file_download_sharp,
+            file.totalDownloads,
+          ),
       ],
     );
   }
@@ -111,7 +120,7 @@ class FileEntryItemListWidget extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: appTheme.appColors.iconGreyColor,
+          color: appTheme.appColors.iconActiveColor,
           size: AppIconSize.size_18,
         ),
         HorizontalTextPadding.with2(),
