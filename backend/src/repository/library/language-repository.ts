@@ -15,7 +15,8 @@ export class LanguageRepository extends Repository<LanguageEntity> {
     async createLanguages(languages: CreateLanguagesReqBody): Promise<any> {
         const entities: LanguageEntity[] = languages.languages.map((lang) => {
             const entity = new LanguageEntity();
-            entity.name = lang;
+            entity.name = lang.name;
+            entity.language_code = lang.language_code;
             return entity;
 
         }) ?? [];
