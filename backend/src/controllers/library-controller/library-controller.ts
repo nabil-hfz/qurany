@@ -25,7 +25,7 @@ export class LibraryController implements Controller {
       customClaims: [AppRoles.admin],
     });
 
-    httpServer.post({
+    httpServer.put({
       path: `${this.url}/increase-views-count/:id`,
       requestHandler: this.increaseViewsCount.bind(this),
       customClaims: [AppRoles.guest],
