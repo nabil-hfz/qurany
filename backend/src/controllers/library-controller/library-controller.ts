@@ -25,6 +25,19 @@ export class LibraryController implements Controller {
       customClaims: [AppRoles.admin],
     });
 
+    httpServer.post({
+      path: `${this.url}/increase-views-count/:id`,
+      requestHandler: this.increaseViewsCount.bind(this),
+      customClaims: [AppRoles.guest],
+    });
+
+    httpServer.put({
+      path: `${this.url}/increase-downloads-count/:id`,
+      requestHandler: this.increaseDownloadsCount.bind(this),
+      customClaims: [AppRoles.guest],
+    });
+
+
     httpServer.get({
       path: this.url,
       requestHandler: this.getFileEntryList.bind(this),
@@ -186,6 +199,75 @@ export class LibraryController implements Controller {
     // next();
   }
 
+
+  private readonly increaseViewsCount: RequestHandler = async (
+    req: any,
+    res: any,
+    next: any,
+  ) => {
+    const id = +req.params.id;
+    if (!id) {
+      throw new HttpResponseError(
+        400,
+        "BAD_REQUEST",
+        "Please, no 'id' for file entry is defined " + id
+      );
+    }
+    const result = await libraryRepository.incrementIntValue(id, "totalViews");
+    if (result == null) {
+      throw new HttpResponseError(
+        404,
+        "NOT_FOUND",
+        "FileEntry id " + id + " not found"
+      );
+    }
+
+    const fileEntry = await libraryRepository.getOneById(id);
+    if (fileEntry == null || fileEntry.id == null) {
+      throw new HttpResponseError(
+        404,
+        "NOT_FOUND",
+        "FileEntry id " + id + " not found"
+      );
+    }
+
+    res.status(200).send(ResponseModel.toResult(fileEntry));
+  }
+
+
+  private readonly increaseDownloadsCount: RequestHandler = async (
+    req: any,
+    res: any,
+    next: any,
+  ) => {
+    const id = +req.params.id;
+    if (!id) {
+      throw new HttpResponseError(
+        400,
+        "BAD_REQUEST",
+        "Please, no 'id' for file entry is defined " + id
+      );
+    }
+    const result = await libraryRepository.incrementIntValue(id, "totalDownloads");
+    if (result == null) {
+      throw new HttpResponseError(
+        404,
+        "NOT_FOUND",
+        "FileEntry id " + id + " not found"
+      );
+    }
+
+    const fileEntry = await libraryRepository.getOneById(id);
+    if (fileEntry == null || fileEntry.id == null) {
+      throw new HttpResponseError(
+        404,
+        "NOT_FOUND",
+        "FileEntry id " + id + " not found"
+      );
+    }
+
+    res.status(200).send(ResponseModel.toResult(fileEntry));
+  }
 }
 
 

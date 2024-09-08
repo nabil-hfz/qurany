@@ -3,6 +3,7 @@ import { Repository as TypeORMRepository, EntityTarget, ObjectLiteral, ObjectId,
 import { logError } from '../utils/logger';
 import { AppPagination } from '../middlewares/pagination.middleware';
 import dataSource from '../db/data-source';
+import { UpdateResult } from 'typeorm/driver/mongodb/typings';
 
 export interface GetAllOptions<T> {
   conditions?: Partial<T> & Partial<AppPagination>,
@@ -69,6 +70,21 @@ export abstract class Repository<T extends ObjectLiteral> {
       logError(error);
       return null;
     }
+  }
+  public async incrementIntValue(id: number, propertyPath: string): Promise<UpdateResult | null> {
+    try {
+      const conditions: any = { id: +id };
+      console.log('conditions is ', conditions);
+
+      const result = await this._repository.increment(conditions, propertyPath, 1);
+
+      console.log('result is ', result);
+    
+      return result.raw;
+    } catch (error) {
+      logError(error);
+    }
+    return null;
   }
 
   public async create(resource: T): Promise<T> {

@@ -11,7 +11,6 @@ import * as tmp from 'tmp';
 import { FileEntity } from "../db/entities/file.entity";
 import { ThumbnailImageResponse } from "./thumbnail-service";
 
-
 export class UploaderService {
     // private _onFileEvent = 'file';
     private _onErrorEvent = 'error';

@@ -22,6 +22,12 @@ type PostParams = {
   fileFields?: any[];
   customClaims?: AppRoles[];
 };
+type PutParams = {
+  path: string;
+  requestHandler: RequestHandler[] | RequestHandler;
+  fileFields?: any[];
+  customClaims?: AppRoles[];
+};
 
 type GetParams = {
   path: string;
@@ -73,13 +79,11 @@ export class HttpServer {
   }
 
   put(
-    path: string,
-    requestHandler: RequestHandler,
-    customClaims?: AppRoles[]
+    param: PutParams
   ): void {
     this.express.put(
-      path,
-      this._catchErrorHandler(requestHandler, customClaims)
+      param.path,
+      this._catchErrorHandler(param.requestHandler, param.customClaims)
     );
   }
 
